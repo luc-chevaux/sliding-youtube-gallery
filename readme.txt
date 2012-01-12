@@ -27,9 +27,9 @@ You can choose to display the videos in a fully customizable sliding gallery or 
 
 == Frequently Asked Questions ==
 
-= Where could I have more information about this plugin?
+= Where could I have more information about this plugin? =
 
-For more information about this plugin, please visit [my blog](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/ "my blog") and post comments, questions and advices in order to make this plugin better.
+For more information about this plugin, please visit [webEng blog](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/ "webEng blog") and post comments, questions and advices in order to make this plugin better.
 
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
