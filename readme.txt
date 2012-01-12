@@ -3,13 +3,13 @@ Contributors: webeng
 Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/
 Tags: youtube, video, gallery, sliding gallery
 Requires at least: 2.0 or higher
-Tested up to: 3.3
+Tested up to: 3.3.1
 Stable tag: 1.0.0.beta
 
-Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user’s channel.
+Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user's channel.
 
 == Description ==
-Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user’s channel.
+Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user's channel.
 You can choose to display the videos in a fully customizable sliding gallery or if you prefer, you may display it as an ordered list table.
 
 == Installation ==
@@ -26,6 +26,10 @@ You can choose to display the videos in a fully customizable sliding gallery or 
 	- Activate the plugin through the ‘Plugins’ menu in wordpress
 
 == Frequently Asked Questions ==
+
+= Where could I have more information about this plugin?
+
+For more information about this plugin, please visit [my blog](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/ "my blog") and post comments, questions and advices in order to make this plugin better.
 
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
