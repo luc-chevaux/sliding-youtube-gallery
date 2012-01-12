@@ -1,0 +1,50 @@
+fieldset {
+	border: 1px #efefef solid;
+	margin-bottom: 10px;
+	padding: 10px;
+	box-shadow: 0 8px 10px -10px black;
+	border-radius: 5px;
+}
+
+legend {
+	font-size: 14px;
+	padding: 3px;
+}
+
+input, select {
+	margin-right: 10px;
+}
+
+input[type="radio"] {
+	margin-right: 0;
+}
+
+img {
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+hr {
+	color: #efefef;
+	border: 1px #efefef solid;
+}
+
+label {
+
+}
+
+.icon32.icon-settings, #icon-options-general {
+	background: url("../images/gear-white.png") no-repeat scroll transparent;
+	margin-right: 5px;
+	padding-right: 0;
+}
+
+#thumb_bordercolor_selector, #box_backgroundcolor_selector, #desc_fontcolor_selector {
+	display: inline-block;
+}
+
+#thumb_bordercolor_selector div, #box_backgroundcolor_selector div, #desc_fontcolor_selector div {
+    background: url("../images/select.png") repeat scroll center center transparent;
+    height: 15px;
+    width: 15px;
+}
