@@ -408,15 +408,37 @@ function getPageVideoEntry($videoEntry) {
 	$html .= '</div>';
 	
 	return $html;
+}
 
-	/*
-	 * // append video tags
-	$html .= '<span class="video_tags"><strong>Tags:</strong> ';
-	foreach ($videoEntry->getVideoTags() as $key => $value) {
-	$html .= $value." | ";
+function getEntireFeed($videoFeed, $counter, $method) {
+	$stop = get_option ( 'syg_youtube_maxvideocount' );
+	foreach ( $videoFeed as $videoEntry ) {
+		if ($method == GALLERY) {
+			$html .= getGalleryVideoEntry ($videoEntry);
+		} else if ($method == PAGE) {
+			$html .= getPageVideoEntry ($videoEntry);
+		}
+		
+		if ($counter >= $stop) {
+			break;
+		} else {
+			$counter ++;
+		}
 	}
-	$html .= '</span>';
-	*/
+
+	// See whether we have another set of results
+	if ($counter < $stop) {
+		try {
+			$videoFeed = $videoFeed->getNextFeed ();
+		} catch ( Zend_Gdata_App_Exception $e ) {
+			return $html;
+		}
+
+		if ($videoFeed) {
+			$html .= getEntireFeed ( $videoFeed, $counter );
+		}
+	}
+	return $html;
 }
 
 /*
@@ -424,31 +446,16 @@ function getPageVideoEntry($videoEntry) {
  */
 function getSygVideoGallery() {
 	// variables for the field and option names
-	$username = get_option('syg_youtube_username');
-	
-	$yt = new Zend_Gdata_YouTube();
-  	$yt->setMajorProtocolVersion(2);
-  	
-  	$videoFeed = $yt->getuserUploads($username);
-  	
-	$html  = '<div id="syg_video_gallery"><div class="sc_menu">';
+	$username = get_option ( 'syg_youtube_username' );
+	$yt = new Zend_Gdata_YouTube ();
+	$yt->setMajorProtocolVersion ( 2 );
+	$videoFeed = $yt->getuserUploads ( $username );
+	$html = '<div id="syg_video_gallery"><div class="sc_menu">';
 	$html .= '<ul class="sc_menu">';
-	
-	$stop = get_option('syg_youtube_maxvideocount');
-	$start = 1;
-	
-	foreach ($videoFeed as $videoEntry) {
-    	$html .= getGalleryVideoEntry($videoEntry);
-    	if ($start >= $stop) { 
-    		break; 
-    	} else {
-    		$start++ ;
-    	}
-	}
-  	
-  	$html .= '</ul>';
+	$html .= getEntireFeed ( $videoFeed, 1, GALLERY );
+	$html .= '</ul>';
 	$html .= '</div></div>';
-	
+
 	return $html;
 }
 
@@ -458,18 +465,11 @@ function getSygVideoGallery() {
 function getSygVideoPage() {
 	// variables for the field and option names
 	$username = get_option('syg_youtube_username');
-
 	$yt = new Zend_Gdata_YouTube();
 	$yt->setMajorProtocolVersion(2);
-	 
 	$videoFeed = $yt->getuserUploads($username);
-	 
 	$html  = '<div id="syg_video_page">';
-
-	foreach ($videoFeed as $videoEntry) {
-		$html .= getPageVideoEntry($videoEntry);
-	}
-	 
+	$html .= getEntireFeed ( $videoFeed, 1, PAGE );
 	$html .= '</div>';
 
 	return $html;
