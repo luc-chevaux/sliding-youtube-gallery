@@ -435,7 +435,7 @@ function getEntireFeed($videoFeed, $counter, $method) {
 		}
 
 		if ($videoFeed) {
-			$html .= getEntireFeed ( $videoFeed, $counter );
+			$html .= getEntireFeed ( $videoFeed, $counter, $method );
 		}
 	}
 	return $html;

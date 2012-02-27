@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery
 Requires at least: 2.0 or higher
 Tested up to: 3.3.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user's channel.
 
@@ -63,7 +63,7 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 =
 * Video count setting bug, was fixed.
 
 = 1.0.0.beta =
@@ -71,7 +71,7 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.1 =
 Video count setting bug, was fixed.
 
 = 1.0.0.beta =
