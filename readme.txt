@@ -63,10 +63,16 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 
 == Changelog ==
 
+= 1.0.0 =
+* Video count setting bug, was fixed.
+
 = 1.0.0.beta =
 * Initial Release, beta.
 
 == Upgrade Notice ==
+
+= 1.0.0 =
+Video count setting bug, was fixed.
 
 = 1.0.0.beta =
 Initial Release, beta.
