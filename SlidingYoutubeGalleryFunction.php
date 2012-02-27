@@ -452,7 +452,7 @@ function getSygVideoGallery() {
 	$videoFeed = $yt->getuserUploads ( $username );
 	$html = '<div id="syg_video_gallery"><div class="sc_menu">';
 	$html .= '<ul class="sc_menu">';
-	$html .= getEntireFeed ( $videoFeed, 1, GALLERY );
+	$html .= getEntireFeed ( $videoFeed, 1, SYG_METHOD_GALLERY );
 	$html .= '</ul>';
 	$html .= '</div></div>';
 
@@ -469,7 +469,7 @@ function getSygVideoPage() {
 	$yt->setMajorProtocolVersion(2);
 	$videoFeed = $yt->getuserUploads($username);
 	$html  = '<div id="syg_video_page">';
-	$html .= getEntireFeed ( $videoFeed, 1, PAGE );
+	$html .= getEntireFeed ( $videoFeed, 1, SYG_METHOD_PAGE );
 	$html .= '</div>';
 
 	return $html;
