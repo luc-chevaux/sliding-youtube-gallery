@@ -413,9 +413,9 @@ function getPageVideoEntry($videoEntry) {
 function getEntireFeed($videoFeed, $counter, $method) {
 	$stop = get_option ( 'syg_youtube_maxvideocount' );
 	foreach ( $videoFeed as $videoEntry ) {
-		if ($method == GALLERY) {
+		if ($method == SYG_METHOD_GALLERY) {
 			$html .= getGalleryVideoEntry ($videoEntry);
-		} else if ($method == PAGE) {
+		} else if ($method == SYG_METHOD_PAGE) {
 			$html .= getPageVideoEntry ($videoEntry);
 		}
 		
