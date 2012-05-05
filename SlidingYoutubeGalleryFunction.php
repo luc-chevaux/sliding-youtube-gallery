@@ -102,16 +102,22 @@ function generateSygAdminForm($syg, $updated = false) {
 		echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
 	}
 	
+	// define some dir alias
+	$homeRoot = home_url();
+	$cssPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+	$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
+	$jsPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+	
 	// define css to include
-	$css_url = plugins_url(basename(dirname(__FILE__)) . '/css/admin.css');
-    $css_color_picker = plugins_url(basename(dirname(__FILE__)) . '/css/colorpicker.css');
+	$cssAdminUrl = $cssPath . 'admin.css';
+    $cssColorPicker = $cssPath . 'colorpicker.css';
 
     // css inclusion
     echo '<style type="text/css">';
-	echo '@import url('.$css_url.');';
+	echo '@import url('.$cssAdminUrl.');';
 	echo '</style>';
 	echo '<style type="text/css">';
-	echo '@import url('.$css_color_picker.');';
+	echo '@import url('.$cssColorPicker.');';
 	echo '</style>';
 	
 	// begin admin form section
@@ -202,18 +208,18 @@ function generateSygAdminForm($syg, $updated = false) {
 	($syg['th_image']['val'] == 2) ? $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2" checked="checked">' : $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2">';
 	($syg['th_image']['val'] == 3) ? $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3" checked="checked">' : $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3">';
 	echo $syg_ty_opt_1;
-	echo '<img width="32" src="'.plugins_url(basename(dirname(__FILE__)) . '/images/button/play-the-video_1.png').'"/>';
+	echo '<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>';
 	echo $syg_ty_opt_2;
-	echo '<img width="32" src="'.plugins_url(basename(dirname(__FILE__)) . '/images/button/play-the-video_2.png').'"/>';
+	echo '<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>';
 	echo $syg_ty_opt_3;
-	echo '<img width="32" src="'.plugins_url(basename(dirname(__FILE__)) . '/images/button/play-the-video_3.png').'"/>';
+	echo '<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>';
 	echo '<label for="'.$syg['th_buttonopacity']['opt'].'">Button opacity: </label>';
 	echo '<input type="text" id="'.$syg['th_buttonopacity']['opt'].'" name="'.$syg['th_buttonopacity']['opt'].'" value="'.$syg['th_buttonopacity']['val'].'" size="10">';
 	echo '</fieldset>';
 	
 	// javascript inclusion
-	$js_url = plugins_url(basename(dirname(__FILE__)) . '/js/admin.js');
-    $js_color_picker = plugins_url(basename(dirname(__FILE__)) . '/js/colorpicker.js');
+	$js_url = $jsPath . '/admin.js';
+    $js_color_picker = $jsPath . '/colorpicker.js';
 	echo '<script type="text/javascript" src="'.$js_url.'"></script>';
 	echo '<script type="text/javascript" src="'.$js_color_picker.'"></script>';
 	
@@ -315,14 +321,20 @@ function Sec2Time($time){
  * return html for a video entry in a gallery
  */
 function getGalleryVideoEntry($videoEntry) {
+	// define some dir alias
+	$homeRoot = home_url();
+	$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
+	$pluginUrl = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/';
+	
 	// get video thumbnails from youtube
 	$videoThumbnails = $videoEntry->getVideoThumbnails();
 	$video_id = $videoEntry->getVideoId();
-	$html .= '<li><a class="sygVideo" href="'.plugins_url(basename(dirname(__FILE__)). '/SygVideo.php').'?id='.$video_id.'">';
+	$html .= '<li><a class="sygVideo" href="' . $pluginUrl . 'SygVideo.php'.'?id='.$video_id.'">';
+	
 	// append video thumbnail
 	$html .= (get_option('syg_description_show')) ? '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="'.$videoEntry->getVideoDescription().'" title="'.$videoEntry->getVideoDescription().'"/>' : '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="play" title="play"/>';
 	// append overlay button
-	$syg_thumb_image = get_option('syg_thumbnail_image') != '' ? plugins_url(basename(dirname(__FILE__)).'/images/button/play-the-video_'.get_option('syg_thumbnail_image').'.png') : plugins_url(basename(dirname(__FILE__)).'/images/button/play-the-video_1.png');
+	$syg_thumb_image = get_option('syg_thumbnail_image') != '' ? $imgPath . '/button/play-the-video_' . get_option('syg_thumbnail_image').'.png' : $imgPath . '/images/button/play-the-video_1.png';
 	$html .= '<img class="play-icon" src="'.$syg_thumb_image.'" alt="play">';
 	// append video duration
 	if (get_option('syg_description_showduration')) {
@@ -344,6 +356,11 @@ function getGalleryVideoEntry($videoEntry) {
  * return html for a video entry in a page
 */
 function getPageVideoEntry($videoEntry) {
+	// define some dir alias
+	$homeRoot = home_url();
+	$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
+	$pluginUrl = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/';
+	
 	// get video thumbnails from youtube
 	$videoThumbnails = $videoEntry->getVideoThumbnails();
 	$video_id = $videoEntry->getVideoId();
@@ -351,10 +368,10 @@ function getPageVideoEntry($videoEntry) {
 	$html .= '<table class="video_entry_table">';
 	$html .= '<tr>';
 	$html .= '<td class="syg_video_page_thumb">';
-	$html .= '<a class="sygVideo" href="'.plugins_url(basename(dirname(__FILE__)). '/SygVideo.php').'?id='.$video_id.'">';
+	$html .= '<a class="sygVideo" href="'. $pluginUrl . 'SygVideo.php'.'?id='.$video_id.'">';
 	$html .= (get_option('syg_description_show')) ? '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="'.$videoEntry->getVideoDescription().'" title="'.$videoEntry->getVideoDescription().'"/>' : '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="play" title="play"/>';
 	// append overlay button
-	$syg_thumb_image = get_option('syg_thumbnail_image') != '' ? plugins_url(basename(dirname(__FILE__)).'/images/button/play-the-video_'.get_option('syg_thumbnail_image').'.png') : plugins_url(basename(dirname(__FILE__)).'/images/button/play-the-video_1.png');
+	$syg_thumb_image = get_option('syg_thumbnail_image') != '' ? $imgPath . '/button/play-the-video_'.get_option('syg_thumbnail_image').'.png' : $imgPath .'/images/button/play-the-video_1.png';
 	$html .= '<img class="play-icon" src="'.$syg_thumb_image.'" alt="play">';
 	// append video duration
 	if (get_option('syg_description_showduration')) {

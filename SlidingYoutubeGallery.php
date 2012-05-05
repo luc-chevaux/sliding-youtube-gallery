@@ -9,6 +9,15 @@
  * Description: Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user’s channel. User can choose to display the videos in a fully customizable sliding gallery or in a video page.
  */
 
+/*
+@todo renderlo in qualche modo indipendente dalla piattaforma
+@todo memorizzare le combinazioni e richiamarle con un id
+@todo widget wordpress
+@todo down scrolling
+@todo background image
+@todo filter by tags
+*/
+
 define ('SYG_METHOD_GALLERY','gallery');
 define ('SYG_METHOD_PAGE','page');
  
@@ -54,14 +63,20 @@ function slidingYoutubeGalleryActivation() {
 function setSygFrontEndOption() {
 	define('SYG_VERSION', '1.0.0.beta');
 	
-	// get the resources url
-	$css_url = plugins_url(basename(dirname(__FILE__)) . '/css/SlidingYoutubeGallery.css.php');
-	$js_url = plugins_url(basename(dirname(__FILE__)) . '/js/SlidingYoutubeGallery.js.php');
+	// define some dir alias
+	$homeRoot = home_url();
+	$cssPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+	$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
+	$jsPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
 	
-	$fancybox_js_url = plugins_url(basename(dirname(__FILE__)) . '/js/fancybox/jquery.fancybox-1.3.4.pack.js');
-	$easing_js_url = plugins_url(basename(dirname(__FILE__)) . '/js/fancybox/jquery.easing-1.3.pack.js');
-	$mousewheel_js_url = plugins_url(basename(dirname(__FILE__)) . '/js/fancybox/jquery.mousewheel-3.0.4.pack.js');
-	$fancybox_css_url = plugins_url(basename(dirname(__FILE__)) . '/js/fancybox/jquery.fancybox-1.3.4.css');
+	// get the resources url
+	$css_url = $cssPath . 'SlidingYoutubeGallery.css.php';
+	$js_url =  $jsPath . 'SlidingYoutubeGallery.js.php';
+	
+	$fancybox_js_url = $jsPath. '/fancybox/jquery.fancybox-1.3.4.pack.js';
+	$easing_js_url = $jsPath . '/fancybox/jquery.easing-1.3.pack.js';
+	$mousewheel_js_url = $jsPath . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+	$fancybox_css_url = $jsPath . '/fancybox/jquery.fancybox-1.3.4.css';
 	
 	// register styles
 	wp_register_style('sliding-youtube-gallery', $css_url, array(), SYG_VERSION, 'screen');

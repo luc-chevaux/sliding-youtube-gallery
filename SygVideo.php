@@ -1,7 +1,16 @@
 <?php 
 // include zend loader
 
-include('../../../wp-load.php');
+// include zend loader
+$root = realpath(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))));
+if (file_exists($root.'/wp-load.php')) {
+	// WP 2.6
+	require_once($root.'/wp-load.php');
+} else {
+	// Before 2.6
+	require_once($root.'/wp-config.php');
+}
+
 // include default values
 include('./DefaultValues.php');
 // include default function
