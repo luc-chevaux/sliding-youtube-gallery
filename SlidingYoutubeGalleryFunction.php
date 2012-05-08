@@ -124,6 +124,39 @@ function generateSygAdminForm($syg, $updated = false) {
 	echo '<div class="wrap">';
 	echo '<div id="icon-options-general" class="icon32"><br/></div><h2>Sliding Youtube Gallery | by <a href="http://blog.webeng.it" target="_new">WebEng</a></h2>';
 	echo '<hr/>';
+	
+	echo SygConstant::BE_WELCOME_MESSAGE;
+	
+	// begin gallery list section
+	echo '<h3>Manage your gallery</h3>';
+	echo "<table>";
+	
+	echo "<th>";
+	echo "<td>";
+	echo "Gallery ID";
+	echo "</td>";
+	echo "<td>";
+	echo "Gallery User";
+	echo "</td>";
+	echo "<td>";
+	echo "Action";
+	echo "</td>";
+	echo "</th>";
+	
+	
+	echo "<tr>";
+	echo "<td>";
+	
+	echo "</td>";
+	echo "<td>";
+	
+	echo "</td>";
+	echo "<td>";
+	
+	echo "</td>";
+	echo "</tr>";
+	
+	echo "</table>";
 	echo '<p>Here you can set the SlidingYoutubeGallery default behavior.</p>';
 	echo '<form name="form1" method="post" action="">';
 	echo '<input type="hidden" name="'.$syg['hiddenfield']['opt'].'" value="Y">';

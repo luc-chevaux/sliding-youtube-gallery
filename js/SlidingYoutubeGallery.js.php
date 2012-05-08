@@ -15,13 +15,13 @@ include('../DefaultValues.php');
 // include default function
 include('../DefaultFunction.php');
 
-$type = extractType($syg_youtube_videoformat);
-$width = extractWidth($syg_youtube_videoformat);
+$type = SygUtil::extractType($syg_youtube_videoformat);
+$width = SygUtil::extractWidth($syg_youtube_videoformat);
 
 if ($type == 'n') {
-	$height = getHeight($width);
+	$height = SygUtil::getNormalHeight($width);
 } else {
-	$height = getWideHeight($width);
+	$height = SygUtil::getWideHeight($width);
 }
 $width += 20;
 $height += 20;

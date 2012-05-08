@@ -23,12 +23,15 @@ define ('SYG_METHOD_PAGE','page');
  
 require_once 'SlidingYoutubeGalleryFunction.php';
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygConstant.php');
+require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygGallery.php');
 
 // define activation hook
 register_activation_hook(__FILE__, 'slidingYoutubeGalleryActivation' );
 
 // activation function
 function slidingYoutubeGalleryActivation() {
+	global $wpdb;
 	include 'DefaultValues.php';
 	add_option('syg_youtube_username', '');
 	add_option('syg_youtube_videoformat', $syg_youtube_videoformat);
@@ -61,7 +64,7 @@ function slidingYoutubeGalleryActivation() {
 }
 
 function setSygFrontEndOption() {
-	define('SYG_VERSION', '1.0.0.beta');
+	define('SYG_VERSION', '1.2.0');
 	
 	// define some dir alias
 	$homeRoot = home_url();
