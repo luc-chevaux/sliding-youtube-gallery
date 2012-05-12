@@ -1,6 +1,16 @@
 <?php
 class SlidingYouTubeGalleryPlugin {
 
+	private static $instance = null;
+	
+	public static function getInstance() {
+		if(self::$instance == null) {
+			$c = __CLASS__;
+			self::$instance = new $c;
+		}
+		return self::$instance;
+	}
+	
 	private $homeRoot;
 	private $pluginRoot;
 	private $jsRoot;
@@ -265,13 +275,13 @@ class SlidingYouTubeGalleryPlugin {
 	 * admin hook to wp
 	*/
 	function SlidingYoutubeGalleryAdmin() {
-		add_options_page('SlidingYoutubeGallery Options', 'SlidingYoutubeGallery', 'manage_options', 'syg-administration-panel', 'sygAdminMain');
+		add_options_page('SlidingYoutubeGallery Options', 'SlidingYoutubeGallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminMain'));
 	}
 	
 	/*
 	 * do the option inventory
 	*/
-	function optionInventory() {
+	private function optionInventory() {
 		$syg = array();
 		$syg['yt_user']['opt'] = 'syg_youtube_username';
 		$syg['yt_videoformat']['opt'] = 'syg_youtube_videoformat';
@@ -352,7 +362,7 @@ class SlidingYouTubeGalleryPlugin {
 	/*
 	 * function used to generate admin form
 	*/
-	function generateSygAdminForm($syg, $updated = false) {
+	private function generateSygAdminForm($syg, $updated = false) {
 		// check if plugin has updated something
 		if ($updated) {
 			echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
@@ -553,7 +563,7 @@ class SlidingYouTubeGalleryPlugin {
 		}
 	
 		// option inventory
-		$syg = optionInventory();
+		$syg = $this->optionInventory();
 	
 		if( isset($_POST[$syg['hiddenfield']['opt']]) && $_POST[$syg['hiddenfield']['opt']] == 'Y' ) {
 			// get posted values
@@ -566,10 +576,10 @@ class SlidingYouTubeGalleryPlugin {
 			$updated = true;
 		}else{
 			// get option values
-			$syg = getOptionValues($syg);
+			$syg = $this->getOptionValues($syg);
 		}
 	
-		generateSygAdminForm($syg, $updated);
+		$this->generateSygAdminForm($syg, $updated);
 	}
 }
 ?>

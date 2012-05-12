@@ -1,8 +1,11 @@
 <?php
+
 // set header type
 header('Content-type: text/css');
+
 // include zend loader
 $root = realpath(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))));
+
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6
 	require_once($root.'/wp-load.php');

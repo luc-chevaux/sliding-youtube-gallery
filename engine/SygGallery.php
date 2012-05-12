@@ -7,7 +7,7 @@ class SygGallery {
 	private $boxBackground;
 	private $boxRadius;
 	private $boxPadding;
-	private $thumbheight;
+	private $thumbHeight;
 	private $thumbWidth;
 	private $thumbBorderSize;
 	private $thumbBorderColor;
@@ -15,88 +15,90 @@ class SygGallery {
 	private $thumbOverlaySize;
 	private $thumbImage;
 	private $thumbDistance;
-	private $thumbButtonopacity;
+	private $thumbButtonOpacity;
 	private $percOccW;
-	private $defaultLeft; // = 50 - ($percOcc_w / 2 * 100);
-	private $percOccH; // = $thumbOverlaySize / ($thumbHeight + ($thumbBorderSize*2));
-	private $defaultTop; // = 50 - ($percOccH / 2 * 100);
-	private $thumbTop; // = get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $default_top;
-	private $thumbLeft; // = get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $default_left;
-	private $descWidth; // = get_option('syg_description_width') != '' ? get_option('syg_description_width') : $syg_thumbnail_width;
-	private $descFontSize; // = get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12";
-	private $descFontColor; // = get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333";
-	private $descShow; // = get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false";
-	private $descShowDuration; // = get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false";
-	private $descShowTags; // = get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false";
-	private $descShowRatings; // = get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false";
-	private $descShowCategories; // = get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false";
+	private $defaultLeft;
+	private $percOccH;
+	private $defaultTop;
+	private $thumbTop;
+	private $thumbLeft;
+	private $descWidth;
+	private $descFontSize;
+	private $descFontColor;
+	private $descShow;
+	private $descShowDuration;
+	private $descShowTags;
+	private $descShowRatings;
+	private $descShowCategories;
 	
 	// default constructor
 	public function __construct() {
 		/* YouTube default values */
 		// default video format
-		$syg_youtube_videoformat = get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n";
-		// default max video count
-		$syg_youtube_maxvideocount = get_option('syg_youtube_maxvideocount') != '' ? get_option('syg_youtube_maxvideocount') : "15";
+		$this->setYtVideoFormat(get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n");
+		$this->setYtMaxVideoCount(get_option('syg_youtube_maxvideocount') != '' ? get_option('syg_youtube_maxvideocount') : "15");
 		
 		/* box default values*/
 		// default main box width
-		$syg_box_width = get_option('syg_box_width') != '' ? get_option('syg_box_width') : "550";
+		$this->setBoxWidth(get_option('syg_box_width') != '' ? get_option('syg_box_width') : "550");
+		
 		// default main box background color
-		$syg_box_background = get_option('syg_box_background') != '' ? get_option('syg_box_background') : "#efefef";
+		$this->setBoxBackground(get_option('syg_box_background') != '' ? get_option('syg_box_background') : "#efefef");
 		// default box radius pixel
-		$syg_box_radius = get_option('syg_box_radius') != '' ? get_option('syg_box_radius') : "10";
+		$this->setBoxRadius(get_option('syg_box_radius') != '' ? get_option('syg_box_radius') : "10");
 		// default box padding pixel
-		$syg_box_padding = get_option('syg_box_padding') != '' ? get_option('syg_box_padding') : "10";
+		$this->setBoxPadding(get_option('syg_box_padding') != '' ? get_option('syg_box_padding') : "10");
 		
 		/* thumbnail default values*/
 		// default thumbnail height
-		$syg_thumbnail_height = get_option('syg_thumbnail_height') != '' ? get_option('syg_thumbnail_height') : "100";
+		$this->setThumbHeight(get_option('syg_thumbnail_height') != '' ? get_option('syg_thumbnail_height') : "100");
 		// default thumbnail width
-		$syg_thumbnail_width = get_option('syg_thumbnail_width') != '' ? get_option('syg_thumbnail_width') : "133";
+		$this->setThumbWidth(get_option('syg_thumbnail_width') != '' ? get_option('syg_thumbnail_width') : "133");
 		// default thumbnail border size
-		$syg_thumbnail_bordersize = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
+		$this->setThumbBorderSize(get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3");
 		// default thumbnail border color
-		$syg_thumbnail_bordercolor = get_option('syg_thumbnail_bordercolor') != '' ? get_option('syg_thumbnail_bordercolor') : "#333333";
+		$this->setThumbBorderColor(get_option('syg_thumbnail_bordercolor') != '' ? get_option('syg_thumbnail_bordercolor') : "#333333");
 		// default thumbnail border radius
-		$syg_thumbnail_borderradius = get_option('syg_thumbnail_borderradius') != '' ? get_option('syg_thumbnail_borderradius') : "10";
+		$this->setThumbBorderRadius(get_option('syg_thumbnail_borderradius') != '' ? get_option('syg_thumbnail_borderradius') : "10");
 		// default thumbnail overlay size
-		$syg_thumbnail_overlaysize = get_option('syg_thumbnail_overlaysize') != '' ? get_option('syg_thumbnail_overlaysize') : "32";
+		$this->setThumbOverlaySize(get_option('syg_thumbnail_overlaysize') != '' ? get_option('syg_thumbnail_overlaysize') : "32");
 		// default overlay button
-		$syg_thumbnail_image = get_option('syg_thumbnail_image') != '' ? get_option('syg_thumbnail_image') : "1";
+		$this->setThumbImage(get_option('syg_thumbnail_image') != '' ? get_option('syg_thumbnail_image') : "1");
 		// default thumbnail border size
-		$syg_thumbnail_bordersize = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
+		$this->setThumbBorderSize(get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3");
 		// default thumbnail distance
-		$syg_thumbnail_distance = get_option('syg_thumbnail_distance') != '' ? get_option('syg_thumbnail_distance') : "10";
+		$this->setThumbDistance(get_option('syg_thumbnail_distance') != '' ? get_option('syg_thumbnail_distance') : "10");
 		// default thumbnail button opacity
-		$syg_thumbnail_buttonopacity = get_option('syg_thumbnail_buttonopacity') != '' ? get_option('syg_thumbnail_buttonopacity') : "0.50";
+		$this->setThumbButtonOpacity(get_option('syg_thumbnail_buttonopacity') != '' ? get_option('syg_thumbnail_buttonopacity') : "0.50");
+
 		// update calculated option
-		$perc_occ_w = $syg_thumbnail_overlaysize / ($syg_thumbnail_width + ($syg_thumbnail_bordersize*2));
-		$default_left = 50 - ($perc_occ_w / 2 * 100);
-		$perc_occ_h = $syg_thumbnail_overlaysize / ($syg_thumbnail_height + ($syg_thumbnail_bordersize*2));
-		$default_top = 50 - ($perc_occ_h / 2 * 100);
+		$this->setPercOccW($syg_thumbnail_overlaysize / ($this->thumbWidth + ($this->thumbBorderSize*2)));
+		$this->setDefaultLeft(50 - ($this->percOccW / 2 * 100));
+		$this->setPercOccH($syg_thumbnail_overlaysize / ($this->thumbHeight + ($this->thumbBorderSize*2)));
+		$this->setDefaultTop(50 - ($this->percOccH / 2 * 100));
+		
 		// default thumbnail top position
-		$syg_thumbnail_top = get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $default_top;
+		$this->setThumbTop(get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $this->defaultTop);
 		// default thumbnail left position
-		$syg_thumbnail_left = get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $default_left;
+		$this->setThumbLeft(get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $this->defaultLeft);
 		
 		/* thumbnail description */
 		// default description width
-		$syg_description_width = get_option('syg_description_width') != '' ? get_option('syg_description_width') : $syg_thumbnail_width;
+		$this->setDescWidth(get_option('syg_description_width') != '' ? get_option('syg_description_width') : $this->thumbWidth);
 		// default description font size
-		$syg_description_fontsize = get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12";
+		$this->setDescFontSize(get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12");
 		// default description font color
-		$syg_description_fontcolor = get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333";
+		$this->setDescFontColor(get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333");
 		// default show video description
-		$syg_description_show = get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false";
+		$this->setDescShow(get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false");
 		// default show video duration
-		$syg_description_showduration = get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false";
+		$this->setDescShowDuration(get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false");
 		// default show video tags
-		$syg_description_showtags = get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false";
+		$this->setDescShowTags(get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false");
 		// default show video ratings
-		$syg_description_showratings = get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false";
+		$this->setDescShowRatings(get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false");
 		// default show video categories
-		$syg_description_showcategories = get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false";
+		$this->setDescShowRatings(get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false");
 	}
 	
 	/**
@@ -144,8 +146,8 @@ class SygGallery {
 	/**
 	 * @return the $thumbheight
 	 */
-	public function getThumbheight() {
-		return $this->thumbheight;
+	public function getThumbHeight() {
+		return $this->thumbHeight;
 	}
 
 	/**
@@ -200,8 +202,8 @@ class SygGallery {
 	/**
 	 * @return the $thumbButtonopacity
 	 */
-	public function getThumbButtonopacity() {
-		return $this->thumbButtonopacity;
+	public function getThumbButtonOpacity() {
+		return $this->thumbButtonOpacity;
 	}
 
 	/**
@@ -347,8 +349,8 @@ class SygGallery {
 	/**
 	 * @param field_type $thumbheight
 	 */
-	public function setThumbheight($thumbheight) {
-		$this->thumbheight = $thumbheight;
+	public function setThumbHeight($thumbHeight) {
+		$this->thumbHeight = $thumbHeight;
 	}
 
 	/**
@@ -403,8 +405,8 @@ class SygGallery {
 	/**
 	 * @param field_type $thumbButtonopacity
 	 */
-	public function setThumbButtonopacity($thumbButtonopacity) {
-		$this->thumbButtonopacity = $thumbButtonopacity;
+	public function setThumbButtonOpacity($thumbButtonOpacity) {
+		$this->thumbButtonOpacity = $thumbButtonOpacity;
 	}
 
 	/**

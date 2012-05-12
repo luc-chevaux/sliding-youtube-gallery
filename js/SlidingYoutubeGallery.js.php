@@ -1,8 +1,11 @@
 <?php
+
 // set header type
 header('Content-type: text/javascript');
+
 // include zend loader
 $root = realpath(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))));
+
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6
 	require_once($root.'/wp-load.php');
@@ -10,6 +13,7 @@ if (file_exists($root.'/wp-load.php')) {
 	// Before 2.6
 	require_once($root.'/wp-config.php');
 }
+
 // include default values
 include('../DefaultValues.php');
 // include default function
@@ -23,8 +27,10 @@ if ($type == 'n') {
 } else {
 	$height = SygUtil::getWideHeight($width);
 }
+
 $width += 20;
 $height += 20;
+
 ?>
 
 jQuery.noConflict();

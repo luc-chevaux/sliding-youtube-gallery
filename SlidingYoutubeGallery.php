@@ -30,5 +30,5 @@ require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUt
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygYouTube.php');
 
 // run the plugin
-$syg = new SlidingYouTubeGalleryPlugin();
+$syg = SlidingYouTubeGalleryPlugin::getInstance();
 ?>
