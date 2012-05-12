@@ -13,8 +13,7 @@ if (file_exists($root.'/wp-load.php')) {
 
 // include default values
 include('./DefaultValues.php');
-// include default function
-include('./DefaultFunction.php');
+
 $id = $_GET['id'];
 
 $type = SygUtil::extractType($syg_youtube_videoformat);
