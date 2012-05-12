@@ -1,27 +1,103 @@
 <?php
 class SlidingYouTubeGalleryPlugin {
+
+	private $homeRoot;
+	private $pluginRoot;
+	private $jsRoot;
+	private $cssRoot;
+	private $imgRoot;
 	
 	public function __construct() {
+		// set the wp path
+		$this->homeRoot = home_url();
+		
 		// set the plugin path
-
-		/*
-		 * add action
-		*/
+		$this->pluginRoot = SygConstant::WP_PLUGIN_PATH;
+		
+		// set the css path
+		$this->cssRoot = SygConstant::WP_CSS_PATH;
+		
+		// set the js path
+		$this->jsRoot = SygConstant::WP_JS_PATH;
+		
+		// set the img path
+		$this->imgRoot = SygConstant::WP_IMG_PATH;
+		
+		// attach the admin menu to the hook
 		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
+		
+		// check for zend gdata interface on init
 		add_action('init', array($this, 'checkZendGData'));
 		
-		// define activation hook
-		register_activation_hook(__FILE__, array($this, 'slidingYoutubeGalleryActivation'));
+		// register activation hook
+		register_activation_hook(__FILE__, array($this, 'activation'));
 
 		// front end code block
 		if(!is_admin()) {
 			// set front end option
-			setSygFrontEndOption();
+			$this->setFrontEndOption();
 
-			// add shortcode
-			add_shortcode('syg_gallery', array($this, 'syg_getSlidingYoutubeGallery'));
-			add_shortcode('syg_page', array($this, 'syg_getVideoPage'));
+			// add shortcodes
+			add_shortcode('syg_gallery', array($this, 'getGallery'));
+			add_shortcode('syg_page', array($this, 'getVideoPage'));
 		}
+	}
+	
+	// getters and setters
+	
+	/**
+	 * @param string $jsRoot
+	 */
+	private function setJsRoot($jsRoot) {
+		$this->jsRoot = $jsRoot;
+	}
+	
+	/**
+	 * @param string $cssRoot
+	 */
+	private function setCssRoot($cssRoot) {
+		$this->cssRoot = $cssRoot;
+	}
+	
+	/**
+	 * @param string $imgRoot
+	 */
+	private function setImgRoot($imgRoot) {
+		$this->imgRoot = $imgRoot;
+	}
+	
+	/**
+	 * @return the $homeRoot
+	 */
+	public function getHomeRoot() {
+		return $this->homeRoot;
+	}
+	
+	/**
+	 * @return the $pluginRoot
+	 */
+	public function getPluginRoot() {
+		return $this->pluginRoot;
+	}
+	/**
+	 * @return the $jsRoot
+	 */
+	public function getJsRoot() {
+		return $this->jsRoot;
+	}
+	
+	/**
+	 * @return the $cssRoot
+	 */
+	public function getCssRoot() {
+		return $this->cssRoot;
+	}
+	
+	/**
+	 * @return the $imgRoot
+	 */
+	public function getImgRoot() {
+		return $this->imgRoot;
 	}
 
 	// activation function
@@ -32,24 +108,19 @@ class SlidingYouTubeGalleryPlugin {
 	}
 
 	private function setFrontEndOption() {
-
-		// define some dir alias
-		$homeRoot = home_url();
-		$cssPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
-		$jsPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
-
+		
 		// get the resources url
-		$css_url = $cssPath . 'SlidingYoutubeGallery.css.php';
-		$js_url =  $jsPath . 'SlidingYoutubeGallery.js.php';
+		$sygCssUrl = $this->cssRoot . 'SlidingYoutubeGallery.css.php';
+		$sygJsUrl =  $this->jsRoot . 'SlidingYoutubeGallery.js.php';
 
+		// external
 		$fancybox_js_url = $jsPath. '/fancybox/jquery.fancybox-1.3.4.pack.js';
 		$easing_js_url = $jsPath . '/fancybox/jquery.easing-1.3.pack.js';
 		$mousewheel_js_url = $jsPath . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
 		$fancybox_css_url = $jsPath . '/fancybox/jquery.fancybox-1.3.4.css';
 
 		// register styles
-		wp_register_style('sliding-youtube-gallery', $css_url, array(), SygConstant::SYG_VERSION, 'screen');
+		wp_register_style('sliding-youtube-gallery', $sygCssUrl, array(), SygConstant::SYG_VERSION, 'screen');
 		wp_enqueue_style('sliding-youtube-gallery');
 		wp_register_style('fancybox', $fancybox_css_url, array(), SygConstant::SYG_VERSION, 'screen');
 		wp_enqueue_style('fancybox');
@@ -58,7 +129,7 @@ class SlidingYouTubeGalleryPlugin {
 		wp_enqueue_script('jquery');
 
 		// load our own scripts
-		wp_register_script('sliding-youtube-gallery', $js_url, array(), SygConstant::SYG_VERSION, true);
+		wp_register_script('sliding-youtube-gallery', $sygJsUrl, array(), SygConstant::SYG_VERSION, true);
 		wp_enqueue_script('sliding-youtube-gallery');
 		wp_register_script('fancybox', $fancybox_js_url, array(), SygConstant::SYG_VERSION, true);
 		wp_enqueue_script('fancybox');
@@ -264,11 +335,9 @@ class SlidingYouTubeGalleryPlugin {
 			echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
 		}
 	
-		// define some dir alias
-		$homeRoot = home_url();
-		$cssPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
-		$jsPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$imgPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
 	
 		// define css to include
 		$cssAdminUrl = $cssPath . 'admin.css';

@@ -18,18 +18,16 @@
 @todo filter by tags
 */
 
-require_once 'SlidingYoutubeGalleryFunction.php';
-
+// include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
+// include engine
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygConstant.php');
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygDao.php');
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygGallery.php');
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUtil.php');
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygYouTube.php');
-
-include 'DefaultValues.php';
 
 // run the plugin
 $syg = new SlidingYouTubeGalleryPlugin();

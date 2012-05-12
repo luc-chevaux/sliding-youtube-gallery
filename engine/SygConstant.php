@@ -10,5 +10,11 @@ class SygConstant {
 	// methods
 	const SYG_METHOD_GALLERY = 'gallery';
 	const SYG_METHOD_PAGE = 'page';
+	
+	// paths 
+	const WP_PLUGIN_PATH = '/wp-content/plugins/sliding-youtube-gallery/';
+	const WP_CSS_PATH = '/wp-content/plugins/sliding-youtube-gallery/css/';
+	const WP_JS_PATH = '/wp-content/plugins/sliding-youtube-gallery/js/';
+	const WP_IMG_PATH = '/wp-content/plugins/sliding-youtube-gallery/img/';
 }
 ?>
