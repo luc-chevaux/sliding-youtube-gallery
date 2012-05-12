@@ -1,8 +1,8 @@
 <?php
 
 class SygUtil {
-	private static final $nAspectRatio = 0.75;
-	private static final $wAspectRatio = 0.5625;
+	private static $nAspectRatio = 0.75;
+	private static $wAspectRatio = 0.5625;
 	
 	/* function to mantain the aspect ratio normal
 	 * when width has been changed

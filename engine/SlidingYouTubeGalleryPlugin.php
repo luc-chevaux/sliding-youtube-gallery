@@ -7,21 +7,11 @@ class SlidingYouTubeGalleryPlugin {
 	private $cssRoot;
 	private $imgRoot;
 	
+	private $sygYt;
+	
 	public function __construct() {
-		// set the wp path
-		$this->homeRoot = home_url();
-		
-		// set the plugin path
-		$this->pluginRoot = SygConstant::WP_PLUGIN_PATH;
-		
-		// set the css path
-		$this->cssRoot = SygConstant::WP_CSS_PATH;
-		
-		// set the js path
-		$this->jsRoot = SygConstant::WP_JS_PATH;
-		
-		// set the img path
-		$this->imgRoot = SygConstant::WP_IMG_PATH;
+		// set environment
+		$this->setEnvironment();
 		
 		// attach the admin menu to the hook
 		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
@@ -45,6 +35,39 @@ class SlidingYouTubeGalleryPlugin {
 	
 	// getters and setters
 	
+	private function setEnvironment() {
+		// set home root
+		$this->homeRoot = home_url();
+		
+		// set the plugin path
+		$this->setPluginRoot(SygConstant::WP_PLUGIN_PATH);
+		
+		// set the css path
+		$this->setCssRoot(SygConstant::WP_CSS_PATH);
+		
+		// set the js path
+		$this->setJsRoot(SygConstant::WP_JS_PATH);
+		
+		// set the img path
+		$this->setImgRoot(SygConstant::WP_IMG_PATH);
+		
+		$this->sygYt = new SygYouTube();
+	}
+	
+	/**
+	 * @param field_type $homeRoot
+	 */
+	private function setHomeRoot($homeRoot) {
+		$this->homeRoot = $homeRoot;
+	}
+
+	/**
+	 * @param field_type $pluginRoot
+	 */
+	private function setPluginRoot($pluginRoot) {
+		$this->pluginRoot = $pluginRoot;
+	}
+
 	/**
 	 * @param string $jsRoot
 	 */
@@ -114,10 +137,10 @@ class SlidingYouTubeGalleryPlugin {
 		$sygJsUrl =  $this->jsRoot . 'SlidingYoutubeGallery.js.php';
 
 		// external
-		$fancybox_js_url = $jsPath. '/fancybox/jquery.fancybox-1.3.4.pack.js';
-		$easing_js_url = $jsPath . '/fancybox/jquery.easing-1.3.pack.js';
-		$mousewheel_js_url = $jsPath . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-		$fancybox_css_url = $jsPath . '/fancybox/jquery.fancybox-1.3.4.css';
+		$fancybox_js_url = $this->jsRoot . '/fancybox/jquery.fancybox-1.3.4.pack.js';
+		$easing_js_url = $this->jsRoot . '/fancybox/jquery.easing-1.3.pack.js';
+		$mousewheel_js_url = $this->jsRoot . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+		$fancybox_css_url = $this->jsRoot. '/fancybox/jquery.fancybox-1.3.4.css';
 
 		// register styles
 		wp_register_style('sliding-youtube-gallery', $sygCssUrl, array(), SygConstant::SYG_VERSION, 'screen');
@@ -143,7 +166,7 @@ class SlidingYouTubeGalleryPlugin {
 	/*
 	 * check for zend gdata interface
 	*/
-	private function checkZendGData () {
+	public function checkZendGData () {
 		if (defined('WP_ZEND_GDATA_INTERFACES') && constant('WP_ZEND_GDATA_INTERFACES')) {
 			$paths = explode(PATH_SEPARATOR, get_include_path());
 			foreach ($paths as $path) {
@@ -170,7 +193,7 @@ class SlidingYouTubeGalleryPlugin {
 		try {
 			Zend_Loader::loadClass('Zend_Gdata_YouTube');
 			$yt = new Zend_Gdata_YouTube();
-			$html = getSygVideoGallery();
+			$html = $this->getSygVideoGallery();
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
 		}
@@ -184,7 +207,7 @@ class SlidingYouTubeGalleryPlugin {
 		try {
 			Zend_Loader::loadClass('Zend_Gdata_YouTube');
 			$yt = new Zend_Gdata_YouTube();
-			$html = getSygVideoPage();
+			$html = $this->getSygVideoPage();
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
 		}
@@ -215,7 +238,7 @@ class SlidingYouTubeGalleryPlugin {
 		$videoFeed = $yt->getuserUploads ( $username );
 		$html = '<div id="syg_video_gallery"><div class="sc_menu">';
 		$html .= '<ul class="sc_menu">';
-		$html .= getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
+		$html .= $this->sygYt->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
 		$html .= '</ul>';
 		$html .= '</div></div>';
 	
@@ -232,7 +255,7 @@ class SlidingYouTubeGalleryPlugin {
 		$yt->setMajorProtocolVersion(2);
 		$videoFeed = $yt->getuserUploads($username);
 		$html  = '<div id="syg_video_page">';
-		$html .= getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
+		$html .= $this->sygYt->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
 		$html .= '</div>';
 	
 		return $html;

@@ -14,7 +14,7 @@ class SygYouTube {
 		$stop = get_option ( 'syg_youtube_maxvideocount' );
 		foreach ( $videoFeed as $videoEntry ) {
 			if ($method == SygConstant::SYG_METHOD_GALLERY) {
-				$html .= getGalleryVideoEntry ($videoEntry);
+				$html .= $this->getGalleryVideoEntry ($videoEntry);
 			} else if ($method == SygConstant::SYG_METHOD_PAGE) {
 				$html .= getPageVideoEntry ($videoEntry);
 			}
@@ -35,7 +35,7 @@ class SygYouTube {
 			}
 	
 			if ($videoFeed) {
-				$html .= getEntireFeed ( $videoFeed, $counter, $method );
+				$html .= $this->getEntireFeed ( $videoFeed, $counter, $method );
 			}
 		}
 		return $html;
