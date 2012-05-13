@@ -1,8 +1,8 @@
 <?php 
-// include zend loader
 
 // include zend loader
 $root = realpath(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))));
+
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6
 	require_once($root.'/wp-load.php');
@@ -11,8 +11,13 @@ if (file_exists($root.'/wp-load.php')) {
 	require_once($root.'/wp-config.php');
 }
 
-// include default values
-include('./DefaultValues.php');
+// include required wordpress object
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
+
+$syg = SlidingYouTubeGalleryPlugin::getInstance();
+$option = $syg->getOption();
+extract ($option);
 
 $id = $_GET['id'];
 
