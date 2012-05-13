@@ -14,10 +14,13 @@ if (file_exists($root.'/wp-load.php')) {
 	require_once($root.'/wp-config.php');
 }
 
-// include default values
-include('../DefaultValues.php');
-// include default function
-include('../DefaultFunction.php');
+// include required wordpress object
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
+
+$syg = SlidingYouTubeGalleryPlugin::getInstance();
+$option = $syg->getOption();
+extract ($option);
 
 $type = SygUtil::extractType($syg_youtube_videoformat);
 $width = SygUtil::extractWidth($syg_youtube_videoformat);

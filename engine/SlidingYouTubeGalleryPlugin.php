@@ -17,6 +17,8 @@ class SlidingYouTubeGalleryPlugin {
 	private $cssRoot;
 	private $imgRoot;
 	
+	private $syg = array();
+	
 	private $sygYt;
 	
 	public function __construct() {
@@ -64,6 +66,75 @@ class SlidingYouTubeGalleryPlugin {
 		$this->sygYt = new SygYouTube();
 	}
 	
+	public function getOption() {
+		/* YouTube default values */
+		$option = array();
+		// default video format
+		$option['syg_youtube_videoformat'] = get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n";
+		// default max video count
+		$option['syg_youtube_maxvideocount'] = get_option('syg_youtube_maxvideocount') != '' ? get_option('syg_youtube_maxvideocount') : "15";
+		
+		/* box default values*/
+		// default main box width
+		$option['syg_box_width'] = get_option('syg_box_width') != '' ? get_option('syg_box_width') : "550";
+		// default main box background color
+		$option['syg_box_background'] = get_option('syg_box_background') != '' ? get_option('syg_box_background') : "#efefef";
+		// default box radius pixel
+		$option['syg_box_radius'] = get_option('syg_box_radius') != '' ? get_option('syg_box_radius') : "10";
+		// default box padding pixel
+		$option['syg_box_padding'] = get_option('syg_box_padding') != '' ? get_option('syg_box_padding') : "10";
+		
+		/* thumbnail default values*/
+		// default thumbnail height
+		$option['syg_thumbnail_height'] = get_option('syg_thumbnail_height') != '' ? get_option('syg_thumbnail_height') : "100";
+		// default thumbnail width
+		$option['syg_thumbnail_width'] = get_option('syg_thumbnail_width') != '' ? get_option('syg_thumbnail_width') : "133";
+		// default thumbnail border size
+		$option['syg_thumbnail_bordersize'] = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
+		// default thumbnail border color
+		$option['syg_thumbnail_bordercolor'] = get_option('syg_thumbnail_bordercolor') != '' ? get_option('syg_thumbnail_bordercolor') : "#333333";
+		// default thumbnail border radius
+		$option['syg_thumbnail_borderradius'] = get_option('syg_thumbnail_borderradius') != '' ? get_option('syg_thumbnail_borderradius') : "10";
+		// default thumbnail overlay size
+		$option['syg_thumbnail_overlaysize'] = get_option('syg_thumbnail_overlaysize') != '' ? get_option('syg_thumbnail_overlaysize') : "32";
+		// default overlay button
+		$option['syg_thumbnail_image'] = get_option('syg_thumbnail_image') != '' ? get_option('syg_thumbnail_image') : "1";
+		// default thumbnail border size
+		$option['syg_thumbnail_bordersize'] = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
+		// default thumbnail distance
+		$option['syg_thumbnail_distance'] = get_option('syg_thumbnail_distance') != '' ? get_option('syg_thumbnail_distance') : "10";
+		// default thumbnail button opacity
+		$option['syg_thumbnail_buttonopacity'] = get_option('syg_thumbnail_buttonopacity') != '' ? get_option('syg_thumbnail_buttonopacity') : "0.50";
+		// update calculated option
+		$option['perc_occ_w'] = $option['syg_thumbnail_overlaysize'] / ($option['syg_thumbnail_width'] + ($option['syg_thumbnail_bordersize']*2));
+		$option['default_left'] = 50 - ($perc_occ_w / 2 * 100);
+		$option['perc_occ_h'] = $option['syg_thumbnail_overlaysize'] / ($option['syg_thumbnail_height'] + ($option['syg_thumbnail_bordersize']*2));
+		$option['default_top'] = 50 - ($perc_occ_h / 2 * 100);
+		// default thumbnail top position
+		$option['syg_thumbnail_top'] = get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $option['default_top'];
+		// default thumbnail left position
+		$option['syg_thumbnail_left'] = get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $option['default_left'];
+		
+		/* thumbnail description */
+		// default description width
+		$option['syg_description_width'] = get_option('syg_description_width') != '' ? get_option('syg_description_width') : $option['syg_thumbnail_width'];
+		// default description font size
+		$option['syg_description_fontsize'] = get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12";
+		// default description font color
+		$option['syg_description_fontcolor'] = get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333";
+		// default show video description
+		$option['syg_description_show'] = get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false";
+		// default show video duration
+		$option['syg_description_showduration'] = get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false";
+		// default show video tags
+		$option['syg_description_showtags'] = get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false";
+		// default show video ratings
+		$option['syg_description_showratings'] = get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false";
+		// default show video categories
+		$option['syg_description_showcategories'] = get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false";
+		
+		return $option;
+	}
 	/**
 	 * @param field_type $homeRoot
 	 */
@@ -282,54 +353,52 @@ class SlidingYouTubeGalleryPlugin {
 	 * do the option inventory
 	*/
 	private function optionInventory() {
-		$syg = array();
-		$syg['yt_user']['opt'] = 'syg_youtube_username';
-		$syg['yt_videoformat']['opt'] = 'syg_youtube_videoformat';
-		$syg['yt_maxvideocount']['opt'] = 'syg_youtube_maxvideocount';
-		$syg['th_height']['opt'] = 'syg_thumbnail_height';
-		$syg['th_width']['opt'] = 'syg_thumbnail_width';
-		$syg['th_bordersize']['opt'] = 'syg_thumbnail_bordersize';
-		$syg['th_bordercolor']['opt'] = 'syg_thumbnail_bordercolor';
-		$syg['th_borderradius']['opt'] = 'syg_thumbnail_borderradius';
-		$syg['th_distance']['opt'] = 'syg_thumbnail_distance';
-		$syg['th_overlaysize']['opt'] = 'syg_thumbnail_overlaysize';
-		$syg['th_image']['opt'] = 'syg_thumbnail_image';
-		$syg['th_top']['opt'] = 'syg_thumbnail_top';
-		$syg['th_left']['opt'] = 'syg_thumbnail_left';
-		$syg['th_buttonopacity']['opt'] = 'syg_thumbnail_buttonopacity';
-		$syg['box_width']['opt'] = 'syg_box_width';
-		$syg['box_background']['opt'] = 'syg_box_background';
-		$syg['box_radius']['opt'] = 'syg_box_radius';
-		$syg['box_padding']['opt'] = 'syg_box_padding';
-		$syg['desc_width']['opt'] = 'syg_description_width';
-		$syg['desc_fontcolor']['opt'] = 'syg_description_fontcolor';
-		$syg['desc_fontsize']['opt'] = 'syg_description_fontsize';
-		$syg['desc_showdescription']['opt'] = 'syg_description_show';
-		$syg['desc_showduration']['opt'] = 'syg_description_showduration';
-		$syg['desc_showtags']['opt'] = 'syg_description_showtags';
-		$syg['desc_showratings']['opt'] = 'syg_description_showratings';
-		$syg['desc_showcat']['opt'] = 'syg_description_showcategories';
+		
+		$this->syg['yt_user']['opt'] = 'syg_youtube_username';
+		$this->$syg['yt_videoformat']['opt'] = 'syg_youtube_videoformat';
+		$this->$syg['yt_maxvideocount']['opt'] = 'syg_youtube_maxvideocount';
+		$this->$syg['th_height']['opt'] = 'syg_thumbnail_height';
+		$this->$syg['th_width']['opt'] = 'syg_thumbnail_width';
+		$this->$syg['th_bordersize']['opt'] = 'syg_thumbnail_bordersize';
+		$this->$syg['th_bordercolor']['opt'] = 'syg_thumbnail_bordercolor';
+		$this->$syg['th_borderradius']['opt'] = 'syg_thumbnail_borderradius';
+		$this->$syg['th_distance']['opt'] = 'syg_thumbnail_distance';
+		$this->$syg['th_overlaysize']['opt'] = 'syg_thumbnail_overlaysize';
+		$this->$syg['th_image']['opt'] = 'syg_thumbnail_image';
+		$this->$syg['th_top']['opt'] = 'syg_thumbnail_top';
+		$this->$syg['th_left']['opt'] = 'syg_thumbnail_left';
+		$this->$syg['th_buttonopacity']['opt'] = 'syg_thumbnail_buttonopacity';
+		$this->$syg['box_width']['opt'] = 'syg_box_width';
+		$this->$syg['box_background']['opt'] = 'syg_box_background';
+		$this->$syg['box_radius']['opt'] = 'syg_box_radius';
+		$this->$syg['box_padding']['opt'] = 'syg_box_padding';
+		$this->$syg['desc_width']['opt'] = 'syg_description_width';
+		$this->$syg['desc_fontcolor']['opt'] = 'syg_description_fontcolor';
+		$this->$syg['desc_fontsize']['opt'] = 'syg_description_fontsize';
+		$this->$syg['desc_showdescription']['opt'] = 'syg_description_show';
+		$this->$syg['desc_showduration']['opt'] = 'syg_description_showduration';
+		$this->$syg['desc_showtags']['opt'] = 'syg_description_showtags';
+		$this->$syg['desc_showratings']['opt'] = 'syg_description_showratings';
+		$this->$syg['desc_showcat']['opt'] = 'syg_description_showcategories';
 	
-		$syg['hiddenfield']['opt'] = 'syg_submit_hidden';
-		return $syg;
+		$this->$syg['hiddenfield']['opt'] = 'syg_submit_hidden';
 	}
 	
 	/*
 	 * function used to get option value
 	*/
-	function getOptionValues($syg) {
-		foreach ($syg as $key => $value) {
-			$syg[$key]['val'] = get_option($value['opt']);
+	private function getOptionValues($syg) {
+		foreach ($this->syg as $key => $value) {
+			$this->syg[$key]['val'] = get_option($value['opt']);
 		}
-		return $syg;
 	}
 	
 	/*
 	 * function used to get posted value
 	*/
-	function getPostedValues($syg) {
-		foreach ($syg as $key => $value) {
-			$syg[$key]['val'] = $_POST[$value['opt']];
+	private function getPostedValues($syg) {
+		foreach ($this->syg as $key => $value) {
+			$this->syg[$key]['val'] = $_POST[$value['opt']];
 		}
 		return $syg;
 	}
