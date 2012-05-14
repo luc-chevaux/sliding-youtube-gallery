@@ -1,7 +1,5 @@
 <?php
 
-global $wpdb;
-
 class SygDao {
 	private $wpDatabaseLink;
 	
@@ -10,6 +8,7 @@ class SygDao {
 	
 	// default constructor
 	public function __construct() {
+		global $wpdb;
 		$this->wpDatabaseLink = $wpdb;
 	}
 	
@@ -30,7 +29,7 @@ class SygDao {
 	
 	// get all syg gallery from database
 	function getAllSyg($output_type = 'OBJECT') {
-		return $wpdb->get_results($this->sqlGetAllGalleries, $output_type);
+		return $this->wpDatabaseLink->get_results($this->sqlGetAllGalleries, $output_type);
 	}
 
 	// get syg gallery by id from database
