@@ -62,7 +62,7 @@ class SlidingYouTubeGalleryPlugin {
 		
 		// set the img path
 		$this->setImgRoot(SygConstant::WP_IMG_PATH);
-		
+				
 		$this->sygYt = new SygYouTube();
 	}
 	
@@ -270,7 +270,6 @@ class SlidingYouTubeGalleryPlugin {
 
 	// sliding youtube gallery
 	function getGallery() {
-		require_once 'Zend/Loader.php'; // the Zend dir must be in your include_path
 		try {
 			Zend_Loader::loadClass('Zend_Gdata_YouTube');
 			$yt = new Zend_Gdata_YouTube();
@@ -284,7 +283,6 @@ class SlidingYouTubeGalleryPlugin {
 
 	// sliding video page
 	function getVideoPage() {
-		require_once 'Zend/Loader.php'; // the Zend dir must be in your include_path
 		try {
 			Zend_Loader::loadClass('Zend_Gdata_YouTube');
 			$yt = new Zend_Gdata_YouTube();
@@ -476,6 +474,9 @@ class SlidingYouTubeGalleryPlugin {
 		echo "<span>Gallery ID</span>";
 		echo "</th>";
 		echo "<th>";
+		echo "<span>Profile picture</span>";
+		echo "</th>";
+		echo "<th>";
 		echo "<span>Gallery User</span>";
 		echo "</th>";
 		echo "<th>";
@@ -487,6 +488,10 @@ class SlidingYouTubeGalleryPlugin {
 			echo "<tr>";
 			echo "<td>";
 			echo $gallery->id; 
+			echo "</td>";
+			echo "<td>";
+			$user = $this->sygYt->getUserProfile($gallery->syg_youtube_username);
+			echo $user->getThumbnail()->getUrl();
 			echo "</td>";
 			echo "<td>";
 			echo $gallery->syg_youtube_username;
