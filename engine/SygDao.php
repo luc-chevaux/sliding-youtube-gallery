@@ -13,28 +13,28 @@ class SygDao {
 	}
 	
 	// add a syg gallery to database
-	function addSyg() {
+	public function addSyg() {
 		
 	}
 
 	// update a syg gallery to database	
-	function updateSyg() {
+	public function updateSyg() {
 	
 	}
 	
 	// delete a syg gallery to database	
-	function deleteSyg() {
+	public function deleteSyg() {
 	
 	}
 	
 	// get all syg gallery from database
-	function getAllSyg($output_type = 'OBJECT') {
+	public function getAllSyg($output_type = 'OBJECT') {
 		return $this->wpDatabaseLink->get_results($this->sqlGetAllGalleries, $output_type);
 	}
 
 	// get syg gallery by id from database
-	function getSygById($id) {
-		
+	public function getSygById($id, $output_type = 'OBJECT') {
+		//return $this->wpDatabaseLink->
 	}
 }
 ?>

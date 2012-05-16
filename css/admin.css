@@ -1,3 +1,34 @@
+@font-face {
+    font-family: 'HandelGothicBTRegular';
+    src: url('../font/handel_gothic-webfont.eot');
+    src: url('../font/handel_gothic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/handel_gothic-webfont.woff') format('woff'),
+         url('../font/handel_gothic-webfont.ttf') format('truetype'),
+         url('../font/handel_gothic-webfont.svg#HandelGothicBTRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HandelGothicDLight';
+    src: url('../font/handel_gothic_light-webfont.eot');
+    src: url('../font/handel_gothic_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/handel_gothic_light-webfont.woff') format('woff'),
+         url('../font/handel_gothic_light-webfont.ttf') format('truetype'),
+         url('../font/handel_gothic_light-webfont.svg#HandelGothicDRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.webengTitle {
+	font-family: HandelGothicBTRegular !important;
+}
+
+.webengText {
+	font-family: HandelGothicDLight !important;
+	font-size: 16px;
+}
+
 fieldset {
 	border: 1px #efefef solid;
 	margin-bottom: 10px;
@@ -47,4 +78,39 @@ label {
     background: url("../images/select.png") repeat scroll center center transparent;
     height: 15px;
     width: 15px;
+}
+
+/* table of galleries */ 
+
+#galleries_table {
+	border: 1px #ccc solid;
+	width: 100%;
+	border-radius: 8px;
+}
+
+#galleries_table th:FIRST-CHILD {
+	background: #ccc;
+	color: #333;
+	border-radius: 6px 0px 0px 0px;
+}
+
+#galleries_table th {
+	background: #ccc;
+	color: #333;
+	font-size: 12px;
+	height: 30px;
+}
+
+#galleries_table th:LAST-CHILD {
+	background: #ccc;
+	color: #333;
+	border-radius: 0px 6px 0px 0px;
+}
+
+#galleries_table th span {
+	padding: 5px;
+}
+
+#galleries_table tr {
+	height: 26px;
 }

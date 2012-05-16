@@ -455,29 +455,33 @@ class SlidingYouTubeGalleryPlugin {
 	
 		// begin admin form section
 		echo '<div class="wrap">';
-		echo '<div id="icon-options-general" class="icon32"><br/></div><h2>Sliding Youtube Gallery | by <a href="http://blog.webeng.it" target="_new">WebEng</a></h2>';
+		echo '<div id="icon-options-general" class="icon32"><br/></div><h2 class="webengTitle">Sliding Youtube Gallery | by <a href="http://blog.webeng.it" target="_new">WebEng</a></h2>';
 		echo '<hr/>';
 	
+		echo '<p class="webengText">';
 		echo SygConstant::BE_WELCOME_MESSAGE;
-	
+		echo '</p>';
+		
+		echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE;
+		
 		$dao = new SygDao();
 		$galleries = $dao->getAllSyg(); 
 		
 		// begin gallery list section
 		echo '<h3>Manage your gallery</h3>';
-		echo "<table>";
+		echo "<table cellspacing=\"0\" id=\"galleries_table\">";
 	
+		echo "<tr>";
 		echo "<th>";
-		echo "<td>";
-		echo "Gallery ID";
-		echo "</td>";
-		echo "<td>";
-		echo "Gallery User";
-		echo "</td>";
-		echo "<td>";
-		echo "Action";
-		echo "</td>";
+		echo "<span>Gallery ID</span>";
 		echo "</th>";
+		echo "<th>";
+		echo "<span>Gallery User</span>";
+		echo "</th>";
+		echo "<th>";
+		echo "<span>Action</span>";
+		echo "</th>";
+		echo "</tr>";
 	
 		foreach ($galleries as $gallery) {
 			echo "<tr>";
@@ -493,6 +497,9 @@ class SlidingYouTubeGalleryPlugin {
 			echo "</tr>";
 		}	
 		echo "</table>";
+		
+		echo '<br/>';
+		echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Add new Gallery"/>';
 		
 		echo '<p>Here you can set the SlidingYoutubeGallery default behavior.</p>';
 		echo '<form name="form1" method="post" action="">';
