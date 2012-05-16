@@ -4,9 +4,14 @@ global $wpdb;
 
 class SygYouTube {
 	private $wpDatabaseLink;
-		
+	private $yt;
+	
 	// default constructor
 	public function __construct() {
+		/*require_once 'Zend/Loader.php'; // the Zend dir must be in your include_path
+		Zend_Loader::loadClass('Zend_Gdata_YouTube');*/
+		$this->yt = new Zend_Gdata_YouTube();
+		
 		$this->wpDatabaseLink = $wpdb;
 	}
 	
@@ -149,6 +154,12 @@ class SygYouTube {
 		$html .= "</li>";
 	
 		return $html;
+	}
+	
+	function getUserProfile($userName) {
+		$this->yt->setMajorProtocolVersion(2);
+		$userProfile = $this->yt->getUserProfile($userName);
+		return $userProfile;
 	}
 }
 ?>
