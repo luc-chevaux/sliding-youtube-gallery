@@ -18,6 +18,9 @@
 @todo filter by tags
 */
 
+$lib_path = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/lib';
+set_include_path (get_include_path() . PATH_SEPARATOR . $lib_path);
+
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 

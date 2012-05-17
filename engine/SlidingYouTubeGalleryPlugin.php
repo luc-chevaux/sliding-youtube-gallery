@@ -1,4 +1,7 @@
 <?php
+
+include_once 'Zend/Loader.php';
+
 class SlidingYouTubeGalleryPlugin {
 
 	private static $instance = null;
