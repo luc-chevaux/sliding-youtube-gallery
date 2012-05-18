@@ -84,7 +84,7 @@ label {
 
 #galleries_table {
 	border: 1px #ccc solid;
-	width: 100%;
+	width: 500px;
 	border-radius: 8px;
 }
 
@@ -113,4 +113,28 @@ label {
 
 #galleries_table tr {
 	height: 26px;
+}
+
+#galleries_table td {
+	text-align: center;
+}
+
+th.id {
+	width: 50px;
+}
+
+th.user_pic {
+	width: 100px;
+}
+
+img.user_pic {
+	height: 50px;
+}
+
+th.user {
+	width: 200px;
+}
+
+th.action {
+	width: 200px;
 }

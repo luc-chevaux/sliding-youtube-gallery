@@ -22,7 +22,7 @@ class SlidingYouTubeGalleryPlugin {
 	
 	private $syg = array();
 	
-	private $sygYt;
+	private $sygYouTube;
 	
 	public function __construct() {
 		// set environment
@@ -65,8 +65,9 @@ class SlidingYouTubeGalleryPlugin {
 		
 		// set the img path
 		$this->setImgRoot(SygConstant::WP_IMG_PATH);
-				
-		$this->sygYt = new SygYouTube();
+		
+		// set local youtube object
+		$this->sygYouTube = new SygYouTube();
 	}
 	
 	public function getOption() {
@@ -274,8 +275,6 @@ class SlidingYouTubeGalleryPlugin {
 	// sliding youtube gallery
 	function getGallery() {
 		try {
-			Zend_Loader::loadClass('Zend_Gdata_YouTube');
-			$yt = new Zend_Gdata_YouTube();
 			$html = $this->getSygVideoGallery();
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
@@ -287,8 +286,6 @@ class SlidingYouTubeGalleryPlugin {
 	// sliding video page
 	function getVideoPage() {
 		try {
-			Zend_Loader::loadClass('Zend_Gdata_YouTube');
-			$yt = new Zend_Gdata_YouTube();
 			$html = $this->getSygVideoPage();
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
@@ -320,7 +317,7 @@ class SlidingYouTubeGalleryPlugin {
 		$videoFeed = $yt->getuserUploads ( $username );
 		$html = '<div id="syg_video_gallery"><div class="sc_menu">';
 		$html .= '<ul class="sc_menu">';
-		$html .= $this->sygYt->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
+		$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
 		$html .= '</ul>';
 		$html .= '</div></div>';
 	
@@ -337,7 +334,7 @@ class SlidingYouTubeGalleryPlugin {
 		$yt->setMajorProtocolVersion(2);
 		$videoFeed = $yt->getuserUploads($username);
 		$html  = '<div id="syg_video_page">';
-		$html .= $this->sygYt->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
+		$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
 		$html .= '</div>';
 	
 		return $html;
@@ -472,20 +469,20 @@ class SlidingYouTubeGalleryPlugin {
 		echo '<h3>Manage your gallery</h3>';
 		echo "<table cellspacing=\"0\" id=\"galleries_table\">";
 	
-		echo "<tr>";
-		echo "<th>";
-		echo "<span>Gallery ID</span>";
-		echo "</th>";
-		echo "<th>";
-		echo "<span>Profile picture</span>";
-		echo "</th>";
-		echo "<th>";
-		echo "<span>Gallery User</span>";
-		echo "</th>";
-		echo "<th>";
-		echo "<span>Action</span>";
-		echo "</th>";
-		echo "</tr>";
+		echo '<tr>';
+		echo '<th class="id">';
+		echo '<span>ID</span>';
+		echo '</th>';
+		echo '<th class="user_pic">';
+		echo '<span>Avatar</span>';
+		echo '</th>';
+		echo '<th class="user">';
+		echo '<span>User</span>';
+		echo '</th>';
+		echo '<th class="action">';
+		echo '<span>Action</span>';
+		echo '</th>';
+		echo '</tr>';
 	
 		foreach ($galleries as $gallery) {
 			echo "<tr>";
@@ -493,14 +490,14 @@ class SlidingYouTubeGalleryPlugin {
 			echo $gallery->id; 
 			echo "</td>";
 			echo "<td>";
-			$user = $this->sygYt->getUserProfile($gallery->syg_youtube_username);
-			echo $user->getThumbnail()->getUrl();
+			$user = $this->sygYouTube->getUserProfile($gallery->syg_youtube_username);
+			echo '<img src="'.$user->getThumbnail()->getUrl().'" class="user_pic"></img>';
 			echo "</td>";
 			echo "<td>";
 			echo $gallery->syg_youtube_username;
 			echo "</td>";
 			echo "<td>";
-			
+			echo 'View | Edit | Delete';
 			echo "</td>";
 			echo "</tr>";
 		}	
