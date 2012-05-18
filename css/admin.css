@@ -20,6 +20,16 @@
     font-style: normal;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'HandelGothicBTRegular';
+}
+
+h3 {
+	font-size: 18px;
+	font-weight: normal;
+	color: #464646;
+}
+
 .webengTitle {
 	font-family: HandelGothicBTRegular !important;
 }
@@ -27,6 +37,14 @@
 .webengText {
 	font-family: HandelGothicDLight !important;
 	font-size: 16px;
+}
+
+.webengRed {
+	color: #bc0f11;
+}
+
+.noDecoration {
+	text-decoration: none;
 }
 
 fieldset {
@@ -39,6 +57,8 @@ fieldset {
 
 legend {
 	font-size: 14px;
+	font-weight: lighter;
+	font-family: 'HandelGothicDLight';
 	padding: 3px;
 }
 
@@ -84,7 +104,7 @@ label {
 
 #galleries_table {
 	border: 1px #ccc solid;
-	width: 500px;
+	width: 700px;
 	border-radius: 8px;
 }
 
@@ -117,6 +137,7 @@ label {
 
 #galleries_table td {
 	text-align: center;
+	padding: 10px;
 }
 
 th.id {
@@ -136,5 +157,9 @@ th.user {
 }
 
 th.action {
+	width: 200px;
+}
+
+th.type {
 	width: 200px;
 }

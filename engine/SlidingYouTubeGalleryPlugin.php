@@ -453,7 +453,7 @@ class SlidingYouTubeGalleryPlugin {
 	
 		// begin admin form section
 		echo '<div class="wrap">';
-		echo '<div id="icon-options-general" class="icon32"><br/></div><h2 class="webengTitle">Sliding Youtube Gallery | by <a href="http://blog.webeng.it" target="_new">WebEng</a></h2>';
+		echo '<div id="icon-options-general" class="icon32"><br/></div><h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2>';
 		echo '<hr/>';
 	
 		echo '<p class="webengText">';
@@ -477,7 +477,10 @@ class SlidingYouTubeGalleryPlugin {
 		echo '<span>Avatar</span>';
 		echo '</th>';
 		echo '<th class="user">';
-		echo '<span>User</span>';
+		echo '<span>Details</span>';
+		echo '</th>';
+		echo '<th class="type">';
+		echo '<span>Type</span>';
 		echo '</th>';
 		echo '<th class="action">';
 		echo '<span>Action</span>';
@@ -497,17 +500,45 @@ class SlidingYouTubeGalleryPlugin {
 			echo $gallery->syg_youtube_username;
 			echo "</td>";
 			echo "<td>";
-			echo 'View | Edit | Delete';
+			echo "User Channel";
+			echo "</td>";
+			echo "<td>";
+			echo '<a href="#" onclick="javascript: Preview('.$gallery->id.');">Preview</a> | <a href="?page=syg-administration-panel&id='.$gallery->id.'">Edit</a> | <a href="#" onclick="javascript: Delete('.$gallery->id.');">Delete</a>';
 			echo "</td>";
 			echo "</tr>";
-		}	
-		echo "</table>";
+		}
+		echo '<tr>';
+		echo '<th class="id">';
+		echo '<span>ID</span>';
+		echo '</th>';
+		echo '<th class="user_pic">';
+		echo '<span>Avatar</span>';
+		echo '</th>';
+		echo '<th class="user">';
+		echo '<span>Details</span>';
+		echo '</th>';
+		echo '<th class="type">';
+		echo '<span>Type</span>';
+		echo '</th>';
+		echo '<th class="action">';
+		echo '<span>Action</span>';
+		echo '</th>';
+		echo '</tr>';
+		echo "</table>";		
 		
 		echo '<br/>';
 		echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Add new Gallery"/>';
 		
+		echo '<h3>General Settings</h3>';
 		echo '<p>Here you can set the SlidingYoutubeGallery default behavior.</p>';
+		
 		echo '<form name="form1" method="post" action="">';
+		echo '<fieldset>';
+		echo '<legend><strong>YouTube settings</strong></legend>';
+		
+		echo '</fieldset>';
+		echo '</form>';
+		/*echo '<form name="form1" method="post" action="">';
 		echo '<input type="hidden" name="'.$syg['hiddenfield']['opt'].'" value="Y">';
 	
 		// youtube settings
@@ -631,7 +662,7 @@ class SlidingYouTubeGalleryPlugin {
 	
 		echo '<hr/>';
 		echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>';
-		echo '</form>';
+		echo '</form>';*/
 		echo '</div>';
 	}
 	
