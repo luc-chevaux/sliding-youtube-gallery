@@ -1,21 +1,21 @@
 @font-face {
     font-family: 'HandelGothicBTRegular';
-    src: url('../font/handel_gothic-webfont.eot');
-    src: url('../font/handel_gothic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/handel_gothic-webfont.woff') format('woff'),
-         url('../font/handel_gothic-webfont.ttf') format('truetype'),
-         url('../font/handel_gothic-webfont.svg#HandelGothicBTRegular') format('svg');
+    src: url('./font/handel_gothic-webfont.eot');
+    src: url('./font/handel_gothic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/handel_gothic-webfont.woff') format('woff'),
+         url('./font/handel_gothic-webfont.ttf') format('truetype'),
+         url('./font/handel_gothic-webfont.svg#HandelGothicBTRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'HandelGothicDLight';
-    src: url('../font/handel_gothic_light-webfont.eot');
-    src: url('../font/handel_gothic_light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/handel_gothic_light-webfont.woff') format('woff'),
-         url('../font/handel_gothic_light-webfont.ttf') format('truetype'),
-         url('../font/handel_gothic_light-webfont.svg#HandelGothicDRegular') format('svg');
+    src: url('./font/handel_gothic_light-webfont.eot');
+    src: url('./font/handel_gothic_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('./font/handel_gothic_light-webfont.woff') format('woff'),
+         url('./font/handel_gothic_light-webfont.ttf') format('truetype'),
+         url('./font/handel_gothic_light-webfont.svg#HandelGothicDRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
