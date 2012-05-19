@@ -156,10 +156,22 @@ class SygYouTube {
 		return $html;
 	}
 	
-	function getUserProfile($userName) {
+	/*
+	 * return youtube user profile
+	 */
+	function getUserProfile($username) {
 		$this->yt->setMajorProtocolVersion(2);
-		$userProfile = $this->yt->getUserProfile($userName);
+		$userProfile = $this->yt->getUserProfile($username);
 		return $userProfile;
+	}
+	
+	/*
+	 * return user uploads
+	*/
+	function getUserUploads($username) {
+		$this->yt->setMajorProtocolVersion(2);
+		$videoFeed = $yt->getuserUploads($username);
+		return $videoFeed;
 	}
 }
 ?>

@@ -3,6 +3,7 @@ class SygGallery {
 	// object attributes
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
+	private $ytUsername;
 	private $boxWidth;
 	private $boxBackground;
 	private $boxRadius;
@@ -30,6 +31,7 @@ class SygGallery {
 	private $descShowTags;
 	private $descShowRatings;
 	private $descShowCategories;
+	private $id;
 	
 	// default constructor
 	public function __construct() {
@@ -113,6 +115,13 @@ class SygGallery {
 	 */
 	public function getYtMaxVideoCount() {
 		return $this->ytMaxVideoCount;
+	}
+
+	/**
+	 * @return the $ytUsername
+	 */
+	public function getYtUsername() {
+		return $this->ytUsername;
 	}
 
 	/**
@@ -305,6 +314,20 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $id
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @param field_type $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
 	 * @param field_type $ytVideoFormat
 	 */
 	public function setYtVideoFormat($ytVideoFormat) {
@@ -318,6 +341,13 @@ class SygGallery {
 		$this->ytMaxVideoCount = $ytMaxVideoCount;
 	}
 
+	/**
+	 * @param field_type $ytUsername
+	 */
+	public function setYtUsername($ytUsername) {
+		$this->ytUsername = $ytUsername;
+	}
+	
 	/**
 	 * @param field_type $boxWidth
 	 */
@@ -506,7 +536,5 @@ class SygGallery {
 	public function setDescShowCategories($descShowCategories) {
 		$this->descShowCategories = $descShowCategories;
 	}
-
-	
 }
 ?>

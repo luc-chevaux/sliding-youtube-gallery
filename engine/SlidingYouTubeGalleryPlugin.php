@@ -1,8 +1,9 @@
 <?php
 
 include_once 'Zend/Loader.php';
+if (!class_exists('SanityPluginFramework')) require_once($plugin_path.'Sanity/sanity.php');
 
-class SlidingYouTubeGalleryPlugin {
+class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 	private static $instance = null;
 	
@@ -23,8 +24,11 @@ class SlidingYouTubeGalleryPlugin {
 	private $syg = array();
 	
 	private $sygYouTube;
+	private $sygDao;
 	
 	public function __construct() {
+		parent::__construct(__FILE__);
+		
 		// set environment
 		$this->setEnvironment();
 		
@@ -66,8 +70,9 @@ class SlidingYouTubeGalleryPlugin {
 		// set the img path
 		$this->setImgRoot(SygConstant::WP_IMG_PATH);
 		
-		// set local youtube object
+		// set local object
 		$this->sygYouTube = new SygYouTube();
+		$this->sygDao = new SygDao();
 	}
 	
 	public function getOption() {
@@ -275,7 +280,13 @@ class SlidingYouTubeGalleryPlugin {
 	// sliding youtube gallery
 	function getGallery() {
 		try {
-			$html = $this->getSygVideoGallery();
+			$username = get_option ( 'syg_youtube_username' );
+			$videoFeed = $this->sygYouTube->getuserUploads ( $username );
+			$html = '<div id="syg_video_gallery"><div class="sc_menu">';
+			$html .= '<ul class="sc_menu">';
+			$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
+			$html .= '</ul>';
+			$html .= '</div></div>';
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
 		}
@@ -286,7 +297,12 @@ class SlidingYouTubeGalleryPlugin {
 	// sliding video page
 	function getVideoPage() {
 		try {
-			$html = $this->getSygVideoPage();
+			// variables for the field and option names
+			$username = get_option('syg_youtube_username');
+			$videoFeed =  $this->sygYouTube->getuserUploads($username);
+			$html  = '<div id="syg_video_page">';
+			$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
+			$html .= '</div>';
 		} catch (Exception $ex) {
 			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
 		}
@@ -304,40 +320,6 @@ class SlidingYouTubeGalleryPlugin {
 	function syg_display_gallery() {
 		$html = $this->getGallery();
 		echo $html;
-	}
-	
-	/*
-	 * return html for a sliding video gallery
-	*/
-	function getSygVideoGallery() {
-		// variables for the field and option names
-		$username = get_option ( 'syg_youtube_username' );
-		$yt = new Zend_Gdata_YouTube ();
-		$yt->setMajorProtocolVersion ( 2 );
-		$videoFeed = $yt->getuserUploads ( $username );
-		$html = '<div id="syg_video_gallery"><div class="sc_menu">';
-		$html .= '<ul class="sc_menu">';
-		$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
-		$html .= '</ul>';
-		$html .= '</div></div>';
-	
-		return $html;
-	}
-	
-	/*
-	 * return html for a video page
-	*/
-	function getSygVideoPage() {
-		// variables for the field and option names
-		$username = get_option('syg_youtube_username');
-		$yt = new Zend_Gdata_YouTube();
-		$yt->setMajorProtocolVersion(2);
-		$videoFeed = $yt->getuserUploads($username);
-		$html  = '<div id="syg_video_page">';
-		$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
-		$html .= '</div>';
-	
-		return $html;
 	}
 	
 	/*
@@ -430,240 +412,21 @@ class SlidingYouTubeGalleryPlugin {
 	 * function used to generate admin form
 	*/
 	private function generateSygAdminForm($syg, $updated = false) {
-		// check if plugin has updated something
-		if ($updated) {
-			echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
-		}
-	
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$imgPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
-	
+		$this->data['updated'] = $updated;
+		
 		// define css to include
-		$cssAdminUrl = $cssPath . 'admin.css';
-		$cssColorPicker = $cssPath . 'colorpicker.css';
-	
-		// css inclusion
-		echo '<style type="text/css">';
-		echo '@import url('.$cssAdminUrl.');';
-		echo '</style>';
-		echo '<style type="text/css">';
-		echo '@import url('.$cssColorPicker.');';
-		echo '</style>';
-	
-		// begin admin form section
-		echo '<div class="wrap">';
-		echo '<div id="icon-options-general" class="icon32"><br/></div><h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2>';
-		echo '<hr/>';
-	
-		echo '<p class="webengText">';
-		echo SygConstant::BE_WELCOME_MESSAGE;
-		echo '</p>';
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
+		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
 		
-		echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE;
-		
-		$dao = new SygDao();
-		$galleries = $dao->getAllSyg(); 
-		
-		// begin gallery list section
-		echo '<h3>Manage your gallery</h3>';
-		echo "<table cellspacing=\"0\" id=\"galleries_table\">";
-	
-		echo '<tr>';
-		echo '<th class="id">';
-		echo '<span>ID</span>';
-		echo '</th>';
-		echo '<th class="user_pic">';
-		echo '<span>Avatar</span>';
-		echo '</th>';
-		echo '<th class="user">';
-		echo '<span>Details</span>';
-		echo '</th>';
-		echo '<th class="type">';
-		echo '<span>Type</span>';
-		echo '</th>';
-		echo '<th class="action">';
-		echo '<span>Action</span>';
-		echo '</th>';
-		echo '</tr>';
-	
-		foreach ($galleries as $gallery) {
-			echo "<tr>";
-			echo "<td>";
-			echo $gallery->id; 
-			echo "</td>";
-			echo "<td>";
-			$user = $this->sygYouTube->getUserProfile($gallery->syg_youtube_username);
-			echo '<img src="'.$user->getThumbnail()->getUrl().'" class="user_pic"></img>';
-			echo "</td>";
-			echo "<td>";
-			echo $gallery->syg_youtube_username;
-			echo "</td>";
-			echo "<td>";
-			echo "User Channel";
-			echo "</td>";
-			echo "<td>";
-			echo '<a href="#" onclick="javascript: Preview('.$gallery->id.');">Preview</a> | <a href="?page=syg-administration-panel&id='.$gallery->id.'">Edit</a> | <a href="#" onclick="javascript: Delete('.$gallery->id.');">Delete</a>';
-			echo "</td>";
-			echo "</tr>";
+		// put galleries in the view
+		$galleries = $this->sygDao->getAllSyg(); 
+
+		// add additional information to galleries
+		foreach ($galleries as $key => $value) {
+				$galleries[$key]['user'] = $this->sygYouTube->getUserProfile($value->); 
 		}
-		echo '<tr>';
-		echo '<th class="id">';
-		echo '<span>ID</span>';
-		echo '</th>';
-		echo '<th class="user_pic">';
-		echo '<span>Avatar</span>';
-		echo '</th>';
-		echo '<th class="user">';
-		echo '<span>Details</span>';
-		echo '</th>';
-		echo '<th class="type">';
-		echo '<span>Type</span>';
-		echo '</th>';
-		echo '<th class="action">';
-		echo '<span>Action</span>';
-		echo '</th>';
-		echo '</tr>';
-		echo "</table>";		
-		
-		echo '<br/>';
-		echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Add new Gallery"/>';
-		
-		echo '<h3>General Settings</h3>';
-		echo '<p>Here you can set the SlidingYoutubeGallery default behavior.</p>';
-		
-		echo '<form name="form1" method="post" action="">';
-		echo '<fieldset>';
-		echo '<legend><strong>YouTube settings</strong></legend>';
-		
-		echo '</fieldset>';
-		echo '</form>';
-		/*echo '<form name="form1" method="post" action="">';
-		echo '<input type="hidden" name="'.$syg['hiddenfield']['opt'].'" value="Y">';
-	
-		// youtube settings
-		echo '<fieldset>';
-		echo '<legend><strong>YouTube settings</strong></legend>';
-		echo '<label for="'.$syg['yt_user']['opt'].'">YouTube User: </label>';
-		echo '<input type="text" id="'.$syg['yt_user']['opt'].'" name="'.$syg['yt_user']['opt'].'" value="'.$syg['yt_user']['val'].'" size="30">';
-		echo '<label for="'.$syg['desc_showduration']['opt'].'">Duration </label>';
-		$chk_duration = ($syg['desc_showduration']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showduration']['opt'].'" id="'.$syg['desc_showduration']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showduration']['opt'].'" id="'.$syg['desc_showduration']['opt'].'" value="1">';
-		echo $chk_duration;
-		echo '<label for="'.$syg['desc_showdescription']['opt'].'">Description </label>';
-		$chk_desc = ($syg['desc_showdescription']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showdescription']['opt'].'" id="'.$syg['desc_showdescription']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showdescription']['opt'].'" id="'.$syg['desc_showdescription']['opt'].'" value="1">';
-		echo $chk_desc;
-		echo '<label for="'.$syg['desc_showtags']['opt'].'">Tags </label>';
-		$chk_tags = ($syg['desc_showtags']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showtags']['opt'].'" id="'.$syg['desc_showtags']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showtags']['opt'].'" id="'.$syg['desc_showtags']['opt'].'" value="1">';
-		echo $chk_tags;
-		echo '<label for="'.$syg['desc_showratings']['opt'].'">Ratings </label>';
-		$chk_showratings = ($syg['desc_showratings']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showratings']['opt'].'" id="'.$syg['desc_showratings']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showratings']['opt'].'" id="'.$syg['desc_showratings']['opt'].'" value="1">';
-		echo $chk_showratings;
-		echo '<label for="'.$syg['desc_showcat']['opt'].'">Categories </label>';
-		$chk_showcat = ($syg['desc_showcat']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showcat']['opt'].'" id="'.$syg['desc_showcat']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showcat']['opt'].'" id="'.$syg['desc_showcat']['opt'].'" value="1">';
-		echo $chk_showcat;
-		echo "<br/><br/>";
-		echo '<label for="'.$syg['yt_videoformat']['opt'].'">Video Format: </label>';
-		($syg['yt_videoformat']['val'] == "420n") ? $syg_vf_opt_1 = '<option value="420n" selected="selected">420 X 315 (normal)</option>' : $syg_vf_opt_1 = '<option value="420n">420 X 315 (normal)</option>';
-		($syg['yt_videoformat']['val'] == "480n") ? $syg_vf_opt_2 = '<option value="480n" selected="selected">480 X 360 (normal)</option>' : $syg_vf_opt_2 = '<option value="480n">480 X 360 (normal)</option>';
-		($syg['yt_videoformat']['val'] == "640n") ? $syg_vf_opt_3 = '<option value="640n" selected="selected">640 X 480 (normal)</option>' : $syg_vf_opt_3 = '<option value="640n">640 X 480 (normal)</option>';
-		($syg['yt_videoformat']['val'] == "960n") ? $syg_vf_opt_4 = '<option value="960n" selected="selected">960 X 720 (normal)</option>' : $syg_vf_opt_4 = '<option value="960n">960 X 720 (normal)</option>';
-		($syg['yt_videoformat']['val'] == "560w") ? $syg_vf_opt_5 = '<option value="560w" selected="selected">560 X 315 (wide)</option>' : $syg_vf_opt_5 = '<option value="560w">560 X 315 (wide)</option>';
-		($syg['yt_videoformat']['val'] == "640w") ? $syg_vf_opt_6 = '<option value="640w" selected="selected">640 X 360 (wide)</option>' : $syg_vf_opt_6 = '<option value="640w">640 X 360 (wide)</option>';
-		($syg['yt_videoformat']['val'] == "853w") ? $syg_vf_opt_7 = '<option value="853w" selected="selected">853 X 480 (wide)</option>' : $syg_vf_opt_7 = '<option value="853w">853 X 480 (wide)</option>';
-		($syg['yt_videoformat']['val'] == "1280w") ? $syg_vf_opt_8 = '<option value="1280w" selected="selected">1280 X 720 (wide)</option>' : $syg_vf_opt_8 = '<option value="1280w">1280 X 720 (wide)</option>';
-		echo '<select id="'.$syg['yt_videoformat']['opt'].'" name="'.$syg['yt_videoformat']['opt'].'">';
-		echo $syg_vf_opt_1;
-		echo $syg_vf_opt_2;
-		echo $syg_vf_opt_3;
-		echo $syg_vf_opt_4;
-		echo $syg_vf_opt_5;
-		echo $syg_vf_opt_6;
-		echo $syg_vf_opt_7;
-		echo $syg_vf_opt_8;
-		echo '</select>';
-		echo '<label for="'.$syg['yt_maxvideocount']['opt'].'">Maximum Video Count: </label>';
-		echo '<input type="text" id="'.$syg['yt_maxvideocount']['opt'].'" name="'.$syg['yt_maxvideocount']['opt'].'" value="'.$syg['yt_maxvideocount']['val'].'" size="10">';
-		echo '</fieldset>';
-	
-		// thumbnail appereance
-		echo '<fieldset>';
-		echo '<legend><strong>Thumbnail appereance</strong></legend>';
-		echo '<label for="'.$syg['th_height']['opt'].'">Height: </label>';
-		echo '<input onchange="calculateNewWidth();" type="text" id="'.$syg['th_height']['opt'].'" name="'.$syg['th_height']['opt'].'" value="'.$syg['th_height']['val'].'" size="10">';
-		echo '<label for="'.$syg['th_width']['opt'].'">Width: </label>';
-		echo '<input onchange="calculateNewHeight();" type="text" id="'.$syg['th_width']['opt'].'" name="'.$syg['th_width']['opt'].'" value="'.$syg['th_width']['val'].'" size="10">';
-		echo '<label for="'.$syg['th_bordersize']['opt'].'">Border Size: </label>';
-		echo '<input type="text" id="'.$syg['th_bordersize']['opt'].'" name="'.$syg['th_bordersize']['opt'].'" value="'.$syg['th_bordersize']['val'].'" size="10">';
-		echo '<br/><br/>';
-		echo '<label for="'.$syg['th_borderradius']['opt'].'">Border Radius: </label>';
-		echo '<input type="text" id="'.$syg['th_borderradius']['opt'].'" name="'.$syg['th_borderradius']['opt'].'" value="'.$syg['th_borderradius']['val'].'" size="10">';
-		echo '<label for="'.$syg['th_distance']['opt'].'">Distance: </label>';
-		echo '<input type="text" id="'.$syg['th_distance']['opt'].'" name="'.$syg['th_distance']['opt'].'" value="'.$syg['th_distance']['val'].'" size="10">';
-		echo '<label for="'.$syg['th_bordercolor']['opt'].'">Border Color: </label>';
-		echo '<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="text" id="'.$syg['th_bordercolor']['opt'].'" name="'.$syg['th_bordercolor']['opt'].'" value="'.$syg['th_bordercolor']['val'].'" size="10">';
-		echo '<div id="thumb_bordercolor_selector">';
-		echo '<div style="background-color: #333333;"></div>';
-		echo '</div>';
-		echo '<br/><br/>';
-		echo '<label for="'.$syg['th_overlaysize']['opt'].'">Button size: </label>';
-		($syg['th_overlaysize']['val'] == "16") ? $syg_to_opt_1 = '<option value="16" selected="selected">16</option>' : $syg_to_opt_1 = '<option value="16">16</option>';
-		($syg['th_overlaysize']['val'] == "32") ? $syg_to_opt_2 = '<option value="32" selected="selected">32</option>' : $syg_to_opt_2 = '<option value="32">32</option>';
-		($syg['th_overlaysize']['val'] == "64") ? $syg_to_opt_3 = '<option value="64" selected="selected">64</option>' : $syg_to_opt_3 = '<option value="64">64</option>';
-		($syg['th_overlaysize']['val'] == "128") ? $syg_to_opt_4 = '<option value="128" selected="selected">128</option>' : $syg_to_opt_4 = '<option value="128">128</option>';
-		echo '<select id="'.$syg['th_overlaysize']['opt'].'" name="'.$syg['th_overlaysize']['opt'].'">';
-		echo $syg_to_opt_1;
-		echo $syg_to_opt_2;
-		echo $syg_to_opt_3;
-		echo $syg_to_opt_4;
-		echo '</select>';
-		echo '<label for="'.$syg['th_image']['opt'].'">Image: </label>';
-		($syg['th_image']['val'] == 1) ? $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1" checked="checked">' : $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1">';
-		($syg['th_image']['val'] == 2) ? $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2" checked="checked">' : $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2">';
-		($syg['th_image']['val'] == 3) ? $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3" checked="checked">' : $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3">';
-		echo $syg_ty_opt_1;
-		echo '<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>';
-		echo $syg_ty_opt_2;
-		echo '<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>';
-		echo $syg_ty_opt_3;
-		echo '<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>';
-		echo '<label for="'.$syg['th_buttonopacity']['opt'].'">Button opacity: </label>';
-		echo '<input type="text" id="'.$syg['th_buttonopacity']['opt'].'" name="'.$syg['th_buttonopacity']['opt'].'" value="'.$syg['th_buttonopacity']['val'].'" size="10">';
-		echo '</fieldset>';
-	
-		// javascript inclusion
-		$js_url = $jsPath . '/admin.js';
-		$js_color_picker = $jsPath . '/colorpicker.js';
-		echo '<script type="text/javascript" src="'.$js_url.'"></script>';
-		echo '<script type="text/javascript" src="'.$js_color_picker.'"></script>';
-	
-		// box and description appereance
-		echo '<fieldset>';
-		echo '<legend><strong>Box and description appereance</strong></legend>';
-		echo '<label for="'.$syg['box_width']['opt'].'">Box width: </label>';
-		echo '<input type="text" id="'.$syg['box_width']['opt'].'" name="'.$syg['box_width']['opt'].'" value="'.$syg['box_width']['val'].'" size="10">';
-		echo '<label for="'.$syg['box_radius']['opt'].'">Box Radius: </label>';
-		echo '<input type="text" id="'.$syg['box_radius']['opt'].'" name="'.$syg['box_radius']['opt'].'" value="'.$syg['box_radius']['val'].'" size="10">';
-		echo '<label for="'.$syg['box_padding']['opt'].'">Box Padding: </label>';
-		echo '<input type="text" id="'.$syg['box_padding']['opt'].'" name="'.$syg['box_padding']['opt'].'" value="'.$syg['box_padding']['val'].'" size="10">';
-		echo '<label for="'.$syg['box_background']['opt'].'">Background color: </label>';
-		echo '<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="text" id="'.$syg['box_background']['opt'].'" name="'.$syg['box_background']['opt'].'" value="'.$syg['box_background']['val'].'" size="10">';
-		echo '<div id="box_backgroundcolor_selector">';
-		echo '<div style="background-color: #efefef;"></div>';
-		echo '</div>';
-		echo '<br/><br/>';
-		echo '<label for="'.$syg['desc_fontsize']['opt'].'">Font size: </label>';
-		echo '<input type="text" id="'.$syg['desc_fontsize']['opt'].'" name="'.$syg['desc_fontsize']['opt'].'" value="'.$syg['desc_fontsize']['val'].'" size="10">';
-		echo '<label for="'.$syg['desc_fontcolor']['opt'].'">Font color: </label>';
-		echo '<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="text" id="'.$syg['desc_fontcolor']['opt'].'" name="'.$syg['desc_fontcolor']['opt'].'" value="'.$syg['desc_fontcolor']['val'].'" size="10">';
-		echo '<div id="desc_fontcolor_selector">';
-		echo '<div style="background-color: #333333;"></div>';
-		echo '</div>';
-		echo '</fieldset>';
-	
-		echo '<hr/>';
-		echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>';
-		echo '</form>';*/
-		echo '</div>';
 	}
 	
 	/*
@@ -698,4 +461,131 @@ class SlidingYouTubeGalleryPlugin {
 		$this->generateSygAdminForm($syg, $updated);
 	}
 }
+
+/*echo '<form name="form1" method="post" action="">';
+ echo '<input type="hidden" name="'.$syg['hiddenfield']['opt'].'" value="Y">';
+
+// youtube settings
+echo '<fieldset>';
+echo '<legend><strong>YouTube settings</strong></legend>';
+echo '<label for="'.$syg['yt_user']['opt'].'">YouTube User: </label>';
+echo '<input type="text" id="'.$syg['yt_user']['opt'].'" name="'.$syg['yt_user']['opt'].'" value="'.$syg['yt_user']['val'].'" size="30">';
+echo '<label for="'.$syg['desc_showduration']['opt'].'">Duration </label>';
+$chk_duration = ($syg['desc_showduration']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showduration']['opt'].'" id="'.$syg['desc_showduration']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showduration']['opt'].'" id="'.$syg['desc_showduration']['opt'].'" value="1">';
+echo $chk_duration;
+echo '<label for="'.$syg['desc_showdescription']['opt'].'">Description </label>';
+$chk_desc = ($syg['desc_showdescription']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showdescription']['opt'].'" id="'.$syg['desc_showdescription']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showdescription']['opt'].'" id="'.$syg['desc_showdescription']['opt'].'" value="1">';
+echo $chk_desc;
+echo '<label for="'.$syg['desc_showtags']['opt'].'">Tags </label>';
+$chk_tags = ($syg['desc_showtags']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showtags']['opt'].'" id="'.$syg['desc_showtags']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showtags']['opt'].'" id="'.$syg['desc_showtags']['opt'].'" value="1">';
+echo $chk_tags;
+echo '<label for="'.$syg['desc_showratings']['opt'].'">Ratings </label>';
+$chk_showratings = ($syg['desc_showratings']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showratings']['opt'].'" id="'.$syg['desc_showratings']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showratings']['opt'].'" id="'.$syg['desc_showratings']['opt'].'" value="1">';
+echo $chk_showratings;
+echo '<label for="'.$syg['desc_showcat']['opt'].'">Categories </label>';
+$chk_showcat = ($syg['desc_showcat']['val'] == "1") ? '<input type="checkbox" name="'.$syg['desc_showcat']['opt'].'" id="'.$syg['desc_showcat']['opt'].'" value="1" checked="checked">' : '<input type="checkbox" name="'.$syg['desc_showcat']['opt'].'" id="'.$syg['desc_showcat']['opt'].'" value="1">';
+echo $chk_showcat;
+echo "<br/><br/>";
+echo '<label for="'.$syg['yt_videoformat']['opt'].'">Video Format: </label>';
+($syg['yt_videoformat']['val'] == "420n") ? $syg_vf_opt_1 = '<option value="420n" selected="selected">420 X 315 (normal)</option>' : $syg_vf_opt_1 = '<option value="420n">420 X 315 (normal)</option>';
+($syg['yt_videoformat']['val'] == "480n") ? $syg_vf_opt_2 = '<option value="480n" selected="selected">480 X 360 (normal)</option>' : $syg_vf_opt_2 = '<option value="480n">480 X 360 (normal)</option>';
+($syg['yt_videoformat']['val'] == "640n") ? $syg_vf_opt_3 = '<option value="640n" selected="selected">640 X 480 (normal)</option>' : $syg_vf_opt_3 = '<option value="640n">640 X 480 (normal)</option>';
+($syg['yt_videoformat']['val'] == "960n") ? $syg_vf_opt_4 = '<option value="960n" selected="selected">960 X 720 (normal)</option>' : $syg_vf_opt_4 = '<option value="960n">960 X 720 (normal)</option>';
+($syg['yt_videoformat']['val'] == "560w") ? $syg_vf_opt_5 = '<option value="560w" selected="selected">560 X 315 (wide)</option>' : $syg_vf_opt_5 = '<option value="560w">560 X 315 (wide)</option>';
+($syg['yt_videoformat']['val'] == "640w") ? $syg_vf_opt_6 = '<option value="640w" selected="selected">640 X 360 (wide)</option>' : $syg_vf_opt_6 = '<option value="640w">640 X 360 (wide)</option>';
+($syg['yt_videoformat']['val'] == "853w") ? $syg_vf_opt_7 = '<option value="853w" selected="selected">853 X 480 (wide)</option>' : $syg_vf_opt_7 = '<option value="853w">853 X 480 (wide)</option>';
+($syg['yt_videoformat']['val'] == "1280w") ? $syg_vf_opt_8 = '<option value="1280w" selected="selected">1280 X 720 (wide)</option>' : $syg_vf_opt_8 = '<option value="1280w">1280 X 720 (wide)</option>';
+echo '<select id="'.$syg['yt_videoformat']['opt'].'" name="'.$syg['yt_videoformat']['opt'].'">';
+echo $syg_vf_opt_1;
+echo $syg_vf_opt_2;
+echo $syg_vf_opt_3;
+echo $syg_vf_opt_4;
+echo $syg_vf_opt_5;
+echo $syg_vf_opt_6;
+echo $syg_vf_opt_7;
+echo $syg_vf_opt_8;
+echo '</select>';
+echo '<label for="'.$syg['yt_maxvideocount']['opt'].'">Maximum Video Count: </label>';
+echo '<input type="text" id="'.$syg['yt_maxvideocount']['opt'].'" name="'.$syg['yt_maxvideocount']['opt'].'" value="'.$syg['yt_maxvideocount']['val'].'" size="10">';
+echo '</fieldset>';
+
+// thumbnail appereance
+echo '<fieldset>';
+echo '<legend><strong>Thumbnail appereance</strong></legend>';
+echo '<label for="'.$syg['th_height']['opt'].'">Height: </label>';
+echo '<input onchange="calculateNewWidth();" type="text" id="'.$syg['th_height']['opt'].'" name="'.$syg['th_height']['opt'].'" value="'.$syg['th_height']['val'].'" size="10">';
+echo '<label for="'.$syg['th_width']['opt'].'">Width: </label>';
+echo '<input onchange="calculateNewHeight();" type="text" id="'.$syg['th_width']['opt'].'" name="'.$syg['th_width']['opt'].'" value="'.$syg['th_width']['val'].'" size="10">';
+echo '<label for="'.$syg['th_bordersize']['opt'].'">Border Size: </label>';
+echo '<input type="text" id="'.$syg['th_bordersize']['opt'].'" name="'.$syg['th_bordersize']['opt'].'" value="'.$syg['th_bordersize']['val'].'" size="10">';
+echo '<br/><br/>';
+echo '<label for="'.$syg['th_borderradius']['opt'].'">Border Radius: </label>';
+echo '<input type="text" id="'.$syg['th_borderradius']['opt'].'" name="'.$syg['th_borderradius']['opt'].'" value="'.$syg['th_borderradius']['val'].'" size="10">';
+echo '<label for="'.$syg['th_distance']['opt'].'">Distance: </label>';
+echo '<input type="text" id="'.$syg['th_distance']['opt'].'" name="'.$syg['th_distance']['opt'].'" value="'.$syg['th_distance']['val'].'" size="10">';
+echo '<label for="'.$syg['th_bordercolor']['opt'].'">Border Color: </label>';
+echo '<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="text" id="'.$syg['th_bordercolor']['opt'].'" name="'.$syg['th_bordercolor']['opt'].'" value="'.$syg['th_bordercolor']['val'].'" size="10">';
+echo '<div id="thumb_bordercolor_selector">';
+echo '<div style="background-color: #333333;"></div>';
+echo '</div>';
+echo '<br/><br/>';
+echo '<label for="'.$syg['th_overlaysize']['opt'].'">Button size: </label>';
+($syg['th_overlaysize']['val'] == "16") ? $syg_to_opt_1 = '<option value="16" selected="selected">16</option>' : $syg_to_opt_1 = '<option value="16">16</option>';
+($syg['th_overlaysize']['val'] == "32") ? $syg_to_opt_2 = '<option value="32" selected="selected">32</option>' : $syg_to_opt_2 = '<option value="32">32</option>';
+($syg['th_overlaysize']['val'] == "64") ? $syg_to_opt_3 = '<option value="64" selected="selected">64</option>' : $syg_to_opt_3 = '<option value="64">64</option>';
+($syg['th_overlaysize']['val'] == "128") ? $syg_to_opt_4 = '<option value="128" selected="selected">128</option>' : $syg_to_opt_4 = '<option value="128">128</option>';
+echo '<select id="'.$syg['th_overlaysize']['opt'].'" name="'.$syg['th_overlaysize']['opt'].'">';
+echo $syg_to_opt_1;
+echo $syg_to_opt_2;
+echo $syg_to_opt_3;
+echo $syg_to_opt_4;
+echo '</select>';
+echo '<label for="'.$syg['th_image']['opt'].'">Image: </label>';
+($syg['th_image']['val'] == 1) ? $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1" checked="checked">' : $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1">';
+($syg['th_image']['val'] == 2) ? $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2" checked="checked">' : $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2">';
+($syg['th_image']['val'] == 3) ? $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3" checked="checked">' : $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3">';
+echo $syg_ty_opt_1;
+echo '<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>';
+echo $syg_ty_opt_2;
+echo '<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>';
+echo $syg_ty_opt_3;
+echo '<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>';
+echo '<label for="'.$syg['th_buttonopacity']['opt'].'">Button opacity: </label>';
+echo '<input type="text" id="'.$syg['th_buttonopacity']['opt'].'" name="'.$syg['th_buttonopacity']['opt'].'" value="'.$syg['th_buttonopacity']['val'].'" size="10">';
+echo '</fieldset>';
+
+// javascript inclusion
+$js_url = $jsPath . '/admin.js';
+$js_color_picker = $jsPath . '/colorpicker.js';
+echo '<script type="text/javascript" src="'.$js_url.'"></script>';
+echo '<script type="text/javascript" src="'.$js_color_picker.'"></script>';
+
+// box and description appereance
+echo '<fieldset>';
+echo '<legend><strong>Box and description appereance</strong></legend>';
+echo '<label for="'.$syg['box_width']['opt'].'">Box width: </label>';
+echo '<input type="text" id="'.$syg['box_width']['opt'].'" name="'.$syg['box_width']['opt'].'" value="'.$syg['box_width']['val'].'" size="10">';
+echo '<label for="'.$syg['box_radius']['opt'].'">Box Radius: </label>';
+echo '<input type="text" id="'.$syg['box_radius']['opt'].'" name="'.$syg['box_radius']['opt'].'" value="'.$syg['box_radius']['val'].'" size="10">';
+echo '<label for="'.$syg['box_padding']['opt'].'">Box Padding: </label>';
+echo '<input type="text" id="'.$syg['box_padding']['opt'].'" name="'.$syg['box_padding']['opt'].'" value="'.$syg['box_padding']['val'].'" size="10">';
+echo '<label for="'.$syg['box_background']['opt'].'">Background color: </label>';
+echo '<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="text" id="'.$syg['box_background']['opt'].'" name="'.$syg['box_background']['opt'].'" value="'.$syg['box_background']['val'].'" size="10">';
+echo '<div id="box_backgroundcolor_selector">';
+echo '<div style="background-color: #efefef;"></div>';
+echo '</div>';
+echo '<br/><br/>';
+echo '<label for="'.$syg['desc_fontsize']['opt'].'">Font size: </label>';
+echo '<input type="text" id="'.$syg['desc_fontsize']['opt'].'" name="'.$syg['desc_fontsize']['opt'].'" value="'.$syg['desc_fontsize']['val'].'" size="10">';
+echo '<label for="'.$syg['desc_fontcolor']['opt'].'">Font color: </label>';
+echo '<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="text" id="'.$syg['desc_fontcolor']['opt'].'" name="'.$syg['desc_fontcolor']['opt'].'" value="'.$syg['desc_fontcolor']['val'].'" size="10">';
+echo '<div id="desc_fontcolor_selector">';
+echo '<div style="background-color: #333333;"></div>';
+echo '</div>';
+echo '</fieldset>';
+
+echo '<hr/>';
+echo '<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>';
+echo '</form>';*/
+
 ?>
