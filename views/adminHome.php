@@ -1,25 +1,36 @@
+<!-- Php Inclusion -->
+<?php 
+require_once('../engine/SygConstant.php');
+?>
+
+<!-- User Message -->
 <?php if ($this->data['updated']) {?>
 	<div class="updated"><p><strong>Settings saved.</strong></p></div>
 <?php } ?>
 
-<!-- css inclusion -->
+<!-- Css Inclusion -->
 <style type="text/css">
 @import url('<?php echo $this->data['cssAdminUrl'] ?>');
 </style>
 <style type="text/css">
 @import url('<?php echo $this->data['cssColorPicker'] ?>');
 </style>
-		
+
+<!-- Title Page -->
 <div class="wrap">
 	<div id="icon-options-general" class="icon32">
 	<br/>
 </div>
 <h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2>
 <hr/>
+
+<!-- Welcome Message -->
 <p class="webengText">
-	SygConstant::BE_WELCOME_MESSAGE;
+	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
 </p>
-SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE;
+<?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?>
+
+<!-- Gallery List -->
 <h3>Manage your gallery</h3>
 <table cellspacing="0" id="galleries_table">
 	<tr>
@@ -39,47 +50,38 @@ SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE;
 			<span>Action</span>
 		</th>
 	</tr>
-	foreach ($galleries as $gallery) {
+<?php
+$galleries = $this->data['galleries']; 
+foreach ($galleries as $gallery) {
+?>
 	<tr>
 		<td>
-			echo $gallery->id;
+			<?php echo $gallery->getId(); ?>
 		</td>
 		<td>
-			$user = $this->sygYouTube->getUserProfile($gallery->syg_youtube_username);
-			<img src="'.$user->getThumbnail()->getUrl().'" class="user_pic"></img>';
+			<img src="<?php echo $gallery->getUserProfile()->getThumbnail()->getUrl(); ?>" class="user_pic"></img>';
 		</td>
 		<td>
-			$gallery->syg_youtube_username;
+			<?php echo $gallery->getYtUsername(); ?>
 		</td>
 		<td>
 			User Channel
 		</td>
 		<td>
-			<a href="#" onclick="javascript: Preview('.$gallery->id.');">Preview</a> | <a href="?page=syg-administration-panel&id='.$gallery->id.'">Edit</a> | <a href="#" onclick="javascript: Delete('.$gallery->id.');">Delete</a>
+			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&id='<?php echo $gallery->getId(); ?>'">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
 		</td>
 	</tr>
-	}
-	
+<?php } ?>
 	<tr>
-		<th class="id">
-			<span>ID</span>
-		</th>
-		<th class="user_pic">
-			<span>Avatar</span>
-		</th>
-		<th class="user">
-			<span>Details</span>
-		</th>
-		<th class="type">
-			<span>Type</span>
-		</th>
-		<th class="action">
-			<span>Action</span>
+		<th colspan="5" class="navigation">
+			<< | >>
 		</th>
 	</tr>
-</table>		
+</table>	
 <br/>
 <input type="submit" id="Submit" name="Submit" class="button-primary" value="Add new Gallery"/>
+
+<!-- General Setting -->
 <h3>General Settings</h3>
 <p>Here you can set the SlidingYoutubeGallery default behavior.</p>
 <form name="form1" method="post" action="">

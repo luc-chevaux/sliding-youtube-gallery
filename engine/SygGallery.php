@@ -31,6 +31,8 @@ class SygGallery {
 	private $descShowCategories;
 	private $id;
 	
+	private $userProfile;
+	
 	// default constructor
 	public function __construct() {
 		/* YouTube default values */
@@ -73,14 +75,12 @@ class SygGallery {
 
 		// update calculated option
 		$this->setPercOccW($syg_thumbnail_overlaysize / ($this->thumbWidth + ($this->thumbBorderSize*2)));
-		$this->setDefaultLeft(50 - ($this->percOccW / 2 * 100));
 		$this->setPercOccH($syg_thumbnail_overlaysize / ($this->thumbHeight + ($this->thumbBorderSize*2)));
-		$this->setDefaultTop(50 - ($this->percOccH / 2 * 100));
-		
+				
 		// default thumbnail top position
-		$this->setThumbTop(get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $this->defaultTop);
+		$this->setThumbTop(get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : 50 - ($this->percOccH / 2 * 100));
 		// default thumbnail left position
-		$this->setThumbLeft(get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $this->defaultLeft);
+		$this->setThumbLeft(get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : 50 - ($this->percOccW / 2 * 100));
 		
 		/* thumbnail description */
 		// default description width
@@ -303,6 +303,13 @@ class SygGallery {
 	public function getId() {
 		return $this->id;
 	}
+	
+	/**
+	 * @return the $userProfile
+	 */
+	public function getUserProfile() {
+		return $this->userProfile;
+	}
 
 	/**
 	 * @param field_type $id
@@ -506,5 +513,13 @@ class SygGallery {
 	public function setDescShowCategories($descShowCategories) {
 		$this->descShowCategories = $descShowCategories;
 	}
+
+	/**
+	 * @param field_type $userProfile
+	 */
+	public function setUserProfile($userProfile) {
+		$this->userProfile = $userProfile;
+	}
+
 }
 ?>

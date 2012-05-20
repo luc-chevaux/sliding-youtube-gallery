@@ -326,7 +326,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * admin hook to wp
 	*/
 	function SlidingYoutubeGalleryAdmin() {
-		add_options_page('SlidingYoutubeGallery Options', 'SlidingYoutubeGallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminMain'));
+		add_options_page('SlidingYoutubeGallery Options', 'SlidingYoutubeGallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminHome'));
 	}
 	
 	/*
@@ -401,30 +401,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	}
 	
 	/*
-	 * function used to generate admin form
-	*/
-	private function generateSygAdminForm($syg, $updated = false) {
-		$this->data['updated'] = $updated;
-		
-		// define css to include
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
-		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
-		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
-		
-		// put galleries in the view
-		$galleries = $this->sygDao->getAllSyg(); 
-
-		// add additional information to galleries
-		foreach ($galleries as $key => $value) {
-				$galleries[$key]['user'] = $this->sygYouTube->getUserProfile($value->getYtUsername());
-		}
-	}
-	
-	/*
 	 * main function for admin interface
 	*/
-	function sygAdminMain() {
+	function sygAdminHome() {
 		// updated flag
 		$updated = false;
 	
@@ -432,7 +411,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		if (!current_user_can('manage_options'))  {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
-	
+				
 		// option inventory
 		$syg = $this->optionInventory();
 	
@@ -450,7 +429,27 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			$syg = $this->getOptionValues($syg);
 		}
 	
-		$this->generateSygAdminForm($syg, $updated);
+		$this->data['updated'] = $updated;
+		
+		// define css to include
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
+		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
+		
+		// put galleries in the view
+		$galleries = $this->sygDao->getAllSyg(); 
+		
+		// add additional information to galleries
+		foreach ($galleries as $key => $value) {
+				$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
+		}
+		
+		$this->data['galleries'] = $galleries;
+		
+		wp_die('FRIsad');
+		
+		$this->render('adminHome.php');
 	}
 }
 
