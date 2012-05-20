@@ -55,7 +55,7 @@ foreach ($galleries as $gallery) {
 			<?php echo $gallery->getId(); ?>
 		</td>
 		<td>
-			<img src="<?php echo $gallery->getUserProfile()->getThumbnail()->getUrl(); ?>" class="user_pic"></img>';
+			<img src="<?php echo $gallery->getUserProfile()->getThumbnail()->getUrl(); ?>" class="user_pic"></img>
 		</td>
 		<td>
 			<?php echo $gallery->getYtUsername(); ?>
@@ -64,14 +64,14 @@ foreach ($galleries as $gallery) {
 			User Channel
 		</td>
 		<td>
-			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&id='<?php echo $gallery->getId(); ?>'">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
+			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
 		</td>
 	</tr>
 <?php } ?>
-	<tr>
-		<th colspan="5" class="navigation">
+	<tr class="navigation">
+		<td colspan="5" class="navigation">
 			<< | >>
-		</th>
+		</td>
 	</tr>
 </table>	
 <br/>
@@ -83,6 +83,7 @@ foreach ($galleries as $gallery) {
 <form name="form1" method="post" action="">
 	<fieldset>
 		<legend><strong>YouTube settings</strong></legend>
-	
+		<label for="developer_key">Developer Key: </label>
+		<input type="text" id="developer_key" name="developer_key" value="" size="20">
 	</fieldset>
 </form>

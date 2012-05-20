@@ -88,3 +88,14 @@ function updateColorPicker(id, val) {
 	jQuery('#' + id + ' div').css('backgroundColor', jQuery(val).val());
 	return true;
 }
+
+function Preview (id) {
+	
+	return true;
+}
+
+function Delete (id) {
+	
+	return true;
+
+}

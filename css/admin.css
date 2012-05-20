@@ -140,11 +140,11 @@ label {
 	padding: 10px;
 }
 
-th.id {
+#galleries_table th.id {
 	width: 50px;
 }
 
-th.user_pic {
+#galleries_table th.user_pic {
 	width: 100px;
 }
 
@@ -152,14 +152,25 @@ img.user_pic {
 	height: 50px;
 }
 
-th.user {
+#galleries_table th.user {
 	width: 200px;
 }
 
-th.action {
+#galleries_table th.action {
 	width: 200px;
 }
 
-th.type {
+#galleries_table th.type {
 	width: 200px;
+}
+
+#galleries_table tr.navigation {
+	height: 10px;
+}
+
+#galleries_table td.navigation {
+	width: 800px;
+	padding: 2px;
+	background-color: #efefef;
+	border-radius: 0px 0px 6px 6px;
 }

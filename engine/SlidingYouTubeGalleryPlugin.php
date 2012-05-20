@@ -39,7 +39,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
 		
 		// check for zend gdata interface on init
-		add_action('init', array($this, 'checkZendGData'));
+		// add_action('init', array($this, 'checkZendGData'));
 		
 		// register activation hook
 		register_activation_hook(__FILE__, array($this, 'activation'));
@@ -81,69 +81,10 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	public function getOption() {
 		/* YouTube default values */
 		$option = array();
+
+		// example
 		// default video format
-		$option['syg_youtube_videoformat'] = get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n";
-		// default max video count
-		$option['syg_youtube_maxvideocount'] = get_option('syg_youtube_maxvideocount') != '' ? get_option('syg_youtube_maxvideocount') : "15";
-		
-		/* box default values*/
-		// default main box width
-		$option['syg_box_width'] = get_option('syg_box_width') != '' ? get_option('syg_box_width') : "550";
-		// default main box background color
-		$option['syg_box_background'] = get_option('syg_box_background') != '' ? get_option('syg_box_background') : "#efefef";
-		// default box radius pixel
-		$option['syg_box_radius'] = get_option('syg_box_radius') != '' ? get_option('syg_box_radius') : "10";
-		// default box padding pixel
-		$option['syg_box_padding'] = get_option('syg_box_padding') != '' ? get_option('syg_box_padding') : "10";
-		
-		/* thumbnail default values*/
-		// default thumbnail height
-		$option['syg_thumbnail_height'] = get_option('syg_thumbnail_height') != '' ? get_option('syg_thumbnail_height') : "100";
-		// default thumbnail width
-		$option['syg_thumbnail_width'] = get_option('syg_thumbnail_width') != '' ? get_option('syg_thumbnail_width') : "133";
-		// default thumbnail border size
-		$option['syg_thumbnail_bordersize'] = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
-		// default thumbnail border color
-		$option['syg_thumbnail_bordercolor'] = get_option('syg_thumbnail_bordercolor') != '' ? get_option('syg_thumbnail_bordercolor') : "#333333";
-		// default thumbnail border radius
-		$option['syg_thumbnail_borderradius'] = get_option('syg_thumbnail_borderradius') != '' ? get_option('syg_thumbnail_borderradius') : "10";
-		// default thumbnail overlay size
-		$option['syg_thumbnail_overlaysize'] = get_option('syg_thumbnail_overlaysize') != '' ? get_option('syg_thumbnail_overlaysize') : "32";
-		// default overlay button
-		$option['syg_thumbnail_image'] = get_option('syg_thumbnail_image') != '' ? get_option('syg_thumbnail_image') : "1";
-		// default thumbnail border size
-		$option['syg_thumbnail_bordersize'] = get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3";
-		// default thumbnail distance
-		$option['syg_thumbnail_distance'] = get_option('syg_thumbnail_distance') != '' ? get_option('syg_thumbnail_distance') : "10";
-		// default thumbnail button opacity
-		$option['syg_thumbnail_buttonopacity'] = get_option('syg_thumbnail_buttonopacity') != '' ? get_option('syg_thumbnail_buttonopacity') : "0.50";
-		// update calculated option
-		$option['perc_occ_w'] = $option['syg_thumbnail_overlaysize'] / ($option['syg_thumbnail_width'] + ($option['syg_thumbnail_bordersize']*2));
-		$option['default_left'] = 50 - ($perc_occ_w / 2 * 100);
-		$option['perc_occ_h'] = $option['syg_thumbnail_overlaysize'] / ($option['syg_thumbnail_height'] + ($option['syg_thumbnail_bordersize']*2));
-		$option['default_top'] = 50 - ($perc_occ_h / 2 * 100);
-		// default thumbnail top position
-		$option['syg_thumbnail_top'] = get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : $option['default_top'];
-		// default thumbnail left position
-		$option['syg_thumbnail_left'] = get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : $option['default_left'];
-		
-		/* thumbnail description */
-		// default description width
-		$option['syg_description_width'] = get_option('syg_description_width') != '' ? get_option('syg_description_width') : $option['syg_thumbnail_width'];
-		// default description font size
-		$option['syg_description_fontsize'] = get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12";
-		// default description font color
-		$option['syg_description_fontcolor'] = get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333";
-		// default show video description
-		$option['syg_description_show'] = get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false";
-		// default show video duration
-		$option['syg_description_showduration'] = get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false";
-		// default show video tags
-		$option['syg_description_showtags'] = get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false";
-		// default show video ratings
-		$option['syg_description_showratings'] = get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false";
-		// default show video categories
-		$option['syg_description_showcategories'] = get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false";
+		// $option['syg_youtube_videoformat'] = get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n";
 		
 		return $option;
 	}
@@ -255,30 +196,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		wp_enqueue_script('mousewheel');
 
 	}
-	
-	/*
-	 * check for zend gdata interface
-	*/
-	public function checkZendGData () {
-		if (defined('WP_ZEND_GDATA_INTERFACES') && constant('WP_ZEND_GDATA_INTERFACES')) {
-			$paths = explode(PATH_SEPARATOR, get_include_path());
-			foreach ($paths as $path) {
-				if (file_exists("$path/Zend/Loader.php")) {
-					define('WP_ZEND_GDATA_INTERFACES', true);
-					return true;
-				}else{
-					return false;
-				}
-			}
-		}else{
-			define('WP_ZEND_GDATA_INTERFACES', false);
-			add_action( 'admin_notices', array($this, 'zendGDataNotFound'));
-		}
-	}
-	
-	private function zendGDataNotFound() {
-		echo "<div id=\"message\" class=\"error\">Error: You must install and activate Zend GData Interfaces before running Sliding YouTube Gallery.</div>";
-	}
 
 	// sliding youtube gallery
 	function getGallery() {
@@ -329,7 +246,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * admin hook to wp
 	*/
 	function SlidingYoutubeGalleryAdmin() {
-		add_options_page('SlidingYoutubeGallery Options', 'SlidingYoutubeGallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminHome'));
+		add_options_page('SlidingYoutubeGallery Options', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminHome'));
 	}
 	
 	/*
