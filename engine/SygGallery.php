@@ -18,9 +18,7 @@ class SygGallery {
 	private $thumbDistance;
 	private $thumbButtonOpacity;
 	private $percOccW;
-	private $defaultLeft;
 	private $percOccH;
-	private $defaultTop;
 	private $thumbTop;
 	private $thumbLeft;
 	private $descWidth;
@@ -223,24 +221,10 @@ class SygGallery {
 	}
 
 	/**
-	 * @return the $defaultLeft
-	 */
-	public function getDefaultLeft() {
-		return $this->defaultLeft;
-	}
-
-	/**
 	 * @return the $percOccH
 	 */
 	public function getPercOccH() {
 		return $this->percOccH;
-	}
-
-	/**
-	 * @return the $defaultTop
-	 */
-	public function getDefaultTop() {
-		return $this->defaultTop;
 	}
 
 	/**
@@ -447,24 +431,10 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $defaultLeft
-	 */
-	public function setDefaultLeft($defaultLeft) {
-		$this->defaultLeft = $defaultLeft;
-	}
-
-	/**
 	 * @param field_type $percOccH
 	 */
 	public function setPercOccH($percOccH) {
 		$this->percOccH = $percOccH;
-	}
-
-	/**
-	 * @param field_type $defaultTop
-	 */
-	public function setDefaultTop($defaultTop) {
-		$this->defaultTop = $defaultTop;
 	}
 
 	/**

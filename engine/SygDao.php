@@ -46,14 +46,13 @@ class SygDao {
 	private function freeze($result) {
 		$gallery = new SygGallery();
 		
+		// box option values
 		$gallery->setBoxBackground($result->syg_box_background);
 		$gallery->setBoxPadding($result->syg_box_padding);
 		$gallery->setBoxRadius($result->syg_box_radius);
 		$gallery->setBoxWidth($result->syg_box_width);
 		
-		$gallery->setDefaultLeft($defaultLeft);
-		$gallery->setDefaultTop($defaultTop);
-		
+		// description option values
 		$gallery->setDescFontColor($result->syg_description_fontcolor);
 		$gallery->setDescFontSize($result->syg_description_fontsize);
 		$gallery->setDescShow($result->syg_description_show);
@@ -63,9 +62,7 @@ class SygDao {
 		$gallery->setDescShowTags($result->syg_description_showtags);
 		$gallery->setDescWidth($result->syg_description_width);
 		
-		$gallery->setPercOccH($percOccH);
-		$gallery->setPercOccW($percOccW);
-		
+		// thumbnail option values
 		$gallery->setThumbBorderColor($result->syg_thumbnail_bordercolor);
 		$gallery->setThumbBorderRadius($result->syg_thumbnail_borderradius);
 		$gallery->setThumbBorderSize($result->syg_thumbnail_bordersize);
@@ -73,20 +70,26 @@ class SygDao {
 		$gallery->setThumbDistance($result->syg_thumbnail_distance);
 		$gallery->setThumbHeight($result->syg_thumbnail_height);
 		$gallery->setThumbImage($result->syg_thumbnail_image);
-		
-		$gallery->setThumbLeft($result->);
-		$gallery->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
-		$gallery->setThumbTop($result->);
-		
 		$gallery->setThumbWidth($result->syg_thumbnail_width);
+		$gallery->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
+		// additional graphic option values
+		$gallery->setPercOccH($gallery->getThumbOverlaySize() / ($gallery->getThumbHeight() + ($gallery->getThumbBorderSize()*2)));
+		$gallery->setPercOccW($gallery->getThumbOverlaySize() / ($gallery->getThumbWidth() + ($gallery->getThumbBorderSize()*2)));
+		$gallery->setThumbTop(50 - ($gallery->getPercOccH() / 2 * 100));
+		$gallery->setThumbLeft(50 - ($gallery->getPercOccW() / 2 * 100));
+		
+		// youtube option values
 		$gallery->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
 		$gallery->setYtVideoFormat($result->syg_youtube_videoformat);
 		$gallery->setYtUsername($result->syg_youtube_username);
+		
+		// id
 		$gallery->setId($result->id);
+		
+		return $gallery;
 	}
 	
 	private function unFreeze($gallery) {
-		
 		
 		return $result;
 	}

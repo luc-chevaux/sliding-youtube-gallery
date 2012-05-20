@@ -392,15 +392,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			update_option($value['opt'], $value['val']);
 		}
 	
-		// update calculated option
-		$img_width = $syg['th_overlaysize']['val'];
-		$img_height = $syg['th_overlaysize']['val'];
-	
-		$perc_occ_w = $img_width / ($syg['th_width']['val'] + ($syg['th_bordersize']['val']*2));
-		$syg['th_left']['val'] = 50 - ($perc_occ_w / 2 * 100);
-	
-		$perc_occ_h = $img_height / ($syg['th_height']['val'] + ($syg['th_bordersize']['val']*2));
-		$syg['th_top']['val'] = 50 - ($perc_occ_h / 2 * 100);
+		
 	
 		update_option($syg['th_top']['opt'], $syg['th_top']['val']);
 		update_option($syg['th_left']['opt'], $syg['th_left']['val']);
@@ -425,7 +417,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 		// add additional information to galleries
 		foreach ($galleries as $key => $value) {
-				$galleries[$key]['user'] = $this->sygYouTube->getUserProfile($value->); 
+				$galleries[$key]['user'] = $this->sygYouTube->getUserProfile($value->getYtUsername());
 		}
 	}
 	
