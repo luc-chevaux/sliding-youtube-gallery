@@ -119,7 +119,7 @@ class SanityPluginFramework {
         $template_path = $this->plugin_dir.'/views/'.$view.'.php';
         ob_start();
         include($template_path);
-        $output = ob_get_clean();
+        //$output = ob_get_clean();
         return $output;
     }
     

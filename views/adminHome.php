@@ -1,7 +1,4 @@
 <!-- Php Inclusion -->
-<?php 
-require_once('../engine/SygConstant.php');
-?>
 
 <!-- User Message -->
 <?php if ($this->data['updated']) {?>
@@ -10,10 +7,8 @@ require_once('../engine/SygConstant.php');
 
 <!-- Css Inclusion -->
 <style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl'] ?>');
-</style>
-<style type="text/css">
-@import url('<?php echo $this->data['cssColorPicker'] ?>');
+@import url('<?php echo $this->data['cssAdminUrl']; ?>');
+@import url('<?php echo $this->data['cssColorPicker']; ?>');
 </style>
 
 <!-- Title Page -->
@@ -28,6 +23,7 @@ require_once('../engine/SygConstant.php');
 <p class="webengText">
 	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
 </p>
+
 <?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?>
 
 <!-- Gallery List -->

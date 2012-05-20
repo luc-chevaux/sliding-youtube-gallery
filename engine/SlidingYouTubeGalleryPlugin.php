@@ -27,7 +27,10 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	private $sygDao;
 	
 	public function __construct() {
-		parent::__construct(__FILE__);
+		
+		$me =  ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+		
+		parent::__construct(dirname($me));
 		
 		// set environment
 		$this->setEnvironment();
@@ -434,6 +437,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		// define css to include
 		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
 		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		
 		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
 		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
 		
@@ -446,10 +450,8 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 		
 		$this->data['galleries'] = $galleries;
-		
-		wp_die('FRIsad');
-		
-		$this->render('adminHome.php');
+				
+		$this->render('adminHome');
 	}
 }
 
