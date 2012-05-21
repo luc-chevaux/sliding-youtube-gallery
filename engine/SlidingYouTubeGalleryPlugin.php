@@ -165,43 +165,49 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		// set db version
 		$syg_db_version = "1.0";
 		
-		// set the table name
-		$table_name = $wpdb->prefix . "syg";
+		// get the current db version
+		$installed_ver = get_option( "syg_db_version" );
 		
-		// must create table if not exists
-		$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `syg_youtube_username` varchar(255) NOT NULL,
-				  `syg_youtube_videoformat` varchar(255) NOT NULL,
-				  `syg_youtube_maxvideocount` int(11) NOT NULL,
-				  `syg_thumbnail_height` int(11) NOT NULL,
-				  `syg_thumbnail_width` int(11) NOT NULL,
-				  `syg_thumbnail_bordersize` int(11) NOT NULL,
-				  `syg_thumbnail_bordercolor` varchar(255) NOT NULL,
-				  `syg_thumbnail_borderradius` int(11) NOT NULL,
-				  `syg_thumbnail_distance` int(11) NOT NULL,
-				  `syg_thumbnail_overlaysize` int(11) NOT NULL,
-				  `syg_thumbnail_image` varchar(255) NOT NULL,
-				  `syg_thumbnail_buttonopacity` float NOT NULL,
-				  `syg_description_width` int(11) NOT NULL,
-				  `syg_description_fontsize` int(11) NOT NULL,
-				  `syg_description_fontcolor` varchar(255) NOT NULL,
-				  `syg_description_show` tinyint(1) NOT NULL,
-				  `syg_description_showduration` tinyint(1) NOT NULL,
-				  `syg_description_showtags` tinyint(1) NOT NULL,
-				  `syg_description_showratings` tinyint(1) NOT NULL,
-				  `syg_description_showcategories` tinyint(1) NOT NULL,
-				  `syg_box_width` int(11) NOT NULL,
-				  `syg_box_background` varchar(255) NOT NULL,
-				  `syg_box_radius` int(11) NOT NULL,
-				  `syg_box_padding` int(11) NOT NULL,
-				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
-		
-		// run the dbDelta function
-		dbDelta($sql);
-		
-		add_option("syg_db_version", $syg_db_version);
+		if( $installed_ver != $syg_db_version ) {
+			// set the table name
+			$table_name = $wpdb->prefix . "syg";
+			
+			// must create table if not exists
+			$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
+					  `id` int(11) NOT NULL AUTO_INCREMENT,
+					  `syg_youtube_username` varchar(255) NOT NULL,
+					  `syg_youtube_videoformat` varchar(255) NOT NULL,
+					  `syg_youtube_maxvideocount` int(11) NOT NULL,
+					  `syg_thumbnail_height` int(11) NOT NULL,
+					  `syg_thumbnail_width` int(11) NOT NULL,
+					  `syg_thumbnail_bordersize` int(11) NOT NULL,
+					  `syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+					  `syg_thumbnail_borderradius` int(11) NOT NULL,
+					  `syg_thumbnail_distance` int(11) NOT NULL,
+					  `syg_thumbnail_overlaysize` int(11) NOT NULL,
+					  `syg_thumbnail_image` varchar(255) NOT NULL,
+					  `syg_thumbnail_buttonopacity` float NOT NULL,
+					  `syg_description_width` int(11) NOT NULL,
+					  `syg_description_fontsize` int(11) NOT NULL,
+					  `syg_description_fontcolor` varchar(255) NOT NULL,
+					  `syg_description_show` tinyint(1) NOT NULL,
+					  `syg_description_showduration` tinyint(1) NOT NULL,
+					  `syg_description_showtags` tinyint(1) NOT NULL,
+					  `syg_description_showratings` tinyint(1) NOT NULL,
+					  `syg_description_showcategories` tinyint(1) NOT NULL,
+					  `syg_box_width` int(11) NOT NULL,
+					  `syg_box_background` varchar(255) NOT NULL,
+					  `syg_box_radius` int(11) NOT NULL,
+					  `syg_box_padding` int(11) NOT NULL,
+					  PRIMARY KEY  (`id`)
+					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+			
+			// run the dbDelta function
+			dbDelta($sql);
+			
+			// add or update db version option
+			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version); 
+		}
 	}
 
 	private function setFrontEndOption() {
