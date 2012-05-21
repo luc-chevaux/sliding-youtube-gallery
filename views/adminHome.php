@@ -48,6 +48,14 @@
 	</tr>
 <?php
 $galleries = $this->data['galleries']; 
+if (count($galleries) == 0) { ?>
+<tr>
+		<td colspan="5">
+		<?php echo SygConstant::BE_NO_GALLERY_FOUND; ?>
+		</td>
+	</tr>
+<?php }
+
 foreach ($galleries as $gallery) {
 ?>
 	<tr>
@@ -64,7 +72,7 @@ foreach ($galleries as $gallery) {
 			User Channel
 		</td>
 		<td>
-			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
+			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
 		</td>
 	</tr>
 <?php } ?>

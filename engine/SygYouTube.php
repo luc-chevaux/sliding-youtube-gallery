@@ -170,7 +170,7 @@ class SygYouTube {
 	*/
 	function getUserUploads($username) {
 		$this->yt->setMajorProtocolVersion(2);
-		$videoFeed = $yt->getuserUploads($username);
+		$videoFeed = $this->yt->getuserUploads($username);
 		return $videoFeed;
 	}
 }

@@ -22,15 +22,16 @@ $lib_path = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/lib';
 set_include_path (get_include_path() . PATH_SEPARATOR . $lib_path);
 
 // include required wordpress object
-require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+require_once (ABSPATH . 'wp-admin/includes/plugin.php');
+require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 
 // include engine
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygConstant.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygDao.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygGallery.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUtil.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygYouTube.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygConstant.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygDao.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygGallery.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUtil.php');
+require_once (ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygYouTube.php');
 
 // run the plugin
 $syg = SlidingYouTubeGalleryPlugin::getInstance();

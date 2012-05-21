@@ -160,8 +160,48 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	// activation function
 	private function activation() {
 		global $wpdb;
-
+		global $syg_db_version;
+		
+		// set db version
+		$syg_db_version = "1.0";
+		
+		// set the table name
+		$table_name = $wpdb->prefix . "syg";
+		
 		// must create table if not exists
+		$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `syg_youtube_username` varchar(255) NOT NULL,
+				  `syg_youtube_videoformat` varchar(255) NOT NULL,
+				  `syg_youtube_maxvideocount` int(11) NOT NULL,
+				  `syg_thumbnail_height` int(11) NOT NULL,
+				  `syg_thumbnail_width` int(11) NOT NULL,
+				  `syg_thumbnail_bordersize` int(11) NOT NULL,
+				  `syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+				  `syg_thumbnail_borderradius` int(11) NOT NULL,
+				  `syg_thumbnail_distance` int(11) NOT NULL,
+				  `syg_thumbnail_overlaysize` int(11) NOT NULL,
+				  `syg_thumbnail_image` varchar(255) NOT NULL,
+				  `syg_thumbnail_buttonopacity` float NOT NULL,
+				  `syg_description_width` int(11) NOT NULL,
+				  `syg_description_fontsize` int(11) NOT NULL,
+				  `syg_description_fontcolor` varchar(255) NOT NULL,
+				  `syg_description_show` tinyint(1) NOT NULL,
+				  `syg_description_showduration` tinyint(1) NOT NULL,
+				  `syg_description_showtags` tinyint(1) NOT NULL,
+				  `syg_description_showratings` tinyint(1) NOT NULL,
+				  `syg_description_showcategories` tinyint(1) NOT NULL,
+				  `syg_box_width` int(11) NOT NULL,
+				  `syg_box_background` varchar(255) NOT NULL,
+				  `syg_box_radius` int(11) NOT NULL,
+				  `syg_box_padding` int(11) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+		
+		// run the dbDelta function
+		dbDelta($sql);
+		
+		add_option("syg_db_version", $syg_db_version);
 	}
 
 	private function setFrontEndOption() {
@@ -331,24 +371,49 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		if (!current_user_can('manage_options'))  {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
-				
+
+		switch ($_GET['action']) {
+			case 'edit':
+				$this->forwardToEdit();
+				break;
+			case 'add':				
+				$this->forwardToAdd();
+				break;
+			case null:
+				$this->forwardToHome();			
+			default:
+				break;
+		}
+	}
+	
+	private function forwardToAdd() {
+		
+	}
+	
+	private function forwardToEdit() {
+		$id = (int) $_GET['id'];
+		$this->data['gallery'] = $this->sygDao->getSygById($id);
+		$this->render('adminGallery');
+	}
+	
+	private function forwardToHome() {
 		// option inventory
 		$syg = $this->optionInventory();
-	
+		
 		if( isset($_POST[$syg['hiddenfield']['opt']]) && $_POST[$syg['hiddenfield']['opt']] == 'Y' ) {
 			// get posted values
 			$syg = getPostedValues($syg);
-			 
+		
 			// update options
 			$syg = updateOptions($syg);
-	
+		
 			// updated flag
 			$updated = true;
 		}else{
 			// get option values
 			$syg = $this->getOptionValues($syg);
 		}
-	
+		
 		$this->data['updated'] = $updated;
 		
 		// define css to include
@@ -359,15 +424,15 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
 		
 		// put galleries in the view
-		$galleries = $this->sygDao->getAllSyg(); 
+		$galleries = $this->sygDao->getAllSyg();
 		
 		// add additional information to galleries
 		foreach ($galleries as $key => $value) {
-				$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
+			$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
 		}
 		
 		$this->data['galleries'] = $galleries;
-				
+		
 		$this->render('adminHome');
 	}
 }
