@@ -32,6 +32,7 @@ h3 {
 
 .webengTitle {
 	font-family: HandelGothicBTRegular !important;
+	display: inline-block;
 }
 
 .webengText {

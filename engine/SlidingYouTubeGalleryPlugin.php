@@ -385,20 +385,56 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			case 'add':				
 				$this->forwardToAdd();
 				break;
+			case 'delete':
+				$this->forwardToDelete();
+				break;
+			case 'settings':
+				$this->forwardToSettings();
+				break;
 			case null:
-				$this->forwardToHome();			
+				$this->forwardToHome();
+				break;
 			default:
 				break;
 		}
 	}
 	
-	private function forwardToAdd() {
+	private function forwardToSettings() {
+		// define css to include
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
 		
+		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
+		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
+		
+		$this->render('generalSettings');
+	}
+	
+	private function forwardToAdd() {
+		// define css to include
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		
+		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
+		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
+		
+		$this->data['gallery'] = new SygGallery();
+		
+		$this->render('adminGallery');
 	}
 	
 	private function forwardToEdit() {
 		$id = (int) $_GET['id'];
+		
+		// define css to include
+		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
+		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		
+		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
+		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
+		
 		$this->data['gallery'] = $this->sygDao->getSygById($id);
+		
 		$this->render('adminGallery');
 	}
 	

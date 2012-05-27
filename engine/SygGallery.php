@@ -34,71 +34,52 @@ class SygGallery {
 	private $userProfile;
 	
 	// default constructor
-	public function __construct() {
-		/* YouTube default values */
-		// default video format
-		$this->setYtVideoFormat(get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n");
-		$this->setYtMaxVideoCount(get_option('syg_youtube_maxvideocount') != '' ? get_option('syg_youtube_maxvideocount') : "15");
-		
-		/* box default values*/
-		// default main box width
-		$this->setBoxWidth(get_option('syg_box_width') != '' ? get_option('syg_box_width') : "550");
-		
-		// default main box background color
-		$this->setBoxBackground(get_option('syg_box_background') != '' ? get_option('syg_box_background') : "#efefef");
-		// default box radius pixel
-		$this->setBoxRadius(get_option('syg_box_radius') != '' ? get_option('syg_box_radius') : "10");
-		// default box padding pixel
-		$this->setBoxPadding(get_option('syg_box_padding') != '' ? get_option('syg_box_padding') : "10");
-		
-		/* thumbnail default values*/
-		// default thumbnail height
-		$this->setThumbHeight(get_option('syg_thumbnail_height') != '' ? get_option('syg_thumbnail_height') : "100");
-		// default thumbnail width
-		$this->setThumbWidth(get_option('syg_thumbnail_width') != '' ? get_option('syg_thumbnail_width') : "133");
-		// default thumbnail border size
-		$this->setThumbBorderSize(get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3");
-		// default thumbnail border color
-		$this->setThumbBorderColor(get_option('syg_thumbnail_bordercolor') != '' ? get_option('syg_thumbnail_bordercolor') : "#333333");
-		// default thumbnail border radius
-		$this->setThumbBorderRadius(get_option('syg_thumbnail_borderradius') != '' ? get_option('syg_thumbnail_borderradius') : "10");
-		// default thumbnail overlay size
-		$this->setThumbOverlaySize(get_option('syg_thumbnail_overlaysize') != '' ? get_option('syg_thumbnail_overlaysize') : "32");
-		// default overlay button
-		$this->setThumbImage(get_option('syg_thumbnail_image') != '' ? get_option('syg_thumbnail_image') : "1");
-		// default thumbnail border size
-		$this->setThumbBorderSize(get_option('syg_thumbnail_bordersize') != '' ? get_option('syg_thumbnail_bordersize') : "3");
-		// default thumbnail distance
-		$this->setThumbDistance(get_option('syg_thumbnail_distance') != '' ? get_option('syg_thumbnail_distance') : "10");
-		// default thumbnail button opacity
-		$this->setThumbButtonOpacity(get_option('syg_thumbnail_buttonopacity') != '' ? get_option('syg_thumbnail_buttonopacity') : "0.50");
+	public function __construct($result = null) {
+		$this->mapThis($result);
+	}
 
-		// update calculated option
-		$this->setPercOccW($syg_thumbnail_overlaysize / ($this->thumbWidth + ($this->thumbBorderSize*2)));
-		$this->setPercOccH($syg_thumbnail_overlaysize / ($this->thumbHeight + ($this->thumbBorderSize*2)));
-				
-		// default thumbnail top position
-		$this->setThumbTop(get_option('syg_thumbnail_top') != '' ? get_option('syg_thumbnail_top') : 50 - ($this->percOccH / 2 * 100));
-		// default thumbnail left position
-		$this->setThumbLeft(get_option('syg_thumbnail_left') != '' ? get_option('syg_thumbnail_left') : 50 - ($this->percOccW / 2 * 100));
+	private function mapThis($result = null) {
 		
-		/* thumbnail description */
-		// default description width
-		$this->setDescWidth(get_option('syg_description_width') != '' ? get_option('syg_description_width') : $this->thumbWidth);
-		// default description font size
-		$this->setDescFontSize(get_option('syg_description_fontsize') != '' ? get_option('syg_description_fontsize') : "12");
-		// default description font color
-		$this->setDescFontColor(get_option('syg_description_fontcolor') != '' ? get_option('syg_description_fontcolor') : "#333333");
-		// default show video description
-		$this->setDescShow(get_option('syg_description_show') != '' ? get_option('syg_description_show') : "false");
-		// default show video duration
-		$this->setDescShowDuration(get_option('syg_description_showduration') != '' ? get_option('syg_description_showduration') : "false");
-		// default show video tags
-		$this->setDescShowTags(get_option('syg_description_showtags') != '' ? get_option('syg_description_showtags') : "false");
-		// default show video ratings
-		$this->setDescShowRatings(get_option('syg_description_showratings') != '' ? get_option('syg_description_showratings') : "false");
-		// default show video categories
-		$this->setDescShowRatings(get_option('syg_description_showcategories') != '' ? get_option('syg_description_showcategories') : "false");
+		
+		// box option values
+		$this->setBoxBackground($result->syg_box_background);
+		$this->setBoxPadding($result->syg_box_padding);
+		$this->setBoxRadius($result->syg_box_radius);
+		$this->setBoxWidth($result->syg_box_width);
+		
+		// description option values
+		$this->setDescFontColor($result->syg_description_fontcolor);
+		$this->setDescFontSize($result->syg_description_fontsize);
+		$this->setDescShow($result->syg_description_show);
+		$this->setDescShowCategories($result->syg_description_showcategories);
+		$this->setDescShowDuration($result->syg_description_showduration);
+		$this->setDescShowRatings($result->syg_description_showratings);
+		$this->setDescShowTags($result->syg_description_showtags);
+		$this->setDescWidth($result->syg_description_width);
+		
+		// thumbnail option values
+		$this->setThumbBorderColor($result->syg_thumbnail_bordercolor);
+		$this->setThumbBorderRadius($result->syg_thumbnail_borderradius);
+		$this->setThumbBorderSize($result->syg_thumbnail_bordersize);
+		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
+		$this->setThumbDistance($result->syg_thumbnail_distance);
+		$this->setThumbHeight($result->syg_thumbnail_height);
+		$this->setThumbImage($result->syg_thumbnail_image);
+		$this->setThumbWidth($result->syg_thumbnail_width);
+		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
+		// additional graphic option values
+		$this->setPercOccH($this->getThumbOverlaySize() / ($this->getThumbHeight() + ($this->getThumbBorderSize()*2)));
+		$this->setPercOccW($this->getThumbOverlaySize() / ($this->getThumbWidth() + ($this->getThumbBorderSize()*2)));
+		$this->setThumbTop(50 - ($this->getPercOccH() / 2 * 100));
+		$this->setThumbLeft(50 - ($this->getPercOccW() / 2 * 100));
+		
+		// youtube option values
+		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
+		$this->setYtVideoFormat($result->syg_youtube_videoformat);
+		$this->setYtUsername($result->syg_youtube_username);
+		
+		// id
+		$this->setId($result->id);
 	}
 	
 	/**
@@ -109,220 +90,17 @@ class SygGallery {
 	}
 
 	/**
-	 * @return the $ytMaxVideoCount
-	 */
-	public function getYtMaxVideoCount() {
-		return $this->ytMaxVideoCount;
-	}
-
-	/**
-	 * @return the $ytUsername
-	 */
-	public function getYtUsername() {
-		return $this->ytUsername;
-	}
-
-	/**
-	 * @return the $boxWidth
-	 */
-	public function getBoxWidth() {
-		return $this->boxWidth;
-	}
-
-	/**
-	 * @return the $boxBackground
-	 */
-	public function getBoxBackground() {
-		return $this->boxBackground;
-	}
-
-	/**
-	 * @return the $boxRadius
-	 */
-	public function getBoxRadius() {
-		return $this->boxRadius;
-	}
-
-	/**
-	 * @return the $boxPadding
-	 */
-	public function getBoxPadding() {
-		return $this->boxPadding;
-	}
-
-	/**
-	 * @return the $thumbheight
-	 */
-	public function getThumbHeight() {
-		return $this->thumbHeight;
-	}
-
-	/**
-	 * @return the $thumbWidth
-	 */
-	public function getThumbWidth() {
-		return $this->thumbWidth;
-	}
-
-	/**
-	 * @return the $thumbBorderSize
-	 */
-	public function getThumbBorderSize() {
-		return $this->thumbBorderSize;
-	}
-
-	/**
-	 * @return the $thumbBorderColor
-	 */
-	public function getThumbBorderColor() {
-		return $this->thumbBorderColor;
-	}
-
-	/**
-	 * @return the $thumbBorderRadius
-	 */
-	public function getThumbBorderRadius() {
-		return $this->thumbBorderRadius;
-	}
-
-	/**
-	 * @return the $thumbOverlaySize
-	 */
-	public function getThumbOverlaySize() {
-		return $this->thumbOverlaySize;
-	}
-
-	/**
-	 * @return the $thumbImage
-	 */
-	public function getThumbImage() {
-		return $this->thumbImage;
-	}
-
-	/**
-	 * @return the $thumbDistance
-	 */
-	public function getThumbDistance() {
-		return $this->thumbDistance;
-	}
-
-	/**
-	 * @return the $thumbButtonopacity
-	 */
-	public function getThumbButtonOpacity() {
-		return $this->thumbButtonOpacity;
-	}
-
-	/**
-	 * @return the $percOccW
-	 */
-	public function getPercOccW() {
-		return $this->percOccW;
-	}
-
-	/**
-	 * @return the $percOccH
-	 */
-	public function getPercOccH() {
-		return $this->percOccH;
-	}
-
-	/**
-	 * @return the $thumbTop
-	 */
-	public function getThumbTop() {
-		return $this->thumbTop;
-	}
-
-	/**
-	 * @return the $thumbLeft
-	 */
-	public function getThumbLeft() {
-		return $this->thumbLeft;
-	}
-
-	/**
-	 * @return the $descWidth
-	 */
-	public function getDescWidth() {
-		return $this->descWidth;
-	}
-
-	/**
-	 * @return the $descFontSize
-	 */
-	public function getDescFontSize() {
-		return $this->descFontSize;
-	}
-
-	/**
-	 * @return the $descFontColor
-	 */
-	public function getDescFontColor() {
-		return $this->descFontColor;
-	}
-
-	/**
-	 * @return the $descShow
-	 */
-	public function getDescShow() {
-		return $this->descShow;
-	}
-
-	/**
-	 * @return the $descShowDuration
-	 */
-	public function getDescShowDuration() {
-		return $this->descShowDuration;
-	}
-
-	/**
-	 * @return the $descShowTags
-	 */
-	public function getDescShowTags() {
-		return $this->descShowTags;
-	}
-
-	/**
-	 * @return the $descShowRatings
-	 */
-	public function getDescShowRatings() {
-		return $this->descShowRatings;
-	}
-
-	/**
-	 * @return the $descShowCategories
-	 */
-	public function getDescShowCategories() {
-		return $this->descShowCategories;
-	}
-
-	/**
-	 * @return the $id
-	 */
-	public function getId() {
-		return $this->id;
-	}
-	
-	/**
-	 * @return the $userProfile
-	 */
-	public function getUserProfile() {
-		return $this->userProfile;
-	}
-
-	/**
-	 * @param field_type $id
-	 */
-	public function setId($id) {
-		$this->id = $id;
-	}
-
-	/**
 	 * @param field_type $ytVideoFormat
 	 */
 	public function setYtVideoFormat($ytVideoFormat) {
 		$this->ytVideoFormat = $ytVideoFormat;
+	}
+
+	/**
+	 * @return the $ytMaxVideoCount
+	 */
+	public function getYtMaxVideoCount() {
+		return $this->ytMaxVideoCount;
 	}
 
 	/**
@@ -333,17 +111,38 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $ytUsername
+	 */
+	public function getYtUsername() {
+		return $this->ytUsername;
+	}
+
+	/**
 	 * @param field_type $ytUsername
 	 */
 	public function setYtUsername($ytUsername) {
 		$this->ytUsername = $ytUsername;
 	}
-	
+
+	/**
+	 * @return the $boxWidth
+	 */
+	public function getBoxWidth() {
+		return $this->boxWidth;
+	}
+
 	/**
 	 * @param field_type $boxWidth
 	 */
 	public function setBoxWidth($boxWidth) {
 		$this->boxWidth = $boxWidth;
+	}
+
+	/**
+	 * @return the $boxBackground
+	 */
+	public function getBoxBackground() {
+		return $this->boxBackground;
 	}
 
 	/**
@@ -354,10 +153,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $boxRadius
+	 */
+	public function getBoxRadius() {
+		return $this->boxRadius;
+	}
+
+	/**
 	 * @param field_type $boxRadius
 	 */
 	public function setBoxRadius($boxRadius) {
 		$this->boxRadius = $boxRadius;
+	}
+
+	/**
+	 * @return the $boxPadding
+	 */
+	public function getBoxPadding() {
+		return $this->boxPadding;
 	}
 
 	/**
@@ -368,10 +181,24 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $thumbheight
+	 * @return the $thumbHeight
+	 */
+	public function getThumbHeight() {
+		return $this->thumbHeight;
+	}
+
+	/**
+	 * @param field_type $thumbHeight
 	 */
 	public function setThumbHeight($thumbHeight) {
 		$this->thumbHeight = $thumbHeight;
+	}
+
+	/**
+	 * @return the $thumbWidth
+	 */
+	public function getThumbWidth() {
+		return $this->thumbWidth;
 	}
 
 	/**
@@ -382,10 +209,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $thumbBorderSize
+	 */
+	public function getThumbBorderSize() {
+		return $this->thumbBorderSize;
+	}
+
+	/**
 	 * @param field_type $thumbBorderSize
 	 */
 	public function setThumbBorderSize($thumbBorderSize) {
 		$this->thumbBorderSize = $thumbBorderSize;
+	}
+
+	/**
+	 * @return the $thumbBorderColor
+	 */
+	public function getThumbBorderColor() {
+		return $this->thumbBorderColor;
 	}
 
 	/**
@@ -396,10 +237,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $thumbBorderRadius
+	 */
+	public function getThumbBorderRadius() {
+		return $this->thumbBorderRadius;
+	}
+
+	/**
 	 * @param field_type $thumbBorderRadius
 	 */
 	public function setThumbBorderRadius($thumbBorderRadius) {
 		$this->thumbBorderRadius = $thumbBorderRadius;
+	}
+
+	/**
+	 * @return the $thumbOverlaySize
+	 */
+	public function getThumbOverlaySize() {
+		return $this->thumbOverlaySize;
 	}
 
 	/**
@@ -410,10 +265,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $thumbImage
+	 */
+	public function getThumbImage() {
+		return $this->thumbImage;
+	}
+
+	/**
 	 * @param field_type $thumbImage
 	 */
 	public function setThumbImage($thumbImage) {
 		$this->thumbImage = $thumbImage;
+	}
+
+	/**
+	 * @return the $thumbDistance
+	 */
+	public function getThumbDistance() {
+		return $this->thumbDistance;
 	}
 
 	/**
@@ -424,10 +293,24 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $thumbButtonopacity
+	 * @return the $thumbButtonOpacity
+	 */
+	public function getThumbButtonOpacity() {
+		return $this->thumbButtonOpacity;
+	}
+
+	/**
+	 * @param field_type $thumbButtonOpacity
 	 */
 	public function setThumbButtonOpacity($thumbButtonOpacity) {
 		$this->thumbButtonOpacity = $thumbButtonOpacity;
+	}
+
+	/**
+	 * @return the $percOccW
+	 */
+	public function getPercOccW() {
+		return $this->percOccW;
 	}
 
 	/**
@@ -438,10 +321,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $percOccH
+	 */
+	public function getPercOccH() {
+		return $this->percOccH;
+	}
+
+	/**
 	 * @param field_type $percOccH
 	 */
 	public function setPercOccH($percOccH) {
 		$this->percOccH = $percOccH;
+	}
+
+	/**
+	 * @return the $thumbTop
+	 */
+	public function getThumbTop() {
+		return $this->thumbTop;
 	}
 
 	/**
@@ -452,10 +349,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $thumbLeft
+	 */
+	public function getThumbLeft() {
+		return $this->thumbLeft;
+	}
+
+	/**
 	 * @param field_type $thumbLeft
 	 */
 	public function setThumbLeft($thumbLeft) {
 		$this->thumbLeft = $thumbLeft;
+	}
+
+	/**
+	 * @return the $descWidth
+	 */
+	public function getDescWidth() {
+		return $this->descWidth;
 	}
 
 	/**
@@ -466,10 +377,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $descFontSize
+	 */
+	public function getDescFontSize() {
+		return $this->descFontSize;
+	}
+
+	/**
 	 * @param field_type $descFontSize
 	 */
 	public function setDescFontSize($descFontSize) {
 		$this->descFontSize = $descFontSize;
+	}
+
+	/**
+	 * @return the $descFontColor
+	 */
+	public function getDescFontColor() {
+		return $this->descFontColor;
 	}
 
 	/**
@@ -480,10 +405,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $descShow
+	 */
+	public function getDescShow() {
+		return $this->descShow;
+	}
+
+	/**
 	 * @param field_type $descShow
 	 */
 	public function setDescShow($descShow) {
 		$this->descShow = $descShow;
+	}
+
+	/**
+	 * @return the $descShowDuration
+	 */
+	public function getDescShowDuration() {
+		return $this->descShowDuration;
 	}
 
 	/**
@@ -494,10 +433,24 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $descShowTags
+	 */
+	public function getDescShowTags() {
+		return $this->descShowTags;
+	}
+
+	/**
 	 * @param field_type $descShowTags
 	 */
 	public function setDescShowTags($descShowTags) {
 		$this->descShowTags = $descShowTags;
+	}
+
+	/**
+	 * @return the $descShowRatings
+	 */
+	public function getDescShowRatings() {
+		return $this->descShowRatings;
 	}
 
 	/**
@@ -508,10 +461,38 @@ class SygGallery {
 	}
 
 	/**
+	 * @return the $descShowCategories
+	 */
+	public function getDescShowCategories() {
+		return $this->descShowCategories;
+	}
+
+	/**
 	 * @param field_type $descShowCategories
 	 */
 	public function setDescShowCategories($descShowCategories) {
 		$this->descShowCategories = $descShowCategories;
+	}
+
+	/**
+	 * @return the $id
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @param field_type $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * @return the $userProfile
+	 */
+	public function getUserProfile() {
+		return $this->userProfile;
 	}
 
 	/**
@@ -520,6 +501,5 @@ class SygGallery {
 	public function setUserProfile($userProfile) {
 		$this->userProfile = $userProfile;
 	}
-
 }
 ?>

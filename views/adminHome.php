@@ -1,5 +1,7 @@
 <!-- Php Inclusion -->
 
+<!-- Extra Php Code -->
+
 <!-- User Message -->
 <?php if ($this->data['updated']) {?>
 	<div class="updated"><p><strong>Settings saved.</strong></p></div>
@@ -16,15 +18,13 @@
 	<div id="icon-options-general" class="icon32">
 	<br/>
 </div>
-<h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2>
+<h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
 <!-- Welcome Message -->
 <p class="webengText">
 	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
 </p>
-
-<?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?>
 
 <!-- Gallery List -->
 <h3>Manage your gallery</h3>
@@ -83,15 +83,8 @@ foreach ($galleries as $gallery) {
 	</tr>
 </table>	
 <br/>
-<input type="submit" id="Submit" name="Submit" class="button-primary" value="Add new Gallery"/>
 
-<!-- General Setting -->
-<h3>General Settings</h3>
-<p>Here you can set the SlidingYoutubeGallery default behavior.</p>
-<form name="form1" method="post" action="">
-	<fieldset>
-		<legend><strong>YouTube settings</strong></legend>
-		<label for="developer_key">Developer Key: </label>
-		<input type="text" id="developer_key" name="developer_key" value="" size="20">
-	</fieldset>
-</form>
+<a href="options-general.php?page=syg-administration-panel&action=add" class="button-primary">Add new Gallery</a>
+<a href="options-general.php?page=syg-administration-panel&action=settings" class="button-primary">General Settings</a>
+<a href="options-general.php?page=syg-administration-panel&action=contact" class="button-primary">Contact Developer</a>
+<a href="options-general.php?page=syg-administration-panel&action=donate" class="button-primary">Donate!</a>

@@ -1,6 +1,37 @@
+<!-- Php Inclusion -->
+
+<!-- Extra Php Code -->
 <?php 	
 	$gallery = new SygGallery();
+	
+	// javascript inclusion
+	$js_url = $jsPath . '/admin.js';
+	$js_color_picker = $jsPath . '/colorpicker.js';
 ?>
+
+<!-- User Message -->
+<?php if ($this->data['updated']) {?>
+	<div class="updated"><p><strong>Settings saved.</strong></p></div>
+<?php } ?>
+
+<!-- Css Inclusion -->
+<style type="text/css">
+@import url('<?php echo $this->data['cssAdminUrl']; ?>');
+@import url('<?php echo $this->data['cssColorPicker']; ?>');
+</style>
+
+<!-- Title Page -->
+<div class="wrap">
+	<div id="icon-options-general" class="icon32">
+	<br/>
+</div>
+<h2 class="webengTitle">Sliding Youtube Gallery :: <a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a></h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
+<hr/>
+
+<!-- Welcome Message -->
+<p class="webengText">
+	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
+</p>
 	<form name="form1" method="post" action="">
 		<input type="hidden" name=" -- da completare --" value="Y">
 
@@ -55,82 +86,104 @@
 		<fieldset>
 			<legend><strong>Thumbnail appereance</strong></legend>
 			
+			<!-- thumbnail height -->
 			<label for="syg_thumbnail_height">Height: </label>
 			<input onchange="calculateNewWidth();" type="text" id="syg_thumbnail_height" name="syg_thumbnail_height" value="<?php echo $gallery->getThumbHeight(); ?>" size="10">
 			
+			<!-- thumbnail width -->
 			<label for="">Width: </label>
 			<input onchange="calculateNewHeight();" type="text" id="syg_thumbnail_width" name="syg_thumbnail_width" value="<?php echo $gallery->getThumbWidth(); ?>" size="10">
 			
-			<label for="'.$syg['th_bordersize']['opt'].'">Border Size: </label>
-			<input type="text" id="'.$syg['th_bordersize']['opt'].'" name="'.$syg['th_bordersize']['opt'].'" value="'.$syg['th_bordersize']['val'].'" size="10">
+			<!-- thumbnail bordersize -->
+			<label for="syg_thumbnail_bordersize">Border Size: </label>
+			<input type="text" id="syg_thumbnail_bordersize" name="syg_thumbnail_bordersize" value="<?php echo $gallery->getThumbBorderSize(); ?>" size="10">
 			
 			<br/><br/>
 
-			echo '<label for="'.$syg['th_borderradius']['opt'].'">Border Radius: </label>';
-			echo '<input type="text" id="'.$syg['th_borderradius']['opt'].'" name="'.$syg['th_borderradius']['opt'].'" value="'.$syg['th_borderradius']['val'].'" size="10">';
-			echo '<label for="'.$syg['th_distance']['opt'].'">Distance: </label>';
-			echo '<input type="text" id="'.$syg['th_distance']['opt'].'" name="'.$syg['th_distance']['opt'].'" value="'.$syg['th_distance']['val'].'" size="10">';
-			echo '<label for="'.$syg['th_bordercolor']['opt'].'">Border Color: </label>';
-			echo '<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="text" id="'.$syg['th_bordercolor']['opt'].'" name="'.$syg['th_bordercolor']['opt'].'" value="'.$syg['th_bordercolor']['val'].'" size="10">';
-			echo '<div id="thumb_bordercolor_selector">';
-			echo '<div style="background-color: #333333;"></div>';
-			echo '</div>';
-			echo '<br/><br/>';
-echo '<label for="'.$syg['th_overlaysize']['opt'].'">Button size: </label>';
-($syg['th_overlaysize']['val'] == "16") ? $syg_to_opt_1 = '<option value="16" selected="selected">16</option>' : $syg_to_opt_1 = '<option value="16">16</option>';
-($syg['th_overlaysize']['val'] == "32") ? $syg_to_opt_2 = '<option value="32" selected="selected">32</option>' : $syg_to_opt_2 = '<option value="32">32</option>';
-($syg['th_overlaysize']['val'] == "64") ? $syg_to_opt_3 = '<option value="64" selected="selected">64</option>' : $syg_to_opt_3 = '<option value="64">64</option>';
-($syg['th_overlaysize']['val'] == "128") ? $syg_to_opt_4 = '<option value="128" selected="selected">128</option>' : $syg_to_opt_4 = '<option value="128">128</option>';
-echo '<select id="'.$syg['th_overlaysize']['opt'].'" name="'.$syg['th_overlaysize']['opt'].'">';
-echo $syg_to_opt_1;
-echo $syg_to_opt_2;
-echo $syg_to_opt_3;
-echo $syg_to_opt_4;
-echo '</select>';
-echo '<label for="'.$syg['th_image']['opt'].'">Image: </label>';
-($syg['th_image']['val'] == 1) ? $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1" checked="checked">' : $syg_ty_opt_1 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="1">';
-($syg['th_image']['val'] == 2) ? $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2" checked="checked">' : $syg_ty_opt_2 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="2">';
-($syg['th_image']['val'] == 3) ? $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3" checked="checked">' : $syg_ty_opt_3 = '<input type="radio" id="'.$syg['th_image']['opt'].'" name="'.$syg['th_image']['opt'].'" value="3">';
-echo $syg_ty_opt_1;
-echo '<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>';
-echo $syg_ty_opt_2;
-echo '<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>';
-echo $syg_ty_opt_3;
-echo '<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>';
-echo '<label for="'.$syg['th_buttonopacity']['opt'].'">Button opacity: </label>';
-echo '<input type="text" id="'.$syg['th_buttonopacity']['opt'].'" name="'.$syg['th_buttonopacity']['opt'].'" value="'.$syg['th_buttonopacity']['val'].'" size="10">';
-echo '</fieldset>';
+			<!-- thumbnail borderradius -->
+			<label for="syg_thumbnail_borderradius">Border Radius: </label>
+			<input type="text" id="syg_thumbnail_borderradius" name="syg_thumbnail_borderradius" value="<?php echo $gallery->getThumbBorderRadius(); ?>" size="10">
+			
+			<!-- distance -->
+			<label for="syg_thumbnail_distance">Distance: </label>
+			<input type="text" id="syg_thumbnail_distance" name="syg_thumbnail_distance" value="<?php echo $gallery->getThumbDistance(); ?>" size="10">
+			
+			<!-- border color -->
+			<label for="syg_thumbnail_bordercolor">Border Color: </label>
+			<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="text" id="syg_thumbnail_bordercolor" name="syg_thumbnail_bordercolor" value="<?php echo $gallery->getThumbBorderColor(); ?>" size="10">
+			
+			<!-- color picker -->
+			<div id="thumb_bordercolor_selector">
+			<div style="background-color: #333333;"></div>
+			</div>
+			
+			<br/><br/>
+			
+			<!-- button size -->
+			<label for="syg_thumbnail_overlaysize">Button size: </label>
+				<select id="syg_thumbnail_overlaysize" name="syg_thumbnail_overlaysize">
+				<option value="16" <?php if ($gallery->getThumbOverlaySize() == '16') echo 'selected="selected"'; ?>>16</option>
+				<option value="32" <?php if ($gallery->getThumbOverlaySize() == '32') echo 'selected="selected"'; ?>>32</option>
+				<option value="64" <?php if ($gallery->getThumbOverlaySize() == '64') echo 'selected="selected"'; ?>>64</option>
+				<option value="128" <?php if ($gallery->getThumbOverlaySize() == '128') echo 'selected="selected"'; ?>>128</option>
+			</select>
 
-// javascript inclusion
-$js_url = $jsPath . '/admin.js';
-$js_color_picker = $jsPath . '/colorpicker.js';
-echo '<script type="text/javascript" src="'.$js_url.'"></script>';
-echo '<script type="text/javascript" src="'.$js_color_picker.'"></script>';
+			<!-- overlay button image -->
+			<label for="syg_thumbnail_image">Image: </label>
+			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="1" <?php if ($gallery->getThumbImage() == 1) echo 'checked="checked"'; ?>>
+			<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>
+			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="2" <?php if ($gallery->getThumbImage() == 2) echo 'checked="checked"'; ?>>
+			<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>	
+			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="3" <?php if ($gallery->getThumbImage() == 3) echo 'checked="checked"'; ?>>
+			<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>
+			
+			<!-- overlay button opacity -->
+			<label for="syg_thumbnail_buttonopacity">Button opacity: </label>
+			<input type="text" id="syg_thumbnail_buttonopacity" name="syg_thumbnail_buttonopacity" value="<?php echo $gallery->getThumbButtonOpacity(); ?>" size="10">';
+		</fieldset>
 
-// box and description appereance
-<fieldset>';
-<legend><strong>Box and description appereance</strong></legend>';
-<label for="'.$syg['box_width']['opt'].'">Box width: </label>';
-<input type="text" id="'.$syg['box_width']['opt'].'" name="'.$syg['box_width']['opt'].'" value="'.$syg['box_width']['val'].'" size="10">';
-<label for="'.$syg['box_radius']['opt'].'">Box Radius: </label>';
-<input type="text" id="'.$syg['box_radius']['opt'].'" name="'.$syg['box_radius']['opt'].'" value="'.$syg['box_radius']['val'].'" size="10">';
-<label for="'.$syg['box_padding']['opt'].'">Box Padding: </label>';
-<input type="text" id="'.$syg['box_padding']['opt'].'" name="'.$syg['box_padding']['opt'].'" value="'.$syg['box_padding']['val'].'" size="10">';
-<label for="'.$syg['box_background']['opt'].'">Background color: </label>';
-<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="text" id="'.$syg['box_background']['opt'].'" name="'.$syg['box_background']['opt'].'" value="'.$syg['box_background']['val'].'" size="10">';
-<div id="box_backgroundcolor_selector">';
-<div style="background-color: #efefef;"></div>';
-</div>';
-<br/><br/>';
-<label for="'.$syg['desc_fontsize']['opt'].'">Font size: </label>';
-<input type="text" id="'.$syg['desc_fontsize']['opt'].'" name="'.$syg['desc_fontsize']['opt'].'" value="'.$syg['desc_fontsize']['val'].'" size="10">';
-<label for="'.$syg['desc_fontcolor']['opt'].'">Font color: </label>';
-<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="text" id="'.$syg['desc_fontcolor']['opt'].'" name="'.$syg['desc_fontcolor']['opt'].'" value="'.$syg['desc_fontcolor']['val'].'" size="10">';
-<div id="desc_fontcolor_selector">';
-<div style="background-color: #333333;"></div>';
-</div>';
-</fieldset>';
+		<!-- overlay button opacity -->
+		<script type="text/javascript" src="'.$js_url.'"></script>
+		<script type="text/javascript" src="'.$js_color_picker.'"></script>
 
-<hr/>';
-<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>';
-</form>';
+		<!-- box and description appereance -->
+		<fieldset>
+			<legend><strong>Box and description appereance</strong></legend>
+		
+			<!-- box width -->
+			<label for="syg_box_width">Box width: </label>
+			<input type="text" id="syg_box_width" name="syg_box_width" value="<?php echo $gallery->getBoxWidth(); ?>" size="10">
+		
+			<!-- box radius -->
+			<label for="syg_box_radius">Box Radius: </label>
+			<input type="text" id="syg_box_radius" name="syg_box_radius" value="<?php echo $gallery->getBoxRadius(); ?>" size="10">
+
+			<!-- box padding -->
+			<label for="syg_box_padding">Box Padding: </label>
+			<input type="text" id="syg_box_padding" name="syg_box_padding" value="<?php echo $gallery->getBoxPadding(); ?>" size="10">
+
+			<!-- background color -->
+			<label for="syg_box_background">Background color: </label>
+			<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="text" id="syg_box_background" name="syg_box_background" value="<?php echo $gallery->getBoxBackground(); ?>" size="10">
+
+			<div id="box_backgroundcolor_selector">
+				<div style="background-color: #efefef;"></div>
+			</div>
+		
+			<br/><br/>
+
+			<!-- description font size -->
+			<label for="syg_description_fontsize">Font size: </label>
+			<input type="text" id="syg_description_fontsize" name="syg_description_fontsize" value="<?php echo $gallery->getDescFontSize(); ?>" size="10">
+			
+			<!-- description font color -->
+			<label for="syg_description_fontcolor">Font color: </label>
+			<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="text" id="syg_description_fontcolor" name="syg_description_fontcolor" value="<?php echo $gallery->getDescFontColor(); ?>" size="10">
+			
+			<div id="desc_fontcolor_selector">
+				<div style="background-color: #333333;"></div>
+			</div>
+	</fieldset>
+	<hr/>
+	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
+</form>
