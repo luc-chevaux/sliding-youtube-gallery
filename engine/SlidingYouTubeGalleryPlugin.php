@@ -264,50 +264,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	}
 	
 	/*
-	 * do the option inventory
-	*/
-	private function optionInventory() {
-		
-		$this->syg['yt_user']['opt'] = 'syg_youtube_username';
-		$this->syg['yt_videoformat']['opt'] = 'syg_youtube_videoformat';
-		$this->syg['yt_maxvideocount']['opt'] = 'syg_youtube_maxvideocount';
-		$this->syg['th_height']['opt'] = 'syg_thumbnail_height';
-		$this->syg['th_width']['opt'] = 'syg_thumbnail_width';
-		$this->syg['th_bordersize']['opt'] = 'syg_thumbnail_bordersize';
-		$this->syg['th_bordercolor']['opt'] = 'syg_thumbnail_bordercolor';
-		$this->syg['th_borderradius']['opt'] = 'syg_thumbnail_borderradius';
-		$this->syg['th_distance']['opt'] = 'syg_thumbnail_distance';
-		$this->syg['th_overlaysize']['opt'] = 'syg_thumbnail_overlaysize';
-		$this->syg['th_image']['opt'] = 'syg_thumbnail_image';
-		$this->syg['th_top']['opt'] = 'syg_thumbnail_top';
-		$this->syg['th_left']['opt'] = 'syg_thumbnail_left';
-		$this->syg['th_buttonopacity']['opt'] = 'syg_thumbnail_buttonopacity';
-		$this->syg['box_width']['opt'] = 'syg_box_width';
-		$this->syg['box_background']['opt'] = 'syg_box_background';
-		$this->syg['box_radius']['opt'] = 'syg_box_radius';
-		$this->syg['box_padding']['opt'] = 'syg_box_padding';
-		$this->syg['desc_width']['opt'] = 'syg_description_width';
-		$this->syg['desc_fontcolor']['opt'] = 'syg_description_fontcolor';
-		$this->syg['desc_fontsize']['opt'] = 'syg_description_fontsize';
-		$this->syg['desc_showdescription']['opt'] = 'syg_description_show';
-		$this->syg['desc_showduration']['opt'] = 'syg_description_showduration';
-		$this->syg['desc_showtags']['opt'] = 'syg_description_showtags';
-		$this->syg['desc_showratings']['opt'] = 'syg_description_showratings';
-		$this->syg['desc_showcat']['opt'] = 'syg_description_showcategories';
-	
-		$this->syg['hiddenfield']['opt'] = 'syg_submit_hidden';
-	}
-	
-	/*
-	 * function used to get option value
-	*/
-	private function getOptionValues($syg) {
-		foreach ($this->syg as $key => $value) {
-			$this->syg[$key]['val'] = get_option($value['opt']);
-		}
-	}
-	
-	/*
 	 * function used to get posted value
 	*/
 	private function getPostedValues($syg) {
@@ -442,14 +398,34 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * @return Return a redirect to gallery adding section
 	 */
 	private function forwardToAdd() {
+		
+		$updated = false;
+		
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
-		// put an empty gallery in the view	
-		$this->data['gallery'] = new SygGallery();
+		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
+			// get posted values
+			$syg = getPostedValues($syg);
 		
-		// render adminGallery view
-		$this->render('adminGallery');
+			// update db
+			$syg = updateOptions($syg);
+		
+			// updated flag
+			$updated = true;
+			
+			// updated flag
+			$this->data['updated'] = $updated;
+			
+			// render adminGallery view
+			$this->render('adminHome');
+		}else{
+			// put an empty gallery in the view
+			$this->data['gallery'] = new SygGallery();
+			
+			// render adminGallery view
+			$this->render('adminGallery');
+		}
 	}
 	
 	/*
@@ -475,26 +451,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * @return Return a redirect to plugin admin homepage
 	 */
 	private function forwardToHome() {
-		// option inventory
-		$syg = $this->optionInventory();
-		
-		if( isset($_POST[$syg['hiddenfield']['opt']]) && $_POST[$syg['hiddenfield']['opt']] == 'Y' ) {
-			// get posted values
-			$syg = getPostedValues($syg);
-		
-			// update options
-			$syg = updateOptions($syg);
-		
-			// updated flag
-			$updated = true;
-		}else{
-			// get option values
-			$syg = $this->getOptionValues($syg);
-		}
-		
-		// updated flag
-		$this->data['updated'] = $updated;
-		
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
