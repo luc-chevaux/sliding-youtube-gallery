@@ -55,7 +55,7 @@
 			<input type="checkbox" name="syg_description_showtags" id="syg_description_showtags" value="1" <?php if ($gallery->getDescShowTags()) echo 'checked="checked"';?>>
 
 			<!-- ratings -->
-			<label for="syg_description_showratings">Ratings </label>'
+			<label for="syg_description_showratings">Ratings </label>
 			<input type="checkbox" name="syg_description_showratings" id="syg_description_showratings" value="1" <?php if ($gallery->getDescShowRatings()) echo 'checked="checked"';?>>
 
 			<!-- categories -->
@@ -131,15 +131,15 @@
 			<!-- overlay button image -->
 			<label for="syg_thumbnail_image">Image: </label>
 			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="1" <?php if ($gallery->getThumbImage() == 1) echo 'checked="checked"'; ?>>
-			<img width="32" src="'. $imgPath . '/button/play-the-video_1.png'.'"/>
+			<img width="32" src="<?php echo $imgPath . '/button/play-the-video_1.png'; ?>"/>
 			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="2" <?php if ($gallery->getThumbImage() == 2) echo 'checked="checked"'; ?>>
-			<img width="32" src="'. $imgPath . '/button/play-the-video_2.png'.'"/>	
+			<img width="32" src="<?php echo $imgPath . '/button/play-the-video_2.png'; ?>"/>	
 			<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="3" <?php if ($gallery->getThumbImage() == 3) echo 'checked="checked"'; ?>>
-			<img width="32" src="'. $imgPath . '/button/play-the-video_3.png'.'"/>
+			<img width="32" src="<?php echo $imgPath . '/button/play-the-video_3.png'; ?>"/>
 			
 			<!-- overlay button opacity -->
 			<label for="syg_thumbnail_buttonopacity">Button opacity: </label>
-			<input type="text" id="syg_thumbnail_buttonopacity" name="syg_thumbnail_buttonopacity" value="<?php echo $gallery->getThumbButtonOpacity(); ?>" size="10">';
+			<input type="text" id="syg_thumbnail_buttonopacity" name="syg_thumbnail_buttonopacity" value="<?php echo $gallery->getThumbButtonOpacity(); ?>" size="10">
 		</fieldset>
 
 		<!-- overlay button opacity -->

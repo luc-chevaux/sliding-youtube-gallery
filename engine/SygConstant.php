@@ -7,9 +7,8 @@ class SygConstant {
 	const BE_SUPPORT_PAGE = '<a href=\"http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/\">Support page</a>';
 	const BE_DONATION_CODE = '<a href=\"http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/\">Donation</a>';
 
-	// strings
+	// strings message
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
-	
 	
 	// methods
 	const SYG_METHOD_GALLERY = 'gallery';
@@ -20,5 +19,10 @@ class SygConstant {
 	const WP_CSS_PATH = '/wp-content/plugins/sliding-youtube-gallery/css/';
 	const WP_JS_PATH = '/wp-content/plugins/sliding-youtube-gallery/js/';
 	const WP_IMG_PATH = '/wp-content/plugins/sliding-youtube-gallery/img/';
+	
+	// contexts
+	const SYG_CTX_FE = "SYG_CTX_FE";
+	const SYG_CTX_BE = "SYG_CTX_BE";
+	const SYG_CTX_WS = "SYG_CTX_WS";
 }
 ?>

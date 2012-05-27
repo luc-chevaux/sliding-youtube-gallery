@@ -39,8 +39,6 @@ class SygGallery {
 	}
 
 	private function mapThis($result = null) {
-		
-		
 		// box option values
 		$this->setBoxBackground($result->syg_box_background);
 		$this->setBoxPadding($result->syg_box_padding);
@@ -63,9 +61,9 @@ class SygGallery {
 		$this->setThumbBorderSize($result->syg_thumbnail_bordersize);
 		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
 		$this->setThumbDistance($result->syg_thumbnail_distance);
-		$this->setThumbHeight($result->syg_thumbnail_height);
+		$this->setThumbHeight(($result->syg_thumbnail_height > 0) ? $result->syg_thumbnail_height : 315);
 		$this->setThumbImage($result->syg_thumbnail_image);
-		$this->setThumbWidth($result->syg_thumbnail_width);
+		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : 420);
 		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
 		// additional graphic option values
 		$this->setPercOccH($this->getThumbOverlaySize() / ($this->getThumbHeight() + ($this->getThumbBorderSize()*2)));

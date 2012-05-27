@@ -7,6 +7,10 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 	private static $instance = null;
 	
+	/* Return current instance of the plugin
+	 * @param null
+	 * @return null
+	 * */
 	public static function getInstance() {
 		if(self::$instance == null) {
 			$c = __CLASS__;
@@ -26,6 +30,10 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	private $sygYouTube;
 	private $sygDao;
 	
+	/* Construct an instance of the plugin
+	 * @param null
+	 * @return null
+	 */
 	public function __construct() {
 		
 		$me =  ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
@@ -38,9 +46,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		// attach the admin menu to the hook
 		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
 		
-		// check for zend gdata interface on init
-		// add_action('init', array($this, 'checkZendGData'));
-		
 		// register activation hook
 		register_activation_hook(__FILE__, array($this, 'activation'));
 
@@ -48,15 +53,16 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		if(!is_admin()) {
 			// set front end option
 			$this->setFrontEndOption();
-
 			// add shortcodes
 			add_shortcode('syg_gallery', array($this, 'getGallery'));
 			add_shortcode('syg_page', array($this, 'getVideoPage'));
 		}
 	}
 	
-	// getters and setters
-	
+	/* Set the plugin environment
+	 * @param null
+	 * @return null
+	 */
 	private function setEnvironment() {
 		// set home root
 		$this->homeRoot = home_url();
@@ -77,17 +83,65 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();
 	}
-	
-	public function getOption() {
-		/* YouTube default values */
-		$option = array();
 
-		// example
-		// default video format
-		// $option['syg_youtube_videoformat'] = get_option('syg_youtube_videoformat') != '' ? get_option('syg_youtube_videoformat') : "480n";
-		
-		return $option;
+	/* Activation function of the plugin
+	 * @param null
+	 * @return null
+	 */
+	private function activation() {
+		global $wpdb;
+		global $syg_db_version;
+	
+		// set db version
+		$syg_db_version = "1.0";
+	
+		// get the current db version
+		$installed_ver = get_option( "syg_db_version" );
+	
+		if( $installed_ver != $syg_db_version ) {
+			// set the table name
+			$table_name = $wpdb->prefix . "syg";
+				
+			// must create table if not exists
+			$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`syg_youtube_username` varchar(255) NOT NULL,
+			`syg_youtube_videoformat` varchar(255) NOT NULL,
+			`syg_youtube_maxvideocount` int(11) NOT NULL,
+			`syg_thumbnail_height` int(11) NOT NULL,
+			`syg_thumbnail_width` int(11) NOT NULL,
+			`syg_thumbnail_bordersize` int(11) NOT NULL,
+			`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+			`syg_thumbnail_borderradius` int(11) NOT NULL,
+			`syg_thumbnail_distance` int(11) NOT NULL,
+			`syg_thumbnail_overlaysize` int(11) NOT NULL,
+			`syg_thumbnail_image` varchar(255) NOT NULL,
+			`syg_thumbnail_buttonopacity` float NOT NULL,
+			`syg_description_width` int(11) NOT NULL,
+			`syg_description_fontsize` int(11) NOT NULL,
+			`syg_description_fontcolor` varchar(255) NOT NULL,
+			`syg_description_show` tinyint(1) NOT NULL,
+			`syg_description_showduration` tinyint(1) NOT NULL,
+			`syg_description_showtags` tinyint(1) NOT NULL,
+			`syg_description_showratings` tinyint(1) NOT NULL,
+			`syg_description_showcategories` tinyint(1) NOT NULL,
+			`syg_box_width` int(11) NOT NULL,
+			`syg_box_background` varchar(255) NOT NULL,
+			`syg_box_radius` int(11) NOT NULL,
+			`syg_box_padding` int(11) NOT NULL,
+			PRIMARY KEY  (`id`)
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+				
+			// run the dbDelta function
+			dbDelta($sql);
+				
+			// add or update db version option
+			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);
+		}
 	}
+	
+	/* GETTERS AND SETTERS */
+	
 	/**
 	 * @param field_type $homeRoot
 	 */
@@ -140,107 +194,21 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * @return the $jsRoot
 	 */
 	public function getJsRoot() {
-		return $this->jsRoot;
+		return $this->homeRoot.$this->jsRoot;
 	}
 	
 	/**
 	 * @return the $cssRoot
 	 */
 	public function getCssRoot() {
-		return $this->cssRoot;
+		return $this->homeRoot.$this->cssRoot;
 	}
 	
 	/**
 	 * @return the $imgRoot
 	 */
 	public function getImgRoot() {
-		return $this->imgRoot;
-	}
-
-	// activation function
-	private function activation() {
-		global $wpdb;
-		global $syg_db_version;
-		
-		// set db version
-		$syg_db_version = "1.0";
-		
-		// get the current db version
-		$installed_ver = get_option( "syg_db_version" );
-		
-		if( $installed_ver != $syg_db_version ) {
-			// set the table name
-			$table_name = $wpdb->prefix . "syg";
-			
-			// must create table if not exists
-			$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
-					  `id` int(11) NOT NULL AUTO_INCREMENT,
-					  `syg_youtube_username` varchar(255) NOT NULL,
-					  `syg_youtube_videoformat` varchar(255) NOT NULL,
-					  `syg_youtube_maxvideocount` int(11) NOT NULL,
-					  `syg_thumbnail_height` int(11) NOT NULL,
-					  `syg_thumbnail_width` int(11) NOT NULL,
-					  `syg_thumbnail_bordersize` int(11) NOT NULL,
-					  `syg_thumbnail_bordercolor` varchar(255) NOT NULL,
-					  `syg_thumbnail_borderradius` int(11) NOT NULL,
-					  `syg_thumbnail_distance` int(11) NOT NULL,
-					  `syg_thumbnail_overlaysize` int(11) NOT NULL,
-					  `syg_thumbnail_image` varchar(255) NOT NULL,
-					  `syg_thumbnail_buttonopacity` float NOT NULL,
-					  `syg_description_width` int(11) NOT NULL,
-					  `syg_description_fontsize` int(11) NOT NULL,
-					  `syg_description_fontcolor` varchar(255) NOT NULL,
-					  `syg_description_show` tinyint(1) NOT NULL,
-					  `syg_description_showduration` tinyint(1) NOT NULL,
-					  `syg_description_showtags` tinyint(1) NOT NULL,
-					  `syg_description_showratings` tinyint(1) NOT NULL,
-					  `syg_description_showcategories` tinyint(1) NOT NULL,
-					  `syg_box_width` int(11) NOT NULL,
-					  `syg_box_background` varchar(255) NOT NULL,
-					  `syg_box_radius` int(11) NOT NULL,
-					  `syg_box_padding` int(11) NOT NULL,
-					  PRIMARY KEY  (`id`)
-					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
-			
-			// run the dbDelta function
-			dbDelta($sql);
-			
-			// add or update db version option
-			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version); 
-		}
-	}
-
-	private function setFrontEndOption() {
-		
-		// get the resources url
-		$sygCssUrl = $this->cssRoot . 'SlidingYoutubeGallery.css.php';
-		$sygJsUrl =  $this->jsRoot . 'SlidingYoutubeGallery.js.php';
-
-		// external
-		$fancybox_js_url = $this->jsRoot . '/fancybox/jquery.fancybox-1.3.4.pack.js';
-		$easing_js_url = $this->jsRoot . '/fancybox/jquery.easing-1.3.pack.js';
-		$mousewheel_js_url = $this->jsRoot . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-		$fancybox_css_url = $this->jsRoot. '/fancybox/jquery.fancybox-1.3.4.css';
-
-		// register styles
-		wp_register_style('sliding-youtube-gallery', $sygCssUrl, array(), SygConstant::SYG_VERSION, 'screen');
-		wp_enqueue_style('sliding-youtube-gallery');
-		wp_register_style('fancybox', $fancybox_css_url, array(), SygConstant::SYG_VERSION, 'screen');
-		wp_enqueue_style('fancybox');
-
-		// load the local copy of jQuery in the footer
-		wp_enqueue_script('jquery');
-
-		// load our own scripts
-		wp_register_script('sliding-youtube-gallery', $sygJsUrl, array(), SygConstant::SYG_VERSION, true);
-		wp_enqueue_script('sliding-youtube-gallery');
-		wp_register_script('fancybox', $fancybox_js_url, array(), SygConstant::SYG_VERSION, true);
-		wp_enqueue_script('fancybox');
-		wp_register_script('easing', $easing_js_url, array(), SygConstant::SYG_VERSION, true);
-		wp_enqueue_script('easing');
-		wp_register_script('mousewheel', $mousewheel_js_url, array(), SygConstant::SYG_VERSION, true);
-		wp_enqueue_script('mousewheel');
-
+		return $this->homeRoot.$this->imgRoot;
 	}
 
 	// sliding youtube gallery
@@ -358,8 +326,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			update_option($value['opt'], $value['val']);
 		}
 	
-		
-	
 		update_option($syg['th_top']['opt'], $syg['th_top']['val']);
 		update_option($syg['th_left']['opt'], $syg['th_left']['val']);
 	
@@ -367,8 +333,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	}
 	
 	/*
-	 * main function for admin interface
-	*/
+	 * @param null
+	 * @return Simple action controller
+	 */
 	function sygAdminHome() {
 		// updated flag
 		$updated = false;
@@ -378,6 +345,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
 
+		// determine wich action to call
 		switch ($_GET['action']) {
 			case 'edit':
 				$this->forwardToEdit();
@@ -399,45 +367,110 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 	}
 	
+	/*
+	 * @param null
+	 * @return Inject css, js and img path with other information used by view
+	 */
+	private function prepareHeader(&$view, $context) {
+		
+		switch ($context) {
+			case SygConstant::SYG_CTX_BE:
+				// define resources path
+				$view['cssPath'] = $this->getCssRoot();
+				$view['imgPath'] = $this->getImgRoot();
+				$view['jsPath'] = $this->getJsRoot();
+				
+				// css to include
+				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
+				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+				break;
+			case SygConstant::SYG_CTX_FE:
+				// get the resources url
+				$sygCssUrl = $this->cssRoot . 'SlidingYoutubeGallery.css.php';
+				$sygJsUrl =  $this->jsRoot . 'SlidingYoutubeGallery.js.php';
+				
+				// external
+				$fancybox_js_url = $this->jsRoot . '/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$easing_js_url = $this->jsRoot . '/fancybox/jquery.easing-1.3.pack.js';
+				$mousewheel_js_url = $this->jsRoot . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$fancybox_css_url = $this->jsRoot. '/fancybox/jquery.fancybox-1.3.4.css';
+				
+				// register styles
+				wp_register_style('sliding-youtube-gallery', $sygCssUrl, array(), SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('sliding-youtube-gallery');
+				wp_register_style('fancybox', $fancybox_css_url, array(), SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('fancybox');
+				
+				// load the local copy of jQuery in the footer
+				wp_enqueue_script('jquery');
+				
+				// load our own scripts
+				wp_register_script('sliding-youtube-gallery', $sygJsUrl, array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery');
+				wp_register_script('fancybox', $fancybox_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('fancybox');
+				wp_register_script('easing', $easing_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('easing');
+				wp_register_script('mousewheel', $mousewheel_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('mousewheel');
+				break;
+			case SygConstant::SYG_CTX_WS:
+				
+				break;
+			default:
+				break;
+		}  
+	}
+	
+	/*
+	 * @param null
+	 * @return Return a redirect to plugin admin homepage
+	 */
 	private function forwardToSettings() {
-		// define css to include
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		// prepare header 
+		$this->prepareHeader($this->data);
 		
-		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
-		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
-		
+		// render generalSettings view
 		$this->render('generalSettings');
 	}
 	
+	/*
+	 * @param null
+	 * @return Return a redirect to gallery adding section
+	 */
 	private function forwardToAdd() {
-		// define css to include
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		// prepare header
+		$this->prepareHeader($this->data);
 		
-		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
-		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
-		
+		// put an empty gallery in the view	
 		$this->data['gallery'] = new SygGallery();
 		
+		// render adminGallery view
 		$this->render('adminGallery');
 	}
 	
+	/*
+	 * @param null
+	 * @return Return a redirect to gallery editing section
+	 */
 	private function forwardToEdit() {
+		// get the gallery id
 		$id = (int) $_GET['id'];
 		
-		// define css to include
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
+		// prepare header
+		$this->prepareHeader($this->data);
 		
-		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
-		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
-		
+		// put gallery in the view
 		$this->data['gallery'] = $this->sygDao->getSygById($id);
 		
+		// render adminGallery view
 		$this->render('adminGallery');
 	}
 	
+	/*
+	 * @param null
+	 * @return Return a redirect to plugin admin homepage
+	 */
 	private function forwardToHome() {
 		// option inventory
 		$syg = $this->optionInventory();
