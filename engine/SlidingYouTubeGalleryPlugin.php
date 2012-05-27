@@ -338,6 +338,11 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				// css to include
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+				
+				// js to include
+				$view['jsAdminUrl'] = $view['jsPath'] . 'admin.js';
+				$view['jsColorPickerUrl'] = $view['jsPath'] . 'colorpicker.js';
+				
 				break;
 			case SygConstant::SYG_CTX_FE:
 				// define resources path
@@ -401,15 +406,12 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		
 		$updated = false;
 		
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
 		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
 			// get posted values
-			$syg = getPostedValues($syg);
+			$syg = $this->getPostedValues($syg);
 		
 			// update db
-			$syg = updateOptions($syg);
+			$syg = $this->sygDao->addSyg($syg);
 		
 			// updated flag
 			$updated = true;
@@ -418,8 +420,11 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			$this->data['updated'] = $updated;
 			
 			// render adminGallery view
-			$this->render('adminHome');
+			$this->forwardToHome();
 		}else{
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			
 			// put an empty gallery in the view
 			$this->data['gallery'] = new SygGallery();
 			

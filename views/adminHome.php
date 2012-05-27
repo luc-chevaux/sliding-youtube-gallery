@@ -13,6 +13,8 @@
 @import url('<?php echo $this->data['cssColorPicker']; ?>');
 </style>
 
+<!-- Javascript Inclusion -->
+
 <!-- Title Page -->
 <div class="wrap">
 	<div id="icon-options-general" class="icon32">

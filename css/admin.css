@@ -96,7 +96,7 @@ label {
 }
 
 #thumb_bordercolor_selector div, #box_backgroundcolor_selector div, #desc_fontcolor_selector div {
-    background: url("../img/select.png") repeat scroll center center transparent;
+    background: url("../img/colorpicker/select.png") repeat scroll center center transparent;
     height: 15px;
     width: 15px;
 }

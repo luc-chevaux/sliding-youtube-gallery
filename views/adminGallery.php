@@ -3,10 +3,6 @@
 <!-- Extra Php Code -->
 <?php 	
 	$gallery = $this->data['gallery'];
-	
-	// javascript inclusion
-	$js_url = $jsPath . '/admin.js';
-	$js_color_picker = $jsPath . '/colorpicker.js';
 ?>
 
 <!-- User Message -->
@@ -19,6 +15,10 @@
 @import url('<?php echo $this->data['cssAdminUrl']; ?>');
 @import url('<?php echo $this->data['cssColorPicker']; ?>');
 </style>
+
+<!-- Javascript Inclusion -->
+<script type="text/javascript" src="<?php echo $this->data['jsAdminUrl']; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->data['jsColorPickerUrl']; ?>"></script>
 
 <!-- Title Page -->
 <div class="wrap">
@@ -43,7 +43,30 @@
 		<legend><strong>YouTube settings</strong></legend>
 		<label for="syg_youtube_username">YouTube User: </label>
 		<input type="text" id="syg_youtube_username" name="syg_youtube_username" value="<?php echo $gallery->getYtUsername(); ?>" size="30">
+				
+		<br/><br/>
 
+		<!-- video format -->
+		<label for="syg_youtube_videoformat">Video Format: </label>
+		<select id="syg_youtube_videoformat" name="syg_youtube_videoformat">
+			<option value="420n" <?php if ($gallery->getYtVideoFormat() == '420n') echo 'selected="selected"'; ?>>420 X 315 (normal)</option>
+			<option value="480n" <?php if ($gallery->getYtVideoFormat() == '480n') echo 'selected="selected"'; ?>>480 X 360 (normal)</option>
+			<option value="640n" <?php if ($gallery->getYtVideoFormat() == '640n') echo 'selected="selected"'; ?>>640 X 480 (normal)</option>
+			<option value="960n" <?php if ($gallery->getYtVideoFormat() == '960n') echo 'selected="selected"'; ?>>960 X 720 (normal)</option>
+			<option value="560w" <?php if ($gallery->getYtVideoFormat() == '560w') echo 'selected="selected"'; ?>>560 X 315 (wide)</option>
+			<option value="640w" <?php if ($gallery->getYtVideoFormat() == '640w') echo 'selected="selected"'; ?>>640 X 360 (wide)</option>
+			<option value="853w" <?php if ($gallery->getYtVideoFormat() == '853w') echo 'selected="selected"'; ?>>853 X 480 (wide)</option>
+			<option value="1280w" <?php if ($gallery->getYtVideoFormat() == '1280w') echo 'selected="selected"'; ?>>1280 X 720 (wide)</option>
+		</select>
+		
+		<!-- video count -->
+		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
+		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
+	</fieldset>
+	
+	<!-- description appereance -->
+	<fieldset>
+		<legend><strong>Meta Information</strong></legend>
 		<!-- duration -->
 		<label for="syg_description_showduration">Duration </label>
 		<input type="checkbox" name="syg_description_showduration" id="syg_description_showduration" value="1" <?php if ($gallery->getDescShowDuration()) echo 'checked="checked"';?>>
@@ -63,25 +86,6 @@
 		<!-- categories -->
 		<label for="syg_description_showcategories">Categories </label>
 		<input type="checkbox" name="syg_description_showcategories" id="syg_description_showcategories" value="1" <?php if ($gallery->getDescShowCategories()) echo 'checked="checked"';?>>
-		
-		<br/><br/>
-
-		<!-- video format -->
-		<label for="syg_youtube_videoformat">Video Format: </label>
-		<select id="'.$syg['yt_videoformat']['opt'].'" name="'.$syg['yt_videoformat']['opt'].'">
-			<option value="420n" <?php if ($gallery->getYtVideoFormat() == '420n') echo 'selected="selected"'; ?>>420 X 315 (normal)</option>
-			<option value="480n" <?php if ($gallery->getYtVideoFormat() == '480n') echo 'selected="selected"'; ?>>480 X 360 (normal)</option>
-			<option value="640n" <?php if ($gallery->getYtVideoFormat() == '640n') echo 'selected="selected"'; ?>>640 X 480 (normal)</option>
-			<option value="960n" <?php if ($gallery->getYtVideoFormat() == '960n') echo 'selected="selected"'; ?>>960 X 720 (normal)</option>
-			<option value="560w" <?php if ($gallery->getYtVideoFormat() == '560w') echo 'selected="selected"'; ?>>560 X 315 (wide)</option>
-			<option value="640w" <?php if ($gallery->getYtVideoFormat() == '640w') echo 'selected="selected"'; ?>>640 X 360 (wide)</option>
-			<option value="853w" <?php if ($gallery->getYtVideoFormat() == '853w') echo 'selected="selected"'; ?>>853 X 480 (wide)</option>
-			<option value="1280w" <?php if ($gallery->getYtVideoFormat() == '1280w') echo 'selected="selected"'; ?>>1280 X 720 (wide)</option>
-		</select>
-		
-		<!-- video count -->
-		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
-		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
 	</fieldset>
 	
 	<!-- thumbnail appereance -->
@@ -112,7 +116,7 @@
 		
 		<!-- border color -->
 		<label for="syg_thumbnail_bordercolor">Border Color: </label>
-		<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="text" id="syg_thumbnail_bordercolor" name="syg_thumbnail_bordercolor" value="<?php echo $gallery->getThumbBorderColor(); ?>" size="10">
+		<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="hidden" id="syg_thumbnail_bordercolor" name="syg_thumbnail_bordercolor" value="<?php echo $gallery->getThumbBorderColor(); ?>" size="10">
 		
 		<!-- color picker -->
 		<div id="thumb_bordercolor_selector">
@@ -120,7 +124,10 @@
 		</div>
 		
 		<br/><br/>
-		
+	</fieldset>
+	
+	<fieldset>
+		<legend><strong>Play Button Appereance</strong></legend>
 		<!-- button size -->
 		<label for="syg_thumbnail_overlaysize">Button size: </label>
 			<select id="syg_thumbnail_overlaysize" name="syg_thumbnail_overlaysize">
@@ -133,20 +140,16 @@
 		<!-- overlay button image -->
 		<label for="syg_thumbnail_image">Image: </label>
 		<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="1" <?php if ($gallery->getThumbImage() == 1) echo 'checked="checked"'; ?>>
-		<img width="32" src="<?php echo $imgPath . '/button/play-the-video_1.png'; ?>"/>
+		<img width="32" src="<?php echo $this->data['imgPath'] . '/button/play-the-video_1.png'; ?>"/>
 		<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="2" <?php if ($gallery->getThumbImage() == 2) echo 'checked="checked"'; ?>>
-		<img width="32" src="<?php echo $imgPath . '/button/play-the-video_2.png'; ?>"/>	
+		<img width="32" src="<?php echo $this->data['imgPath'] . '/button/play-the-video_2.png'; ?>"/>	
 		<input type="radio" id="syg_thumbnail_image" name="syg_thumbnail_image" value="3" <?php if ($gallery->getThumbImage() == 3) echo 'checked="checked"'; ?>>
-		<img width="32" src="<?php echo $imgPath . '/button/play-the-video_3.png'; ?>"/>
+		<img width="32" src="<?php echo $this->data['imgPath'] . '/button/play-the-video_3.png'; ?>"/>
 		
 		<!-- overlay button opacity -->
 		<label for="syg_thumbnail_buttonopacity">Button opacity: </label>
 		<input type="text" id="syg_thumbnail_buttonopacity" name="syg_thumbnail_buttonopacity" value="<?php echo $gallery->getThumbButtonOpacity(); ?>" size="10">
 	</fieldset>
-
-	<!-- overlay button opacity -->
-	<script type="text/javascript" src="'.$js_url.'"></script>
-	<script type="text/javascript" src="'.$js_color_picker.'"></script>
 
 	<!-- box and description appereance -->
 	<fieldset>
@@ -166,7 +169,7 @@
 
 		<!-- background color -->
 		<label for="syg_box_background">Background color: </label>
-		<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="text" id="syg_box_background" name="syg_box_background" value="<?php echo $gallery->getBoxBackground(); ?>" size="10">
+		<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="hidden" id="syg_box_background" name="syg_box_background" value="<?php echo $gallery->getBoxBackground(); ?>" size="10">
 
 		<div id="box_backgroundcolor_selector">
 			<div style="background-color: #efefef;"></div>
@@ -180,7 +183,7 @@
 		
 		<!-- description font color -->
 		<label for="syg_description_fontcolor">Font color: </label>
-		<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="text" id="syg_description_fontcolor" name="syg_description_fontcolor" value="<?php echo $gallery->getDescFontColor(); ?>" size="10">
+		<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="hidden" id="syg_description_fontcolor" name="syg_description_fontcolor" value="<?php echo $gallery->getDescFontColor(); ?>" size="10">
 		
 		<div id="desc_fontcolor_selector">
 			<div style="background-color: #333333;"></div>

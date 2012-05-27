@@ -4,8 +4,8 @@ class SygConstant {
 
 	// define administration menu constant
 	const BE_WELCOME_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
-	const BE_SUPPORT_PAGE = '<a href=\"http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/\">Support page</a>';
-	const BE_DONATION_CODE = '<a href=\"http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/\">Donation</a>';
+	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
+	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 
 	// strings message
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
@@ -24,5 +24,11 @@ class SygConstant {
 	const SYG_CTX_FE = "SYG_CTX_FE";
 	const SYG_CTX_BE = "SYG_CTX_BE";
 	const SYG_CTX_WS = "SYG_CTX_WS";
+	
+	// default values for constructors
+	const SYG_DESC_DEFAULT_FONT_COLOR = "#ffffff";
+	const SYG_THUMB_DEFAULT_BORDER_COLOR = "#efefef";
+	const SYG_BOX_DEFAULT_BACKGROUND_COLOR = "#cccccc";
+	
 }
 ?>

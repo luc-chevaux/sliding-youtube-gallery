@@ -40,13 +40,13 @@ class SygGallery {
 
 	private function mapThis($result = null) {
 		// box option values
-		$this->setBoxBackground($result->syg_box_background);
+		$this->setBoxBackground(($result->syg_box_background) ? $result->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
 		$this->setBoxPadding($result->syg_box_padding);
 		$this->setBoxRadius($result->syg_box_radius);
 		$this->setBoxWidth($result->syg_box_width);
 		
 		// description option values
-		$this->setDescFontColor($result->syg_description_fontcolor);
+		$this->setDescFontColor(($result->syg_description_fontcolor) ? ($result->syg_description_fontcolor) : SygConstant::SYG_DESC_DEFAULT_FONT_COLOR);
 		$this->setDescFontSize($result->syg_description_fontsize);
 		$this->setDescShow($result->syg_description_show);
 		$this->setDescShowCategories($result->syg_description_showcategories);
@@ -56,7 +56,7 @@ class SygGallery {
 		$this->setDescWidth($result->syg_description_width);
 		
 		// thumbnail option values
-		$this->setThumbBorderColor($result->syg_thumbnail_bordercolor);
+		$this->setThumbBorderColor(($result->syg_thumbnail_bordercolor) ? $result->syg_thumbnail_bordercolor: SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
 		$this->setThumbBorderRadius($result->syg_thumbnail_borderradius);
 		$this->setThumbBorderSize($result->syg_thumbnail_bordersize);
 		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
