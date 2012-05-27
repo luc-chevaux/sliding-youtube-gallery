@@ -52,7 +52,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		// front end code block
 		if(!is_admin()) {
 			// set front end option
-			$this->setFrontEndOption();
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 			// add shortcodes
 			add_shortcode('syg_gallery', array($this, 'getGallery'));
 			add_shortcode('syg_page', array($this, 'getVideoPage'));
@@ -372,7 +372,6 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * @return Inject css, js and img path with other information used by view
 	 */
 	private function prepareHeader(&$view, $context) {
-		
 		switch ($context) {
 			case SygConstant::SYG_CTX_BE:
 				// define resources path
@@ -385,37 +384,41 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
 				break;
 			case SygConstant::SYG_CTX_FE:
-				// get the resources url
-				$sygCssUrl = $this->cssRoot . 'SlidingYoutubeGallery.css.php';
-				$sygJsUrl =  $this->jsRoot . 'SlidingYoutubeGallery.js.php';
+				// define resources path
+				$view['cssPath'] = $this->getCssRoot();
+				$view['imgPath'] = $this->getImgRoot();
+				$view['jsPath'] = $this->getJsRoot();
 				
-				// external
-				$fancybox_js_url = $this->jsRoot . '/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$easing_js_url = $this->jsRoot . '/fancybox/jquery.easing-1.3.pack.js';
-				$mousewheel_js_url = $this->jsRoot . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$fancybox_css_url = $this->jsRoot. '/fancybox/jquery.fancybox-1.3.4.css';
+				// define plugin resources url in the view
+				$view['sygCssUrl'] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php';
+				$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js.php';
 				
-				// register styles
-				wp_register_style('sliding-youtube-gallery', $sygCssUrl, array(), SygConstant::SYG_VERSION, 'screen');
+				// define presentation plugin resources
+				$view['fancybox_js_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath'] . '/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath'] . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['cssPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
+				
+				// css injection
+				wp_register_style('sliding-youtube-gallery', $view['sygCssUrl'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('sliding-youtube-gallery');
-				wp_register_style('fancybox', $fancybox_css_url, array(), SygConstant::SYG_VERSION, 'screen');
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
 				
-				// load the local copy of jQuery in the footer
+				// javascript injection
+				// dependencies
 				wp_enqueue_script('jquery');
-				
-				// load our own scripts
-				wp_register_script('sliding-youtube-gallery', $sygJsUrl, array(), SygConstant::SYG_VERSION, true);
+				// scripts
+				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery');
-				wp_register_script('fancybox', $fancybox_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('fancybox');
-				wp_register_script('easing', $easing_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('easing');
-				wp_register_script('mousewheel', $mousewheel_js_url, array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
 				break;
 			case SygConstant::SYG_CTX_WS:
-				
 				break;
 			default:
 				break;
@@ -428,7 +431,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 */
 	private function forwardToSettings() {
 		// prepare header 
-		$this->prepareHeader($this->data);
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 		// render generalSettings view
 		$this->render('generalSettings');
@@ -440,7 +443,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 */
 	private function forwardToAdd() {
 		// prepare header
-		$this->prepareHeader($this->data);
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 		// put an empty gallery in the view	
 		$this->data['gallery'] = new SygGallery();
@@ -458,7 +461,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$id = (int) $_GET['id'];
 		
 		// prepare header
-		$this->prepareHeader($this->data);
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 		// put gallery in the view
 		$this->data['gallery'] = $this->sygDao->getSygById($id);
@@ -489,14 +492,11 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			$syg = $this->getOptionValues($syg);
 		}
 		
+		// updated flag
 		$this->data['updated'] = $updated;
 		
-		// define css to include
-		$cssPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/css/';
-		$jsPath = $this->homeRoot . '/wp-content/plugins/sliding-youtube-gallery/js/';
-		
-		$this->data['cssAdminUrl'] = $cssPath . 'admin.css';
-		$this->data['cssColorPicker'] = $cssPath . 'colorpicker.css';
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 		// put galleries in the view
 		$galleries = $this->sygDao->getAllSyg();
@@ -506,8 +506,10 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
 		}
 		
+		// put galleries in the view
 		$this->data['galleries'] = $galleries;
 		
+		// render adminHome view
 		$this->render('adminHome');
 	}
 }
