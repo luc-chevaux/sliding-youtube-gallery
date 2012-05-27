@@ -2,7 +2,7 @@
 
 <!-- Extra Php Code -->
 <?php 	
-	$gallery = new SygGallery();
+	$gallery = $this->data['gallery'];
 	
 	// javascript inclusion
 	$js_url = $jsPath . '/admin.js';
