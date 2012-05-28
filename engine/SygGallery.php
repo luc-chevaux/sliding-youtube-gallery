@@ -80,6 +80,65 @@ class SygGallery {
 		$this->setId($result->id);
 	}
 	
+	public function toDto() {
+		return 
+			array('syg_box_background' 				=> $syg->getBoxBackground(),
+				'syg_box_padding' 					=> $syg->getBoxPadding(),
+				'syg_box_radius'					=> $syg->getBoxRadius(),
+				'syg_box_width' 					=> $syg->getBoxWidth(),
+				'syg_description_fontcolor' 		=> $syg->getDescFontColor(),
+				'syg_description_fontsize'			=> $syg->getDescFontSize(),
+				'syg_description_show'				=> $syg->getDescShow(),
+				'syg_description_showcategories'	=> $syg->getDescShowCategories(),
+				'syg_description_showduration'		=> $syg->getDescShowDuration(),
+				'syg_description_showratings'		=> $syg->getDescShowRatings(),
+				'syg_description_showtags' 			=> $syg->getDescShowTags(),
+				'syg_description_width'				=> $syg->getDescWidth(),
+				'syg_thumbnail_bordercolor'			=> $syg->getThumbBorderColor(),
+				'syg_thumbnail_borderradius'		=> $syg->getThumbBorderRadius(),
+				'syg_thumbnail_bordersize'			=> $syg->getThumbBorderSize(),
+				'syg_thumbnail_buttonopacity'		=> $syg->getThumbButtonOpacity(),
+				'syg_thumbnail_distance'			=> $syg->getThumbDistance(),
+				'syg_thumbnail_height'				=> $syg->getThumbHeight(),
+				'syg_thumbnail_image'				=> $syg->getThumbImage(),
+				'syg_thumbnail_width'				=> $syg->getThumbWidth(),
+				'syg_thumbnail_overlaysize'			=> $syg->getThumbOverlaySize(),
+				'syg_youtube_maxvideocount'			=> $syg->getYtMaxVideoCount(),
+				'syg_youtube_videoformat'			=> $syg->getYtVideoFormat(),
+				'syg_youtube_username'				=> $syg->getYtUsername(),
+				'id'								=> $syg->getId()
+			);
+	}
+	
+	public function toFormats() {
+		return 
+			array('%s',
+				'%d',
+				'%d',
+				'%d',
+				'%s',
+				'%d',
+				'%d',
+				'%d',
+				'syg_description_showduration'		=> $syg->getDescShowDuration(),
+				'syg_description_showratings'		=> $syg->getDescShowRatings(),
+				'syg_description_showtags' 			=> $syg->getDescShowTags(),
+				'syg_description_width'				=> $syg->getDescWidth(),
+				'syg_thumbnail_bordercolor'			=> $syg->getThumbBorderColor(),
+				'syg_thumbnail_borderradius'		=> $syg->getThumbBorderRadius(),
+				'syg_thumbnail_bordersize'			=> $syg->getThumbBorderSize(),
+				'syg_thumbnail_buttonopacity'		=> $syg->getThumbButtonOpacity(),
+				'syg_thumbnail_distance'			=> $syg->getThumbDistance(),
+				'syg_thumbnail_height'				=> $syg->getThumbHeight(),
+				'syg_thumbnail_image'				=> $syg->getThumbImage(),
+				'syg_thumbnail_width'				=> $syg->getThumbWidth(),
+				'syg_thumbnail_overlaysize'			=> $syg->getThumbOverlaySize(),
+				'syg_youtube_maxvideocount'			=> $syg->getYtMaxVideoCount(),
+				'syg_youtube_videoformat'			=> $syg->getYtVideoFormat(),
+				'syg_youtube_username'				=> $syg->getYtUsername(),
+				'id'			
+			);
+	}
 	/**
 	 * @return the $ytVideoFormat
 	 */

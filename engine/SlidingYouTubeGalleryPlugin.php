@@ -10,7 +10,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	/* Return current instance of the plugin
 	 * @param null
 	 * @return null
-	 * */
+	 */
 	public static function getInstance() {
 		if(self::$instance == null) {
 			$c = __CLASS__;
@@ -408,10 +408,13 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		
 		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
 			// get posted values
-			$syg = $this->getPostedValues($syg);
-		
+			$data = serialize($_POST);
+			
+			// create a new gallery
+			$syg = new SygGallery($data);
+			
 			// update db
-			$syg = $this->sygDao->addSyg($syg);
+			$this->sygDao->addSyg($syg);
 		
 			// updated flag
 			$updated = true;
