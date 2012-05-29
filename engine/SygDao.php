@@ -8,15 +8,6 @@ class SygDao {
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
 	
-	/*$wpdb->prepare(
-			"
-			
-			WHERE post_id = %d
-			AND meta_key = %s
-			",
-			13, 'gargle'
-	)*/
-	
 	/* Default constructor
 	 * @param null
 	 * @return null
