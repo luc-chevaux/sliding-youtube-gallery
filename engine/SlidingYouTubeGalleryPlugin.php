@@ -407,6 +407,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$updated = false;
 		
 		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
+			// database add procedure
 			// get posted values
 			$data = serialize($_POST);
 			
@@ -425,6 +426,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			// render adminGallery view
 			$this->forwardToHome();
 		}else{
+			// gallery administration form section
 			// prepare header
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 			
@@ -441,17 +443,38 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	 * @return Return a redirect to gallery editing section
 	 */
 	private function forwardToEdit() {
-		// get the gallery id
-		$id = (int) $_GET['id'];
-		
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
-		// put gallery in the view
-		$this->data['gallery'] = $this->sygDao->getSygById($id);
-		
-		// render adminGallery view
-		$this->render('adminGallery');
+		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
+			// database update procedure
+			// get posted values
+			$data = serialize($_POST);
+				
+			// create a new gallery
+			$syg = new SygGallery($data);
+			
+			// update db
+			$this->sygDao->updateSyg($syg);
+			
+			// updated flag
+			$updated = true;
+				
+			// updated flag
+			$this->data['updated'] = $updated;
+				
+			// render adminGallery view
+			$this->forwardToHome();
+		} else {
+			// get the gallery id
+			$id = (int) $_GET['id'];
+			
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			
+			// put gallery in the view
+			$this->data['gallery'] = $this->sygDao->getSygById($id);
+			
+			// render adminGallery view
+			$this->render('adminGallery');
+		}
 	}
 	
 	/*

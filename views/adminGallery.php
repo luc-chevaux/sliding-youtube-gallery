@@ -36,7 +36,8 @@
 <!-- Gallery Form -->
 <form name="form1" method="post" action="">
 	<input type="hidden" name="syg_submit_hidden" value="Y">
-
+	<input type="hidden" name="id" id="id" value="<?php echo $gallery->getId(); ?>">
+	
 	<!-- youtube settings -->
 	<fieldset>
 		<!-- user -->
