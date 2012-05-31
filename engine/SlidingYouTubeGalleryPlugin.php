@@ -212,24 +212,37 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	}
 
 	// sliding youtube gallery
-	function getGallery() {
-		try {
-			$username = get_option ( 'syg_youtube_username' );
-			$videoFeed = $this->sygYouTube->getuserUploads ( $username );
-			$html = '<div id="syg_video_gallery"><div class="sc_menu">';
-			$html .= '<ul class="sc_menu">';
-			$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_GALLERY );
-			$html .= '</ul>';
-			$html .= '</div></div>';
-		} catch (Exception $ex) {
-			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
+	function getGallery($attributes) {
+		extract(shortcode_atts(array('id' => null), $attributes));
+		if (!empty($id)) {
+			try {
+				// get the gallery
+				$dao = new SygDao();
+				$gallery = $dao->getSygById($id);
+				$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
+
+				// get video feed from youtube 
+				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
+
+				// truncate video feed
+				array_splice ($videoFeed, $gallery->getYtMaxVideoCount());
+				
+				// put the feed in the view
+				$this->data['feed'] = $feed;
+				
+				$this->render('gallery');		
+			} catch (Exception $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->render('exception');
+			}	
 		}
 
 		return $html;
 	}
 
 	// sliding video page
-	function getVideoPage() {
+	function getVideoPage($attributes) {
 		try {
 			// variables for the field and option names
 			$username = get_option('syg_youtube_username');

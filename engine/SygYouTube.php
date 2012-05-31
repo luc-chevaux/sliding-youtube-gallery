@@ -15,35 +15,8 @@ class SygYouTube {
 		$this->wpDatabaseLink = $wpdb;
 	}
 	
-	function getEntireFeed($videoFeed, $counter, $method) {
-		$stop = get_option ( 'syg_youtube_maxvideocount' );
-		foreach ( $videoFeed as $videoEntry ) {
-			if ($method == SygConstant::SYG_METHOD_GALLERY) {
-				$html .= $this->getGalleryVideoEntry ($videoEntry);
-			} else if ($method == SygConstant::SYG_METHOD_PAGE) {
-				$html .= getPageVideoEntry ($videoEntry);
-			}
-	
-			if ($counter >= $stop) {
-				break;
-			} else {
-				$counter ++;
-			}
-		}
-	
-		// See whether we have another set of results
-		if ($counter < $stop) {
-			try {
-				$videoFeed = $videoFeed->getNextFeed ();
-			} catch ( Zend_Gdata_App_Exception $e ) {
-				return $html;
-			}
-	
-			if ($videoFeed) {
-				$html .= $this->getEntireFeed ( $videoFeed, $counter, $method );
-			}
-		}
-		return $html;
+	function getEntireFeed($videoFeed, SygGallery $gallery) {
+		
 	}
 	
 	/*
