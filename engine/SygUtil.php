@@ -43,7 +43,7 @@ class SygUtil {
 	/*
 	 * convert second to time
 	*/
-	public static function Sec2Time($time) {
+	private static function Sec2Time($time) {
 		if(is_numeric($time)) {
 			$value = array(
 					"years" => 0, "days" => 0, "hours" => 0,
@@ -70,6 +70,14 @@ class SygUtil {
 		}else{
 			return (bool) FALSE;
 		}
+	}
+	
+	public static function formatDuration ($duration = null) {
+		$duration = self::Sec2Time($duration);
+		$videoDuration .= ($duration['hours'] > 0) ? $duration['hours'].':' : '';
+		$videoDuration .= ($duration['minutes'] > 0) ? $duration['minutes'].':' : '0:';
+		$videoDuration .= str_pad($duration['seconds'], 2, '0', STR_PAD_LEFT);
+		return $videoDuration;
 	}
 }
 ?>

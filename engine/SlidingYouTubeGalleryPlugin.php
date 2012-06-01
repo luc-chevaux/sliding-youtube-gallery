@@ -223,13 +223,24 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
-
+				
 				// truncate video feed
-				array_splice ($videoFeed, $gallery->getYtMaxVideoCount());
+				// create new feed
+				$counter = 1;
+				$feed = new Zend_Gdata_YouTube_VideoFeed();
+				foreach ($videoFeed as $videoEntry) {
+					$feed->addEntry($videoEntry);
+					$i++;
+					if ($i > $gallery->getYtMaxVideoCount()) break;
+				}
 				
 				// put the feed in the view
 				$this->data['feed'] = $feed;
 				
+				// put the gallery settings in the view
+				$this->data['gallery'] = $gallery;
+				
+				// render gallery snippet code
 				$this->render('gallery');		
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
@@ -362,6 +373,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				$view['cssPath'] = $this->getCssRoot();
 				$view['imgPath'] = $this->getImgRoot();
 				$view['jsPath'] = $this->getJsRoot();
+				$view['pluginPath'] = $this->getPluginRoot();
 				
 				// define plugin resources url in the view
 				$view['sygCssUrl'] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php';

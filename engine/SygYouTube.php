@@ -15,10 +15,6 @@ class SygYouTube {
 		$this->wpDatabaseLink = $wpdb;
 	}
 	
-	function getEntireFeed($videoFeed, SygGallery $gallery) {
-		
-	}
-	
 	/*
 	 * return html for a video entry in a page
 	*/
