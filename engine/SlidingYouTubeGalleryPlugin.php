@@ -6,6 +6,16 @@
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2
+ * 
+ * @todo Indicizzare i blocchi html, nel caso di più gallerie su una pagina, in modo da renderli independenti con css e js.
+ * @todo Inserire statistiche di attivazione, disattivazione, aggiornamento e nuova installazione
+ * @todo Sistemare la visualizzazione e la action di youtube page gallery
+ * @todo Preview
+ * @todo Navigator
+ * @todo YouTube api key option
+ * @todo Linkare la cancellazione con javascript 
+ * @todo Aggiornare la documentazione
+ * @todo Aggiungere opzione disabilita video correlati
  */
 
 include_once 'Zend/Loader.php';
@@ -217,17 +227,34 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		return $this->homeRoot.$this->imgRoot;
 	}
 
+	/* END GETTERS AND SETTER */
+	
+	
+	/**
+	 * Get gallery settings returning its DTO
+	 * @param $id 
+	 * @return array
+	 */
 	public function getGallerySettings($id = null) {
+		// cast id to an int
 		$id = (int) $id;
+		
 		// get the gallery
 		$dao = new SygDao();
 		$gallery = $dao->getSygById($id);
+		
+		// set youtube profile object in the gallery
 		$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 		
+		// return gallery in dto format
 		return $gallery->toDto();	
 	}
 	
-	// sliding youtube gallery
+	/**
+	 * Get gallery wordpress hook function
+	 * @param $attributes 
+	 * @return null
+	 */
 	function getGallery($attributes) {
 		extract(shortcode_atts(array('id' => null), $attributes));
 		if (!empty($id)) {
@@ -271,7 +298,11 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		return $html;
 	}
 
-	// sliding video page
+	/**
+	 * Get page wordpress hook function
+	 * @param $attributes 
+	 * @return null
+	 */
 	function getVideoPage($attributes) {
 		try {
 			// variables for the field and option names
@@ -286,54 +317,19 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 		return $html;
 	}
-
-	// video page short code
-	function syg_display_page() {
-		$html = $this->getVideoPage();
-		echo $html;
-	}
-
-	// video gallery short code
-	function syg_display_gallery() {
-		$html = $this->getGallery();
-		echo $html;
-	}
 	
-	/*
-	 * admin hook to wp
-	*/
+	/**
+	 * Sliding YouTube Gallery admin menu hook
+	 * @param $attributes 
+	 * @return null
+	 */
 	function SlidingYoutubeGalleryAdmin() {
 		add_options_page('SlidingYoutubeGallery Options', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminHome'));
 	}
 	
-	/*
-	 * function used to get posted value
-	*/
-	private function getPostedValues($syg) {
-		foreach ($this->syg as $key => $value) {
-			$this->syg[$key]['val'] = $_POST[$value['opt']];
-		}
-		return $syg;
-	}
-	
-	/*
-	 * function used to update option
-	*/
-	function updateOptions($syg) {
-		// update generic option
-		foreach ($syg as $key => $value) {
-			update_option($value['opt'], $value['val']);
-		}
-	
-		update_option($syg['th_top']['opt'], $syg['th_top']['val']);
-		update_option($syg['th_left']['opt'], $syg['th_left']['val']);
-	
-		return $syg;
-	}
-	
-	/*
-	 * @param null
-	 * @return Simple action controller
+	/**
+	 * Plugin administration hook function
+	 * @return null
 	 */
 	function sygAdminHome() {
 		// updated flag
@@ -366,9 +362,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 	}
 	
-	/*
-	 * @param null
-	 * @return Inject css, js and img path with other information used by view
+	/**
+	 * Prepare HTML Headers with css/js injection
+	 * @return null
 	 */
 	private function prepareHeader(&$view, $context) {
 		switch ($context) {
@@ -432,9 +428,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}  
 	}
 	
-	/*
-	 * @param null
-	 * @return Return a redirect to plugin admin homepage
+	/**
+	 * Action Forward to setting page
+	 * @return null
 	 */
 	private function forwardToSettings() {
 		// prepare header 
@@ -444,9 +440,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$this->render('generalSettings');
 	}
 	
-	/*
-	 * @param null
-	 * @return Return a redirect to gallery adding section
+	/**
+	 * Action Forward to add gallery
+	 * @return null
 	 */
 	private function forwardToAdd() {
 		
@@ -484,9 +480,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 	}
 	
-	/*
-	 * @param null
-	 * @return Return a redirect to gallery editing section
+	/**
+	 * Action Forward to edit gallery
+	 * @return null
 	 */
 	private function forwardToEdit() {
 		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
@@ -523,9 +519,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 	}
 	
-	/*
-	 * @param null
-	 * @return Return a redirect to plugin admin homepage
+	/**
+	 * Action Forward to homepage
+	 * @return null
 	 */
 	private function forwardToHome() {
 		// prepare header

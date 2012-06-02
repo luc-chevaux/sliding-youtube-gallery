@@ -8,8 +8,6 @@
  * @version: 1.2
  */
 
-global $wpdb;
-
 class SygDao {
 	private $db;
 	private $table_name ;
@@ -23,8 +21,9 @@ class SygDao {
 	 * Default constructor
 	 * @return null
 	 */
-	public function __construct() {		
+	public function __construct() {
 		// get wordpress dbms linked
+		global $wpdb;
 		$this->db = $wpdb;
 		
 		// set table name
