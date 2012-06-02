@@ -11,7 +11,6 @@
 
 /*
 @todo renderlo in qualche modo indipendente dalla piattaforma
-@todo memorizzare le combinazioni e richiamarle con un id
 @todo widget wordpress
 @todo down scrolling
 @todo background image

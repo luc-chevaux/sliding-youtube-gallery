@@ -384,7 +384,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				$view['cssPath'] = $this->getCssRoot();
 				$view['imgPath'] = $this->getImgRoot();
 				$view['jsPath'] = $this->getJsRoot();
-				$view['pluginPath'] = $this->getPluginRoot();
+				
+				// define plugin url
+				$view['pluginUrl'] = $this->homeRoot . $this->getPluginRoot();
 				
 				// define plugin resources url in the view
 				$gallery = $view['gallery'];
