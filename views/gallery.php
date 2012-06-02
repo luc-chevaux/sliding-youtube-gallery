@@ -17,9 +17,9 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 <!-- Javascript Inclusion -->
 
 <!-- Gallery -->
-<div id="syg_video_gallery">
-	<div class="sc_menu">
-		<ul class="sc_menu">
+<div id="syg_video_gallery-<?php echo $gallery->getId();?>">
+	<div class="sc_menu-<?php echo $gallery->getId();?>">
+		<ul class="sc_menu-<?php echo $gallery->getId();?>">
 			<?php 
 				foreach ($feed as $element) {
 					$videoThumbnails = $element->getVideoThumbnails();	
@@ -29,13 +29,13 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 					<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>&video=<?php echo $element->getVideoId(); ?>">
 						<!-- append video thumbnail -->
 						<?php if ($gallery->getDescShow()) { ?>
-							<img src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+							<img src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
 						<?php } else { ?>
-							<img src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image" alt="play" title="play"/>
+							<img src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
 						<?php }?>				
 				
 						<!-- show overlay button -->			
-						<img class="play-icon" src="<?php echo $overlayButtonSrc; ?>" alt="play">
+						<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
 				
 						<!-- show video duration -->
 						<?php if ($gallery->getDescShowDuration()) { ?>
@@ -43,7 +43,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 						<?php } ?>
 					</a>
 					<!-- show video title -->
-					<span class="video_title"><?php echo $element->getVideoTitle(); ?></span>
+					<span class="video_title-<?php echo $gallery->getId();?>"><?php echo $element->getVideoTitle(); ?></span>
 				</li>
 			<?php } ?>
 		</ul>

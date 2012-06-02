@@ -19,13 +19,14 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
 
 $syg = SygPlugin::getInstance();
-$option = $syg->getGallerySettings($_GET['id']);
+$id = $_GET['id'];
+$option = $syg->getGallerySettings($id);
 extract ($option);
 ?>
 
 /* general styles */
 
-img.thumbnail-image{
+img.thumbnail-image-<?php echo $id; ?> {
 	width: <?php echo $syg_thumbnail_width; ?>px;
 	heigth: <?php echo $syg_thumbnail_height; ?>px;
 	border: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;	
@@ -36,7 +37,7 @@ img.thumbnail-image{
     display: block;
 }
 
-img.play-icon{
+img.play-icon-<?php echo $id; ?>{
 	border: 0;
 	display: block;
 	visibility:visible;
@@ -70,7 +71,7 @@ span.video_duration {
 
 /* video-page styles */
 
-h4.video_title {
+h4.video_title-<?php echo $id; ?> {
 	color: <?php echo $syg_description_fontcolor; ?>;
 	font-size: 115%;
 	font-weight: bold;
@@ -78,44 +79,44 @@ h4.video_title {
 	border-bottom: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;
 }
 
-h4.video_title a {
+h4.video_title-<?php echo $id; ?> a {
 	color: inherit;
 	text-decoration: none;
 }
 
-.syg_video_page_container .video_entry_table {
+.syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> {
 	width: 100%;
 	border-width: 0px 0px 0px 0px;
 	margin: 0;
 	padding: 0;
 }
 
-.video_entry_table td p {
+.video_entry_table-<?php echo $id; ?> td p {
 	margin: 0px 0px 3%;
 	font-size: 95%;
 }
 
-.video_entry_table td span.video_tags {
+.video_entry_table-<?php echo $id; ?> td span.video_tags {
 	font-size: 80%;
 	display: block;
 }
 
-.video_entry_table td span.video_ratings {
+.video_entry_table-<?php echo $id; ?> td span.video_ratings {
 	font-size: 80%;
 	display: block;
 }
 
-.video_entry_table td span.video_categories {
+.video_entry_table-<?php echo $id; ?> td span.video_categories {
 	font-size: 80%;
 	display: block;
 }
 
-.syg_video_page_container .video_entry_table td{
+.syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> td{
 	border-width: 0px 0px 0px 0px;
 	vertical-align: top;
 }
 
-.syg_video_page_thumb {
+.syg_video_page_thumb-<?php echo $id; ?> {
 	width: <?php echo $syg_thumbnail_width; ?>px;
 }
 
@@ -125,7 +126,7 @@ h4.video_title a {
 
 /* video-gallery styles */
 
-#syg_video_gallery {
+#syg_video_gallery-<?php echo $id; ?> {
 	background-color: <?php echo $syg_box_background; ?>;
 	border-radius: <?php echo $syg_box_radius; ?>px;
     -webkit-border-radius: <?php echo $syg_box_radius; ?>px;
@@ -134,32 +135,32 @@ h4.video_title a {
     display: inline-block;
 }
 
-div.sc_menu {
+div.sc_menu-<?php echo $id; ?> {
 	position: relative;
 }
 
-ul.sc_menu {	
+ul.sc_menu-<?php echo $id; ?> {	
 	width: 50000px;	
 	padding: <?php echo $syg_box_padding; ?>px; 
 	margin: 0;
 	list-style: none;
 }
 
-ul.sc_menu li {
+ul.sc_menu-<?php echo $id; ?> li {
 	display: block;
 	float: left;
 	margin-right: <?php echo $syg_thumbnail_distance; ?>px;
 }
 
-ul.sc_menu li:last-child {
+ul.sc_menu-<?php echo $id; ?> li:last-child {
 	margin-right: 0;
 }
 
-.sc_menu a:hover span {
+.sc_menu-<?php echo $id; ?> a:hover span {
 	display: block;
 }
 
-.sc_menu span.video_title {
+.sc_menu-<?php echo $id; ?> span.video_title {
 	font-weight: bold;
 	display: block;
 	margin: 3% auto;
@@ -170,7 +171,7 @@ ul.sc_menu li:last-child {
 	margin-bottom: <?php echo $syg_box_padding; ?>px; 
 }
 
-.sc_menu a:hover img {
+.sc_menu-<?php echo $id; ?> a:hover img {
 	filter:alpha(opacity=50);	
 	opacity: 0.5;
 }
