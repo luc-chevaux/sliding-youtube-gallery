@@ -239,7 +239,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				foreach ($videoFeed as $videoEntry) {
 					$feed->addEntry($videoEntry);
 					$i++;
-					if ($i > $gallery->getYtMaxVideoCount()) break;
+					if ($i == $gallery->getYtMaxVideoCount()) break;
 				}
 				
 				// put the feed in the view

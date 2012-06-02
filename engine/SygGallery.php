@@ -68,7 +68,7 @@ class SygGallery {
 		$this->setDescShowDuration($result->syg_description_showduration);
 		$this->setDescShowRatings($result->syg_description_showratings);
 		$this->setDescShowTags($result->syg_description_showtags);
-		$this->setDescWidth($result->syg_description_width);
+		$this->setDescWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
 		
 		// thumbnail option values
 		$this->setThumbBorderColor(($result->syg_thumbnail_bordercolor) ? $result->syg_thumbnail_bordercolor: SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
@@ -76,9 +76,9 @@ class SygGallery {
 		$this->setThumbBorderSize($result->syg_thumbnail_bordersize);
 		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
 		$this->setThumbDistance($result->syg_thumbnail_distance);
-		$this->setThumbHeight(($result->syg_thumbnail_height > 0) ? $result->syg_thumbnail_height : 315);
+		$this->setThumbHeight(($result->syg_thumbnail_height > 0) ? $result->syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
 		$this->setThumbImage($result->syg_thumbnail_image);
-		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : 420);
+		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
 		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
 		// additional graphic option values
 		$this->setPercOccH($this->getThumbOverlaySize() / ($this->getThumbHeight() + ($this->getThumbBorderSize()*2)));
@@ -122,9 +122,11 @@ class SygGallery {
 				'syg_thumbnail_image'				=> $this->getThumbImage(),
 				'syg_thumbnail_width'				=> $this->getThumbWidth(),
 				'syg_thumbnail_overlaysize'			=> $this->getThumbOverlaySize(),
+				'syg_thumbnail_top'					=> $this->getThumbTop(),
+				'syg_thumbnail_left'				=> $this->getThumbLeft(),
 				'syg_youtube_maxvideocount'			=> $this->getYtMaxVideoCount(),
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
-				'syg_youtube_username'				=> $this->getYtUsername(),
+				'syg_youtube_username'				=> $this->getYtUsername(),	
 				'id'								=> $this->getId()
 			);
 	}
