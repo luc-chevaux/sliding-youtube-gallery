@@ -1,76 +1,35 @@
-<?php
-/*
- * return html for a video entry in a page
-*/
-function getPageVideoEntry($videoEntry) {
-	// define some dir alias
-	$homeRoot = home_url();
-	$imgPath = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/images/';
-	$pluginUrl = $homeRoot . '/wp-content/plugins/sliding-youtube-gallery/';
+<!-- Php Inclusion -->
 
-	// get video thumbnails from youtube
-	$videoThumbnails = $videoEntry->getVideoThumbnails();
-	$video_id = $videoEntry->getVideoId();
-	$html .= '<div class="syg_video_page_container" id="'.$video_id.'">';
-	$html .= '<table class="video_entry_table">';
-	$html .= '<tr>';
-	$html .= '<td class="syg_video_page_thumb">';
-	$html .= '<a class="sygVideo" href="'. $pluginUrl . 'SygVideo.php'.'?id='.$video_id.'">';
-	$html .= (get_option('syg_description_show')) ? '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="'.$videoEntry->getVideoDescription().'" title="'.$videoEntry->getVideoDescription().'"/>' : '<img src="'.$videoThumbnails[1]['url'].'" class="thumbnail-image" alt="play" title="play"/>';
-	// append overlay button
-	$syg_thumb_image = get_option('syg_thumbnail_image') != '' ? $imgPath . '/button/play-the-video_'.get_option('syg_thumbnail_image').'.png' : $imgPath .'/images/button/play-the-video_1.png';
-	$html .= '<img class="play-icon" src="'.$syg_thumb_image.'" alt="play">';
-	// append video duration
-	if (get_option('syg_description_showduration')) {
-		$duration = Sec2Time($videoEntry->getVideoDuration());
-		$video_duration .= ($duration['hours'] > 0) ? $duration['hours'].':' : '';
-		$video_duration .= ($duration['minutes'] > 0) ? $duration['minutes'].':' : '0:';
-		$video_duration .= str_pad($duration['seconds'], 2, '0', STR_PAD_LEFT);
-		$html .= '<span class="video_duration">'.$video_duration.'</span>';
-	}
-	$html .= '</a>';
-	$html .= '</td>';
-	$html .= '<td class="syg_video_page_description">';
-	$html .= '<h4 class="video_title"><a href="'.$videoEntry->getVideoWatchPageUrl().'" target="_blank">'.$videoEntry->getVideoTitle().'</a></h4>';
+<!-- Extra Php Code -->
 
-	if (get_option('syg_description_show')) {
-		$html .= '<p>'.$videoEntry->getVideoDescription().'</p>';
-	}
+<!-- User Message -->
 
-	if (get_option('syg_description_showcategories')) {
-		$html .= '<span class="video_categories"><i>Category:</i>&nbsp;&nbsp;';
-		$html .= $videoEntry->getVideoCategory();
-		$html .= '</span> ';
-	}
+<!-- Css Inclusion -->
+<style type="text/css">
+@import url('<?php echo $this->data['cssAdminUrl']; ?>');
+</style>
 
-	if (get_option('syg_description_showtags')) {
-		$html .= '<span class="video_tags"><i>Tags:</i>&nbsp;&nbsp;';
-		foreach ($videoEntry->getVideoTags() as $key => $value) {
-			$html .= $value." | ";
-		}
-		$html .= '</span>';
-	}
+<!-- Javascript Inclusion -->
+<script type="text/javascript" src="<?php echo $this->data['jsAdminUrl']; ?>"></script>
 
-	if (get_option('syg_description_showratings')) {
-		if ($videoEntry->getVideoRatingInfo()) {
-			$html .= '<span class="video_ratings">';
-			$rating = $videoEntry->getVideoRatingInfo();
-			$html .= "<i>Average:</i>&nbsp;&nbsp;".$rating['average'];
-			$html .= '&nbsp;&nbsp;';
-			$html .= '<i>Raters:</i>&nbsp;&nbsp;'.$rating['numRaters'];
-			$html .= '</span>';
-		}else{
-			$html .= '<span class="video_ratings">';
-			$html .= '<i>Rating not available</i>';
-			$html .= '</span>';
-		}
-	}
+<!-- Title Page -->
+<div class="wrap">
+	<div id="icon-options-general" class="icon32">
+	<br/>
+</div>
+<h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
+<hr/>
 
-	$html .= '</td>';
-	$html .= '</tr>';
-	$html .= '</table>';
-	$html .= '</div>';
+<!-- Welcome Message -->
+<p class="webengText">
+	<?php echo SygConstant::BE_CONTACT_MESSAGE; ?>
+</p>
+<h2>Follow me</h2>
 
-	return $html;
-}
-?>
+<h2>Send an email</h2>
+<!-- Gallery Form -->
+<form name="form1" method="post" action="">
+	<input type="hidden" name="syg_submit_hidden" value="Y">
+	
+	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
+</form>

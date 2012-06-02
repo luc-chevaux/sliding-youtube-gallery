@@ -345,23 +345,14 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 		// determine wich action to call
 		switch ($_GET['action']) {
-			case 'edit':
-				$this->forwardToEdit();
-				break;
-			case 'add':				
-				$this->forwardToAdd();
-				break;
-			case 'delete':
-				$this->forwardToDelete();
-				break;
-			case 'settings':
-				$this->forwardToSettings();
-				break;
-			case null:
-				$this->forwardToHome();
-				break;
-			default:
-				break;
+			case 'edit': $this->forwardToEdit(); break;
+			case 'add':	 $this->forwardToAdd();	break;
+			case 'delete': $this->forwardToDelete(); break;
+			case 'settings': $this->forwardToSettings(); break;
+			case 'contact': $this->forwardToContact(); break;
+			case 'donate': $this->forwardToDonate(); break;
+			case null: $this->forwardToHome();	break;
+			default: break;
 		}
 	}
 	
@@ -520,6 +511,30 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 			// render adminGallery view
 			$this->render('adminGallery');
 		}
+	}
+	
+	/**
+	 * Action Forward to contact page
+	 * @return null
+	 */
+	private function forwardToContact() {
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	
+		// render contact view
+		$this->render('contact');
+	}
+	
+	/**
+	 * Action Forward to donation page
+	 * @return null
+	 */
+	private function forwardToDonate() {
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	
+		// render contact view
+		$this->render('donate');
 	}
 	
 	/**
