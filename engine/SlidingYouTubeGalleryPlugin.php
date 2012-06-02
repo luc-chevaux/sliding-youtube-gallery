@@ -16,6 +16,9 @@
  * @todo Linkare la cancellazione con javascript 
  * @todo Aggiornare la documentazione
  * @todo Aggiungere opzione disabilita video correlati
+ * @todo Background image
+ * @todo widget wordpress
+ * @todo down scrolling
  */
 
 include_once 'Zend/Loader.php';
