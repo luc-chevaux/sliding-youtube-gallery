@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Sliding Youtube Gallery Plugin Controller
+ * 
+ * @author: Luca Martini @ webEng
+ * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
+ * @version: 1.2
+ */
+
 include_once 'Zend/Loader.php';
 if (!class_exists('SanityPluginFramework')) require_once($plugin_path.'Sanity/sanity.php');
 
@@ -7,9 +15,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 
 	private static $instance = null;
 	
-	/* Return current instance of the plugin
-	 * @param null
-	 * @return null
+	/**
+	 * Return current instance of the plugin
+	 * @return self::$instance
 	 */
 	public static function getInstance() {
 		if(self::$instance == null) {
@@ -30,8 +38,8 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 	private $sygYouTube;
 	private $sygDao;
 	
-	/* Construct an instance of the plugin
-	 * @param null
+	/**
+	 * Plugin constructor
 	 * @return null
 	 */
 	public function __construct() {
@@ -57,8 +65,8 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		}
 	}
 	
-	/* Set the plugin environment
-	 * @param null
+	/**
+	 * Set the plugin environment
 	 * @return null
 	 */
 	private function setEnvironment() {
@@ -82,8 +90,8 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		$this->sygDao = new SygDao();
 	}
 
-	/* Activation function of the plugin
-	 * @param null
+	/**
+	 * Activation plugin hook
 	 * @return null
 	 */
 	private function activation() {

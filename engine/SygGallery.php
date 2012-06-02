@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Sliding Youtube Gallery Plugin Gallery Data Bean
+ *
+ * @author: Luca Martini @ webEng
+ * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
+ * @version: 1.2
+ */
+
 class SygGallery {
 	// object attributes
 	private $ytVideoFormat;
@@ -40,6 +49,7 @@ class SygGallery {
 	
 	/**
 	 * Constructor
+	 * @param $result
 	 * @return null
 	 */
 	public function __construct($result = null) {
@@ -49,6 +59,7 @@ class SygGallery {
 
 	/**
 	 * Map object from resultset
+	 * @param $result
 	 * @return null
 	 */
 	private function mapThis($result = null) {
@@ -97,7 +108,7 @@ class SygGallery {
 	
 	/**
 	 * Populate and return a dto with values 
-	 * @return null
+	 * @return array
 	 */
 	public function toDto() {
 		return 

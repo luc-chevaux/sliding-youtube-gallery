@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Sliding Youtube Gallery Data Access Object
+ *
+ * @author: Luca Martini @ webEng
+ * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
+ * @version: 1.2
+ */
+
+global $wpdb;
+
 class SygDao {
 	private $db;
 	private $table_name ;
@@ -8,13 +19,11 @@ class SygDao {
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
 	
-	/* Default constructor
-	 * @param null
+	/**
+	 * Default constructor
 	 * @return null
 	 */
-	public function __construct() {
-		global $wpdb;
-		
+	public function __construct() {		
 		// get wordpress dbms linked
 		$this->db = $wpdb;
 		
@@ -22,21 +31,23 @@ class SygDao {
 		$this->table_name = $this->db->prefix . "syg";
 	}
 	
-	/* Add a syg gallery to database
-	 * @param SygGallery type to add
-	 * @return latest inserted id
+	/**
+	 * Add a syg gallery to database
+	 * @param SygGallery $syg to add
+	 * @return $id latest inserted id
 	 */
 	public function addSyg(SygGallery $syg) {
 		$this->db->insert($this->table_name, 
 					$syg->toDto(), 
 					$syg->getRsType()
 					);
-		
-		return $this->db->insert_id;
+		$id = $this->db->insert_id;
+		return $id;
 	}
 
-	/* Update a syg gallery to database
-	 * @param SygGallery type to update
+	/**
+	 * Update a syg gallery to database
+	 * @param SygGallery $syg to update
 	 * @return null
 	 */	
 	public function updateSyg(SygGallery $syg) {
@@ -49,8 +60,9 @@ class SygDao {
 		);
 	}
 
-	/* Delete a syg gallery to database
-	 * @param null
+	/**
+	 * Delete a syg gallery from database
+	 * @param SygGallery $syg to delete
 	 * @return null
 	 */	
 	public function deleteSyg(SygGallery $syg) {
@@ -58,9 +70,10 @@ class SygDao {
 		$this->db->query($query);
 	}
 
-	/* Get all syg gallery from database
-	 * @param null
-	 * @return null
+	/**
+	 * Get all syg gallery from database
+	 * @param $output_type
+	 * @return $galleries
 	 */
 	public function getAllSyg($output_type = 'OBJECT') {
 		$galleries = array();
@@ -72,9 +85,11 @@ class SygDao {
 		return $galleries;
 	}
 
-	/* Add a syg gallery to database
-	 * @param null
-	 * @return null
+	/**
+	 * Get a syg gallery object from database
+	 * @param $id
+	 * @param $output_type
+	 * @return $gallery
 	 */
 	public function getSygById($id, $output_type = 'OBJECT') {
 		$query = $this->db->prepare(sprintf($this->sqlGetGalleryById, $this->table_name, $id));
