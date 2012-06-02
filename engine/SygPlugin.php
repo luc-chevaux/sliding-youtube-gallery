@@ -24,7 +24,7 @@
 include_once 'Zend/Loader.php';
 if (!class_exists('SanityPluginFramework')) require_once($plugin_path.'Sanity/sanity.php');
 
-class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
+class SygPlugin extends SanityPluginFramework {
 
 	private static $instance = null;
 	
