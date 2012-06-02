@@ -405,10 +405,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
 				
-				// javascript injection
-				// dependencies
+				// javascript dependencies injection
 				wp_enqueue_script('jquery');
-				// scripts
+				// javascript dependencies injection
 				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery');
 				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
