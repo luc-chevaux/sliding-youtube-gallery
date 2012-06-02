@@ -19,7 +19,7 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php');
 
 $syg = SlidingYouTubeGalleryPlugin::getInstance();
-$option = $syg->getOption();
+$option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
 

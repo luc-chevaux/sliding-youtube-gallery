@@ -50,9 +50,7 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		register_activation_hook(__FILE__, array($this, 'activation'));
 
 		// front end code block
-		if(!is_admin()) {
-			// set front end option
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+		if(!is_admin()) {			
 			// add shortcodes
 			add_shortcode('syg_gallery', array($this, 'getGallery'));
 			add_shortcode('syg_page', array($this, 'getVideoPage'));
@@ -211,16 +209,26 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 		return $this->homeRoot.$this->imgRoot;
 	}
 
+	public function getGallerySettings($id = null) {
+		$id = (int) $id;
+		// get the gallery
+		$dao = new SygDao();
+		$gallery = $dao->getSygById($id);
+		$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
+		
+		return $gallery->toDto();	
+	}
+	
 	// sliding youtube gallery
 	function getGallery($attributes) {
 		extract(shortcode_atts(array('id' => null), $attributes));
 		if (!empty($id)) {
-			try {
+			try {				
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygById($id);
 				$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
-
+				
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
 				
@@ -239,6 +247,9 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
+				
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
 				// render gallery snippet code
 				$this->render('gallery');		
@@ -376,14 +387,15 @@ class SlidingYouTubeGalleryPlugin extends SanityPluginFramework {
 				$view['pluginPath'] = $this->getPluginRoot();
 				
 				// define plugin resources url in the view
-				$view['sygCssUrl'] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php';
-				$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js.php';
+				$gallery = $view['gallery'];
+				$view['sygCssUrl'] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
+				$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js.php?id=' . $gallery->getId();
 				
 				// define presentation plugin resources
 				$view['fancybox_js_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.pack.js';
 				$view['easing_js_url'] = $view['jsPath'] . '/fancybox/jquery.easing-1.3.pack.js';
 				$view['mousewheel_js_url'] = $view['jsPath'] . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['cssPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
+				$view['fancybox_css_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
 				
 				// css injection
 				wp_register_style('sliding-youtube-gallery', $view['sygCssUrl'], array(), SygConstant::SYG_VERSION, 'screen');
