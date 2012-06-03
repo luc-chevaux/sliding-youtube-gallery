@@ -107,12 +107,12 @@ class SygGallery {
 	}
 	
 	/**
-	 * Populate and return a dto with values 
+	 * Populate and return a dto with values
+	 * @param $full 
 	 * @return array
 	 */
-	public function toDto() {
-		return 
-			array('syg_box_background' 				=> $this->getBoxBackground(),
+	public function toDto($full = false) {
+		$dto = array('syg_box_background'			=> $this->getBoxBackground(),
 				'syg_box_padding' 					=> $this->getBoxPadding(),
 				'syg_box_radius'					=> $this->getBoxRadius(),
 				'syg_box_width' 					=> $this->getBoxWidth(),
@@ -133,13 +133,19 @@ class SygGallery {
 				'syg_thumbnail_image'				=> $this->getThumbImage(),
 				'syg_thumbnail_width'				=> $this->getThumbWidth(),
 				'syg_thumbnail_overlaysize'			=> $this->getThumbOverlaySize(),
-				'syg_thumbnail_top'					=> $this->getThumbTop(),
-				'syg_thumbnail_left'				=> $this->getThumbLeft(),
 				'syg_youtube_maxvideocount'			=> $this->getYtMaxVideoCount(),
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
 				'syg_youtube_username'				=> $this->getYtUsername(),	
-				'id'								=> $this->getId()
-			);
+				'id'								=> $this->getId());
+		
+		if ($full) {
+			$full_array = $dto;
+			$full_array['syg_thumbnail_top'] = $this->getThumbTop();
+			$full_array['syg_thumbnail_left'] = $this->getThumbLeft();
+			$dto = $full_array; 			
+		}
+		
+		return $dto;
 	}
 	
 	/**

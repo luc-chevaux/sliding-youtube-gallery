@@ -54,7 +54,7 @@ a.sygVideo {
 	text-decoration: none;
 }
 
-span.video_duration {
+span.video_duration-<?php echo $id; ?> {
 	border: 0;
 	display: block;
 	visibility:visible;
@@ -160,7 +160,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	display: block;
 }
 
-.sc_menu-<?php echo $id; ?> span.video_title {
+.sc_menu-<?php echo $id; ?> span.video_title-<?php echo $id; ?> {
 	font-weight: bold;
 	display: block;
 	margin: 3% auto;

@@ -40,8 +40,8 @@ jQuery.noConflict();
 
 jQuery(function($){
 	//Get our elements for faster access and set overlay width
-	var div = $('div.sc_menu'),
-		ul = $('ul.sc_menu'),
+	var div = $('div.sc_menu-<?php echo $id; ?>'),
+		ul = $('ul.sc_menu-<?php echo $id; ?>'),
 		ulPadding = 15;
 	
 	//Get menu width

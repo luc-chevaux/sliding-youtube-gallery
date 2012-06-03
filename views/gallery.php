@@ -39,7 +39,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				
 						<!-- show video duration -->
 						<?php if ($gallery->getDescShowDuration()) { ?>
-							<span class="video_duration"><?php echo SygUtil::formatDuration($element->getVideoDuration()); ?></span>
+							<span class="video_duration-<?php echo $gallery->getId();?>"><?php echo SygUtil::formatDuration($element->getVideoDuration()); ?></span>
 						<?php } ?>
 					</a>
 					<!-- show video title -->

@@ -250,7 +250,7 @@ class SygPlugin extends SanityPluginFramework {
 		$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 		
 		// return gallery in dto format
-		return $gallery->toDto();	
+		return $gallery->toDto(true);	
 	}
 	
 	/**
