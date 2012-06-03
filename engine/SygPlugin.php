@@ -17,8 +17,12 @@
  * @todo Aggiornare la documentazione
  * @todo Aggiungere opzione disabilita video correlati
  * @todo Background image
- * @todo widget wordpress
+ * @todo widget wordpress + Implementare scroll verticale
  * @todo down scrolling
+ * @todo Agganciare Eliminazione 
+ * @todo Creare e separare una gestione degli stili
+ * @todo Creare la pagina support con facebook + twitter + mail
+ * @todo Creare la pagina contact con invio mail
  */
 
 include_once 'Zend/Loader.php';
@@ -350,7 +354,7 @@ class SygPlugin extends SanityPluginFramework {
 			case 'delete': $this->forwardToDelete(); break;
 			case 'settings': $this->forwardToSettings(); break;
 			case 'contact': $this->forwardToContact(); break;
-			case 'donate': $this->forwardToDonate(); break;
+			case 'support': $this->forwardToSupport(); break;
 			case null: $this->forwardToHome();	break;
 			default: break;
 		}
@@ -529,12 +533,12 @@ class SygPlugin extends SanityPluginFramework {
 	 * Action Forward to donation page
 	 * @return null
 	 */
-	private function forwardToDonate() {
+	private function forwardToSupport() {
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 	
 		// render contact view
-		$this->render('donate');
+		$this->render('support');
 	}
 	
 	/**

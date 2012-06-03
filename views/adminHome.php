@@ -23,6 +23,9 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
+<!-- Menu -->
+<?php include 'plugin_menu.php'; ?>
+
 <!-- Welcome Message -->
 <p class="webengText">
 	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
@@ -85,8 +88,3 @@ foreach ($galleries as $gallery) {
 	</tr>
 </table>	
 <br/>
-
-<a href="options-general.php?page=syg-administration-panel&action=add" class="button-primary">Add new Gallery</a>
-<a href="options-general.php?page=syg-administration-panel&action=settings" class="button-primary">General Settings</a>
-<a href="options-general.php?page=syg-administration-panel&action=contact" class="button-primary">Contact Developer</a>
-<a href="options-general.php?page=syg-administration-panel&action=donate" class="button-primary">Donate!</a>

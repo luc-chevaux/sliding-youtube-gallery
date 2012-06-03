@@ -24,4 +24,8 @@
 <p class="webengText">
 	<?php echo SygConstant::BE_DONATE_MESSAGE; ?>
 </p>
+
+<!-- Menu -->
+<?php include 'plugin_menu.php'; ?>
+
 <h2>Donate!</h2>

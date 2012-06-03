@@ -28,6 +28,9 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
+<!-- Menu -->
+<?php include 'plugin_menu.php'; ?>
+
 <!-- Welcome Message -->
 <p class="webengText">
 	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
