@@ -89,13 +89,23 @@ function updateColorPicker(id, val) {
 	return true;
 }
 
-function Preview (id) {
+function PreviewGallery (id) {
 	
 	return true;
 }
 
-function Delete (id) {
-	
+function DeleteGallery (id) {
+	var sure = confirm('Are you sure to delete this gallery?');
+	if (sure) {
+		var request = jQuery.ajax({
+			  url: 'options-general.php',
+			  type: 'GET',
+			  data: {page: 'syg-administration-panel', id : id, action : "delete"},
+			  dataType: 'html',
+			  complete: function () {
+				  window.location.reload();
+			  }
+		});
+	}
 	return true;
-
 }

@@ -77,7 +77,7 @@ foreach ($galleries as $gallery) {
 			User Channel
 		</td>
 		<td>
-			<a href="#" onclick="javascript: Preview('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: Delete('<?php echo $gallery->getId(); ?>');">Delete</a>
+			<a href="#" onclick="javascript: PreviewGallery('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: DeleteGallery('<?php echo $gallery->getId(); ?>');">Delete</a>
 		</td>
 	</tr>
 <?php } ?>

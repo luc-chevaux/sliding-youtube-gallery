@@ -19,7 +19,6 @@
  * @todo Background image
  * @todo widget wordpress + Implementare scroll verticale
  * @todo down scrolling
- * @todo Agganciare Eliminazione 
  * @todo Creare e separare una gestione degli stili
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Creare la pagina contact con invio mail
@@ -376,9 +375,14 @@ class SygPlugin extends SanityPluginFramework {
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
 				
+				// javascript dependencies injection
+				wp_enqueue_script('jquery');
+				
 				// js to include
-				$view['jsAdminUrl'] = $view['jsPath'] . 'admin.js';
-				$view['jsColorPickerUrl'] = $view['jsPath'] . 'colorpicker.js';
+				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'admin.js', array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery-admin');
+				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . 'colorpicker.js', array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 				
 				break;
 			case SygConstant::SYG_CTX_FE:
@@ -515,6 +519,20 @@ class SygPlugin extends SanityPluginFramework {
 			// render adminGallery view
 			$this->render('adminGallery');
 		}
+	}
+	
+	/**
+	 * Action Forward to edit gallery
+	 * @return null
+	 */
+	private function forwardToDelete() {
+		// get the gallery id
+		$id = (int) $_GET['id'];
+		
+		// delete gallery
+		$this->sygDao->deleteSyg($this->sygDao->getSygById($id));
+		
+		die();
 	}
 	
 	/**

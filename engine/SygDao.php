@@ -65,7 +65,7 @@ class SygDao {
 	 * @return null
 	 */	
 	public function deleteSyg(SygGallery $syg) {
-		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->table_name, $id));
+		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->table_name, $syg->getId()));
 		$this->db->query($query);
 	}
 
