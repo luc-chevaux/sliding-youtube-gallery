@@ -7,13 +7,11 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2
  * 
- * @todo Indicizzare i blocchi html, nel caso di più gallerie su una pagina, in modo da renderli independenti con css e js.
  * @todo Inserire statistiche di attivazione, disattivazione, aggiornamento e nuova installazione
  * @todo Sistemare la visualizzazione e la action di youtube page gallery
  * @todo Preview
  * @todo Navigator
  * @todo YouTube api key option
- * @todo Linkare la cancellazione con javascript 
  * @todo Aggiornare la documentazione
  * @todo Aggiungere opzione disabilita video correlati
  * @todo Background image
