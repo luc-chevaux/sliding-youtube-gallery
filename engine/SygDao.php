@@ -76,7 +76,7 @@ class SygDao {
 	 */
 	public function getAllSyg($output_type = 'OBJECT') {
 		$galleries = array();
-		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->table_name));
+		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->table_name, 0, SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED));
 		$results = $this->db->get_results($query, $output_type);
 		foreach ($results as $gallery) {
 			$galleries[] = new SygGallery($gallery);
