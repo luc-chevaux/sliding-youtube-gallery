@@ -8,6 +8,8 @@
  * @version: 1.2
  */
 
+require_once (ABSPATH . 'wp-admin/includes/plugin.php');
+
 class SygDao {
 	private $db;
 	private $table_name ;

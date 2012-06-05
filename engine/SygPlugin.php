@@ -577,6 +577,9 @@ class SygPlugin extends SanityPluginFramework {
 		// put galleries in the view
 		$this->data['galleries'] = $galleries;
 		
+		// generate token
+		$_SESSION['request_token'] = $this->getAuthToken();
+		
 		// render adminHome view
 		$this->render('adminHome');
 	}
@@ -586,41 +589,25 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	private function forwardToPaginationService() {
-		// http://www.9lessons.info/2010/10/pagination-with-jquery-php-ajax-and.html
 		
-		if($_POST['page_number']) {
-			$page_number = $_POST['page_number'];
-			$current_page = $page_number;
-			$page_number -= 1;
-			
-			$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
-			
-			$previous_btn = true;
-			$next_btn = true;
-			$first_btn = true;
-			$last_btn = true;
-			
-			$start = $page_number * $per_page;
-			
-			$galleries = $this->sygDao->getAllSyg('', $start, $per_page);
-			
-			$msg = "";
-			while ($row = mysql_fetch_array($result_pag_data))
-			{
-				$htmlmsg=htmlentities($row['message']); //HTML entries filter
-				$msg .= "<li><b>" . $row['msg_id'] . "</b> " . $htmlmsg . "</li>";
-			}
-			$msg = "<div class='data'><ul>" . $msg . "</ul></div>"; // Content for Data
-			
-			/* -----Total count--- */
-			
-			$query_pag_num = "SELECT COUNT(*) AS count FROM messages"; // Total records
-			$result_pag_num = mysql_query($query_pag_num);
-			$row = mysql_fetch_array($result_pag_num);
-			$count = $row['count'];
-			$no_of_paginations = ceil($count / $per_page);
-			/* -----Calculating the starting and endign values for the loop----- */
-		}
+	}
+	
+	/**
+	 * Get Ajax Auth Token
+	 * @return null
+	 */
+	private function getAuthToken() {
+		
+		return $token;
+	}
+	
+	/**
+	 * Verify Ajax Auth Token
+	 * @return null
+	 */
+	public function verifyAuthToken($str) {
+		
+		return true;
 	}
 }
 ?>
