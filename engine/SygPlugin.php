@@ -10,7 +10,6 @@
  * @todo Inserire statistiche di attivazione, disattivazione, aggiornamento e nuova installazione
  * @todo Sistemare la visualizzazione e la action di youtube page gallery
  * @todo Preview
- * @todo Navigator
  * @todo YouTube api key option
  * @todo Aggiornare la documentazione
  * @todo Aggiungere opzione disabilita video correlati

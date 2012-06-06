@@ -108,7 +108,7 @@ class SygGallery {
 		$this->setYtUsername($result->syg_youtube_username);
 		
 		// set youtube user profile
-		$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername()));
+		($this->getYtUsername()) ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername())) : $this->setUserProfile(null);
 		
 		// id
 		$this->setId($result->id);
@@ -595,7 +595,7 @@ class SygGallery {
 	 */
 	public function setUserProfile($userProfile) {
 		$this->userProfile = $userProfile;
-		$this->thumbUrl = $userProfile->getThumbnail()->getUrl();
+		if ($userProfile) $this->thumbUrl = $userProfile->getThumbnail()->getUrl();
 	}
 	
 	/**

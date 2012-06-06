@@ -176,16 +176,16 @@ img.user_pic {
 	border-radius: 0px 0px 6px 6px;
 }
 
-#loading {
-	
+#syg-loading {
+  height: 0 !important;
 }
 
-#pagination {
+#syg-pagination {
 	text-align:center;
 	margin-left:120px;
 }
 
-li {	
+#syg-pagination li {	
 	list-style: none; 
 	float: left; 
 	margin-right: 16px; 
@@ -194,7 +194,7 @@ li {
 	color:#0063DC; 
 }
 
-li:hover { 
+#syg-pagination li:hover { 
 	color:#FF0084; 
 	cursor: pointer; 
 }

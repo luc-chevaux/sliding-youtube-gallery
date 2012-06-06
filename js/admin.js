@@ -74,15 +74,15 @@ function DeleteGallery (id) {
  * function to display splash image
  */
 function displayLoad() {
-	jQuery('#loading').fadeIn(900,0);
-	jQuery('#loading').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
+	jQuery('#syg-loading td').fadeIn(900,0);
+	jQuery('#syg-loading td').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
 }
 
 /**
  * function to hide splash image
  */
 function hideLoad() {
-	jQuery("#loading").fadeOut('slow');
+	jQuery("#syg-loading td").fadeOut('slow');
 }
 
 /*
@@ -97,7 +97,7 @@ jQuery(document).ready(function($) {
   initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');	
 
   // set default css for first element
-  $("#pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
+  $("#syg-pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
   
   // loading images
   displayLoad();
@@ -133,11 +133,11 @@ jQuery(document).ready(function($) {
   });
 
   // pagination click event
-  $("#pagination li").click(function(){
+  $("#syg-pagination li").click(function(){
 	  displayLoad();
 
 	  // css styles
-	  $("#pagination li")
+	  $("#syg-pagination li")
 	  	.css({'border' : 'solid #dddddd 1px'})
 	  	.css({'color' : '#0063DC'});
 

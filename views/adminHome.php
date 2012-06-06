@@ -23,8 +23,6 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
-<div id="loading" ></div>
-
 <!-- Menu -->
 <?php include 'plugin_menu.php'; ?>
 
@@ -53,6 +51,11 @@
 			<span>Action</span>
 		</th>
 	</tr>
+	<tr id="syg-loading">
+		<td colspan="5">
+			
+		</td>
+	</tr>
 <?php
 $galleries = $this->data['galleries']; 
 if (count($galleries) == 0) { ?>
@@ -65,7 +68,7 @@ if (count($galleries) == 0) { ?>
 ?>
 </table>
 
-	<ul id="pagination">
+	<ul id="syg-pagination">
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {
