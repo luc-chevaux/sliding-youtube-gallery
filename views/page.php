@@ -27,7 +27,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		<table class="video_entry_table-<?php echo $gallery->getId();?>">
 			<tr>
 				<td class="syg_video_page_thumb-<?php echo $gallery->getId();?>">
-					<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>">
+					<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>&video=<?php echo $element->getVideoId(); ?>">
 					
 					<!-- append video thumbnail -->
 					<?php if ($gallery->getDescShow()) { ?>
