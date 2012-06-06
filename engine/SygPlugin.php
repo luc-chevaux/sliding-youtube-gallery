@@ -7,17 +7,16 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2
  * 
- * @todo Inserire statistiche di attivazione, disattivazione, aggiornamento e nuova installazione
  * @todo Preview
  * @todo YouTube api key option
  * @todo Aggiornare la documentazione
  * @todo Aggiungere opzione disabilita video correlati
  * @todo Background image
- * @todo widget wordpress + Implementare scroll verticale
- * @todo down scrolling
- * @todo Creare e separare una gestione degli stili
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Creare la pagina contact con invio mail
+ * 
+ * @todo Creare e separare una gestione degli stili (milestone v1.5)
+ * @todo widget wordpress + Implementare scroll verticale (milestone v1.5)
  */
 
 include_once 'Zend/Loader.php';
