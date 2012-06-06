@@ -70,29 +70,27 @@ function DeleteGallery (id) {
 	return true;
 }
 
+/**
+ * function to display splash image
+ */
+function displayLoad() {
+	jQuery('#loading').fadeIn(900,0);
+	jQuery('#loading').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
+}
+
+/**
+ * function to hide splash image
+ */
+function hideLoad() {
+	jQuery("#loading").fadeOut('slow');
+}
+
 /*
  * jQuery on ready function:
  * load colorpickers and update selected colors 
  */
 
-jQuery(document).ready(function($) {
-	
-	/**
-	 * function to display splash image
-	 */
-	function displayLoad() {
-		$('#loading').fadeIn(900,0);
-		$('#loading').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
-	}
-
-	/**
-	 * function to hide splash image
-	 */
-	function hideLoad() {
-		alert ('pippo');
-		$("#loading").fadeOut('slow');
-	}
-	
+jQuery(document).ready(function($) {	
   // init the color pickers
   initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
   initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
@@ -106,10 +104,9 @@ jQuery(document).ready(function($) {
   
   // load data
   var content = "";
-  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=1', 
-		  function(data){
-			  hideLoad();
-		  });
+  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=1', function(data){
+	  hideLoad();
+  });
   
   // alert (content);
 
