@@ -1,8 +1,11 @@
 <?php 
 
-header('Cache-Control: no-cache, must-revalidate');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Content-type: application/json');
+ini_set('display_errors', 0);
+
+header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+header("Cache-Control: no-cache, must-revalidate" );
+header("Pragma: no-cache" );
+header("Content-type: application/json");
 
 // include wp loader
 $root = realpath(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))))));
@@ -43,14 +46,14 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 		$dao = new SygDao();
 		$galleries = $dao->getAllSyg('OBJECT', $start, $per_page);
 			
-		$json = "";
-			
-		foreach ($galleries as $gallery) {
-			$json .= json_encode($gallery->getJsonData());
-		}
-	
-		echo $json;
 		
+		$gallery_to_json = array();	
+		foreach ($galleries as $gallery) {
+			array_push($gallery_to_json, $gallery->getJsonData());
+		}
+		
+		echo json_encode ($gallery_to_json);
+		die();
 		// $this->render('pagination');
 			
 		/* -----Total count--- */
