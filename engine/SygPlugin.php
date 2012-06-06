@@ -8,7 +8,6 @@
  * @version: 1.2
  * 
  * @todo Inserire statistiche di attivazione, disattivazione, aggiornamento e nuova installazione
- * @todo Sistemare la visualizzazione e la action di youtube page gallery
  * @todo Preview
  * @todo YouTube api key option
  * @todo Aggiornare la documentazione
@@ -265,7 +264,6 @@ class SygPlugin extends SanityPluginFramework {
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygById($id);
-				//$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 				
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
@@ -307,15 +305,42 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	function getVideoPage($attributes) {
-		try {
-			// variables for the field and option names
-			$username = get_option('syg_youtube_username');
-			$videoFeed =  $this->sygYouTube->getuserUploads($username);
-			$html  = '<div id="syg_video_page">';
-			$html .= $this->sygYouTube->getEntireFeed ( $videoFeed, 1, SygConstant::SYG_METHOD_PAGE );
-			$html .= '</div>';
-		} catch (Exception $ex) {
-			$html = '<strong>SlidingYoutubeGallery Exception:</strong><br/>'.$ex->getMessage();
+		extract(shortcode_atts(array('id' => null), $attributes));
+		if (!empty($id)) {
+			try {				
+				// get the gallery
+				$dao = new SygDao();
+				$gallery = $dao->getSygById($id);
+				
+				// get video feed from youtube 
+				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
+				
+				// truncate video feed
+				// create new feed
+				$counter = 1;
+				$feed = new Zend_Gdata_YouTube_VideoFeed();
+				foreach ($videoFeed as $videoEntry) {
+					$feed->addEntry($videoEntry);
+					$i++;
+					if ($i == $gallery->getYtMaxVideoCount()) break;
+				}
+				
+				// put the feed in the view
+				$this->data['feed'] = $feed;
+				
+				// put the gallery settings in the view
+				$this->data['gallery'] = $gallery;
+				
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				
+				// render gallery snippet code
+				$this->render('page');		
+			} catch (Exception $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->render('exception');
+			}	
 		}
 
 		return $html;
@@ -351,7 +376,6 @@ class SygPlugin extends SanityPluginFramework {
 			case 'settings': $this->forwardToSettings(); break;
 			case 'contact': $this->forwardToContact(); break;
 			case 'support': $this->forwardToSupport(); break;
-			case 'query': $this->forwardToPaginationService(); break;
 			case null: $this->forwardToHome();	break;
 			default: break;
 		}
@@ -584,14 +608,6 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// render adminHome view
 		$this->render('adminHome');
-	}
-	
-	/**
-	 * Action Forward to pagination service
-	 * @return null
-	 */
-	private function forwardToPaginationService() {
-		
 	}
 	
 	/**
