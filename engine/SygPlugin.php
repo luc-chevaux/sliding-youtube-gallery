@@ -67,6 +67,8 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// register activation hook
 		register_activation_hook(__FILE__, array($this, 'activation'));
+		register_deactivation_hook(__FILE__, array($this, 'deactivation'));
+		register_uninstall_hook(__FILE__, array($this, 'uninstall'));
 
 		// front end code block
 		if(!is_admin()) {			
@@ -101,6 +103,34 @@ class SygPlugin extends SanityPluginFramework {
 		$this->sygDao = new SygDao();
 	}
 
+	/**
+	 * Deactivation plugin hook
+	 * @return null
+	 */
+	private function uninstall() {
+		// remove table
+		
+		// send stat
+		$this->notify;
+	}
+	
+	private function notify() {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action=uninstall&domain=' + $domain_name);
+		curl_setopt($ch, CURLOPT_HEADER, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$data = curl_exec();
+		curl_close($ch);
+	}
+	
+	/**
+	 * Deactivation plugin hook
+	 * @return null
+	 */
+	private function deactivation() {		
+		// send stat
+	}
+	
 	/**
 	 * Activation plugin hook
 	 * @return null
