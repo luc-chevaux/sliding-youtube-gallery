@@ -248,7 +248,7 @@ class SygPlugin extends SanityPluginFramework {
 		$gallery = $dao->getSygById($id);
 		
 		// set youtube profile object in the gallery
-		$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
+		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 		
 		// return gallery in dto format
 		return $gallery->toDto(true);	
@@ -266,7 +266,7 @@ class SygPlugin extends SanityPluginFramework {
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygById($id);
-				$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
+				//$gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 				
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
@@ -570,12 +570,15 @@ class SygPlugin extends SanityPluginFramework {
 		$galleries = $this->sygDao->getAllSyg();
 		
 		// add additional information to galleries
-		foreach ($galleries as $key => $value) {
+		/*foreach ($galleries as $key => $value) {
 			$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
-		}
+		}*/
 		
 		// put galleries in the view
 		$this->data['galleries'] = $galleries;
+		
+		// number of pages
+		$this->data['pages'] = ceil($this->sygDao->getSygCount()/SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
 		
 		// generate token
 		$_SESSION['request_token'] = $this->getAuthToken();

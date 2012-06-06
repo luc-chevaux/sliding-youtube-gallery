@@ -18,6 +18,7 @@ class SygDao {
 	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
+	private $sqlCountGallery = SygConstant::SQL_COUNT_GALLERY;
 	
 	/**
 	 * Default constructor
@@ -97,6 +98,17 @@ class SygDao {
 		$result = $this->db->get_row($query, $output_type);
 		$gallery = new SygGallery($result);
 		return $gallery;
+	}
+	
+	/**
+	 * Get syg count from database
+	 * @return $count
+	 */
+	public function getSygCount() {
+		$query = $this->db->prepare(sprintf($this->sqlCountGallery, $this->table_name));
+		$count= $this->db->get_var($query, 0, 0);
+
+		return (int)$count;
 	}
 }
 ?>

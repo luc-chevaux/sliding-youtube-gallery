@@ -105,10 +105,32 @@ jQuery(document).ready(function($) {
   // load data
   var content = "";
   $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=1', function(data){
+	  var html;
+	  $("tr[id^=syg_row_]").remove();
+	  
+	  $.each(data, function(key, val) {
+		  html = '<tr id="syg_row_' + key + '">';
+		  html = html + '<td>';
+		  html = html + val.id;
+		  html = html + '</td>';
+		  html = html + '<td>';
+		  html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
+		  html = html + '</td>';
+		  html = html + '<td>';
+		  html = html + val.ytUsername;
+		  html = html + '</td>';
+		  html = html + '<td>';
+		  html = html + 'User Channel';
+		  html = html + '</td>';
+		  html = html + '<td>';
+		  html = html + '<a href="#" onclick="javascript: PreviewGallery(\''+ val.id + '\');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+		  html = html + '</td>';
+		  html = html + '</tr>';
+		  $('#galleries_table tr:last-child').after(html);
+	  });
+	  
 	  hideLoad();
   });
-  
-  // alert (content);
 
   // pagination click event
   $("#pagination li").click(function(){
@@ -125,8 +147,32 @@ jQuery(document).ready(function($) {
 
 	  // loading data
 	  var pageNum = this.id;
-
 	  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=' + pageNum, function(data) {
+		  var html;
+		  
+		  $("tr[id^=syg_row_]").remove();
+		  
+		  $.each(data, function(key, val) {
+			  html = '<tr id="syg_row_' + key + '">';
+			  html = html + '<td>';
+			  html = html + val.id;
+			  html = html + '</td>';
+			  html = html + '<td>';
+			  html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
+			  html = html + '</td>';
+			  html = html + '<td>';
+			  html = html + val.ytUsername;
+			  html = html + '</td>';
+			  html = html + '<td>';
+			  html = html + 'User Channel';
+			  html = html + '</td>';
+			  html = html + '<td>';
+			  html = html + '<a href="#" onclick="javascript: PreviewGallery(\''+ val.id + '\');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+			  html = html + '</td>';
+			  html = html + '</tr>';
+			  $('#galleries_table tr:last-child').after(html);
+		  });
+		  
 		  hideLoad();
 	  });
   });

@@ -9,6 +9,8 @@
  */
 
 class SygGallery {
+	private $sygYouTube;
+	
 	// object attributes
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
@@ -26,6 +28,7 @@ class SygGallery {
 	private $thumbImage;
 	private $thumbDistance;
 	private $thumbButtonOpacity;
+	private $thumbUrl;
 	private $percOccW;
 	private $percOccH;
 	private $thumbTop;
@@ -54,6 +57,7 @@ class SygGallery {
 	 */
 	public function __construct($result = null) {
 		if (is_string($result)) $result = unserialize ($result);
+		$this->sygYouTube = new SygYouTube();
 		$this->mapThis($result);
 	}
 
@@ -91,6 +95,7 @@ class SygGallery {
 		$this->setThumbImage($result->syg_thumbnail_image);
 		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
 		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
+		
 		// additional graphic option values
 		$this->setPercOccH($this->getThumbOverlaySize() / ($this->getThumbHeight() + ($this->getThumbBorderSize()*2)));
 		$this->setPercOccW($this->getThumbOverlaySize() / ($this->getThumbWidth() + ($this->getThumbBorderSize()*2)));
@@ -101,6 +106,9 @@ class SygGallery {
 		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
 		$this->setYtVideoFormat($result->syg_youtube_videoformat);
 		$this->setYtUsername($result->syg_youtube_username);
+		
+		// set youtube user profile
+		$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername()));
 		
 		// id
 		$this->setId($result->id);
@@ -155,6 +163,7 @@ class SygGallery {
 			$full_array = $dto;
 			$full_array['syg_thumbnail_top'] = $this->getThumbTop();
 			$full_array['syg_thumbnail_left'] = $this->getThumbLeft();
+			$full_array['syg_thumbnail_url'] = $this->getThumbUrl();
 			$dto = $full_array; 			
 		}
 		
@@ -586,7 +595,21 @@ class SygGallery {
 	 */
 	public function setUserProfile($userProfile) {
 		$this->userProfile = $userProfile;
+		$this->thumbUrl = $userProfile->getThumbnail()->getUrl();
+	}
+	
+	/**
+	 * @return the $thumbUrl
+	 */
+	public function getThumbUrl() {
+		return $this->thumbUrl;
 	}
 
+	/**
+	 * @param field_type $thumbUrl
+	 */
+	public function setThumbUrl($thumbUrl) {
+		$this->thumbUrl = $thumbUrl;
+	}
 }
 ?>

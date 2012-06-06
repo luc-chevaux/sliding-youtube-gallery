@@ -62,33 +62,16 @@ if (count($galleries) == 0) { ?>
 		</td>
 	</tr>
 <?php }
-foreach ($galleries as $gallery) {
 ?>
-	<tr>
-		<td>
-			<?php echo $gallery->getId(); ?>
-		</td>
-		<td>
-			<img src="<?php echo $gallery->getUserProfile()->getThumbnail()->getUrl(); ?>" class="user_pic"></img>
-		</td>
-		<td>
-			<?php echo $gallery->getYtUsername(); ?>
-		</td>
-		<td>
-			User Channel
-		</td>
-		<td>
-			<a href="#" onclick="javascript: PreviewGallery('<?php echo $gallery->getId(); ?>');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=<?php echo $gallery->getId(); ?>">Edit</a> | <a href="#" onclick="javascript: DeleteGallery('<?php echo $gallery->getId(); ?>');">Delete</a>
-		</td>
-	</tr>
-<?php } ?>
 </table>
+
 	<ul id="pagination">
 	<?php
 	// show page links
-	for($i=1; $i<=$pages; $i++) {
+	for($i=1; $i<=$this->data['pages']; $i++) {
 		echo '<li id="'.$i.'">'.$i.'</li>';
 	}
 	?>
-	</ul>	
+	</ul>
+		
 <br/>

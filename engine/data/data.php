@@ -45,15 +45,19 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 			
 		$dao = new SygDao();
 		$galleries = $dao->getAllSyg('OBJECT', $start, $per_page);
-			
 		
 		$gallery_to_json = array();	
+		
 		foreach ($galleries as $gallery) {
+			/*$gallery->setUserProfile ($youtube_service->getUserProfile($gallery->getYtUsername()));
+			var_dump ($gallery->getUserProfile()->getThumbnail()->getUrl());
+			die();*/
 			array_push($gallery_to_json, $gallery->getJsonData());
 		}
 		
 		echo json_encode ($gallery_to_json);
 		die();
+		
 		// $this->render('pagination');
 			
 		/* -----Total count--- */
