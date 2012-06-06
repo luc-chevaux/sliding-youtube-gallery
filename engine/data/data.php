@@ -1,6 +1,8 @@
 <?php 
 
-// require_once ('../../../../../wp-admin/includes/plugin.php');
+header('Cache-Control: no-cache, must-revalidate');
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Content-type: application/json');
 
 // include wp loader
 $root = realpath(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))))));
