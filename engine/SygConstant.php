@@ -68,5 +68,6 @@ class SygConstant {
 	const BE_MENU_CONTACT = 'Contact';
 	const BE_MENU_SETTINGS = 'Settings';
 	const BE_MENU_SUPPORT_THE_PLUGIN = 'Support Plugin Development';
+	const BE_MENU_HOME = 'Galleries';
 }
 ?>

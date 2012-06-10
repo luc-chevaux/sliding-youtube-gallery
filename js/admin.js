@@ -103,7 +103,6 @@ jQuery(document).ready(function($) {
   displayLoad();
   
   // load data
-  var content = "";
   $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=1', function(data){
 	  var html;
 	  $("tr[id^=syg_row_]").remove();
@@ -123,15 +122,30 @@ jQuery(document).ready(function($) {
 		  html = html + 'User Channel';
 		  html = html + '</td>';
 		  html = html + '<td>';
-		  html = html + '<a href="#" onclick="javascript: PreviewGallery(\''+ val.id + '\');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+		  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
 		  html = html + '</td>';
 		  html = html + '</tr>';
+		  
 		  $('#galleries_table tr:last-child').after(html);
+		  
+		  /* alert (val.boxWidth + ' ' + val.thumbHeight); */
+		  width = val.boxWidth;
+		  $(".iframe_" + val.id).fancybox({ 
+			  'width' : width,  
+			  'height' : 200,
+			  'autoScale' : true,  
+			  'transitionIn' : 'none',  
+			  'transitionOut' : 'none',  
+			  'type' : 'iframe',  
+			  'hideOnOverlayClick' : false,
+			  'autoDimensions' : false,
+			  'padding' : 0
+		  });
 	  });
 	  
 	  hideLoad();
   });
-
+  
   // pagination click event
   $("#syg-pagination li").click(function(){
 	  displayLoad();
@@ -167,7 +181,7 @@ jQuery(document).ready(function($) {
 			  html = html + 'User Channel';
 			  html = html + '</td>';
 			  html = html + '<td>';
-			  html = html + '<a href="#" onclick="javascript: PreviewGallery(\''+ val.id + '\');">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+			  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
 			  html = html + '</td>';
 			  html = html + '</tr>';
 			  $('#galleries_table tr:last-child').after(html);

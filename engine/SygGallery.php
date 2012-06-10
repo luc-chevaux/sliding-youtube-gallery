@@ -115,7 +115,8 @@ class SygGallery {
 	}
 	
 	/**
-	 * 
+	 * Return Json data string
+	 * @return $json
 	 */
 	function getJsonData(){
 		$var = get_object_vars($this);
@@ -124,7 +125,8 @@ class SygGallery {
 				$value = $value->getJsonData();
 			}
 		}
-		return $var;
+		$json = $var;
+		return $json;
 	}
 	
 	/**

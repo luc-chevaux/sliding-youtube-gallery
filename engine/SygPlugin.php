@@ -7,16 +7,16 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2
  * 
- * @todo Preview
- * @todo YouTube api key option
  * @todo Aggiornare la documentazione
- * @todo Aggiungere opzione disabilita video correlati
  * @todo Background image
  * @todo Creare la pagina support con facebook + twitter + mail
- * @todo Creare la pagina contact con invio mail
+ * @todo Gestione errore canale non esistente
  * 
- * @todo Creare e separare una gestione degli stili (milestone v1.5)
- * @todo widget wordpress + Implementare scroll verticale (milestone v1.5)
+ * @todo Creare e separare una gestione degli stili (milestone v1.3)
+ * @todo YouTube api key option (milestone v1.3)
+ * @todo widget wordpress + Implementare scroll verticale (milestone v1.3)
+ * @todo Aggiungere opzione disabilita video correlati (milestone v1.3)
+ * @todo Creare la pagina contact con invio mail (milestone v1.3)
  */
 
 include_once 'Zend/Loader.php';
@@ -415,16 +415,27 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE) {
+		// define resources path
+		$view['cssPath'] = $this->getCssRoot();
+		$view['imgPath'] = $this->getImgRoot();
+		$view['jsPath'] = $this->getJsRoot();
+		// define plugin url
+		$view['pluginUrl'] = $this->homeRoot . $this->getPluginRoot();
+		
 		switch ($context) {
-			case SygConstant::SYG_CTX_BE:
-				// define resources path
-				$view['cssPath'] = $this->getCssRoot();
-				$view['imgPath'] = $this->getImgRoot();
-				$view['jsPath'] = $this->getJsRoot();
-				
+			case SygConstant::SYG_CTX_BE:	
 				// css to include
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+				
+				// define presentation plugin resources
+				$view['fancybox_js_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath'] . '/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath'] . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
+				
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('fancybox');
 				
 				// javascript dependencies injection
 				wp_enqueue_script('jquery');
@@ -435,16 +446,14 @@ class SygPlugin extends SanityPluginFramework {
 				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . 'colorpicker.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 				
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('fancybox');
+				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('easing');
+				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('mousewheel');
 				break;
-			case SygConstant::SYG_CTX_FE:
-				// define resources path
-				$view['cssPath'] = $this->getCssRoot();
-				$view['imgPath'] = $this->getImgRoot();
-				$view['jsPath'] = $this->getJsRoot();
-				
-				// define plugin url
-				$view['pluginUrl'] = $this->homeRoot . $this->getPluginRoot();
-				
+			case SygConstant::SYG_CTX_FE:				
 				// define plugin resources url in the view
 				$gallery = $view['gallery'];
 				$view['sygCssUrl_'.$gallery->getId()] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
@@ -464,7 +473,8 @@ class SygPlugin extends SanityPluginFramework {
 				
 				// javascript dependencies injection
 				wp_enqueue_script('jquery');
-				// javascript dependencies injection
+				
+				// js to include
 				wp_register_script('sliding-youtube-gallery-'.$gallery->getId(), $view['sygJsUrl_'.$gallery->getId()], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-'.$gallery->getId());
 				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
@@ -655,6 +665,10 @@ class SygPlugin extends SanityPluginFramework {
 	public function verifyAuthToken($str) {
 		
 		return true;
+	}
+	
+	public function getViewCtx() {
+		return $this->data;
 	}
 }
 ?>
