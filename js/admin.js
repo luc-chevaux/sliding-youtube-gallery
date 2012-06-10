@@ -128,18 +128,15 @@ jQuery(document).ready(function($) {
 		  
 		  $('#galleries_table tr:last-child').after(html);
 		  
-		  /* alert (val.boxWidth + ' ' + val.thumbHeight); */
-		  width = val.boxWidth;
+		  var dHeight     =  parseInt(val.thumbHeight);
+		  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
+		  
 		  $(".iframe_" + val.id).fancybox({ 
-			  'width' : width,  
-			  'height' : 200,
-			  'autoScale' : true,  
-			  'transitionIn' : 'none',  
-			  'transitionOut' : 'none',  
-			  'type' : 'iframe',  
-			  'hideOnOverlayClick' : false,
-			  'autoDimensions' : false,
-			  'padding' : 0
+			  'padding' : 30,
+			  'width' : dWidth,
+			  'centerOnScroll' : true,
+			  'onComplete': function () { $.fancybox.resize(); },
+			  'type' : 'iframe'
 		  });
 	  });
 	  
