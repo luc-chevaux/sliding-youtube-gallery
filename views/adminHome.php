@@ -78,3 +78,4 @@ if (count($galleries) == 0) { ?>
 	</ul>
 		
 <br/>
+<a href="http://www.google.it" class="iframe">Apri google</a>
