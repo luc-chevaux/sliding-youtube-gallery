@@ -67,15 +67,12 @@ if (count($galleries) == 0) { ?>
 <?php }
 ?>
 </table>
-
-	<ul id="syg-pagination">
+<ul id="syg-pagination">
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {
 		echo '<li id="'.$i.'">'.$i.'</li>';
 	}
 	?>
-	</ul>
-		
+</ul>	
 <br/>
-<a href="http://www.google.it" class="iframe">Apri google</a>
