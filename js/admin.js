@@ -128,14 +128,23 @@ jQuery(document).ready(function($) {
 		  
 		  $('#galleries_table tr:last-child').after(html);
 		  
-		  var dHeight     =  parseInt(val.thumbHeight);
+		  var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
 		  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
 		  
 		  $(".iframe_" + val.id).fancybox({ 
 			  'padding' : 30,
 			  'width' : dWidth,
+			  'height' : dHeight,
+			  'titlePosition' : 'inside',
+			  'titleFormat' : function() {
+				  return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
+			  },
 			  'centerOnScroll' : true,
-			  'onComplete': function () { $.fancybox.resize(); },
+			  'onComplete': function() {
+				    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
+				        $('#fancybox-content').height($(this).contents().find('body').height()+30);
+				      });
+				    },
 			  'type' : 'iframe'
 		  });
 	  });
@@ -178,10 +187,30 @@ jQuery(document).ready(function($) {
 			  html = html + 'User Channel';
 			  html = html + '</td>';
 			  html = html + '<td>';
-			  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+			  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
 			  html = html + '</td>';
 			  html = html + '</tr>';
 			  $('#galleries_table tr:last-child').after(html);
+			  
+			  var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
+			  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
+			  
+			  $(".iframe_" + val.id).fancybox({ 
+				  'padding' : 30,
+				  'width' : dWidth,
+				  'height' : dHeight,
+				  'titlePosition' : 'inside',
+				  'titleFormat' : function() {
+					  return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
+				  },
+				  'centerOnScroll' : true,
+				  'onComplete': function() {
+					    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
+					        $('#fancybox-content').height($(this).contents().find('body').height()+30);
+					      });
+					    },
+				  'type' : 'iframe'
+			  });
 		  });
 		  
 		  hideLoad();

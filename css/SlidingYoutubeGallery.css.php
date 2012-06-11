@@ -175,3 +175,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	filter:alpha(opacity=50);	
 	opacity: 0.5;
 }
+
+#gallery-title {
+
+}
