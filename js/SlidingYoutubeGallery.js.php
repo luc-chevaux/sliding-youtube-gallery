@@ -45,8 +45,8 @@ jQuery(function($){
 		ulPadding = 15;
 	
 	//Get menu width
-	var divWidth = div.width();
-
+	var divWidth = <?php echo $syg_box_width; ?>;
+	
 	//Remove scrollbars	
 	div.css({overflow: 'hidden'});
 	
