@@ -13,4 +13,6 @@ if ($type == 'n') {
 } else {
 	$height = SygUtil::getWideHeight($width);
 }
+
+$view = $syg->getViewCtx($id);
 ?>
