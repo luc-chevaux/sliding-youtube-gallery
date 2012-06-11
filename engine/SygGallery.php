@@ -52,13 +52,13 @@ class SygGallery {
 	
 	/**
 	 * Constructor
-	 * @param $result
+	 * @param $key
 	 * @return null
 	 */
-	public function __construct($result = null) {
-		if (is_string($result)) $result = unserialize ($result);
+	public function __construct($key = null) {
+		if (is_string($key)) $key = unserialize ($key);
 		$this->sygYouTube = new SygYouTube();
-		$this->mapThis($result);
+		$this->mapThis($key);
 	}
 
 	/**
