@@ -1,53 +1,57 @@
-<!-- Php Inclusion -->
 <?php 
-	// include wp loader
-	$root = realpath(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))));
-	
-	if (file_exists($root.'/wp-load.php')) {
-		// WP 2.6
-		require_once($root.'/wp-load.php');
-	} else {
-		// Before 2.6
-		require_once($root.'/wp-config.php');
-	}
-	
-	// include required wordpress object
-	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
+	require_once './inc/getWpEnvironment.inc.php';
+	require_once './inc/getExtractedGallery.inc.php';
 ?>
-
-<!-- Extra Php Code -->
 <?php 
-$id = $_GET['id'];
-
-$syg = SygPlugin::getInstance();
-$option = $syg->getGallerySettings($_GET['id']);
-extract ($option);
-
-$type = SygUtil::extractType($syg_youtube_videoformat);
-$width = SygUtil::extractWidth($syg_youtube_videoformat);
-
-if ($type == 'n') {
-	$height = SygUtil::getNormalHeight($width);
-} else {
-	$height = SygUtil::getWideHeight($width);
-}
-
-$syg->getGallery(array('id' => $id));
-
-// get a copy of the view outside wp workflow
-$view = $syg->getViewCtx();
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
-
-<!-- User Message -->
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $view['sygCssUrl_'.$id]; ?>');
-</style>
-
-<!-- Javascript Inclusion -->
-<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
-<script type="text/javascript" src="<?php echo $view['sygJsUrl_'.$id]; ?>"></script>
-
-<!-- Preview -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<style type="text/css">
+		#loading-level {
+		   background: url(../img/ui/loader.gif) no-repeat center center;
+		   height: 100px;
+		   width: 100px;
+		   position: fixed;
+		   z-index: 1000;
+		   left: 50%;
+		   top: 50%;
+		   margin: -25px 0 0 -25px;
+		}
+		
+		#loading-wrapper {display: none;}
+	</style>
+</head>
+<body>
+	<div id="loading-level"></div>
+	<div id="loading-wrapper">
+		<?php 
+		$syg->getGallery(array('id' => $id));
+		?>
+	</div>
+	<div id="loading-footer">
+		<style type="text/css">
+			@import url('<?php echo $view['sygCssUrl_'.$id]; ?>');
+			@import url('<?php echo $view['fancybox_css_url']; ?>');
+		</style>
+		
+		<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
+		<script type="text/javascript">
+		jQuery(function($) {
+			$('#loading-wrapper').hide();
+			$(window).load(function(){
+		  		$('#loading-level').fadeOut(2000);
+		  		$('#loading-level').remove();
+		  		$('#loading-wrapper').show();
+		  		$('#loading-wrapper').css("display", "inline");
+			});
+		});
+		</script>
+		<script type="text/javascript" src="<?php echo $view['fancybox_js_url']; ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['easing_js_url']; ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['mousewheel_js_url']; ?>"></script>
+		<script type="text/javascript" src="<?php echo $view['sygJsUrl_'.$id]; ?>"></script>
+	</div>
+</body>
+</html>
