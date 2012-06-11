@@ -663,12 +663,17 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	public function verifyAuthToken($str) {
-		
 		return true;
 	}
 	
-	public function getViewCtx() {
-		return $this->data;
+	public function getViewCtx($id = null) {
+		if (is_int((int)$id)) {
+			$dao = new SygDao();
+			$this->data['gallery'] = $dao->getSygById($id); 
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+			return $this->data;
+		}
+		return false;
 	}
 }
 ?>
