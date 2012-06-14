@@ -11,6 +11,7 @@
  * @todo Background image
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Gestione errore canale non esistente
+ * @todo Loading sulle gallerie
  * 
  * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
