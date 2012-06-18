@@ -8,7 +8,6 @@
  * @version: 1.2
  * 
  * @todo Aggiornare la documentazione
- * @todo Background image
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Gestione errore canale non esistente
  * @todo Loading sulle gallerie
@@ -18,6 +17,7 @@
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.3)
  * @todo Aggiungere opzione disabilita video correlati (milestone v1.3)
  * @todo Creare la pagina contact con invio mail (milestone v1.3)
+ * @todo Background image (milesone v1.3)
  */
 
 include_once 'Zend/Loader.php';
