@@ -126,7 +126,15 @@ h4.video_title-<?php echo $id; ?> a {
 
 /* video-gallery styles */
 
-#syg_video_gallery-<?php echo $id; ?> {
+/* style to remove after loading */
+.syg_video_gallery_loading-<?php echo $id; ?> {
+	background-image: url('../img/ui/loader.gif');
+	background-repeat: no-repeat;
+	background-position:center;
+	height: 100px !important;
+}
+
+.syg_video_gallery-<?php echo $id; ?> {
 	background-color: <?php echo $syg_box_background; ?>;
 	border-radius: <?php echo $syg_box_radius; ?>px;
     -webkit-border-radius: <?php echo $syg_box_radius; ?>px;
