@@ -101,5 +101,14 @@ class SygUtil {
 		$videoDuration .= str_pad($duration['seconds'], 2, '0', STR_PAD_LEFT);
 		return $videoDuration;
 	}
+	
+	/**
+	 * Check if curl is installed
+	 * @param $duration
+	 * @return $videoDuration;
+	 */
+	public static function isCurlInstalled() {
+		$installed = (in_array ('curl', get_loaded_extensions())) ? true : false;
+	}
 }
 ?>

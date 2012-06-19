@@ -97,19 +97,54 @@ class SygPlugin extends SanityPluginFramework {
 		$this->sygDao = new SygDao();
 	}
 
+	private function removeOldOption() {
+		delete_option('syg_youtube_username');
+		delete_option('syg_youtube_videoformat');
+		delete_option('syg_youtube_maxvideocount');
+		delete_option('syg_thumbnail_height');
+		delete_option('syg_thumbnail_width');
+		delete_option('syg_thumbnail_bordersize');
+		delete_option('syg_thumbnail_bordercolor');
+		delete_option('syg_thumbnail_borderradius');
+		delete_option('syg_thumbnail_top');
+		delete_option('syg_thumbnail_left');
+		delete_option('syg_thumbnail_bordersize');
+		delete_option('syg_thumbnail_distance');
+		delete_option('syg_thumbnail_overlaysize');
+		delete_option('syg_thumbnail_image');
+		delete_option('syg_thumbnail_buttonopacity');
+		delete_option('syg_description_width');
+		delete_option('syg_description_fontsize');
+		delete_option('syg_description_fontcolor');
+		delete_option('syg_description_show');
+		delete_option('syg_description_showduration');
+		delete_option('syg_description_showtags');
+		delete_option('syg_description_showratings');
+		delete_option('syg_description_showcategories');
+		delete_option('syg_box_width');
+		delete_option('syg_box_background');
+		delete_option('syg_box_radius');
+		delete_option('syg_box_padding');
+		delete_option('syg_submit_hidden');
+	}
+	
 	/**
 	 * Collect stats
 	 * @return null
 	 */
 	private static function notify($action = null) {
-		/*$ch = curl_init();
-			$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-	
-		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$data = curl_exec();
-		curl_close($ch);*/
+		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+		
+		if (SygUtil::isCurlInstalled()) {
+			$ch = curl_init();	
+			curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
+			curl_setopt($ch, CURLOPT_HEADER, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$data = curl_exec();
+			curl_close($ch);
+		} else {
+			wp_mail(SygConstant::BE_EMAIL_NOTIFIED, $domain_name." has just ".$action, $domain_name." has just ".$action);
+		}
 	}
 	
 	/**
@@ -151,7 +186,11 @@ class SygPlugin extends SanityPluginFramework {
 	public static function activation() {
 		global $wpdb;
 		global $syg_db_version;
-	
+		
+		// transitory method
+		if (get_option('syg_youtube_username'))
+				$this->removeOldOption();
+		
 		// set db version
 		$syg_db_version = SygConstant::SYG_VERSION;
 	

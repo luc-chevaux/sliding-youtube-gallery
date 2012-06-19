@@ -27,6 +27,7 @@ class SygConstant {
 	const BE_ACTION_UNINSTALL = 'uninstall';
 	const BE_ACTION_ACTIVATION = 'activation';
 	const BE_ACTION_DEACTIVATION = 'deactivation';
+	const BE_EMAIL_NOTIFIED = 'subscription@webeng.it';
 	
 	/**
 	 * Static and general URI
@@ -69,7 +70,6 @@ class SygConstant {
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
-	
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_CONTACT = 'Contact';
 	const BE_MENU_SETTINGS = 'Settings';
