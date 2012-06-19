@@ -7,9 +7,8 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2
  * 
- * @todo Aggiornare la documentazione
  * @todo Creare la pagina support con facebook + twitter + mail
- * @todo Gestione errore canale non esistente
+ * @todo Statistiche
  * 
  * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
@@ -108,15 +107,33 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	private function uninstall() {
+		global $wpdb;
+		
 		// remove table
+		$syg_table_name = $wpdb->prefix . "syg";
+		
+		// must create table if not exists
+		$sql = "DROP TABLE ".$syg_table_name."";
+		
+		// execute clean 
+		$wpdb->query($sql);
+		
+		// remove options
+		delete_option("syg_db_version");
 		
 		// send stat
-		$this->notify;
+		$this->notify(SygConstant::BE_ACTION_UNINSTALL);
 	}
 	
-	private function notify() {
+	/**
+	 * Collect stats
+	 * @return null
+	 */
+	private function notify($action = null) {
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action=uninstall&domain=' + $domain_name);
+		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+		
+		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
 		curl_setopt($ch, CURLOPT_HEADER, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$data = curl_exec();
@@ -129,6 +146,7 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	private function deactivation() {		
 		// send stat
+		$this->notify(SygConstant::BE_ACTION_DEACTIVATION);
 	}
 	
 	/**
@@ -140,17 +158,17 @@ class SygPlugin extends SanityPluginFramework {
 		global $syg_db_version;
 	
 		// set db version
-		$syg_db_version = "1.0";
+		$syg_db_version = SygConstant::SYG_VERSION;
 	
 		// get the current db version
 		$installed_ver = get_option( "syg_db_version" );
 	
 		if( $installed_ver != $syg_db_version ) {
 			// set the table name
-			$table_name = $wpdb->prefix . "syg";
+			$syg_table_name = $wpdb->prefix . "syg";
 				
 			// must create table if not exists
-			$sql = "CREATE TABLE IF NOT EXISTS ".$table_name." (
+			$sql = "CREATE TABLE IF NOT EXISTS ".$syg_table_name." (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`syg_youtube_username` varchar(255) NOT NULL,
 			`syg_youtube_videoformat` varchar(255) NOT NULL,
@@ -184,6 +202,9 @@ class SygPlugin extends SanityPluginFramework {
 				
 			// add or update db version option
 			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);
+			
+			// send stat
+			$this->notify(SygConstant::BE_ACTION_ACTIVATION);
 		}
 	}
 	
@@ -516,17 +537,26 @@ class SygPlugin extends SanityPluginFramework {
 			// get posted values
 			$data = serialize($_POST);
 			
-			// create a new gallery
-			$syg = new SygGallery($data);
+			// check youtube user
+			$valid = $this->sygYouTube->getUserProfile($_POST['syg_youtube_username']);
 			
-			// update db
-			$this->sygDao->addSyg($syg);
-		
-			// updated flag
-			$updated = true;
+			if ($valid) {
+				// create a new gallery
+				$syg = new SygGallery($data);
+				
+				// update db
+				$this->sygDao->addSyg($syg);
 			
-			// updated flag
-			$this->data['updated'] = $updated;
+				// updated flag
+				$updated = true;
+				
+				// updated flag
+				$this->data['updated'] = $updated;
+			} else {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
+			}
 			
 			// render adminGallery view
 			$this->forwardToHome();
@@ -552,19 +582,28 @@ class SygPlugin extends SanityPluginFramework {
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
-				
-			// create a new gallery
-			$syg = new SygGallery($data);
+
+			// check youtube user
+			$valid = $this->sygYouTube->getUserProfile($_POST['syg_youtube_username']);
 			
-			// update db
-			$this->sygDao->updateSyg($syg);
+			if ($valid) {
+				// create a new gallery
+				$syg = new SygGallery($data);
+				
+				// update db
+				$this->sygDao->updateSyg($syg);
+				
+				// updated flag
+				$updated = true;
+					
+				// updated flag
+				$this->data['updated'] = $updated;
+			} else {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
+			}
 			
-			// updated flag
-			$updated = true;
-				
-			// updated flag
-			$this->data['updated'] = $updated;
-				
 			// render adminGallery view
 			$this->forwardToHome();
 		} else {
@@ -631,11 +670,6 @@ class SygPlugin extends SanityPluginFramework {
 		// put galleries in the view
 		$galleries = $this->sygDao->getAllSyg();
 		
-		// add additional information to galleries
-		/*foreach ($galleries as $key => $value) {
-			$galleries[$key]->setUserProfile ($this->sygYouTube->getUserProfile($value->getYtUsername()));
-		}*/
-		
 		// put galleries in the view
 		$this->data['galleries'] = $galleries;
 		
@@ -654,7 +688,6 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	private function getAuthToken() {
-		
 		return $token;
 	}
 	

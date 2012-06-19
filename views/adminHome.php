@@ -7,6 +7,11 @@
 	<div class="updated"><p><strong>Settings saved.</strong></p></div>
 <?php } ?>
 
+<?php if ($this->data['exception']) {?>
+	<div class="error"><p><strong><?php echo $this->data['exception_message']; ?></strong></p></div>
+<?php } ?>
+
+
 <!-- Css Inclusion -->
 <style type="text/css">
 @import url('<?php echo $this->data['cssAdminUrl']; ?>');

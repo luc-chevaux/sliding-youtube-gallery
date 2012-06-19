@@ -1,16 +1,18 @@
 === Plugin Name ===
 Contributors: webeng
 Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/
-Tags: youtube, video, gallery, sliding gallery
-Requires at least: 2.0 or higher
+Tags: youtube, video, gallery, sliding gallery, youtube channel, display video
+Requires at least: 2.7 or higher
 Tested up to: 3.3.1
-Stable tag: 1.0.1
+Stable tag: 1.2.0
+License: GPLv3
 
-Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user's channel.
+Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user's channel!
 
 == Description ==
-Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user's channel.
+Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user's channel!
 You can choose to display the videos in a fully customizable sliding gallery or if you prefer, you may display it as an ordered list table.
+Users can get the video played as a nice fancybox player.
 
 == Installation ==
 - Using the WordPress dashboard
@@ -33,19 +35,19 @@ For more information about this plugin, please visit [webEng blog](http://blog.w
 
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
-To display a Sliding YouTube Gallery in a page or post, you must use the short code [syg_gallery] .
+To display a Sliding YouTube Gallery in a page or post, you must use the short code [syg_gallery id=<your_gallery_id>] .
 
 = How do I display a Sliding YouTube Gallery in a Template? =
 
-To display a Sliding YouTube Gallery within a template you must call the syg_display_gallery() function.
+To display a Sliding YouTube Gallery within a template you must call the getGallery(array("id" => <your_gallery_id>)) function.
 
 = How do I display a simple video page in a page or post? =
 
-To display a video page in a page or post, you must use the short code [syg_page] .
+To display a video page in a page or post, you must use the short code [syg_page id=<your_gallery_id>] .
 
 = How do I display a simple video page in a Template? =
 
-To display a video page within a template you must call the syg_display_page() function.
+To display a video page within a template you must call the getVideoPage(array("id" => <your_gallery_id>)) function.
 
 = How can I override css settings? =
 
@@ -62,6 +64,13 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 3. Sliding YouTube Gallery video page
 
 == Changelog ==
+
+= 1.2.0 =
+* Multiple youtube user
+* Multiple gallery styles
+* Gallery loader
+* Preview mode in gallery list
+* oO compliant plugin
 
 = 1.0.1 =
 * Video count setting bug, was fixed.

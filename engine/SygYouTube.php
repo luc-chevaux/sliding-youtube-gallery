@@ -26,8 +26,12 @@ class SygYouTube {
 	 * @return $userProfile
 	 */
 	function getUserProfile($username) {
-		$this->yt->setMajorProtocolVersion(2);
-		$userProfile = $this->yt->getUserProfile($username);
+		try {
+			$this->yt->setMajorProtocolVersion(2);
+			$userProfile = $this->yt->getUserProfile($username);
+		} catch (Zend_Gdata_App_HttpException $exception) {
+			$userprofile = null;
+		}
 		return $userProfile;
 	}
 	

@@ -14,14 +14,20 @@ class SygConstant {
 	/**
 	 * Plugin configuration
 	 */
-	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 3;
+	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 5;
 	
 	/**
-	 * Plugin methods hooks
+	 * Validation
 	 */
-	const SYG_METHOD_GALLERY = 'gallery';
-	const SYG_METHOD_PAGE = 'page';
+	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
 
+	/**
+	 * Notification
+	 */
+	const BE_ACTION_UNINSTALL = 'uninstall';
+	const BE_ACTION_ACTIVATION = 'activation';
+	const BE_ACTION_DEACTIVATION = 'deactivation';
+	
 	/**
 	 * Static and general URI
 	 */
@@ -55,7 +61,7 @@ class SygConstant {
 	const SYG_THUMB_DEFAULT_HEIGHT = 315;
 
 	/**
-	 * Administration menu constants
+	 * GUI constants
 	 */
 	const BE_WELCOME_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
 	const BE_CONTACT_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
