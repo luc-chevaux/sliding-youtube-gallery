@@ -5,7 +5,7 @@
  *
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2
+ * @version: 1.2.0
  */
 
 require_once (ABSPATH . 'wp-admin/includes/plugin.php');

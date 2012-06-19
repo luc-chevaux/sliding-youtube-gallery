@@ -5,7 +5,7 @@
  * 
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2
+ * @version: 1.2.0
  * 
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Statistiche
@@ -64,11 +64,6 @@ class SygPlugin extends SanityPluginFramework {
 		// attach the admin menu to the hook
 		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
 		
-		// register activation hook
-		register_activation_hook(__FILE__, array($this, 'activation'));
-		register_deactivation_hook(__FILE__, array($this, 'deactivation'));
-		register_uninstall_hook(__FILE__, array($this, 'uninstall'));
-
 		// front end code block
 		if(!is_admin()) {			
 			// add shortcodes
@@ -103,17 +98,32 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * Collect stats
+	 * @return null
+	 */
+	private static function notify($action = null) {
+		/*$ch = curl_init();
+			$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+	
+		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
+		curl_setopt($ch, CURLOPT_HEADER, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$data = curl_exec();
+		curl_close($ch);*/
+	}
+	
+	/**
 	 * Deactivation plugin hook
 	 * @return null
 	 */
-	private function uninstall() {
+	public static function uninstall() {
 		global $wpdb;
 		
 		// remove table
 		$syg_table_name = $wpdb->prefix . "syg";
 		
 		// must create table if not exists
-		$sql = "DROP TABLE ".$syg_table_name."";
+		$sql = "DROP TABLE IF EXISTS ".$syg_table_name."";
 		
 		// execute clean 
 		$wpdb->query($sql);
@@ -122,38 +132,23 @@ class SygPlugin extends SanityPluginFramework {
 		delete_option("syg_db_version");
 		
 		// send stat
-		$this->notify(SygConstant::BE_ACTION_UNINSTALL);
-	}
-	
-	/**
-	 * Collect stats
-	 * @return null
-	 */
-	private function notify($action = null) {
-		$ch = curl_init();
-		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-		
-		curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$data = curl_exec();
-		curl_close($ch);
+		self::notify(SygConstant::BE_ACTION_UNINSTALL);
 	}
 	
 	/**
 	 * Deactivation plugin hook
 	 * @return null
 	 */
-	private function deactivation() {		
+	public static function deactivation() {	
 		// send stat
-		$this->notify(SygConstant::BE_ACTION_DEACTIVATION);
+		self::notify(SygConstant::BE_ACTION_DEACTIVATION);
 	}
 	
 	/**
 	 * Activation plugin hook
 	 * @return null
 	 */
-	private function activation() {
+	public static function activation() {
 		global $wpdb;
 		global $syg_db_version;
 	
@@ -204,7 +199,7 @@ class SygPlugin extends SanityPluginFramework {
 			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);
 			
 			// send stat
-			$this->notify(SygConstant::BE_ACTION_ACTIVATION);
+			self::notify(SygConstant::BE_ACTION_ACTIVATION);
 		}
 	}
 	
