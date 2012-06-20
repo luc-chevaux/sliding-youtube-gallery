@@ -22,6 +22,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		
 		#loading-wrapper {display: none;}
 	</style>
+	<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
 </head>
 <body>
 	<div id="loading-level"></div>
@@ -34,10 +35,9 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		<style type="text/css">
 			@import url('<?php echo $view['sygCssUrl_'.$id]; ?>');
 			@import url('<?php echo $view['fancybox_css_url']; ?>');
-		</style>
-		
-		<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
+		</style>		
 		<script type="text/javascript">
+		jQuery.noConflict();
 		jQuery(function($) {
 			$('#loading-wrapper').hide();
 			$(window).load(function(){

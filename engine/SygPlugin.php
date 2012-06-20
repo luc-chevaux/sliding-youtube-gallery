@@ -97,7 +97,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->sygDao = new SygDao();
 	}
 
-	private function removeOldOption() {
+	private static function removeOldOption() {
 		global $wpdb;
 		
 		// get the table name
@@ -294,7 +294,7 @@ class SygPlugin extends SanityPluginFramework {
 			
 			// transitory method
 			if (get_option('syg_youtube_username'))
-				$this->removeOldOption();
+				self::removeOldOption();
 			
 			// add or update db version option
 			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);

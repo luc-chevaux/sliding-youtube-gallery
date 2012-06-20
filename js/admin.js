@@ -29,15 +29,15 @@ function initColorPicker(id, val, defaultColor) {
 	jQuery('#' + id).ColorPicker({
 		color: defaultColor,
 		onShow: function (colpkr) {
-			$(colpkr).fadeIn(500);
+			jQuery(colpkr).fadeIn(500);
 			return false;
 		},
 		onHide: function (colpkr) {
-			$(colpkr).fadeOut(500);
+			jQuery(colpkr).fadeOut(500);
 			return false;
 		},
 		onChange: function (hsb, hex, rgb) {
-			$('#' + id + ' div').css('backgroundColor', '#' + hex);
+			jQuery('#' + id + ' div').css('backgroundColor', '#' + hex);
 			val.val('#' + hex);
 		}
 	});
