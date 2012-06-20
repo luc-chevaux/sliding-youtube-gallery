@@ -98,34 +98,96 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	private function removeOldOption() {
-		delete_option('syg_youtube_username');
-		delete_option('syg_youtube_videoformat');
-		delete_option('syg_youtube_maxvideocount');
-		delete_option('syg_thumbnail_height');
-		delete_option('syg_thumbnail_width');
-		delete_option('syg_thumbnail_bordersize');
-		delete_option('syg_thumbnail_bordercolor');
-		delete_option('syg_thumbnail_borderradius');
-		delete_option('syg_thumbnail_top');
-		delete_option('syg_thumbnail_left');
-		delete_option('syg_thumbnail_bordersize');
-		delete_option('syg_thumbnail_distance');
-		delete_option('syg_thumbnail_overlaysize');
-		delete_option('syg_thumbnail_image');
-		delete_option('syg_thumbnail_buttonopacity');
-		delete_option('syg_description_width');
-		delete_option('syg_description_fontsize');
-		delete_option('syg_description_fontcolor');
-		delete_option('syg_description_show');
-		delete_option('syg_description_showduration');
-		delete_option('syg_description_showtags');
-		delete_option('syg_description_showratings');
-		delete_option('syg_description_showcategories');
-		delete_option('syg_box_width');
-		delete_option('syg_box_background');
-		delete_option('syg_box_radius');
-		delete_option('syg_box_padding');
-		delete_option('syg_submit_hidden');
+		global $wpdb;
+		
+		// get the table name
+		$syg_table_name = $wpdb->prefix . "syg";
+		
+		$syg_youtube_username = get_option('syg_youtube_username');
+		$syg_youtube_videoformat = get_option('syg_youtube_videoformat');
+		$syg_youtube_maxvideocount = get_option('syg_youtube_maxvideocount');
+		$syg_thumbnail_height = get_option('syg_thumbnail_height');
+		$syg_thumbnail_width = get_option('syg_thumbnail_width');
+		$syg_thumbnail_bordersize = get_option('syg_thumbnail_bordersize');
+		$syg_thumbnail_bordercolor = get_option('syg_thumbnail_bordercolor');
+		$syg_thumbnail_borderradius = get_option('syg_thumbnail_borderradius');
+		$syg_thumbnail_distance = get_option('syg_thumbnail_distance');
+		$syg_thumbnail_overlaysize = get_option('syg_thumbnail_overlaysize');
+		$syg_thumbnail_image = get_option('syg_thumbnail_image');
+		$syg_thumbnail_buttonopacity = get_option('syg_thumbnail_buttonopacity');
+		$syg_description_width = get_option('syg_description_width');
+		$syg_description_fontsize = get_option('syg_description_fontsize');
+		$syg_description_fontcolor = get_option('syg_description_fontcolor');
+		$syg_description_show =  get_option('syg_description_show');
+		$syg_description_showduration = get_option('syg_description_showduration');
+		$syg_description_showtags = get_option('syg_description_showtags');
+		$syg_description_showratings = get_option('syg_description_showratings');
+		$syg_description_showcategories = get_option('syg_description_showcategories');
+		$syg_box_width = get_option('syg_box_width');
+		$syg_box_background = get_option('syg_box_background');
+		$syg_box_radius = get_option('syg_box_radius');
+		$syg_box_padding = get_option('syg_box_padding');
+		
+		$wpdb->insert(
+				$syg_table_name,
+				array(
+						'syg_box_background' => $syg_box_background,
+						'syg_box_padding' => $syg_box_padding,
+						'syg_box_radius' => $syg_box_radius,
+						'syg_box_width' => $syg_box_width,
+						'syg_description_fontcolor' => $syg_description_fontcolor,
+						'syg_description_fontsize' => $syg_description_fontsize,
+						'syg_description_show' => $syg_description_show,
+						'syg_description_showcategories' => $syg_description_showcategories,
+						'syg_description_showduration' => $syg_description_showduration,
+						'syg_description_showratings' => $syg_description_showratings,
+						'syg_description_showtags' => $syg_description_showtags,
+						'syg_description_width' => $syg_description_width,
+						'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
+						'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
+						'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
+						'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
+						'syg_thumbnail_distance' => $syg_thumbnail_distance,
+						'syg_thumbnail_height' => $syg_thumbnail_height,
+						'syg_thumbnail_image' => $syg_thumbnail_image,
+						'syg_thumbnail_width' => $syg_thumbnail_width,
+						'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
+						'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
+						'syg_youtube_videoformat' => $syg_youtube_videoformat,
+						'syg_youtube_username' => $syg_youtube_username
+				),
+				SygGallery::getRsType()
+		);
+		
+		if ($wpdb->insert_id) {
+			delete_option('syg_youtube_username');
+			delete_option('syg_youtube_videoformat');
+			delete_option('syg_youtube_maxvideocount');
+			delete_option('syg_thumbnail_height');
+			delete_option('syg_thumbnail_width');
+			delete_option('syg_thumbnail_bordersize');
+			delete_option('syg_thumbnail_bordercolor');
+			delete_option('syg_thumbnail_borderradius');
+			delete_option('syg_thumbnail_top');
+			delete_option('syg_thumbnail_left');
+			delete_option('syg_thumbnail_distance');
+			delete_option('syg_thumbnail_overlaysize');
+			delete_option('syg_thumbnail_image');
+			delete_option('syg_thumbnail_buttonopacity');
+			delete_option('syg_description_width');
+			delete_option('syg_description_fontsize');
+			delete_option('syg_description_fontcolor');
+			delete_option('syg_description_show');
+			delete_option('syg_description_showduration');
+			delete_option('syg_description_showtags');
+			delete_option('syg_description_showratings');
+			delete_option('syg_description_showcategories');
+			delete_option('syg_box_width');
+			delete_option('syg_box_background');
+			delete_option('syg_box_radius');
+			delete_option('syg_box_padding');
+			delete_option('syg_submit_hidden');
+		}
 	}
 	
 	/**
@@ -187,10 +249,6 @@ class SygPlugin extends SanityPluginFramework {
 		global $wpdb;
 		global $syg_db_version;
 		
-		// transitory method
-		if (get_option('syg_youtube_username'))
-				$this->removeOldOption();
-		
 		// set db version
 		$syg_db_version = SygConstant::SYG_VERSION;
 	
@@ -233,7 +291,11 @@ class SygPlugin extends SanityPluginFramework {
 				
 			// run the dbDelta function
 			dbDelta($sql);
-				
+			
+			// transitory method
+			if (get_option('syg_youtube_username'))
+				$this->removeOldOption();
+			
 			// add or update db version option
 			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);
 			
