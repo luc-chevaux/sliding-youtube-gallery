@@ -37,7 +37,7 @@
 
 <!-- Welcome Message -->
 <p class="webengText">
-	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
+	<?php echo SygConstant::BE_MANAGE_GALLERY_MESSAGE; ?>
 </p>
 
 <!-- Gallery Form -->

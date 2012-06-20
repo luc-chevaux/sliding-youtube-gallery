@@ -28,4 +28,10 @@
 <!-- Menu -->
 <?php include 'plugin_menu.php'; ?>
 
-<h2>Donate!</h2>
+<h2>What you can do?</h2>
+<p><strong>If you're a blogger</strong> and you like this plugin, you may write a small article about this plugin. It would be amazing for my effort!
+<p><strong>If you're a WP or PHP developer</strong> and you like the plugin idea, if you have some time you can contribute to this plugin! Sometimes two developer is better than one, right?
+<p>Anyway, if you only want to use the plugin without partecipate, You may support me buying me a beer! Donation is always good. You can donate over my blog.</p>
+<hr/>
+<p class="webengText">Thank you for downloading! Enjoy WP and OpenSource!</p>
+<p class="webengText">Luca</p>
