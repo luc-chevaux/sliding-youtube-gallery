@@ -5,7 +5,7 @@
  * 
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.1
+ * @version: 1.2.2
  * 
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Statistiche
@@ -60,9 +60,6 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// set environment
 		$this->setEnvironment();
-		
-		// attach the admin menu to the hook
-		add_action('admin_menu', array($this, 'SlidingYoutubeGalleryAdmin'));
 		
 		// front end code block
 		if(!is_admin()) {			
@@ -404,7 +401,12 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	function getGallery($attributes) {
+		foreach ($attributes as $key => $var) {
+			$attributes[$key] = (int)$var;
+		}
+		
 		extract(shortcode_atts(array('id' => null), $attributes));
+		
 		if (!empty($id)) {
 			try {				
 				// get the gallery
@@ -451,7 +453,12 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	function getVideoPage($attributes) {
+		foreach ($attributes as $key => $var) {
+			$attributes[$key] = (int)$var;
+		}
+
 		extract(shortcode_atts(array('id' => null), $attributes));
+		
 		if (!empty($id)) {
 			try {				
 				// get the gallery
@@ -497,8 +504,8 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes 
 	 * @return null
 	 */
-	function SlidingYoutubeGalleryAdmin() {
-		add_options_page('SlidingYoutubeGallery Options', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', array($this, 'sygAdminHome'));
+	public static function SlidingYoutubeGalleryAdmin() {
+		
 	}
 	
 	/**
