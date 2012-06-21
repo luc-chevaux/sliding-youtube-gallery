@@ -78,19 +78,19 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	private function setEnvironment() {
 		// set home root
-		$this->homeRoot = home_url();
+		$this->homeRoot = site_url();
 		
 		// set the plugin path
 		$this->setPluginRoot(SygConstant::WP_PLUGIN_PATH);
 		
 		// set the css path
-		$this->setCssRoot(SygConstant::WP_CSS_PATH);
-		
+		$this->setCssRoot(WP_PLUGIN_URL.SygConstant::WP_CSS_PATH);
+
 		// set the js path
-		$this->setJsRoot(SygConstant::WP_JS_PATH);
+		$this->setJsRoot(WP_PLUGIN_URL.SygConstant::WP_JS_PATH);
 		
 		// set the img path
-		$this->setImgRoot(SygConstant::WP_IMG_PATH);
+		$this->setImgRoot(WP_PLUGIN_URL.SygConstant::WP_IMG_PATH);
 		
 		// set local object
 		$this->sygYouTube = new SygYouTube();
@@ -358,21 +358,21 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return the $jsRoot
 	 */
 	public function getJsRoot() {
-		return $this->homeRoot.$this->jsRoot;
+		return $this->jsRoot;
 	}
 	
 	/**
 	 * @return the $cssRoot
 	 */
 	public function getCssRoot() {
-		return $this->homeRoot.$this->cssRoot;
+		return $this->cssRoot;
 	}
 	
 	/**
 	 * @return the $imgRoot
 	 */
 	public function getImgRoot() {
-		return $this->homeRoot.$this->imgRoot;
+		return $this->imgRoot;
 	}
 
 	/* END GETTERS AND SETTER */

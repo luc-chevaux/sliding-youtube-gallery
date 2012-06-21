@@ -33,9 +33,9 @@ class SygConstant {
 	 * Static and general URI
 	 */
 	const WP_PLUGIN_PATH = '/wp-content/plugins/sliding-youtube-gallery/';
-	const WP_CSS_PATH = '/wp-content/plugins/sliding-youtube-gallery/css/';
-	const WP_JS_PATH = '/wp-content/plugins/sliding-youtube-gallery/js/';
-	const WP_IMG_PATH = '/wp-content/plugins/sliding-youtube-gallery/img/';
+	const WP_CSS_PATH = '/sliding-youtube-gallery/css/';
+	const WP_JS_PATH = '/sliding-youtube-gallery/js/';
+	const WP_IMG_PATH = '/sliding-youtube-gallery/img/';
 
 	/**
 	 * Plugin running contexts

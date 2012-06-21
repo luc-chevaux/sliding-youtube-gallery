@@ -28,7 +28,8 @@
 <!-- Menu -->
 <?php include 'plugin_menu.php'; ?>
 
-<h2>What you can do?</h2>
+<h2 class="webengText">What you can do?</h2>
+<p><strong>If you're experiencing problem with this plugin</strong> or just have some ideas to make it better, don't hesitate to send me an email at syg@webeng.it .
 <p><strong>If you're a blogger</strong> and you like this plugin, you may write a small article about this plugin. It would be amazing for my effort!
 <p><strong>If you're a WP or PHP developer</strong> and you like the plugin idea, if you have some time you can contribute to this plugin! Sometimes two developer is better than one, right?
 <p>Anyway, if you only want to use the plugin without partecipate, You may support me buying me a beer! Donation is always good. You can donate over my blog.</p>

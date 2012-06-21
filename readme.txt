@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video
 Requires at least: 2.7 or higher
 Tested up to: 3.3.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv3
 
 Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user's channel!
@@ -19,7 +19,7 @@ Users can get the video played as a nice fancybox player.
 	- Login to your wordpress blog
 	- Navigate trough to Plugins
 	- Click on Add New button
-	- Search for Sliding YouTube Gallery
+	- Search for YouTube Gallery
 	- Click on Install Button
 	- Activate the plugin
 - Manual installation
@@ -35,19 +35,19 @@ For more information about this plugin, please visit [webEng blog](http://blog.w
 
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
-To display a Sliding YouTube Gallery in a page or post, you must use the short code [syg_gallery id=<your_gallery_id>] .
+To display a Sliding YouTube Gallery in a page or post, you must use the short code [syg_gallery id=your_gallery_id] .
 
 = How do I display a Sliding YouTube Gallery in a Template? =
 
-To display a Sliding YouTube Gallery within a template you must call the getGallery(array("id" => <your_gallery_id>)) function.
+To display a Sliding YouTube Gallery within a template you must call the getGallery(array("id" => your_gallery_id)) function.
 
 = How do I display a simple video page in a page or post? =
 
-To display a video page in a page or post, you must use the short code [syg_page id=<your_gallery_id>] .
+To display a video page in a page or post, you must use the short code [syg_page id=your_gallery_id] .
 
 = How do I display a simple video page in a Template? =
 
-To display a video page within a template you must call the getVideoPage(array("id" => <your_gallery_id>)) function.
+To display a video page within a template you must call the getVideoPage(array("id" => your_gallery_id)) function.
 
 = How can I override css settings? =
 
@@ -60,10 +60,14 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 == Screenshots ==
 
 1. Administration page
-2. Sliding YouTube Gallery
-3. Sliding YouTube Gallery video page
+2. Gallery Admin
+2. Gallery
+3. Page
 
 == Changelog ==
+
+= 1.2.1 =
+* Fix path problems with css and js when wordpress is installed on a sub-directory *
 
 = 1.2.0 =
 * Multiple youtube user
@@ -79,6 +83,9 @@ Not at the moment. Future versions of this plugin will give more ways to integra
 * Initial Release, beta.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Fix path problems with css and js when wordpress is installed on a sub-directory
 
 = 1.0.1 =
 Video count setting bug, was fixed.
