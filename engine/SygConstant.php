@@ -5,11 +5,11 @@
  *
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.2
+ * @version: 1.2.3
  */
 
 class SygConstant {
-	const SYG_VERSION = '1.2.0';
+	const SYG_VERSION = '1.2.3';
 
 	/**
 	 * Plugin configuration

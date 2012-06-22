@@ -5,7 +5,7 @@
  * 
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.2
+ * @version: 1.2.3
  * 
  * @todo Creare la pagina support con facebook + twitter + mail
  * @todo Statistiche
