@@ -50,40 +50,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	</div>
 </div>
 
-<script>
-jQuery(window).load(function() {
-
-	jQuery('#syg_video_gallery-<?php echo $gallery->getId(); ?>')
-		.removeClass('syg_video_gallery_loading-<?php echo $gallery->getId(); ?>')
-		.addClass('syg_video_gallery-<?php echo $gallery->getId(); ?>');
-	
-	
-	/* remove display none */
-	jQuery('.sc_menu-<?php echo $gallery->getId();?>').removeAttr('style');
-
-	jQuery(function($){
-		//Get our elements for faster access and set overlay width
-		var div = $('div.sc_menu-<?php echo $gallery->getId(); ?>'),
-			ul = $('ul.sc_menu-<?php echo $gallery->getId(); ?>'),
-			ulPadding = 15;
-		
-		//Get menu width
-		var divWidth = <?php echo $gallery->getBoxWidth(); ?>;
-		
-		//Remove scrollbars	
-		div.css({overflow: 'hidden'});
-		
-		//Find last image container
-		var lastLi = ul.find('li:last-child');
-		
-		//When user move mouse over menu
-		div.mousemove(function(e){
-			//As images are loaded ul width increases,
-			//so we recalculate it each time
-			var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;	
-			var left = (e.pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
-			div.scrollLeft(left);
-		});
-	});
-});
-</script>
+<!-- registra script -->
+<?php 
+// js to include
+$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/action.js.php?id='.$gallery->getId();
+wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
+wp_enqueue_script('syg-action-'.$gallery->getId());
+?>
