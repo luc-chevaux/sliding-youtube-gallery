@@ -437,15 +437,13 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
 				// render gallery snippet code
-				$this->render('gallery');		
+				return $this->render('gallery');		
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$this->render('exception');
-			}	
+				return $this->render('exception');
+			}
 		}
-
-		return $html;
 	}
 
 	/**
@@ -489,15 +487,13 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
 				// render gallery snippet code
-				$this->render('page');		
+				return $this->render('page');		
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$this->render('exception');
-			}	
+				return $this->render('exception');
+			}
 		}
-
-		return $html;
 	}
 	
 	/**
@@ -513,7 +509,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * Plugin administration hook function
 	 * @return null
 	 */
-	function sygAdminHome() {
+	public function sygAdminHome() {		
 		// updated flag
 		$updated = false;
 	
@@ -524,15 +520,16 @@ class SygPlugin extends SanityPluginFramework {
 
 		// determine wich action to call
 		switch ($_GET['action']) {
-			case 'edit': $this->forwardToEdit(); break;
-			case 'add':	 $this->forwardToAdd();	break;
-			case 'delete': $this->forwardToDelete(); break;
-			case 'settings': $this->forwardToSettings(); break;
-			case 'contact': $this->forwardToContact(); break;
-			case 'support': $this->forwardToSupport(); break;
-			case null: $this->forwardToHome();	break;
+			case 'edit': $output = $this->forwardToEdit(); break;
+			case 'add':	 $output = $this->forwardToAdd(); break;
+			case 'delete': $output = $this->forwardToDelete(); break;
+			case 'settings': $output = $this->forwardToSettings(); break;
+			case 'contact': $output = $this->forwardToContact(); break;
+			case 'support': $output = $this->forwardToSupport(); break;
+			case null: $output = $this->forwardToHome(); break;
 			default: break;
 		}
+		return $output;
 	}
 	
 	/**
@@ -625,7 +622,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 		// render generalSettings view
-		$this->render('generalSettings');
+		return $this->render('generalSettings');
 	}
 	
 	/**
@@ -673,7 +670,7 @@ class SygPlugin extends SanityPluginFramework {
 			$this->data['gallery'] = new SygGallery();
 			
 			// render adminGallery view
-			$this->render('adminGallery');
+			return $this->render('adminGallery');
 		}
 	}
 	
@@ -721,7 +718,7 @@ class SygPlugin extends SanityPluginFramework {
 			$this->data['gallery'] = $this->sygDao->getSygById($id);
 			
 			// render adminGallery view
-			$this->render('adminGallery');
+			return $this->render('adminGallery');
 		}
 	}
 	
@@ -748,7 +745,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 	
 		// render contact view
-		$this->render('contact');
+		return $this->render('contact');
 	}
 	
 	/**
@@ -760,7 +757,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 	
 		// render contact view
-		$this->render('support');
+		return $this->render('support');
 	}
 	
 	/**
@@ -784,7 +781,7 @@ class SygPlugin extends SanityPluginFramework {
 		$_SESSION['request_token'] = $this->getAuthToken();
 		
 		// render adminHome view
-		$this->render('adminHome');
+		return $this->render('adminHome');
 	}
 	
 	/**
