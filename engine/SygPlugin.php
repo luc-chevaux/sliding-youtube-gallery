@@ -19,7 +19,8 @@
  */
 
 include_once 'Zend/Loader.php';
-if (!class_exists('SanityPluginFramework')) require_once($plugin_path.'Sanity/sanity.php');
+
+if (!class_exists('SanityPluginFramework')) require_once(WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/lib/Sanity/sanity.php');
 
 class SygPlugin extends SanityPluginFramework {
 
