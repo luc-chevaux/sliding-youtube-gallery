@@ -96,7 +96,7 @@ class SygUtil {
 	 */
 	public static function formatDuration ($duration = null) {
 		$duration = self::Sec2Time($duration);
-		$videoDuration .= ($duration['hours'] > 0) ? $duration['hours'].':' : '';
+		$videoDuration = ($duration['hours'] > 0) ? $duration['hours'].':' : '';
 		$videoDuration .= ($duration['minutes'] > 0) ? $duration['minutes'].':' : '0:';
 		$videoDuration .= str_pad($duration['seconds'], 2, '0', STR_PAD_LEFT);
 		return $videoDuration;
