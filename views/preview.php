@@ -29,7 +29,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	<div id="loading-level"></div>
 	<div id="loading-wrapper">
 		<?php 
-		$syg->getGallery(array('id' => $id));
+		echo $syg->getGallery(array('id' => $id));
 		?>
 	</div>
 	<div id="loading-footer">

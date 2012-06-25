@@ -512,7 +512,8 @@ class SygPlugin extends SanityPluginFramework {
 	public function sygAdminHome() {		
 		// updated flag
 		$updated = false;
-	
+		$output = '';
+		
 		// check if user has permission to manage options
 		if (!current_user_can('manage_options'))  {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
@@ -529,6 +530,7 @@ class SygPlugin extends SanityPluginFramework {
 			case null: $output = $this->forwardToHome(); break;
 			default: break;
 		}
+		
 		return $output;
 	}
 	

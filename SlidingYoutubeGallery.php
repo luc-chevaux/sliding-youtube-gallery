@@ -29,8 +29,8 @@ register_activation_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeG
 register_deactivation_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeGallery.php', 'deactivate');
 register_uninstall_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeGallery.php', 'uninstall');
 
-// front end code block
 if(!is_admin()) {
+	// front end code block
 	// add shortcodes
 	add_shortcode('syg_gallery', 'getGallery');
 	add_shortcode('syg_page', 'getVideoPage');
@@ -39,17 +39,29 @@ if(!is_admin()) {
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
 }
 
-// run the plugin
+/* shortcode implementation */
 function getGallery($atts) {
 	$syg = SygPlugin::getInstance();
-	$syg->getGallery($atts);
+	return $syg->getGallery($atts);
 }
 
 function getVideoPage($atts) {
 	$syg = SygPlugin::getInstance();
-	$syg->getVideoPage($atts);
+	return $syg->getVideoPage($atts);
 }
 
+/* administration menu */
+function SlidingYoutubeGalleryAdmin () {
+	$syg = SygPlugin::getInstance();
+	add_options_page('Sliding YouTube Gallery', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', 'sygAdminHome');
+}
+
+function sygAdminHome() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->sygAdminHome();
+}
+
+/* activation, deactivation, uninstall hook */
 function activate() {
 	SygPlugin::activation();
 }
@@ -60,14 +72,5 @@ function deactivate() {
 
 function uninstall() {
 	SygPlugin::uninstall();
-}
-
-function SlidingYoutubeGalleryAdmin () {
-	add_options_page('SlidingYoutubeGallery Options', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', 'sygAdminHome');
-}
-
-function sygAdminHome() {
-	$syg = SygPlugin::getInstance();
-	$syg->sygAdminHome();
 }
 ?>
