@@ -5,7 +5,7 @@
  * 
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.3
+ * @version: 1.2.5
  * 
  * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
@@ -664,7 +664,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 			
 			// render adminGallery view
-			$this->forwardToHome();
+			return $this->forwardToHome();
 		}else{
 			// gallery administration form section
 			// prepare header
@@ -710,7 +710,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 			
 			// render adminGallery view
-			$this->forwardToHome();
+			return $this->forwardToHome();
 		} else {
 			// get the gallery id
 			$id = (int) $_GET['id'];

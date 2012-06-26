@@ -5,7 +5,7 @@
  *
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.4
+ * @version: 1.2.5
  */
 
 class SygConstant {
