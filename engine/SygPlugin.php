@@ -7,15 +7,13 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.3
  * 
- * @todo Creare la pagina support con facebook + twitter + mail
- * @todo Statistiche
- * 
  * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.3)
  * @todo Aggiungere opzione disabilita video correlati (milestone v1.3)
  * @todo Creare la pagina contact con invio mail (milestone v1.3)
  * @todo Background image (milesone v1.3)
+ * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3)
  */
 
 include_once 'Zend/Loader.php';
@@ -94,7 +92,11 @@ class SygPlugin extends SanityPluginFramework {
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();
 	}
-
+	
+	/**
+	 * Remove old option
+	 * @return null
+	 */
 	private static function removeOldOption() {
 		global $wpdb;
 		
