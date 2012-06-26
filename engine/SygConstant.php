@@ -9,7 +9,7 @@
  */
 
 class SygConstant {
-	const SYG_VERSION = '1.2.4';
+	const SYG_VERSION = '1.2.5';
 
 	/**
 	 * Plugin configuration
