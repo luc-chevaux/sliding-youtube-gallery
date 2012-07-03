@@ -1,4 +1,3 @@
-<!-- Php Inclusion -->
 <?php 
 	// include wp loader
 	$root = realpath(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))));

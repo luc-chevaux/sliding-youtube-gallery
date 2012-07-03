@@ -26,7 +26,7 @@
 </p>
 
 <!-- Menu -->
-<?php include 'plugin_menu.php'; ?>
+<?php include 'pluginMenu.inc.php'; ?>
 
 <h2 class="webengText">What you can do?</h2>
 <p><strong>If you're experiencing problem with this plugin</strong> or just have some ideas to make it better, don't hesitate to send me an email at syg@webeng.it .

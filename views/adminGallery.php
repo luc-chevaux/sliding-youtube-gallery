@@ -33,7 +33,7 @@
 <hr/>
 
 <!-- Menu -->
-<?php include 'plugin_menu.php'; ?>
+<?php include 'pluginMenu.inc.php'; ?>
 
 <!-- Welcome Message -->
 <p class="webengText">
