@@ -2,7 +2,7 @@
 
 <!-- Extra Php Code -->
 <?php 	
-	$style = $this->data['style'];
+	$styles = $this->data['styles'];
 ?>
 
 <!-- User Message -->
@@ -149,3 +149,6 @@
 	<hr/>
 	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
 </form>
+
+<!-- plugin Menu -->
+<?php include 'inc/contextMenu.inc.php'; ?>

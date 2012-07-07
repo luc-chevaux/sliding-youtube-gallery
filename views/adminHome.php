@@ -81,3 +81,5 @@ if (count($galleries) == 0) { ?>
 	?>
 </ul>	
 <br/>
+
+<?php require_once 'inc/contextMenu.inc.php'; ?>

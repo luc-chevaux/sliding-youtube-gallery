@@ -653,6 +653,20 @@ class SygPlugin extends SanityPluginFramework {
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 
+		// put galleries in the view
+		$styles = $this->sygDao->getAllStyles();
+		
+		// put galleries in the view
+		$this->data['styles'] = $styles;
+		
+		// number of pages
+		$this->data['pages'] = ceil(
+				$this->sygDao->getStylesCount()
+				/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+		
+		// generate token
+		$_SESSION['request_token'] = $this->getAuthToken();
+		
 		// render adminStyles view
 		return $this->render('adminStyles');
 	}
@@ -879,7 +893,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// number of pages
 		$this->data['pages'] = ceil(
-				$this->sygDao->getSygCount()
+				$this->sygDao->getGalleriesCount()
 						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
 
 		// generate token
