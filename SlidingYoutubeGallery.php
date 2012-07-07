@@ -10,39 +10,49 @@
  */
 
 // library path
-$lib_path = WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/lib';
+$lib_path = WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/lib';
 
 // set include path
-set_include_path (get_include_path() . PATH_SEPARATOR . $lib_path);
+set_include_path(get_include_path() . PATH_SEPARATOR . $lib_path);
 
 // include required wordpress object
-require_once (ABSPATH . 'wp-admin/includes/plugin.php');
-require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 // include engine
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygPlugin.php');
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygConstant.php');
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygDao.php');
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygGallery.php');
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygUtil.php');
-require_once (WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/SygYouTube.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygPlugin.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygConstant.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygDao.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygGallery.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygUtil.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygYouTube.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygStyle.php');
+require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygValidate.php');
 
 // register activation hook
-register_activation_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeGallery.php', 'activate');
-register_deactivation_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeGallery.php', 'deactivate');
-register_uninstall_hook(WP_PLUGIN_DIR.'/sliding-youtube-gallery/SlidingYoutubeGallery.php', 'uninstall');
+register_activation_hook(
+		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
+		'activate');
+register_deactivation_hook(
+		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
+		'deactivate');
+register_uninstall_hook(
+		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
+		'uninstall');
 
 // backend and frontend code
-if(!is_admin()) {
+if (!is_admin()) {
 	// front end code block
 	// add shortcodes
 	add_shortcode('syg_gallery', 'getGallery');
 	add_shortcode('syg_page', 'getVideoPage');
-}else {
+} else {
 	// back end code block
 	// attach the admin menu to the hook
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
 }
+
+/* FRONT END METHODS */
 
 /**
  * Get a video gallery
@@ -63,10 +73,40 @@ function getVideoPage($atts) {
 	return $syg->getVideoPage($atts);
 }
 
+/* BACK END METHODS */
+
 // Sliding youtube gallery options page
-function SlidingYoutubeGalleryAdmin () {
+function SlidingYoutubeGalleryAdmin() {
+	global $wp_version;
+
 	$syg = SygPlugin::getInstance();
-	add_options_page('Sliding YouTube Gallery', 'YouTube Gallery', 'manage_options', 'syg-administration-panel', 'sygAdminHome');
+
+	// Add first level menu page
+	add_menu_page('Sliding YouTube Gallery', 'SYG gallery', 'manage_options',
+			'syg-administration-panel', 'sygAdminHome',
+			WP_PLUGIN_URL . '/sliding-youtube-gallery/img/ui/webeng.png');
+
+	// Add second level menu page
+	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_GALLERIES,
+			SygConstant::BE_MENU_MANAGE_GALLERIES, 'manage_options', 'syg-manage-galleries',
+			'manageGalleries');
+	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_STYLES,
+			SygConstant::BE_MENU_MANAGE_STYLES, 'manage_options', 'syg-manage-styles',
+			'manageStyles');
+	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_SETTINGS,
+			SygConstant::BE_MENU_MANAGE_SETTINGS, 'manage_options', 'syg-manage-settings',
+			'manageSettings');
+	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_CONTACTS_AND_SUPPORT,
+			SygConstant::BE_MENU_CONTACTS_AND_SUPPORT, 'manage_options', 'syg-contacts',
+			'getSupport');
+
+	// remove menu duplicated by wordpress
+	if (version_compare($wp_version, '3.1', '<')) {
+		unset($GLOBALS['submenu']['syg-administration-panel'][0]);
+	} else {
+		remove_submenu_page('syg-administration-panel',
+				'syg-administration-panel');
+	}
 }
 
 /**
@@ -76,6 +116,42 @@ function SlidingYoutubeGalleryAdmin () {
 function sygAdminHome() {
 	$syg = SygPlugin::getInstance();
 	echo $syg->sygAdminHome();
+}
+
+/**
+ * Plugin gallery administration
+ * @return null
+ */
+function manageGalleries() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->forwardToGalleries();
+}
+
+/**
+ * Plugin styles administration
+ * @return null
+ */
+function manageStyles() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->forwardToStyles();
+}
+
+/**
+ * Plugin settings administration
+ * @return null
+ */
+function manageSettings() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->forwardToSettings();
+}
+
+/**
+ * Plugin get support
+ * @return null
+ */
+function getSupport() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->forwardToContacts();
 }
 
 /**

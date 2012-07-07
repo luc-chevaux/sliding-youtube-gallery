@@ -19,6 +19,7 @@ class SygDao {
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
 	private $sqlCountGallery = SygConstant::SQL_COUNT_GALLERY;
+	private $sqlCreateTable12X = SygConstant::SQL_CREATE_TABLE_1_2_X;
 	
 	/**
 	 * Default constructor
@@ -109,6 +110,16 @@ class SygDao {
 		$count= $this->db->get_var($query, 0, 0);
 
 		return (int)$count;
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	public function createTable12x() {
+		$query = $this->db->prepare(sprintf($this->sqlCreateTable12X, $this->table_name));
+		// run the dbDelta function and return its values
+		return dbDelta($query);
 	}
 }
 ?>

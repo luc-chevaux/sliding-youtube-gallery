@@ -18,56 +18,59 @@
 
 include_once 'Zend/Loader.php';
 
-if (!class_exists('SanityPluginFramework')) require_once(WP_PLUGIN_DIR.'/sliding-youtube-gallery/engine/lib/Sanity/sanity.php');
+if (!class_exists('SanityPluginFramework'))
+	require_once(WP_PLUGIN_DIR
+			. '/sliding-youtube-gallery/engine/lib/Sanity/sanity.php');
 
 class SygPlugin extends SanityPluginFramework {
 
 	private static $instance = null;
-	
+
 	/**
 	 * Return current instance of the plugin
 	 * @return self::$instance
 	 */
 	public static function getInstance() {
-		if(self::$instance == null) {
+		if (self::$instance == null) {
 			$c = __CLASS__;
 			self::$instance = new $c;
 		}
 		return self::$instance;
 	}
-	
+
 	private $homeRoot;
 	private $pluginRoot;
 	private $jsRoot;
 	private $cssRoot;
 	private $imgRoot;
-	
+
 	private $syg = array();
-	
+
 	private $sygYouTube;
 	private $sygDao;
-	
+
 	/**
 	 * Plugin constructor
 	 * @return null
 	 */
 	public function __construct() {
-		
-		$me =  ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
-		
+
+		$me = ABSPATH
+				. 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+
 		parent::__construct(dirname($me));
-		
+
 		// set environment
 		$this->setEnvironment();
-		
+
 		// front end code block
-		if(!is_admin()) {			
+		if (!is_admin()) {
 			// add shortcodes
 			add_shortcode('syg_gallery', array($this, 'getGallery'));
 			add_shortcode('syg_page', array($this, 'getVideoPage'));
 		}
 	}
-	
+
 	/**
 	 * Set the plugin environment
 	 * @return null
@@ -75,34 +78,34 @@ class SygPlugin extends SanityPluginFramework {
 	private function setEnvironment() {
 		// set home root
 		$this->homeRoot = site_url();
-		
+
 		// set the plugin path
 		$this->setPluginRoot(SygConstant::WP_PLUGIN_PATH);
-		
+
 		// set the css path
-		$this->setCssRoot(WP_PLUGIN_URL.SygConstant::WP_CSS_PATH);
+		$this->setCssRoot(WP_PLUGIN_URL . SygConstant::WP_CSS_PATH);
 
 		// set the js path
-		$this->setJsRoot(WP_PLUGIN_URL.SygConstant::WP_JS_PATH);
-		
+		$this->setJsRoot(WP_PLUGIN_URL . SygConstant::WP_JS_PATH);
+
 		// set the img path
-		$this->setImgRoot(WP_PLUGIN_URL.SygConstant::WP_IMG_PATH);
-		
+		$this->setImgRoot(WP_PLUGIN_URL . SygConstant::WP_IMG_PATH);
+
 		// set local object
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();
 	}
-	
+
 	/**
 	 * Remove old option
 	 * @return null
 	 */
 	private static function removeOldOption() {
 		global $wpdb;
-		
+
 		// get the table name
 		$syg_table_name = $wpdb->prefix . "syg";
-		
+
 		$syg_youtube_username = get_option('syg_youtube_username');
 		$syg_youtube_videoformat = get_option('syg_youtube_videoformat');
 		$syg_youtube_maxvideocount = get_option('syg_youtube_maxvideocount');
@@ -118,7 +121,7 @@ class SygPlugin extends SanityPluginFramework {
 		$syg_description_width = get_option('syg_description_width');
 		$syg_description_fontsize = get_option('syg_description_fontsize');
 		$syg_description_fontcolor = get_option('syg_description_fontcolor');
-		$syg_description_show =  get_option('syg_description_show');
+		$syg_description_show = get_option('syg_description_show');
 		$syg_description_showduration = get_option('syg_description_showduration');
 		$syg_description_showtags = get_option('syg_description_showtags');
 		$syg_description_showratings = get_option('syg_description_showratings');
@@ -127,38 +130,35 @@ class SygPlugin extends SanityPluginFramework {
 		$syg_box_background = get_option('syg_box_background');
 		$syg_box_radius = get_option('syg_box_radius');
 		$syg_box_padding = get_option('syg_box_padding');
-		
-		$wpdb->insert(
-				$syg_table_name,
-				array(
-						'syg_box_background' => $syg_box_background,
-						'syg_box_padding' => $syg_box_padding,
-						'syg_box_radius' => $syg_box_radius,
-						'syg_box_width' => $syg_box_width,
-						'syg_description_fontcolor' => $syg_description_fontcolor,
-						'syg_description_fontsize' => $syg_description_fontsize,
-						'syg_description_show' => $syg_description_show,
-						'syg_description_showcategories' => $syg_description_showcategories,
-						'syg_description_showduration' => $syg_description_showduration,
-						'syg_description_showratings' => $syg_description_showratings,
-						'syg_description_showtags' => $syg_description_showtags,
-						'syg_description_width' => $syg_description_width,
-						'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
-						'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
-						'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
-						'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
-						'syg_thumbnail_distance' => $syg_thumbnail_distance,
-						'syg_thumbnail_height' => $syg_thumbnail_height,
-						'syg_thumbnail_image' => $syg_thumbnail_image,
-						'syg_thumbnail_width' => $syg_thumbnail_width,
-						'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
-						'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
-						'syg_youtube_videoformat' => $syg_youtube_videoformat,
-						'syg_youtube_username' => $syg_youtube_username
-				),
-				SygGallery::getRsType()
-		);
-		
+
+		$wpdb
+				->insert($syg_table_name,
+						array('syg_box_background' => $syg_box_background,
+								'syg_box_padding' => $syg_box_padding,
+								'syg_box_radius' => $syg_box_radius,
+								'syg_box_width' => $syg_box_width,
+								'syg_description_fontcolor' => $syg_description_fontcolor,
+								'syg_description_fontsize' => $syg_description_fontsize,
+								'syg_description_show' => $syg_description_show,
+								'syg_description_showcategories' => $syg_description_showcategories,
+								'syg_description_showduration' => $syg_description_showduration,
+								'syg_description_showratings' => $syg_description_showratings,
+								'syg_description_showtags' => $syg_description_showtags,
+								'syg_description_width' => $syg_description_width,
+								'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
+								'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
+								'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
+								'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
+								'syg_thumbnail_distance' => $syg_thumbnail_distance,
+								'syg_thumbnail_height' => $syg_thumbnail_height,
+								'syg_thumbnail_image' => $syg_thumbnail_image,
+								'syg_thumbnail_width' => $syg_thumbnail_width,
+								'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
+								'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
+								'syg_youtube_videoformat' => $syg_youtube_videoformat,
+								'syg_youtube_username' => $syg_youtube_username),
+						SygGallery::getRsType());
+
 		if ($wpdb->insert_id) {
 			delete_option('syg_youtube_username');
 			delete_option('syg_youtube_videoformat');
@@ -189,58 +189,63 @@ class SygPlugin extends SanityPluginFramework {
 			delete_option('syg_submit_hidden');
 		}
 	}
-	
+
 	/**
 	 * Collect stats
 	 * @return null
 	 */
 	private static function notify($action = null) {
-		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-		
+		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']
+				: $_SERVER['SERVER_NAME'];
+
 		if (SygUtil::isCurlInstalled()) {
-			$ch = curl_init();	
-			curl_setopt($ch, CURLOPT_URL, 'http://www.webeng.it/stats.php?module_name=syg&action='.$action.'&domain='.$domain_name);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL,
+					'http://www.webeng.it/stats.php?module_name=syg&action='
+							. $action . '&domain=' . $domain_name);
 			curl_setopt($ch, CURLOPT_HEADER, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$data = curl_exec();
 			curl_close($ch);
 		} else {
-			wp_mail(SygConstant::BE_EMAIL_NOTIFIED, $domain_name." has just ".$action, $domain_name." has just ".$action);
+			wp_mail(SygConstant::BE_EMAIL_NOTIFIED,
+					$domain_name . " has just " . $action,
+					$domain_name . " has just " . $action);
 		}
 	}
-	
+
 	/**
 	 * Deactivation plugin hook
 	 * @return null
 	 */
 	public static function uninstall() {
 		global $wpdb;
-		
+
 		// remove table
 		$syg_table_name = $wpdb->prefix . "syg";
-		
+
 		// must create table if not exists
-		$sql = "DROP TABLE IF EXISTS ".$syg_table_name."";
-		
+		$sql = "DROP TABLE IF EXISTS " . $syg_table_name . "";
+
 		// execute clean 
 		$wpdb->query($sql);
-		
+
 		// remove options
 		delete_option("syg_db_version");
-		
+
 		// send stat
 		self::notify(SygConstant::BE_ACTION_UNINSTALL);
 	}
-	
+
 	/**
 	 * Deactivation plugin hook
 	 * @return null
 	 */
-	public static function deactivation() {	
+	public static function deactivation() {
 		// send stat
 		self::notify(SygConstant::BE_ACTION_DEACTIVATION);
 	}
-	
+
 	/**
 	 * Activation plugin hook
 	 * @return null
@@ -248,64 +253,35 @@ class SygPlugin extends SanityPluginFramework {
 	public static function activation() {
 		global $wpdb;
 		global $syg_db_version;
-		
+
 		// set db version
 		$syg_db_version = SygConstant::SYG_VERSION;
-	
+
 		// get the current db version
-		$installed_ver = get_option( "syg_db_version" );
-	
-		if( $installed_ver != $syg_db_version ) {
+		$installed_ver = get_option("syg_db_version");
+
+		if ($installed_ver != $syg_db_version) {
 			// set the table name
 			$syg_table_name = $wpdb->prefix . "syg";
-				
-			// must create table if not exists
-			$sql = "CREATE TABLE IF NOT EXISTS ".$syg_table_name." (
-			`id` int(11) NOT NULL AUTO_INCREMENT,
-			`syg_youtube_username` varchar(255) NOT NULL,
-			`syg_youtube_videoformat` varchar(255) NOT NULL,
-			`syg_youtube_maxvideocount` int(11) NOT NULL,
-			`syg_thumbnail_height` int(11) NOT NULL,
-			`syg_thumbnail_width` int(11) NOT NULL,
-			`syg_thumbnail_bordersize` int(11) NOT NULL,
-			`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
-			`syg_thumbnail_borderradius` int(11) NOT NULL,
-			`syg_thumbnail_distance` int(11) NOT NULL,
-			`syg_thumbnail_overlaysize` int(11) NOT NULL,
-			`syg_thumbnail_image` varchar(255) NOT NULL,
-			`syg_thumbnail_buttonopacity` float NOT NULL,
-			`syg_description_width` int(11) NOT NULL,
-			`syg_description_fontsize` int(11) NOT NULL,
-			`syg_description_fontcolor` varchar(255) NOT NULL,
-			`syg_description_show` tinyint(1) NOT NULL,
-			`syg_description_showduration` tinyint(1) NOT NULL,
-			`syg_description_showtags` tinyint(1) NOT NULL,
-			`syg_description_showratings` tinyint(1) NOT NULL,
-			`syg_description_showcategories` tinyint(1) NOT NULL,
-			`syg_box_width` int(11) NOT NULL,
-			`syg_box_background` varchar(255) NOT NULL,
-			`syg_box_radius` int(11) NOT NULL,
-			`syg_box_padding` int(11) NOT NULL,
-			PRIMARY KEY  (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
-				
-			// run the dbDelta function
-			dbDelta($sql);
-			
+
+			$this->sygDao->createTable12x();
+
 			// transitory method
 			if (get_option('syg_youtube_username'))
 				self::removeOldOption();
-			
+
 			// add or update db version option
-			(!get_option("syg_db_version")) ? add_option("syg_db_version", $syg_db_version) : update_option("syg_db_version", $syg_db_version);
-			
+			(!get_option("syg_db_version")) ? add_option("syg_db_version",
+							$syg_db_version)
+					: update_option("syg_db_version", $syg_db_version);
+
 			// send stat
 			self::notify(SygConstant::BE_ACTION_ACTIVATION);
 		}
 	}
-	
+
 	/* GETTERS AND SETTERS */
-	
+
 	/**
 	 * @param field_type $homeRoot
 	 */
@@ -326,28 +302,28 @@ class SygPlugin extends SanityPluginFramework {
 	private function setJsRoot($jsRoot) {
 		$this->jsRoot = $jsRoot;
 	}
-	
+
 	/**
 	 * @param string $cssRoot
 	 */
 	private function setCssRoot($cssRoot) {
 		$this->cssRoot = $cssRoot;
 	}
-	
+
 	/**
 	 * @param string $imgRoot
 	 */
 	private function setImgRoot($imgRoot) {
 		$this->imgRoot = $imgRoot;
 	}
-	
+
 	/**
 	 * @return the $homeRoot
 	 */
 	public function getHomeRoot() {
 		return $this->homeRoot;
 	}
-	
+
 	/**
 	 * @return the $pluginRoot
 	 */
@@ -360,14 +336,14 @@ class SygPlugin extends SanityPluginFramework {
 	public function getJsRoot() {
 		return $this->jsRoot;
 	}
-	
+
 	/**
 	 * @return the $cssRoot
 	 */
 	public function getCssRoot() {
 		return $this->cssRoot;
 	}
-	
+
 	/**
 	 * @return the $imgRoot
 	 */
@@ -376,8 +352,7 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/* END GETTERS AND SETTER */
-	
-	
+
 	/**
 	 * Get gallery settings returning its DTO
 	 * @param $id 
@@ -386,18 +361,18 @@ class SygPlugin extends SanityPluginFramework {
 	public function getGallerySettings($id = null) {
 		// cast id to an int
 		$id = (int) $id;
-		
+
 		// get the gallery
 		$dao = new SygDao();
 		$gallery = $dao->getSygById($id);
-		
+
 		// set youtube profile object in the gallery
 		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
-		
+
 		// return gallery in dto format
-		return $gallery->toDto(true);	
+		return $gallery->toDto(true);
 	}
-	
+
 	/**
 	 * Get gallery wordpress hook function
 	 * @param $attributes 
@@ -405,20 +380,21 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	function getGallery($attributes) {
 		foreach ($attributes as $key => $var) {
-			$attributes[$key] = (int)$var;
+			$attributes[$key] = (int) $var;
 		}
-		
+
 		extract(shortcode_atts(array('id' => null), $attributes));
-		
+
 		if (!empty($id)) {
-			try {				
+			try {
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygById($id);
-				
+
 				// get video feed from youtube 
-				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
-				
+				$videoFeed = $this->sygYouTube
+						->getuserUploads($gallery->getYtUsername());
+
 				// truncate video feed
 				// create new feed
 				$counter = 1;
@@ -426,20 +402,21 @@ class SygPlugin extends SanityPluginFramework {
 				foreach ($videoFeed as $videoEntry) {
 					$feed->addEntry($videoEntry);
 					$i++;
-					if ($i == $gallery->getYtMaxVideoCount()) break;
+					if ($i == $gallery->getYtMaxVideoCount())
+						break;
 				}
-				
+
 				// put the feed in the view
 				$this->data['feed'] = $feed;
-				
+
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
-				
+
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-				
+
 				// render gallery snippet code
-				return $this->render('gallery');		
+				return $this->render('gallery');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
@@ -455,20 +432,21 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	function getVideoPage($attributes) {
 		foreach ($attributes as $key => $var) {
-			$attributes[$key] = (int)$var;
+			$attributes[$key] = (int) $var;
 		}
 
 		extract(shortcode_atts(array('id' => null), $attributes));
-		
+
 		if (!empty($id)) {
-			try {				
+			try {
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygById($id);
-				
+
 				// get video feed from youtube 
-				$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtUsername());
-				
+				$videoFeed = $this->sygYouTube
+						->getuserUploads($gallery->getYtUsername());
+
 				// truncate video feed
 				// create new feed
 				$counter = 1;
@@ -476,20 +454,21 @@ class SygPlugin extends SanityPluginFramework {
 				foreach ($videoFeed as $videoEntry) {
 					$feed->addEntry($videoEntry);
 					$i++;
-					if ($i == $gallery->getYtMaxVideoCount()) break;
+					if ($i == $gallery->getYtMaxVideoCount())
+						break;
 				}
-				
+
 				// put the feed in the view
 				$this->data['feed'] = $feed;
-				
+
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
-				
+
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-				
+
 				// render gallery snippet code
-				return $this->render('page');		
+				return $this->render('page');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
@@ -497,45 +476,56 @@ class SygPlugin extends SanityPluginFramework {
 			}
 		}
 	}
-	
-	/**
-	 * Sliding YouTube Gallery admin menu hook
-	 * @param $attributes 
-	 * @return null
-	 */
-	public static function SlidingYoutubeGalleryAdmin() {
-		
-	}
-	
+
 	/**
 	 * Plugin administration hook function
 	 * @return null
 	 */
-	public function sygAdminHome() {		
+	public function sygAdminHome() {
 		// updated flag
 		$updated = false;
 		$output = '';
-		
+
 		// check if user has permission to manage options
-		if (!current_user_can('manage_options'))  {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
+		if (!current_user_can('manage_options')) {
+			wp_die(
+					__(
+							'You do not have sufficient permissions to access this page.'));
 		}
 
 		// determine wich action to call
 		switch ($_GET['action']) {
-			case 'edit': $output = $this->forwardToEdit(); break;
-			case 'add':	 $output = $this->forwardToAdd(); break;
-			case 'delete': $output = $this->forwardToDelete(); break;
-			case 'settings': $output = $this->forwardToSettings(); break;
-			case 'contact': $output = $this->forwardToContact(); break;
-			case 'support': $output = $this->forwardToSupport(); break;
-			case null: $output = $this->forwardToHome(); break;
-			default: break;
+		case 'edit':
+			$output = $this->forwardToEdit();
+			break;
+		case 'add_gallery':
+			$output = $this->forwardToAddGallery();
+			break;
+		case 'add_style':
+			$output = $this->forwardToAddStyle();
+			break;
+		case 'delete':
+			$output = $this->forwardToDelete();
+			break;
+		case 'settings':
+			$output = $this->forwardToSettings();
+			break;
+		case 'contact':
+			$output = $this->forwardToContact();
+			break;
+		case 'support':
+			$output = $this->forwardToSupport();
+			break;
+		case null:
+			$output = $this->forwardToHome();
+			break;
+		default:
+			break;
 		}
-		
+
 		return $output;
 	}
-	
+
 	/**
 	 * Prepare HTML Headers with css/js injection
 	 * @return null
@@ -547,114 +537,166 @@ class SygPlugin extends SanityPluginFramework {
 		$view['jsPath'] = $this->getJsRoot();
 		// define plugin url
 		$view['pluginUrl'] = $this->homeRoot . $this->getPluginRoot();
-		
+
 		switch ($context) {
-			case SygConstant::SYG_CTX_BE:	
-				// css to include
-				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
-				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
-				
-				// define presentation plugin resources
-				$view['fancybox_js_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath'] . '/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath'] . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
-				
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('fancybox');
-				
-				// javascript dependencies injection
-				wp_enqueue_script('jquery');
-				
-				// js to include
-				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'admin.js', array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery-admin');
-				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . 'colorpicker.js', array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
-				
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('fancybox');
-				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('easing');
-				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('mousewheel');
-				break;
-			case SygConstant::SYG_CTX_FE:				
-				// define plugin resources url in the view
-				$gallery = $view['gallery'];
-				$view['sygCssUrl_'.$gallery->getId()] = $view['cssPath'] . 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
-				$view['sygJsUrl_'.$gallery->getId()] = $view['jsPath'] . 'SlidingYoutubeGallery.js.php?id=' . $gallery->getId();
-				
-				// define presentation plugin resources
-				$view['fancybox_js_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath'] . '/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath'] . '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath'] . '/fancybox/jquery.fancybox-1.3.4.css';
-				
-				// css injection
-				wp_register_style('sliding-youtube-gallery-'.$gallery->getId(), $view['sygCssUrl_'.$gallery->getId()], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('sliding-youtube-gallery-'.$gallery->getId());
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('fancybox');
-				
-				// javascript dependencies injection
-				wp_enqueue_script('jquery');
-				
-				// js to include
-				wp_register_script('sliding-youtube-gallery-'.$gallery->getId(), $view['sygJsUrl_'.$gallery->getId()], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery-'.$gallery->getId());
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('fancybox');
-				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('easing');
-				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('mousewheel');
-				break;
-			case SygConstant::SYG_CTX_WS:
-				break;
-			default:
-				break;
-		}  
+		case SygConstant::SYG_CTX_BE:
+		// css to include
+			$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
+			$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+
+			// define presentation plugin resources
+			$view['fancybox_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
+			$view['easing_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.easing-1.3.pack.js';
+			$view['mousewheel_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+			$view['fancybox_css_url'] = $view['jsPath']
+					. '/fancybox/jquery.fancybox-1.3.4.css';
+
+			wp_register_style('fancybox', $view['fancybox_css_url'], array(),
+					SygConstant::SYG_VERSION, 'screen');
+			wp_enqueue_style('fancybox');
+
+			// javascript dependencies injection
+			wp_enqueue_script('jquery');
+
+			// js to include
+			wp_register_script('sliding-youtube-gallery-admin',
+					$view['jsPath'] . 'admin.js', array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('sliding-youtube-gallery-admin');
+			wp_register_script('sliding-youtube-gallery-colorpicker',
+					$view['jsPath'] . 'colorpicker.js', array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('sliding-youtube-gallery-colorpicker');
+
+			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('fancybox');
+			wp_register_script('easing', $view['easing_js_url'], array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('easing');
+			wp_register_script('mousewheel', $view['mousewheel_js_url'],
+					array(), SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('mousewheel');
+			break;
+		case SygConstant::SYG_CTX_FE:
+		// define plugin resources url in the view
+			$gallery = $view['gallery'];
+			$view['sygCssUrl_' . $gallery->getId()] = $view['cssPath']
+					. 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
+			$view['sygJsUrl_' . $gallery->getId()] = $view['jsPath']
+					. 'SlidingYoutubeGallery.js.php?id=' . $gallery->getId();
+
+			// define presentation plugin resources
+			$view['fancybox_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
+			$view['easing_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.easing-1.3.pack.js';
+			$view['mousewheel_js_url'] = $view['jsPath']
+					. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+			$view['fancybox_css_url'] = $view['jsPath']
+					. '/fancybox/jquery.fancybox-1.3.4.css';
+
+			// css injection
+			wp_register_style('sliding-youtube-gallery-' . $gallery->getId(),
+					$view['sygCssUrl_' . $gallery->getId()], array(),
+					SygConstant::SYG_VERSION, 'screen');
+			wp_enqueue_style('sliding-youtube-gallery-' . $gallery->getId());
+			wp_register_style('fancybox', $view['fancybox_css_url'], array(),
+					SygConstant::SYG_VERSION, 'screen');
+			wp_enqueue_style('fancybox');
+
+			// javascript dependencies injection
+			wp_enqueue_script('jquery');
+
+			// js to include
+			wp_register_script('sliding-youtube-gallery-' . $gallery->getId(),
+					$view['sygJsUrl_' . $gallery->getId()], array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('sliding-youtube-gallery-' . $gallery->getId());
+			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('fancybox');
+			wp_register_script('easing', $view['easing_js_url'], array(),
+					SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('easing');
+			wp_register_script('mousewheel', $view['mousewheel_js_url'],
+					array(), SygConstant::SYG_VERSION, true);
+			wp_enqueue_script('mousewheel');
+			break;
+		case SygConstant::SYG_CTX_WS:
+			break;
+		default:
+			break;
+		}
 	}
-	
+
+	/**
+	 * Action Forward to manage galleries
+	 * @return null
+	 */
+	public function forwardToGalleries() {
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// render adminGalleries view
+		return $this->render('adminGalleries');
+	}
+
+	/**
+	 * Action Forward to manage galleries
+	 * @return null
+	 */
+	public function forwardToStyles() {
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// render adminStyles view
+		return $this->render('adminStyles');
+	}
+
 	/**
 	 * Action Forward to setting page
 	 * @return null
 	 */
-	private function forwardToSettings() {
+	public function forwardToSettings() {
 		// prepare header 
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
+
 		// render generalSettings view
-		return $this->render('generalSettings');
+		return $this->render('adminSettings');
 	}
-	
+
 	/**
 	 * Action Forward to add gallery
 	 * @return null
 	 */
-	private function forwardToAdd() {
-		
+	public function forwardToAddGallery() {
+
 		$updated = false;
-		
-		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
-			// database add procedure
+
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+			// database add gallery procedure
 			// get posted values
 			$data = serialize($_POST);
-			
+
 			// check youtube user
-			$valid = $this->sygYouTube->getUserProfile($_POST['syg_youtube_username']);
-			
+			$valid = $this->sygYouTube
+					->getUserProfile($_POST['syg_youtube_username']);
+
 			if ($valid) {
 				// create a new gallery
 				$syg = new SygGallery($data);
-				
+
 				// update db
 				$this->sygDao->addSyg($syg);
-			
+
 				// updated flag
 				$updated = true;
-				
+
 				// updated flag
 				$this->data['updated'] = $updated;
 			} else {
@@ -662,45 +704,102 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
 			}
-			
+
 			// render adminGallery view
 			return $this->forwardToHome();
-		}else{
+		} else {
 			// gallery administration form section
 			// prepare header
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-			
+
 			// put an empty gallery in the view
 			$this->data['gallery'] = new SygGallery();
-			
+
 			// render adminGallery view
 			return $this->render('adminGallery');
 		}
 	}
-	
+
+	/**
+	 * Action Forward to add style
+	 * @return null
+	 */
+	public function forwardToAddStyle() {
+
+		$updated = false;
+
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+			// database add style procedure
+			// get posted values
+			$data = serialize($_POST);
+
+			try {
+				// validate data
+				SygValidate::getInstance() . validateStyle($data);
+
+				// create a new gallery
+				$style = new SygStyle($data);
+
+				// update db
+				$this->sygDao->addSygStyle($style);
+
+				// updated flag
+				$updated = true;
+
+				// updated flag
+				$this->data['updated'] = $updated;
+			} catch (SygValidateException $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblemFound();
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+			}
+
+			// render adminGallery view
+			return $this->forwardToHome();
+		} else {
+			// gallery administration form section
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+			// put an empty gallery in the view
+			$this->data['style'] = new SygStyle();
+
+			// render adminGallery view
+			return $this->render('adminStyles');
+		}
+	}
+
 	/**
 	 * Action Forward to edit gallery
 	 * @return null
 	 */
-	private function forwardToEdit() {
-		if( isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y' ) {
+	public function forwardToEdit() {
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
 
 			// check youtube user
-			$valid = $this->sygYouTube->getUserProfile($_POST['syg_youtube_username']);
-			
+			$valid = $this->sygYouTube
+					->getUserProfile($_POST['syg_youtube_username']);
+
 			if ($valid) {
 				// create a new gallery
 				$syg = new SygGallery($data);
-				
+
 				// update db
 				$this->sygDao->updateSyg($syg);
-				
+
 				// updated flag
 				$updated = true;
-					
+
 				// updated flag
 				$this->data['updated'] = $updated;
 			} else {
@@ -708,86 +807,88 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
 			}
-			
+
 			// render adminGallery view
 			return $this->forwardToHome();
 		} else {
 			// get the gallery id
 			$id = (int) $_GET['id'];
-			
+
 			// prepare header
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-			
+
 			// put gallery in the view
 			$this->data['gallery'] = $this->sygDao->getSygById($id);
-			
+
 			// render adminGallery view
 			return $this->render('adminGallery');
 		}
 	}
-	
+
 	/**
 	 * Action Forward to edit gallery
 	 * @return null
 	 */
-	private function forwardToDelete() {
+	public function forwardToDelete() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
-		
+
 		// delete gallery
 		$this->sygDao->deleteSyg($this->sygDao->getSygById($id));
-		
+
 		die();
 	}
-	
+
 	/**
 	 * Action Forward to contact page
 	 * @return null
 	 */
-	private function forwardToContact() {
+	public function forwardToContacts() {
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-	
+
 		// render contact view
-		return $this->render('contact');
+		return $this->render('support');
 	}
-	
+
 	/**
 	 * Action Forward to donation page
 	 * @return null
 	 */
-	private function forwardToSupport() {
+	public function forwardToSupport() {
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-	
+
 		// render contact view
 		return $this->render('support');
 	}
-	
+
 	/**
 	 * Action Forward to homepage
 	 * @return null
 	 */
-	private function forwardToHome() {
+	public function forwardToHome() {
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
+
 		// put galleries in the view
 		$galleries = $this->sygDao->getAllSyg();
-		
+
 		// put galleries in the view
 		$this->data['galleries'] = $galleries;
-		
+
 		// number of pages
-		$this->data['pages'] = ceil($this->sygDao->getSygCount()/SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
-		
+		$this->data['pages'] = ceil(
+				$this->sygDao->getSygCount()
+						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+
 		// generate token
 		$_SESSION['request_token'] = $this->getAuthToken();
-		
+
 		// render adminHome view
 		return $this->render('adminHome');
 	}
-	
+
 	/**
 	 * Get Ajax Auth Token
 	 * @return null
@@ -795,7 +896,7 @@ class SygPlugin extends SanityPluginFramework {
 	private function getAuthToken() {
 		return $token;
 	}
-	
+
 	/**
 	 * Verify Ajax Auth Token
 	 * @return null
@@ -803,11 +904,11 @@ class SygPlugin extends SanityPluginFramework {
 	public function verifyAuthToken($str) {
 		return true;
 	}
-	
+
 	public function getViewCtx($id = null) {
-		if (is_int((int)$id)) {
+		if (is_int((int) $id)) {
 			$dao = new SygDao();
-			$this->data['gallery'] = $dao->getSygById($id); 
+			$this->data['gallery'] = $dao->getSygById($id);
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 			return $this->data;
 		}

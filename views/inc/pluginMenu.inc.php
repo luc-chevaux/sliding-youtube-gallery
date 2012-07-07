@@ -1,22 +1,15 @@
 <p>
 <a href="options-general.php?page=syg-administration-panel" class="button-primary">
-	<?php echo SygConstant::BE_MENU_HOME; ?>
+	<?php echo SygConstant::BE_MENU_MANAGE_GALLERIES; ?>
 </a>
-<a href="options-general.php?page=syg-administration-panel&action=add" class="button-primary">
-	<?php echo SygConstant::BE_MENU_ADD_NEW_GALLERY; ?>
+<a href="options-general.php?page=syg-administration-panel&action=add_style" class="button-primary">
+	<?php echo SygConstant::BE_MENU_MANAGE_STYLES; ?>
 </a>
-<!-- 
 <a href="options-general.php?page=syg-administration-panel&action=settings" class="button-primary">
-	<?php /*echo SygConstant::BE_MENU_SETTINGS;*/ ?>
-</a>
--->
-<!-- 
-<a href="options-general.php?page=syg-administration-panel&action=contact" class="button-primary">
-	<?php /*echo SygConstant::BE_MENU_CONTACT;*/ ?>
-</a>
--->
+	<?php echo SygConstant::BE_MENU_MANAGE_SETTINGS; ?>
+</a> 
 <a href="options-general.php?page=syg-administration-panel&action=support" class="button-primary">
-	<?php echo SygConstant::BE_MENU_SUPPORT_THE_PLUGIN; ?>
+	<?php echo SygConstant::BE_MENU_CONTACTS_AND_SUPPORT; ?>
 </a>
 </p>
 <hr/>
