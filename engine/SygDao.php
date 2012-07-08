@@ -17,6 +17,7 @@ class SygDao {
 
 	// Query used in DAO
 	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
+	private $sqlGetAllStyles = SygConstant::SQL_GET_ALL_STYLES;
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
 	private $sqlCountGalleries = SygConstant::SQL_COUNT_QUERY;
