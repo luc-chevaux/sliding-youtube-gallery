@@ -37,7 +37,7 @@
 </p>
 
 <!-- Gallery List -->
-<h3>Manage your gallery</h3>
+<h3><?php echo SygConstant::BE_MANAGE_GALLERY_MESSAGE; ?></h3>
 <table cellspacing="0" id="galleries_table">
 	<tr id="table_header">
 		<th class="id">

@@ -36,3 +36,5 @@
 <hr/>
 <p class="webengText">Thank you for downloading! Enjoy WP and OpenSource!</p>
 <p class="webengText">Luca</p>
+
+<?php require_once 'inc/contextMenu.inc.php'; ?>

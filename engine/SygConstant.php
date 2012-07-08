@@ -16,6 +16,21 @@ class SygConstant {
 	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 5;
 
 	/**
+	 * Plugin running contexts
+	 */
+	const SYG_CTX_FE = "SYG_CTX_FE";
+	const SYG_CTX_BE = "SYG_CTX_BE";
+	const SYG_CTX_WS = "SYG_CTX_WS";
+	
+	/**
+	 * Plugin running action
+	 */
+	const BE_ACTION_MANAGE_GALLERIES = 'syg-manage-galleries';
+	const BE_ACTION_MANAGE_STYLES = 'syg-manage-styles';
+	const BE_ACTION_MANAGE_SETTINGS = 'syg-manage-settings';
+	const BE_ACTION_CONTACTS = 'syg-contacts';
+	
+	/**
 	 * Notification details
 	 */
 	const BE_ACTION_UNINSTALL = 'uninstall';
@@ -30,13 +45,6 @@ class SygConstant {
 	const WP_CSS_PATH = '/sliding-youtube-gallery/css/';
 	const WP_JS_PATH = '/sliding-youtube-gallery/js/';
 	const WP_IMG_PATH = '/sliding-youtube-gallery/img/';
-
-	/**
-	 * Plugin running contexts
-	 */
-	const SYG_CTX_FE = "SYG_CTX_FE";
-	const SYG_CTX_BE = "SYG_CTX_BE";
-	const SYG_CTX_WS = "SYG_CTX_WS";
 
 	/**
 	 * Sql query
@@ -95,11 +103,13 @@ class SygConstant {
 	// user message
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_GALLERY_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
+	const BE_MANAGE_STYLES_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
 	const BE_CONTACT_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
 	const BE_DONATE_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
+	const BE_NO_STYLES_FOUND = 'No styles found in database';
 	
 	// general menu
 	const BE_MENU_HOME = 'Home';
@@ -111,6 +121,7 @@ class SygConstant {
 	// context menu
 	const BE_MENU_ADD_NEW_STYLE = 'Add new Style';
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
+	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
 	
 	/**
 	 * Exceptions

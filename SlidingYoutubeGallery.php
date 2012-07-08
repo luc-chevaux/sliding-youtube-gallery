@@ -88,16 +88,16 @@ function SlidingYoutubeGalleryAdmin() {
 
 	// Add second level menu page
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_GALLERIES,
-			SygConstant::BE_MENU_MANAGE_GALLERIES, 'manage_options', 'syg-manage-galleries',
+			SygConstant::BE_MENU_MANAGE_GALLERIES, 'manage_options', SygConstant::BE_ACTION_MANAGE_GALLERIES,
 			'manageGalleries');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_STYLES,
-			SygConstant::BE_MENU_MANAGE_STYLES, 'manage_options', 'syg-manage-styles',
+			SygConstant::BE_MENU_MANAGE_STYLES, 'manage_options', SygConstant::BE_ACTION_MANAGE_STYLES,
 			'manageStyles');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_SETTINGS,
-			SygConstant::BE_MENU_MANAGE_SETTINGS, 'manage_options', 'syg-manage-settings',
+			SygConstant::BE_MENU_MANAGE_SETTINGS, 'manage_options', SygConstant::BE_ACTION_MANAGE_SETTINGS,
 			'manageSettings');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_CONTACTS_AND_SUPPORT,
-			SygConstant::BE_MENU_CONTACTS_AND_SUPPORT, 'manage_options', 'syg-contacts',
+			SygConstant::BE_MENU_CONTACTS_AND_SUPPORT, 'manage_options', SygConstant::BE_ACTION_CONTACTS,
 			'getSupport');
 
 	// remove menu duplicated by wordpress
@@ -151,7 +151,7 @@ function manageSettings() {
  */
 function getSupport() {
 	$syg = SygPlugin::getInstance();
-	echo $syg->forwardToContacts();
+	echo $syg->forwardToSupport();
 }
 
 /**

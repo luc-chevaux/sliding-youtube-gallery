@@ -482,8 +482,10 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	public function sygAdminHome() {
+		return $this->forwardToGalleries();
+		
 		// updated flag
-		$updated = false;
+		/*$updated = false;
 		$output = '';
 
 		// check if user has permission to manage options
@@ -523,7 +525,7 @@ class SygPlugin extends SanityPluginFramework {
 			break;
 		}
 
-		return $output;
+		return $output;*/
 	}
 
 	/**
@@ -854,18 +856,6 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to contact page
-	 * @return null
-	 */
-	public function forwardToContacts() {
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-		// render contact view
-		return $this->render('support');
-	}
-
-	/**
 	 * Action Forward to donation page
 	 * @return null
 	 */
@@ -874,7 +864,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 
 		// render contact view
-		return $this->render('support');
+		return $this->render('adminSupport');
 	}
 
 	/**

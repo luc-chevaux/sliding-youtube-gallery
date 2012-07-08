@@ -41,3 +41,4 @@
 		<input type="text" id="developer_key" name="developer_key" value="" size="20">
 	</fieldset>
 </form>
+<?php require_once 'inc/contextMenu.inc.php'; ?>

@@ -37,24 +37,21 @@
 
 <!-- Welcome Message -->
 <p class="webengText">
-	<?php echo SygConstant::BE_MANAGE_GALLERY_MESSAGE; ?>
+	<?php echo SygConstant::BE_MANAGE_STYLES_MESSAGE; ?>
 </p>
 
 <!-- Gallery List -->
-<h3>Manage your gallery</h3>
+<h3><?php echo SygConstant::BE_MENU_MANAGE_STYLES; ?></h3>
 <table cellspacing="0" id="galleries_table">
 	<tr id="table_header">
 		<th class="id">
 			<span>ID</span>
 		</th>
-		<th class="user_pic">
-			<span>Avatar</span>
+		<th class="name">
+			<span>Name</span>
 		</th>
-		<th class="user">
+		<th class="details">
 			<span>Details</span>
-		</th>
-		<th class="type">
-			<span>Type</span>
 		</th>
 		<th class="action">
 			<span>Action</span>
@@ -70,7 +67,7 @@ $galleries = $this->data['galleries'];
 if (count($galleries) == 0) { ?>
 <tr>
 		<td colspan="5">
-		<?php echo SygConstant::BE_NO_GALLERY_FOUND; ?>
+		<?php echo SygConstant::BE_NO_STYLES_FOUND; ?>
 		</td>
 	</tr>
 <?php }
