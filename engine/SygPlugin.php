@@ -652,25 +652,39 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	public function forwardToStyles() {
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-		// put galleries in the view
-		$styles = $this->sygDao->getAllStyles();
+		// updated flag
+		$updated = false;
 		
-		// put galleries in the view
-		$this->data['styles'] = $styles;
+		$output = '';
 		
-		// number of pages
-		$this->data['pages'] = ceil(
-				$this->sygDao->getStylesCount()
-				/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
-		
-		// generate token
-		$_SESSION['request_token'] = $this->getAuthToken();
-		
-		// render adminStyles view
-		return $this->render('adminStyles');
+		// determine wich action to call
+		switch ($_GET['action']) {
+			case 'add':
+				$output = $this->forwardToAddStyle();
+				return $output;
+				break;
+			default:
+				// prepare header
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+				
+				// put galleries in the view
+				$styles = $this->sygDao->getAllStyles();
+				
+				// put galleries in the view
+				$this->data['styles'] = $styles;
+				
+				// number of pages
+				$this->data['pages'] = ceil(
+						$this->sygDao->getStylesCount()
+						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+				
+				// generate token
+				$_SESSION['request_token'] = $this->getAuthToken();
+				
+				// render adminStyles view
+				return $this->render('adminStyles');
+				break;
+		}
 	}
 
 	/**
@@ -752,7 +766,7 @@ class SygPlugin extends SanityPluginFramework {
 
 			try {
 				// validate data
-				SygValidate::getInstance() . validateStyle($data);
+				//SygValidate::getInstance().validateStyle($data);
 
 				// create a new gallery
 				$style = new SygStyle($data);
@@ -787,7 +801,7 @@ class SygPlugin extends SanityPluginFramework {
 			$this->data['style'] = new SygStyle();
 
 			// render adminGallery view
-			return $this->render('adminStyles');
+			return $this->render('adminStyle');
 		}
 	}
 

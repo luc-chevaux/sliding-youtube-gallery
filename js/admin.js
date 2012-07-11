@@ -103,7 +103,7 @@ jQuery(document).ready(function($) {
   displayLoad();
   
   // load data
-  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=1', function(data){
+  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=galleries&page_number=1', function(data){
 	  var html;
 	  $("tr[id^=syg_row_]").remove();
 	  
@@ -167,7 +167,7 @@ jQuery(document).ready(function($) {
 
 	  // loading data
 	  var pageNum = this.id;
-	  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&page_number=' + pageNum, function(data) {
+	  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=galleries&page_number=' + pageNum, function(data) {
 		  var html;
 		  
 		  $("tr[id^=syg_row_]").remove();

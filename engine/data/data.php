@@ -28,46 +28,65 @@ require_once ('../SygGallery.php');
 require_once ('../SygUtil.php');
 
 $plugin = SygPlugin::getInstance();
+
 if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
-	if($_GET['page_number']) {
-		$page_number = $_GET['page_number'];
-		$current_page = $page_number;
-		$page_number -= 1;
+	switch ($_GET['table']) {
+		case "galleries": 
+			if($_GET['page_number']) {
+				$page_number = $_GET['page_number'];
+				$current_page = $page_number;
+				$page_number -= 1;
+					
+				$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
+					
+				$previous_btn = true;
+				$next_btn = true;
+				$first_btn = true;
+				$last_btn = true;
+					
+				$start = $page_number * $per_page;
+					
+				$dao = new SygDao();
+				$galleries = $dao->getAllSyg('OBJECT', $start, $per_page);
 			
-		$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
+				$gallery_to_json = array();
 			
-		$previous_btn = true;
-		$next_btn = true;
-		$first_btn = true;
-		$last_btn = true;
+				foreach ($galleries as $gallery) {
+					array_push($gallery_to_json, $gallery->getJsonData());
+				}
 			
-		$start = $page_number * $per_page;
-			
-		$dao = new SygDao();
-		$galleries = $dao->getAllSyg('OBJECT', $start, $per_page);
-		
-		$gallery_to_json = array();	
-		
-		foreach ($galleries as $gallery) {
-			/*$gallery->setUserProfile ($youtube_service->getUserProfile($gallery->getYtUsername()));
-			var_dump ($gallery->getUserProfile()->getThumbnail()->getUrl());
-			die();*/
-			array_push($gallery_to_json, $gallery->getJsonData());
-		}
-		
-		echo json_encode ($gallery_to_json);
-		die();
-		
-		// $this->render('pagination');
-			
-		/* -----Total count--- */
-		/*$query_pag_num = "SELECT COUNT(*) AS count FROM messages"; // Total records
-		 $result_pag_num = mysql_query($query_pag_num);
-		$row = mysql_fetch_array($result_pag_num);
-		$count = $row['count'];
-			
-		$no_of_paginations = ceil($count / $per_page);
-		/* -----Calculating the starting and endign values for the loop----- */
+				echo json_encode ($gallery_to_json);
+				die();
+			}	
+		case "styles":
+			if($_GET['page_number']) {
+				$page_number = $_GET['page_number'];
+				$current_page = $page_number;
+				$page_number -= 1;
+					
+				$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
+					
+				$previous_btn = true;
+				$next_btn = true;
+				$first_btn = true;
+				$last_btn = true;
+					
+				$start = $page_number * $per_page;
+					
+				$dao = new SygDao();
+				$galleries = $dao->getAllStyles('OBJECT', $start, $per_page);
+					
+				$gallery_to_json = array();
+					
+				foreach ($galleries as $gallery) {
+					array_push($gallery_to_json, $gallery->getJsonData());
+				}
+					
+				echo json_encode ($gallery_to_json);
+				die();
+			}
+		default:	
+			null;
 	}
 }
 ?>

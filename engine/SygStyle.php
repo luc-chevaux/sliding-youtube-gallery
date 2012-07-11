@@ -55,6 +55,11 @@ class SygStyle {
 	private function mapThis($result = null) {
 		$result = (object) $result;
 		
+		var_dump($result);
+		
+		// style name
+		$this->setStyleName($result->syg_style_name);
+		
 		// box option values
 		$this->setBoxBackground(($result->syg_box_background) ? $result->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
 		$this->setBoxPadding($result->syg_box_padding);
@@ -459,5 +464,13 @@ class SygStyle {
 	public function setId($id) {
 		$this->id = $id;
 	}
+	
+	/**
+	 * @return the $rsType
+	 */
+	public static function getRsType() {
+		return SygStyle::$rsType;
+	}
+
 }
 ?>

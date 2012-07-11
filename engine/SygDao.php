@@ -51,6 +51,20 @@ class SygDao {
 		$id = $this->db->insert_id;
 		return $id;
 	}
+	
+	/**
+	 * Add a syg style to database
+	 * @param SygStyle $style to add
+	 * @return $id latest inserted id
+	 */
+	public function addSygStyle(SygStyle $style) {
+		$this->db->insert($this->styles_table_name,
+				$style->toDto(),
+				$style->getRsType()
+		);
+		$id = $this->db->insert_id;
+		return $id;
+	}
 
 	/**
 	 * Update a syg gallery to database
