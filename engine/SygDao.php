@@ -35,7 +35,7 @@ class SygDao {
 		
 		// set table name
 		$this->galleries_table_name = $this->db->prefix . "syg";
-		$this->styles_table_name = $this->db->prefix . "styles";
+		$this->styles_table_name = $this->db->prefix . "syg_styles";
 	}
 	
 	/**

@@ -1,55 +1,76 @@
 jQuery.noConflict();
 
-/**
- * function that apply aspect ratio
- */
-function calculateNewWidth() {
-	var height = jQuery('#syg_thumbnail_height').val();
-	var new_width = Math.round(height * 480 / 360);
-	jQuery('#syg_thumbnail_width').val(new_width);
-	return true;
-}
-
-/**
- * function that apply aspect ratio
- */
-function calculateNewHeight() {
-	var width = jQuery('#syg_thumbnail_width').val();
-	var new_height = Math.round(width * 360 / 480);
-	jQuery('#syg_thumbnail_height').val(new_height);
-	return true;
-}
-
-/**
- * function to init colorpicker 
- */
-function initColorPicker(id, val, defaultColor) {
-	jQuery('#' + id + ' div').css('backgroundColor', jQuery(val).val());
+(function($){
+	/**
+	 * function applied to selector
+	 *
+	 * $.fn.calculateNewWidth = function() {
+	 * return true;
+	 * };
+	 */
 	
-	jQuery('#' + id).ColorPicker({
-		color: defaultColor,
-		onShow: function (colpkr) {
-			jQuery(colpkr).fadeIn(500);
-			return false;
-		},
-		onHide: function (colpkr) {
-			jQuery(colpkr).fadeOut(500);
-			return false;
-		},
-		onChange: function (hsb, hex, rgb) {
-			jQuery('#' + id + ' div').css('backgroundColor', '#' + hex);
-			val.val('#' + hex);
+	$.extend({
+		
+		/**
+		 * function to display splash image
+		 */
+		displayLoad : function () {
+			$('#syg-loading td').fadeIn(900,0);
+			$('#syg-loading td').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
 		}
-	});
-	return true;
-}
-
-/**
- * function that preview a gallery (ajax)
- */
-function PreviewGallery (id) {
-	return true;
-}
+	
+		/**
+		 * function to hide splash image
+		 */
+		,hideLoad : function () {
+			$("#syg-loading td").fadeOut('slow');
+		}
+		
+		/**
+		 * function to init colorpicker 
+		 */
+		,initColorPicker : function (id, val, defaultColor) {
+			jQuery('#' + id + ' div').css('backgroundColor', jQuery(val).val());
+			
+			jQuery('#' + id).ColorPicker({
+				color: defaultColor,
+				onShow: function (colpkr) {
+					jQuery(colpkr).fadeIn(500);
+					return false;
+				},
+				onHide: function (colpkr) {
+					jQuery(colpkr).fadeOut(500);
+					return false;
+				},
+				onChange: function (hsb, hex, rgb) {
+					jQuery('#' + id + ' div').css('backgroundColor', '#' + hex);
+					val.val('#' + hex);
+				}
+			});
+			return true;
+		}
+	
+		/**
+		 * function that apply aspect ratio
+		 */
+		,calculateNewWidth : function () {
+			var height = $('#syg_thumbnail_height').val();
+			var new_width = Math.round(height * 480 / 360);
+			$('#syg_thumbnail_width').val(new_width);
+			return true;
+		}
+		
+		/**
+		 * function that apply aspect ratio
+		 */
+		,calculateNewHeight : function () {
+			var width = $('#syg_thumbnail_width').val();
+			var new_height = Math.round(width * 360 / 480);
+			$('#syg_thumbnail_height').val(new_height);
+			return true;
+		}
+    });
+})(jQuery);
 
 /**
  * function that delete a gallery (ajax)
@@ -70,37 +91,26 @@ function DeleteGallery (id) {
 	return true;
 }
 
-/**
- * function to display splash image
- */
-function displayLoad() {
-	jQuery('#syg-loading td').fadeIn(900,0);
-	jQuery('#syg-loading td').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
-}
-
-/**
- * function to hide splash image
- */
-function hideLoad() {
-	jQuery("#syg-loading td").fadeOut('slow');
-}
-
 /*
  * jQuery on ready function:
  * load colorpickers and update selected colors 
  */
 
-jQuery(document).ready(function($) {	
-  // init the color pickers
-  initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
-  initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
-  initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');	
+jQuery(document).ready(function($) {
+	// add the aspect ratio function
+	if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
+	if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
 
-  // set default css for first element
-  $("#syg-pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
+	// init the color pickers
+	$.initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
+	$.initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
+	$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');	
+	
+	// set default css for first element
+	$("#syg-pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
   
-  // loading images
-  displayLoad();
+	// loading images
+	$.displayLoad();
   
   // load data
   $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=galleries&page_number=1', function(data){
@@ -149,7 +159,7 @@ jQuery(document).ready(function($) {
 		  });
 	  });
 	  
-	  hideLoad();
+	  $.hideLoad();
   });
   
   // pagination click event

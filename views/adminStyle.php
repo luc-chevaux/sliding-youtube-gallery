@@ -57,11 +57,11 @@
 		
 		<!-- thumbnail height -->
 		<label for="syg_thumbnail_height">Height: </label>
-		<input onchange="calculateNewWidth();" type="text" id="syg_thumbnail_height" name="syg_thumbnail_height" value="<?php echo $style->getThumbHeight(); ?>" size="10">
+		<input type="text" id="syg_thumbnail_height" name="syg_thumbnail_height" value="<?php echo $style->getThumbHeight(); ?>" size="10">
 		
 		<!-- thumbnail width -->
 		<label for="">Width: </label>
-		<input onchange="calculateNewHeight();" type="text" id="syg_thumbnail_width" name="syg_thumbnail_width" value="<?php echo $style->getThumbWidth(); ?>" size="10">
+		<input type="text" id="syg_thumbnail_width" name="syg_thumbnail_width" value="<?php echo $style->getThumbWidth(); ?>" size="10">
 		
 		<!-- thumbnail bordersize -->
 		<label for="syg_thumbnail_bordersize">Border Size: </label>

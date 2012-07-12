@@ -55,8 +55,6 @@ class SygStyle {
 	private function mapThis($result = null) {
 		$result = (object) $result;
 		
-		var_dump($result);
-		
 		// style name
 		$this->setStyleName($result->syg_style_name);
 		
