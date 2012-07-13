@@ -72,7 +72,7 @@ if (count($galleries) == 0) { ?>
 <?php }
 ?>
 </table>
-<ul id="syg-pagination">
+<ul id="syg-pagination-galleries">
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {

@@ -180,21 +180,21 @@ img.user_pic {
   height: 0 !important;
 }
 
-#syg-pagination {
+#syg-pagination-galleries, #syg-pagination-styles {
 	text-align:center;
 	margin-left:120px;
 }
 
-#syg-pagination li {	
-	list-style: none; 
-	float: left; 
+#syg-pagination-galleries li, #syg-pagination-styles li {	
+	list-style: none;
+	float: left;
 	margin-right: 16px; 
-	padding:5px; 
+	padding:5px;
 	border:solid 1px #dddddd;
-	color:#0063DC; 
+	color:#0063DC;
 }
 
-#syg-pagination li:hover { 
+#syg-pagination-galleries li:hover, #syg-pagination-styles li:hover { 
 	color:#FF0084; 
 	cursor: pointer; 
 }

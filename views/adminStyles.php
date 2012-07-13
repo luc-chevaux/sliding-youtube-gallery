@@ -65,7 +65,7 @@
 <?php
 $galleries = $this->data['galleries']; 
 if (count($galleries) == 0) { ?>
-<tr>
+	<tr>
 		<td colspan="5">
 		<?php echo SygConstant::BE_NO_STYLES_FOUND; ?>
 		</td>
@@ -73,7 +73,7 @@ if (count($galleries) == 0) { ?>
 <?php }
 ?>
 </table>
-<ul id="syg-pagination">
+<ul id="syg-pagination-styles">
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {

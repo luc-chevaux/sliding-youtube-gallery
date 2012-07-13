@@ -23,7 +23,7 @@ jQuery.noConflict();
 		 * function to hide splash image
 		 */
 		,hideLoad : function () {
-			$("#syg-loading td").fadeOut('slow');
+			$('#syg-loading td').fadeOut('slow');
 		}
 		
 		/**
@@ -69,7 +69,89 @@ jQuery.noConflict();
 			$('#syg_thumbnail_height').val(new_height);
 			return true;
 		}
-    });
+		,loadData : function (data) {
+			  var html;
+			  $('tr[id^=syg_row_]').remove();
+			  
+			  $.each(data, function(key, val) {
+				  html = '<tr id="syg_row_' + key + '">';
+				  html = html + '<td>';
+				  html = html + val.id;
+				  html = html + '</td>';
+				  html = html + '<td>';
+				  html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
+				  html = html + '</td>';
+				  html = html + '<td>';
+				  html = html + val.ytUsername;
+				  html = html + '</td>';
+				  html = html + '<td>';
+				  html = html + 'User Channel';
+				  html = html + '</td>';
+				  html = html + '<td>';
+				  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+				  html = html + '</td>';
+				  html = html + '</tr>';
+				  
+				  $('#galleries_table tr:last-child').after(html);
+				  
+				  var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
+				  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
+				  
+				  $('.iframe_' + val.id).fancybox({ 
+					  'padding' : 30,
+					  'width' : dWidth,
+					  'height' : dHeight,
+					  'titlePosition' : 'inside',
+					  'titleFormat' : function() {
+						  return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
+					  },
+					  'centerOnScroll' : true,
+					  'onComplete': function() {
+						    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
+						        $('#fancybox-content').height($(this).contents().find('body').height()+30);
+						      });
+						    },
+					  'type' : 'iframe'
+				  });
+			  });
+			  
+			  $.hideLoad();
+		  },
+		  
+		  /**
+		   * function that add pagination event per table
+		   */
+		  addPaginationClickEvent : function (table) {
+			// add galleries pagination click event
+			$('#syg-pagination-' + table + ' li').click(function(){
+				displayLoad();
+
+				// css styles
+				$('#syg-pagination-' + table + ' li')
+					.css({'border' : 'solid #dddddd 1px'})
+				  	.css({'color' : '#0063DC'});
+
+				$(this)
+					.css({'color' : '#FF0084'})
+					.css({'border' : 'none'});
+
+				// loading data
+				var pageNum = this.id;
+				$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=' + table + '&page_number=' + pageNum, function (data) {$.loadData(data);});
+			});
+		},
+		
+		initUi : function () {
+			// add the aspect ratio function
+			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
+			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
+
+			// init the color pickers
+			$.initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
+			$.initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
+			$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
+		}
+	});
 })(jQuery);
 
 /**
@@ -81,7 +163,7 @@ function DeleteGallery (id) {
 		var request = jQuery.ajax({
 			  url: 'options-general.php',
 			  type: 'GET',
-			  data: {page: 'syg-administration-panel', id : id, action : "delete"},
+			  data: {page: 'syg-administration-panel', id : id, action : 'delete'},
 			  dataType: 'html',
 			  complete: function () {
 				  window.location.reload();
@@ -97,133 +179,34 @@ function DeleteGallery (id) {
  */
 
 jQuery(document).ready(function($) {
-	// add the aspect ratio function
-	if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
-	if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
-
-	// init the color pickers
-	$.initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
-	$.initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
-	$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');	
+	// determine current url
+	var uri = window.location.protocol + '://' + window.location.host + '/' + window.location.pathname;
+	var page = uri.queryKey['page'];
+	var action = uri.queryKey['action']; 
+		
+	if (action) {
+		// init the user interface
+		$.initUi();
+	} else{
+		switch (page) {
+			case 'syg-manage-styles':
+				var table = 'styles';
+				break;
+			case 'syg-manage-galleries':
+				var table = 'galleries';
+				break;
+			default:
+				break;
+				return null;
+		}
 	
-	// set default css for first element
-	$("#syg-pagination li:first").css({'color' : '#FF0084'}).css({'border' : 'none'});
-  
-	// loading images
-	$.displayLoad();
-  
-  // load data
-  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=galleries&page_number=1', function(data){
-	  var html;
-	  $("tr[id^=syg_row_]").remove();
-	  
-	  $.each(data, function(key, val) {
-		  html = '<tr id="syg_row_' + key + '">';
-		  html = html + '<td>';
-		  html = html + val.id;
-		  html = html + '</td>';
-		  html = html + '<td>';
-		  html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
-		  html = html + '</td>';
-		  html = html + '<td>';
-		  html = html + val.ytUsername;
-		  html = html + '</td>';
-		  html = html + '<td>';
-		  html = html + 'User Channel';
-		  html = html + '</td>';
-		  html = html + '<td>';
-		  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
-		  html = html + '</td>';
-		  html = html + '</tr>';
-		  
-		  $('#galleries_table tr:last-child').after(html);
-		  
-		  var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
-		  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
-		  
-		  $(".iframe_" + val.id).fancybox({ 
-			  'padding' : 30,
-			  'width' : dWidth,
-			  'height' : dHeight,
-			  'titlePosition' : 'inside',
-			  'titleFormat' : function() {
-				  return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
-			  },
-			  'centerOnScroll' : true,
-			  'onComplete': function() {
-				    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
-				        $('#fancybox-content').height($(this).contents().find('body').height()+30);
-				      });
-				    },
-			  'type' : 'iframe'
-		  });
-	  });
-	  
-	  $.hideLoad();
-  });
-  
-  // pagination click event
-  $("#syg-pagination li").click(function(){
-	  displayLoad();
-
-	  // css styles
-	  $("#syg-pagination li")
-	  	.css({'border' : 'solid #dddddd 1px'})
-	  	.css({'color' : '#0063DC'});
-
-	  $(this)
-	  	.css({'color' : '#FF0084'})
-	  	.css({'border' : 'none'});
-
-	  // loading data
-	  var pageNum = this.id;
-	  $.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=galleries&page_number=' + pageNum, function(data) {
-		  var html;
-		  
-		  $("tr[id^=syg_row_]").remove();
-		  
-		  $.each(data, function(key, val) {
-			  html = '<tr id="syg_row_' + key + '">';
-			  html = html + '<td>';
-			  html = html + val.id;
-			  html = html + '</td>';
-			  html = html + '<td>';
-			  html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
-			  html = html + '</td>';
-			  html = html + '<td>';
-			  html = html + val.ytUsername;
-			  html = html + '</td>';
-			  html = html + '<td>';
-			  html = html + 'User Channel';
-			  html = html + '</td>';
-			  html = html + '<td>';
-			  html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
-			  html = html + '</td>';
-			  html = html + '</tr>';
-			  $('#galleries_table tr:last-child').after(html);
-			  
-			  var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
-			  var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
-			  
-			  $(".iframe_" + val.id).fancybox({ 
-				  'padding' : 30,
-				  'width' : dWidth,
-				  'height' : dHeight,
-				  'titlePosition' : 'inside',
-				  'titleFormat' : function() {
-					  return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
-				  },
-				  'centerOnScroll' : true,
-				  'onComplete': function() {
-					    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
-					        $('#fancybox-content').height($(this).contents().find('body').height()+30);
-					      });
-					    },
-				  'type' : 'iframe'
-			  });
-		  });
-		  
-		  hideLoad();
-	  });
-  });
+		// loading images
+		$.displayLoad();
+	
+		// get the data
+		$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table='+ table + '&page_number=1', function (data) {$.loadData(data);});
+	
+		// add pagination events
+		$.addPaginationClickEvent(table);
+	}
 });
