@@ -478,14 +478,6 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Plugin administration hook function
-	 * @return null
-	 */
-	public function sygAdminHome() {
-		return $this->forwardToGalleries();
-	}
-
-	/**
 	 * Prepare HTML Headers with css/js injection
 	 * @return null
 	 */
@@ -597,11 +589,39 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	public function forwardToGalleries() {
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-		// render adminGalleries view
-		return $this->render('adminGalleries');
+		// updated flag
+		$updated = false;
+		
+		$output = '';
+		
+		// determine wich action to call
+		switch ($_GET['action']) {
+			case 'add':
+				$output = $this->forwardToAddGallery();
+				return $output;
+				break;
+			default:
+				// prepare header
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		
+				// put galleries in the view
+				$galleries = $this->sygDao->getAllSyg();
+		
+				// put galleries in the view
+				$this->data['galleries'] = $galleries;
+		
+				// number of pages
+				$this->data['pages'] = ceil(
+						$this->sygDao->getGalleriesCount()
+								/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+		
+				// generate token
+				$_SESSION['request_token'] = $this->getAuthToken();
+		
+				// render adminHome view
+				return $this->render('adminGalleries');
+				break;
+		}
 	}
 
 	/**

@@ -115,7 +115,7 @@ function SlidingYoutubeGalleryAdmin() {
  */
 function sygAdminHome() {
 	$syg = SygPlugin::getInstance();
-	echo $syg->sygAdminHome();
+	echo $syg->forwardToHome();
 }
 
 /**

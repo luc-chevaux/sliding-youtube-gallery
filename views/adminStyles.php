@@ -60,7 +60,7 @@
 	</tr>
 <?php
 $galleries = $this->data['galleries']; 
-if (count($galleries) == 0) { ?>
+if (count($styles) == 0) { ?>
 	<tr>
 		<td colspan="5">
 		<?php echo SygConstant::BE_NO_STYLES_FOUND; ?>

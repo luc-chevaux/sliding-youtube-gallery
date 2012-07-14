@@ -82,6 +82,7 @@ jQuery.noConflict();
 			switch (page) {
 				case 'syg-manage-styles':
 					var table = 'styles';
+					$.hideLoad();
 					$.each(data, function(key, val) {
 						html = '<tr id="syg_row_' + key + '">';
 						html = html + '<td>';
@@ -97,32 +98,12 @@ jQuery.noConflict();
 						html = html + '<a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
-					
-						$('#galleries_table tr:last-child').after(html);
-						  
-						var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
-						var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
-						
-						$('.iframe_' + val.id).fancybox({ 
-							'padding' : 30,
-							'width' : dWidth,
-							'height' : dHeight,
-							'titlePosition' : 'inside',
-							'titleFormat' : function() {
-								return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
-							},
-							'centerOnScroll' : true,
-							'onComplete': function() {
-								$('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
-									$('#fancybox-content').height($(this).contents().find('body').height()+30);
-								});
-							},
-							'type' : 'iframe'
-						});
 					});
+					$('#galleries_table tr:last-child').after(html);
 					break;
 				case 'syg-manage-galleries':
 					var table = 'galleries';
+					$.hideLoad();
 					$.each(data, function(key, val) {
 						html = '<tr id="syg_row_' + key + '">';
 						html = html + '<td>';
@@ -169,8 +150,6 @@ jQuery.noConflict();
 					break;
 					return null;
 			}
-			 
-			$.hideLoad();
 		},
 		  
 		/**
