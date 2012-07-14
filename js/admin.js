@@ -88,16 +88,13 @@ jQuery.noConflict();
 						html = html + val.id;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.ytUsername;
+						html = html + val.styleName;
 						html = html + '</td>';
 						html = html + '<td>';
 						html = html + 'User Channel';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 					

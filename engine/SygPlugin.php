@@ -483,49 +483,6 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function sygAdminHome() {
 		return $this->forwardToGalleries();
-		
-		// updated flag
-		/*$updated = false;
-		$output = '';
-
-		// check if user has permission to manage options
-		if (!current_user_can('manage_options')) {
-			wp_die(
-					__(
-							'You do not have sufficient permissions to access this page.'));
-		}
-
-		// determine wich action to call
-		switch ($_GET['action']) {
-		case 'edit':
-			$output = $this->forwardToEdit();
-			break;
-		case 'add_gallery':
-			$output = $this->forwardToAddGallery();
-			break;
-		case 'add_style':
-			$output = $this->forwardToAddStyle();
-			break;
-		case 'delete':
-			$output = $this->forwardToDelete();
-			break;
-		case 'settings':
-			$output = $this->forwardToSettings();
-			break;
-		case 'contact':
-			$output = $this->forwardToContact();
-			break;
-		case 'support':
-			$output = $this->forwardToSupport();
-			break;
-		case null:
-			$output = $this->forwardToHome();
-			break;
-		default:
-			break;
-		}
-
-		return $output;*/
 	}
 
 	/**

@@ -9,9 +9,6 @@
 @import url('<?php echo $this->data['cssAdminUrl']; ?>');
 </style>
 
-<!-- Javascript Inclusion -->
-<script type="text/javascript" src="<?php echo $this->data['jsAdminUrl']; ?>"></script>
-
 <!-- Title Page -->
 <div class="wrap">
 	<div id="icon-options-general" class="icon32">
