@@ -9,7 +9,8 @@
  * 
  * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
- * @todo widget wordpress + Implementare scroll verticale (milestone v1.3)
+ * @todo Paginazione gallerie pagina (milestone v1.3)
+ * @todo widget wordpress + Implementare scroll verticale (milestone v1.4)
  * @todo Aggiungere opzione disabilita video correlati (milestone v1.3)
  * @todo Creare la pagina contact con invio mail (milestone v1.3)
  * @todo Background image (milesone v1.3)
