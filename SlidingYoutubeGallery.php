@@ -86,6 +86,8 @@ function SlidingYoutubeGalleryAdmin() {
 			'syg-administration-panel', 'sygAdminHome',
 			WP_PLUGIN_URL . '/sliding-youtube-gallery/img/ui/webeng.png');
 
+			add_action('admin_home', 'sygAdminHome');
+			
 	// Add second level menu page
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_GALLERIES,
 			SygConstant::BE_MENU_MANAGE_GALLERIES, 'manage_options', SygConstant::BE_ACTION_MANAGE_GALLERIES,

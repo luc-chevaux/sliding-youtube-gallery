@@ -880,7 +880,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// generate token
 		$_SESSION['request_token'] = $this->getAuthToken();
-
+wp_die();
 		// render adminHome view
 		return $this->render('adminHome');
 	}
