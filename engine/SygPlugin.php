@@ -518,6 +518,7 @@ class SygPlugin extends SanityPluginFramework {
 					$view['jsPath'] . 'admin.js', array(),
 					SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('sliding-youtube-gallery-admin');
+			
 			wp_register_script('sliding-youtube-gallery-colorpicker',
 					$view['jsPath'] . 'colorpicker.js', array(),
 					SygConstant::SYG_VERSION, true);
@@ -650,7 +651,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 				
 				// put galleries in the view
-				$styles = $this->sygDao->getAllStyles();
+				$styles = $this->sygDao->getAllSygStyles();
 				
 				// put galleries in the view
 				$this->data['styles'] = $styles;
@@ -853,10 +854,10 @@ class SygPlugin extends SanityPluginFramework {
 	
 			if ($valid) {
 				// create a new gallery
-				$syg = new SygGallery($data);
+				$style = new SygStyle($data);
 	
 				// update db
-				$this->sygDao->updateSygStyle($syg);
+				$this->sygDao->updateSygStyle($style);
 	
 				// updated flag
 				$updated = true;
@@ -880,7 +881,7 @@ class SygPlugin extends SanityPluginFramework {
 	
 			// put style in the view
 			$this->data['style'] = $this->sygDao->getSygStyleById($id);
-	
+
 			// render adminStyle view
 			return $this->render('adminStyle');
 		}

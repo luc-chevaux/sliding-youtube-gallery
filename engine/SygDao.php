@@ -20,6 +20,7 @@ class SygDao {
 	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
 	private $sqlGetAllStyles = SygConstant::SQL_GET_ALL_STYLES;
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
+	private $sqlGetStyleById = SygConstant::SQL_GET_STYLE_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
 	private $sqlCountGalleries = SygConstant::SQL_COUNT_QUERY;
 	private $sqlCountStyles = SygConstant::SQL_COUNT_QUERY;
@@ -150,7 +151,7 @@ class SygDao {
 	 * @param $output_type, $start, $per_page
 	 * @return $styles
 	 */
-	public function getAllStyles($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygStyles($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
 		$styles = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllStyles, $this->styles_table_name, $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);

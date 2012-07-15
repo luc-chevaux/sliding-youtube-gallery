@@ -247,8 +247,9 @@ jQuery(document).ready(function($) {
 	// determine current url
 	var action = $.getQParam('action'); 
 	var page = $.getQParam('page');
-		
-	if (action == 'add') {
+	var id = $.getQParam('id');
+	
+	if (action == 'add' || action =='edit') {
 		// init the user interface
 		$.initUi();
 	} else{
@@ -267,8 +268,11 @@ jQuery(document).ready(function($) {
 		// loading images
 		$.displayLoad();
 	
-		// get the data
-		$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table='+ table + '&page_number=1', function (data) {$.loadData(data);});
+		// load if page contains a list
+		if (!id){
+			// get the data
+			$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table='+ table + '&page_number=1', function (data) {$.loadData(data);});
+		}
 		
 		// add pagination events
 		$.addPaginationClickEvent(table);

@@ -39,15 +39,10 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					
 				$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
 					
-				$previous_btn = true;
-				$next_btn = true;
-				$first_btn = true;
-				$last_btn = true;
-					
 				$start = $page_number * $per_page;
 					
 				$dao = new SygDao();
-				$galleries = $dao->getAllSyg('OBJECT', $start, $per_page);
+				$galleries = $dao->getAllSygGallery('OBJECT', $start, $per_page);
 			
 				$gallery_to_json = array();
 			
@@ -65,16 +60,11 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 				$page_number -= 1;
 					
 				$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
-					
-				$previous_btn = true;
-				$next_btn = true;
-				$first_btn = true;
-				$last_btn = true;
-					
+
 				$start = $page_number * $per_page;
 					
 				$dao = new SygDao();
-				$galleries = $dao->getAllStyles('OBJECT', $start, $per_page);
+				$galleries = $dao->getAllSygStyles('OBJECT', $start, $per_page);
 					
 				$gallery_to_json = array();
 					
