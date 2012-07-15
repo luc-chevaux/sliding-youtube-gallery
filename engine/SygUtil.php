@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Plugin Utility Class
- *
+ * @name SygUtil
+ * @category Sliding Youtube Gallery Plugin Utility Class
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
@@ -13,7 +14,9 @@ class SygUtil {
 	private static $wAspectRatio = 0.5625;
 	
 	/**
-	 * Get height from width (w/normal aspect ratio)
+	 * @name getNormalHeight
+	 * @category Get height from width (w/normal aspect ratio)
+	 * @since 1.2.5
 	 * @param $width
 	 * @return $height
 	 */
@@ -23,7 +26,9 @@ class SygUtil {
 	}
 	
 	/**
-	 * Get height from width (w/wide aspect ratio)
+	 * @name getWideHeight
+	 * @category Get height from width (w/wide aspect ratio)
+	 * @since 1.2.5
 	 * @param $width
 	 * @return $height
 	 */
@@ -33,7 +38,9 @@ class SygUtil {
 	}
 	
 	/**
-	 * Extract type from video format
+	 * @name extractType
+	 * @category Extract type from videoformat
+	 * @since 1.0.1
 	 * @param $videoFormat
 	 * @return $type
 	 */
@@ -44,9 +51,11 @@ class SygUtil {
 	}
 	
 	/**
-	 * Extract width from video format
+	 * @name extractWidth
+	 * @category Extract width from videoformat
+	 * @since 1.0.1
 	 * @param $videoFormat
-	 * @return array
+	 * @return $width
 	 */
 	public static function extractWidth($videoFormat) {
 		$start = 0;
@@ -56,7 +65,9 @@ class SygUtil {
 	}
 	
 	/**
-	 * Convert seconds to a time period
+	 * @name Sec2Time
+	 * @category Return an array with time elements
+	 * @since 1.2.5
 	 * @param $seconds
 	 * @return array
 	 */
@@ -88,11 +99,13 @@ class SygUtil {
 			return (bool) FALSE;
 		}
 	}
-	
+
 	/**
-	 * Datetime Formatter for video duration
+	 * @name formatDuration
+	 * @category Format a video duration in hh:mi:ss
+	 * @since 1.2.5
 	 * @param $duration
-	 * @return $videoDuration;
+	 * @return $videoDuration
 	 */
 	public static function formatDuration ($duration = null) {
 		$duration = self::Sec2Time($duration);
@@ -103,9 +116,11 @@ class SygUtil {
 	}
 	
 	/**
-	 * Check if curl is installed
-	 * @param $duration
-	 * @return $videoDuration;
+	 * @name isCurlInstalled
+	 * @category Check if curl is installed
+	 * @since 1.2.5
+	 * @param $videoFormat
+	 * @return boolean
 	 */
 	public static function isCurlInstalled() {
 		$installed = (in_array ('curl', get_loaded_extensions())) ? true : false;

@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Plugin YouTube Interface
- *
+ * @name SygYouTube
+ * @category Sliding YouTube Gallery Plugin YouTube Interface
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
@@ -12,8 +13,9 @@ class SygYouTube {
 	private $yt;
 	
 	/**
-	 * Constructor
-	 * @return null
+	 * @name __construct
+	 * @category construct SygYouTube object
+	 * @since 1.0.1
 	 */
 	public function __construct() {
 		Zend_Loader::loadClass('Zend_Gdata_YouTube');
@@ -21,8 +23,10 @@ class SygYouTube {
 	}
 	
 	/**
-	 * Return YouTube User Profile Object
-	 * @param $username 
+	 * @name getUserProfile
+	 * @category return youTube user profile object
+	 * @since 1.0.1
+	 * @param $username
 	 * @return $userProfile
 	 */
 	function getUserProfile($username) {
@@ -34,9 +38,11 @@ class SygYouTube {
 		}
 		return $userProfile;
 	}
-	
+	 
 	/**
-	 * Return YouTube User Uploads
+	 * @name getUserUploads
+	 * @category return youTube user uploads
+	 * @since 1.0.1
 	 * @param $username
 	 * @return $videoFeed
 	 */

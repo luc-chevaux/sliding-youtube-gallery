@@ -1,23 +1,30 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Custom Exception Class
- *
+ * @name SygValidateException
+ * @category Sliding Youtube Gallery Custom Exception Class
+ * @since 1.2.5
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  */
 
 class SygValidateException extends Exception {
-	// Redefine the exception so message isn't optional
+	
+	/**
+	 * @name __construct
+	 * @category construct SygValidateException object
+	 * @since 1.2.5
+	 * @param $message, $code
+	 */
 	public function __construct($message, $code = 0) {
 		parent::__construct($message, $code);
 	}
 	
 	/**
-	 * @name validateStyle
-	 * @category return string rap
-	 * @since 1.2.6
+	 * @name __toString
+	 * @category return a string map which is representation of the object
+	 * @since 1.2.5
 	 * @throws Exception
 	 * @return String representation of the object
 	 */
@@ -27,8 +34,9 @@ class SygValidateException extends Exception {
 }
 
 /**
- * Sliding Youtube Gallery Validation Class
- *
+ * @name SygValidate
+ * @category Sliding Youtube Gallery Validate Class
+ * @since 1.2.5
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
@@ -41,9 +49,8 @@ class SygValidate {
 	/**
 	 * @name getInstance
 	 * @category style validation function
-	 * @since 1.2.6
-	 * @throws Exception
-	 * @return $instance of SygValidate
+	 * @since 1.2.5
+	 * @return self::$instance of SygValidate
 	 */
 	public static function getInstance() {
 		if(self::$instance == null) {
@@ -56,8 +63,8 @@ class SygValidate {
 	/**
 	 * @name validateStyle
 	 * @category style validation function
-	 * @since 1.2.6
-	 * @param array $data
+	 * @since 1.2.5
+	 * @param $data array of style params to validate
 	 * @throws SygValidateException
 	 */
 	public static function validateStyle($data) {
@@ -70,8 +77,8 @@ class SygValidate {
 	/**
 	 * @name validateGallery
 	 * @category style validation function
-	 * @since 1.2.6
-	 * @param array $data
+	 * @since 1.2.5
+	 * @param $data array of galleries to validate
 	 * @throws SygValidateException
 	 */
 	public static function validateGallery($data) {
@@ -84,8 +91,8 @@ class SygValidate {
 	/**
 	 * @name getProblemFound
 	 * @category getters and setters
-	 * @since 1.2.6
-	 * @return the $problemFound attribute array 
+	 * @since 1.2.5
+	 * @return $problemFound attribute array 
 	 */
 	public function getProblemFound() {
 		return $this->problemFound;
@@ -94,8 +101,8 @@ class SygValidate {
 	/**
 	 * @name setProblemFound
 	 * @category getters and setters
-	 * @since 1.2.6
-	 * @param field_type $problemFound
+	 * @since 1.2.5
+	 * @param $problemFound
 	 */
 	public function setProblemFound($problemFound) {
 		$this->problemFound = $problemFound;
