@@ -365,7 +365,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// get the gallery
 		$dao = new SygDao();
-		$gallery = $dao->getSygById($id);
+		$gallery = $dao->getSygGalleryById($id);
 
 		// set youtube profile object in the gallery
 		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
@@ -390,7 +390,7 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// get the gallery
 				$dao = new SygDao();
-				$gallery = $dao->getSygById($id);
+				$gallery = $dao->getSygGalleryById($id);
 
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube
@@ -442,7 +442,7 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// get the gallery
 				$dao = new SygDao();
-				$gallery = $dao->getSygById($id);
+				$gallery = $dao->getSygGalleryById($id);
 
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube
@@ -606,7 +606,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 		
 				// put galleries in the view
-				$galleries = $this->sygDao->getAllSyg();
+				$galleries = $this->sygDao->getAllSygGallery();
 		
 				// put galleries in the view
 				$this->data['galleries'] = $galleries;
@@ -704,7 +704,7 @@ class SygPlugin extends SanityPluginFramework {
 				$syg = new SygGallery($data);
 
 				// update db
-				$this->sygDao->addSyg($syg);
+				$this->sygDao->addSygGallery($syg);
 
 				// updated flag
 				$updated = true;
@@ -807,7 +807,7 @@ class SygPlugin extends SanityPluginFramework {
 				$syg = new SygGallery($data);
 
 				// update db
-				$this->sygDao->updateSyg($syg);
+				$this->sygDao->updateSygGallery($syg);
 
 				// updated flag
 				$updated = true;
@@ -830,7 +830,7 @@ class SygPlugin extends SanityPluginFramework {
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 
 			// put gallery in the view
-			$this->data['gallery'] = $this->sygDao->getSygById($id);
+			$this->data['gallery'] = $this->sygDao->getSygGalleryById($id);
 
 			// render adminGallery view
 			return $this->render('adminGallery');
@@ -895,7 +895,7 @@ class SygPlugin extends SanityPluginFramework {
 		$id = (int) $_GET['id'];
 
 		// delete gallery
-		$this->sygDao->deleteSyg($this->sygDao->getSygById($id));
+		$this->sygDao->deleteSygGallery($this->sygDao->getSygGalleryById($id));
 
 		die();
 	}
@@ -971,7 +971,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function getViewCtx($id = null) {
 		if (is_int((int) $id)) {
 			$dao = new SygDao();
-			$this->data['gallery'] = $dao->getSygById($id);
+			$this->data['gallery'] = $dao->getSygGalleryById($id);
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 			return $this->data;
 		}
