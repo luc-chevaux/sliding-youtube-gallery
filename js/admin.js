@@ -70,6 +70,44 @@ jQuery.noConflict();
 			return true;
 		},
 		
+		/**
+		 * function that delete a gallery (ajax)
+		 */
+		deleteStyle : function (id) {
+			var sure = confirm('Are you sure to delete this style?');
+			if (sure) {
+				var request = jQuery.ajax({
+					  url: 'admin.php',
+					  type: 'GET',
+					  data: {page: 'syg-manage-styles', id : id, action : 'delete'},
+					  dataType: 'html',
+					  complete: function () {
+						  window.location.reload();
+					  }
+				});
+			}
+			return true;
+		},
+		
+		/**
+		 * function that delete a gallery (ajax)
+		 */
+		deleteGallery : function (id) {
+			var sure = confirm('Are you sure to delete this gallery?');
+			if (sure) {
+				var request = jQuery.ajax({
+					  url: 'admin.php',
+					  type: 'GET',
+					  data: {page: 'syg-manage-galleries', id : id, action : 'delete'},
+					  dataType: 'html',
+					  complete: function () {
+						  window.location.reload();
+					  }
+				});
+			}
+			return true;
+		},
+		
 		/* 
 		 * function that loads the data in the table
 		 */ 
@@ -84,6 +122,7 @@ jQuery.noConflict();
 					var table = 'styles';
 					$.hideLoad();
 					$.each(data, function(key, val) {
+						
 						html = '<tr id="syg_row_' + key + '">';
 						html = html + '<td>';
 						html = html + val.id;
@@ -95,11 +134,12 @@ jQuery.noConflict();
 						html = html + 'User Channel';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: $.deleteStyle(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
+						$('#galleries_table tr:last-child').after(html);
 					});
-					$('#galleries_table tr:last-child').after(html);
+					
 					break;
 				case 'syg-manage-galleries':
 					var table = 'galleries';
@@ -119,7 +159,7 @@ jQuery.noConflict();
 						html = html + 'User Channel';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-administration-panel&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: DeleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: $.deleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 					
@@ -198,29 +238,10 @@ jQuery.noConflict();
 		});
 })(jQuery);
 
-/**
- * function that delete a gallery (ajax)
- */
-function DeleteGallery (id) {
-	var sure = confirm('Are you sure to delete this gallery?');
-	if (sure) {
-		var request = jQuery.ajax({
-			  url: 'options-general.php',
-			  type: 'GET',
-			  data: {page: 'syg-administration-panel', id : id, action : 'delete'},
-			  dataType: 'html',
-			  complete: function () {
-				  window.location.reload();
-			  }
-		});
-	}
-	return true;
-}
-
-/*
- * jQuery on ready function:
- * load colorpickers and update selected colors 
- */
+/************************************************
+ # jQuery on ready function:					#
+ # load colorpickers and update selected colors # 
+ ************************************************/ 
 
 jQuery(document).ready(function($) {
 	// determine current url

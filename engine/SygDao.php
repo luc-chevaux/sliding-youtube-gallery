@@ -40,13 +40,13 @@ class SygDao {
 	
 	/**
 	 * Add a syg gallery to database
-	 * @param SygGallery $syg to add
+	 * @param SygGallery $gallery to add
 	 * @return $id latest inserted id
 	 */
-	public function addSyg(SygGallery $syg) {
+	public function addSygGallery(SygGallery $gallery) {
 		$this->db->insert($this->galleries_table_name, 
-					$syg->toDto(), 
-					$syg->getRsType()
+					$gallery->toDto(), 
+					$gallery->getRsType()
 					);
 		$id = $this->db->insert_id;
 		return $id;
@@ -71,12 +71,27 @@ class SygDao {
 	 * @param SygGallery $syg to update
 	 * @return null
 	 */	
-	public function updateSyg(SygGallery $syg) {
+	public function updateSygGallery(SygGallery $gallery) {
 		$this->db->update(
 				$this->galleries_table_name,
-				$syg->toDto(),
-				array('id' => $syg->getId()),
-				$syg->getRsType(),
+				$gallery->toDto(),
+				array('id' => $gallery->getId()),
+				$gallery->getRsType(),
+				array('%d')
+		);
+	}
+	
+	/**
+	 * Update a syg style to database
+	 * @param SygStyle $style to update
+	 * @return null
+	 */
+	public function updateSygStyle(SygStyle $style) {
+		$this->db->update(
+				$this->styles_table_name,
+				$style->toDto(),
+				array('id' => $style->getId()),
+				$style->getRsType(),
 				array('%d')
 		);
 	}
@@ -86,8 +101,18 @@ class SygDao {
 	 * @param SygGallery $syg to delete
 	 * @return null
 	 */	
-	public function deleteSyg(SygGallery $syg) {
-		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->galleries_table_name, $syg->getId()));
+	public function deleteSygGallery(SygGallery $gallery) {
+		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->galleries_table_name, $gallery->getId()));
+		$this->db->query($query);
+	}
+	
+	/**
+	 * Delete a syg style from database
+	 * @param SygStyle $style to delete
+	 * @return null
+	 */
+	public function deleteSygStyle(SygStyle $style) {
+		$query = $this->db->prepare(sprintf($this->sqlDeleteStyleById, $this->styles_table_name, $style->getId()));
 		$this->db->query($query);
 	}
 
@@ -109,7 +134,7 @@ class SygDao {
 	/**
 	 * Get all syg styles from database
 	 * @param $output_type
-	 * @return $galleries
+	 * @return $styles
 	 */
 	public function getAllStyles($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
 		$styles = array();
@@ -127,11 +152,24 @@ class SygDao {
 	 * @param $output_type
 	 * @return $gallery
 	 */
-	public function getSygById($id, $output_type = 'OBJECT') {
+	public function getSygGalleryById($id, $output_type = 'OBJECT') {
 		$query = $this->db->prepare(sprintf($this->sqlGetGalleryById, $this->galleries_table_name, $id));
 		$result = $this->db->get_row($query, $output_type);
 		$gallery = new SygGallery($result);
 		return $gallery;
+	}
+	
+	/**
+	 * Get a syg style object from database
+	 * @param $id
+	 * @param $output_type
+	 * @return $style
+	 */
+	public function getSygStyleById($id, $output_type = 'OBJECT') {
+		$query = $this->db->prepare(sprintf($this->sqlGetStyleById, $this->styles_table_name, $id));
+		$result = $this->db->get_row($query, $output_type);
+		$style = new SygStyle($result);
+		return $style;
 	}
 	
 	/**

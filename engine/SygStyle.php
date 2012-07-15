@@ -11,6 +11,7 @@
 class SygStyle {
 	// object attributes
 	private $styleName;
+	private $styleDetails;
 	private $boxWidth;
 	private $boxBackground;
 	private $boxRadius;
@@ -35,7 +36,7 @@ class SygStyle {
 	private $id;
 	
 	// recordset type
-	public static $rsType = array('%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%d','%d','%d','%s','%d','%d','%d');
+	public static $rsType = array('%s','%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%d','%d','%d','%s','%d','%d','%d');
 	
 	/**
 	 * Constructor
@@ -57,6 +58,7 @@ class SygStyle {
 		
 		// style name
 		$this->setStyleName($result->syg_style_name);
+		$this->setStyleDetails($result->syg_style_details);
 		
 		// box option values
 		$this->setBoxBackground(($result->syg_box_background) ? $result->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
@@ -112,6 +114,7 @@ class SygStyle {
 	 */
 	public function toDto($full = false) {
 		$dto = array('syg_style_name'			=> $this->getStyleName(),
+				'syg_style_details'				=> $this->getStyleDetails(),
 				'syg_box_background'			=> $this->getBoxBackground(),
 				'syg_box_padding' 				=> $this->getBoxPadding(),
 				'syg_box_radius'				=> $this->getBoxRadius(),
@@ -447,6 +450,20 @@ class SygStyle {
 	 */
 	public function setDescFontColor($descFontColor) {
 		$this->descFontColor = $descFontColor;
+	}
+
+	/**
+	 * @return the $styleDetails
+	 */
+	public function getStyleDetails() {
+		return $this->styleDetails;
+	}
+
+	/**
+	 * @param field_type $styleDetails
+	 */
+	public function setStyleDetails($styleDetails) {
+		$this->styleDetails = $styleDetails;
 	}
 
 	/**

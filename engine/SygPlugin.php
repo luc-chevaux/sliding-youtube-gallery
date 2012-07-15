@@ -641,6 +641,10 @@ class SygPlugin extends SanityPluginFramework {
 				$output = $this->forwardToAddStyle();
 				return $output;
 				break;
+			case 'edit':
+				$output = $this->forwardToEditStyle();
+				return $output;
+				break;
 			default:
 				// prepare header
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
@@ -787,7 +791,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * Action Forward to edit gallery
 	 * @return null
 	 */
-	public function forwardToEdit() {
+	public function forwardToEditGallery() {
 		if (isset($_POST['syg_submit_hidden'])
 				&& $_POST['syg_submit_hidden'] == 'Y') {
 			// database update procedure
@@ -832,18 +836,81 @@ class SygPlugin extends SanityPluginFramework {
 			return $this->render('adminGallery');
 		}
 	}
+	
+	/**
+	 * Action Forward to edit gallery
+	 * @return null
+	 */
+	public function forwardToEditStyle() {
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+			// database update procedure
+			// get posted values
+			$data = serialize($_POST);
+	
+			// validate posted values (to implement)
+			$valid = true;
+	
+			if ($valid) {
+				// create a new gallery
+				$syg = new SygGallery($data);
+	
+				// update db
+				$this->sygDao->updateSygStyle($syg);
+	
+				// updated flag
+				$updated = true;
+	
+				// updated flag
+				$this->data['updated'] = $updated;
+			} else {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
+			}
+	
+			// render adminStyle view
+			return $this->forwardToHome();
+		} else {
+			// get the style id
+			$id = (int) $_GET['id'];
+	
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	
+			// put style in the view
+			$this->data['style'] = $this->sygDao->getSygStyleById($id);
+	
+			// render adminStyle view
+			return $this->render('adminStyle');
+		}
+	}
 
 	/**
 	 * Action Forward to edit gallery
 	 * @return null
 	 */
-	public function forwardToDelete() {
+	public function forwardToDeleteGallery() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
 
 		// delete gallery
 		$this->sygDao->deleteSyg($this->sygDao->getSygById($id));
 
+		die();
+	}
+	
+	/**
+	 * Action Forward to edit style
+	 * @return null
+	 */
+	public function forwardToDeleteStyle() {
+		// get the gallery id
+		$id = (int) $_GET['id'];
+	
+		// delete gallery
+		$this->sygDao->deleteSygStyle($this->sygDao->getSygStyleById($id));
+	
 		die();
 	}
 
@@ -880,7 +947,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// generate token
 		$_SESSION['request_token'] = $this->getAuthToken();
-wp_die();
+		
 		// render adminHome view
 		return $this->render('adminHome');
 	}
