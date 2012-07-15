@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Data Access Object
- *
+ * @name SygDao
+ * @category Sliding Youtube Gallery Data Access Object
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
@@ -25,8 +26,9 @@ class SygDao {
 	private $sqlCreateTable12X = SygConstant::SQL_CREATE_TABLE_1_2_X;
 	
 	/**
-	 * Default constructor
-	 * @return null
+	 * @name __construct
+	 * @category construct SygDao object
+	 * @since 1.2.5
 	 */
 	public function __construct() {
 		// get wordpress dbms linked
@@ -39,7 +41,9 @@ class SygDao {
 	}
 	
 	/**
-	 * Add a syg gallery to database
+	 * @name addSygGallery
+	 * @category Add a syg gallery to database
+	 * @since 1.2.5
 	 * @param SygGallery $gallery to add
 	 * @return $id latest inserted id
 	 */
@@ -53,8 +57,10 @@ class SygDao {
 	}
 	
 	/**
-	 * Add a syg style to database
-	 * @param SygStyle $style to add
+	 * @name addSygStyle
+	 * @category Add a syg style to database
+	 * @since 1.2.5
+	 * @param SygStyle $gallery to add
 	 * @return $id latest inserted id
 	 */
 	public function addSygStyle(SygStyle $style) {
@@ -67,9 +73,10 @@ class SygDao {
 	}
 
 	/**
-	 * Update a syg gallery to database
-	 * @param SygGallery $syg to update
-	 * @return null
+	 * @name updateSygGallery
+	 * @category Update a syg gallery to database
+	 * @since 1.2.5
+	 * @param SygGallery $gallery to update
 	 */	
 	public function updateSygGallery(SygGallery $gallery) {
 		$this->db->update(
@@ -82,9 +89,10 @@ class SygDao {
 	}
 	
 	/**
-	 * Update a syg style to database
+	 * @name updateSygStyle
+	 * @category Update a syg style to database
+	 * @since 1.2.5
 	 * @param SygStyle $style to update
-	 * @return null
 	 */
 	public function updateSygStyle(SygStyle $style) {
 		$this->db->update(
@@ -97,19 +105,21 @@ class SygDao {
 	}
 
 	/**
-	 * Delete a syg gallery from database
-	 * @param SygGallery $syg to delete
-	 * @return null
-	 */	
+	 * @name deleteSygGallery
+	 * @category Delete a syg gallery to database
+	 * @since 1.2.5
+	 * @param SygGallery $gallery to delete
+	 */
 	public function deleteSygGallery(SygGallery $gallery) {
 		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->galleries_table_name, $gallery->getId()));
 		$this->db->query($query);
 	}
 	
 	/**
-	 * Delete a syg style from database
+	 * @name deleteSygStyle
+	 * @category Delete a syg style to database
+	 * @since 1.2.5
 	 * @param SygStyle $style to delete
-	 * @return null
 	 */
 	public function deleteSygStyle(SygStyle $style) {
 		$query = $this->db->prepare(sprintf($this->sqlDeleteStyleById, $this->styles_table_name, $style->getId()));
@@ -117,11 +127,13 @@ class SygDao {
 	}
 
 	/**
-	 * Get all syg gallery from database
-	 * @param $output_type
+	 * @name getAllSygGallery
+	 * @category Get a syg gallery list from database
+	 * @since 1.2.5
+	 * @param $output_type, $start, $per_page
 	 * @return $galleries
 	 */
-	public function getAllSyg($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygGallery($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
 		$galleries = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->galleries_table_name, $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);
@@ -132,8 +144,10 @@ class SygDao {
 	}
 	
 	/**
-	 * Get all syg styles from database
-	 * @param $output_type
+	 * @name getAllStyles
+	 * @category Get a syg style list from database
+	 * @since 1.2.5
+	 * @param $output_type, $start, $per_page
 	 * @return $styles
 	 */
 	public function getAllStyles($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
@@ -147,9 +161,10 @@ class SygDao {
 	}
 
 	/**
-	 * Get a syg gallery object from database
-	 * @param $id
-	 * @param $output_type
+	 * @name getSygGalleryById
+	 * @category Get a syg gallery from database
+	 * @since 1.2.5
+	 * @param $id, $output_type
 	 * @return $gallery
 	 */
 	public function getSygGalleryById($id, $output_type = 'OBJECT') {
@@ -160,9 +175,10 @@ class SygDao {
 	}
 	
 	/**
-	 * Get a syg style object from database
-	 * @param $id
-	 * @param $output_type
+	 * @name getSygStyleById
+	 * @category Get a syg style from database
+	 * @since 1.2.5
+	 * @param $id, $output_type
 	 * @return $style
 	 */
 	public function getSygStyleById($id, $output_type = 'OBJECT') {
@@ -173,7 +189,9 @@ class SygDao {
 	}
 	
 	/**
-	 * Get syg count from database
+	 * @name getGalleriesCount
+	 * @category Count galleries
+	 * @since 1.2.5
 	 * @return $count
 	 */
 	public function getGalleriesCount() {
@@ -184,7 +202,9 @@ class SygDao {
 	}
 	
 	/**
-	 * Get syg count from database
+	 * @name getStylesCount
+	 * @category Count styles
+	 * @since 1.2.5
 	 * @return $count
 	 */
 	public function getStylesCount() {
@@ -195,8 +215,10 @@ class SygDao {
 	}
 	
 	/**
-	 * 
-	 * 
+	 * @name createTable12x
+	 * @category Create table DDL, switch version from 1.0.1 to 1.2.x
+	 * @since 1.2.5
+	 * @return $dbDelta($query)
 	 */
 	public function createTable12x() {
 		$query = $this->db->prepare(sprintf($this->sqlCreateTable12X, $this->galleries_table_name));
