@@ -928,32 +928,6 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to homepage
-	 * @return null
-	 */
-	public function forwardToHome() {
-		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-		// put galleries in the view
-		$galleries = $this->sygDao->getAllSyg();
-
-		// put galleries in the view
-		$this->data['galleries'] = $galleries;
-
-		// number of pages
-		$this->data['pages'] = ceil(
-				$this->sygDao->getGalleriesCount()
-						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
-
-		// generate token
-		$_SESSION['request_token'] = $this->getAuthToken();
-		
-		// render adminHome view
-		return $this->render('adminHome');
-	}
-
-	/**
 	 * Get Ajax Auth Token
 	 * @return null
 	 */
