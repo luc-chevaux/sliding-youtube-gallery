@@ -134,7 +134,7 @@ jQuery.noConflict();
 						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: $.deleteStyle(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 						$('#galleries_table tr:last-child').after(html);
@@ -198,7 +198,7 @@ jQuery.noConflict();
 		addPaginationClickEvent : function (table) {
 			// add galleries pagination click event
 			$('#syg-pagination-' + table + ' li').click(function(){
-				displayLoad();
+				$.displayLoad();
 				// css styles
 				$('#syg-pagination-' + table + ' li')
 					.css({'border' : 'solid #dddddd 1px'})

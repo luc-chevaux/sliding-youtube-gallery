@@ -28,8 +28,8 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
-<!-- plugin Menu -->
-<?php include 'inc/pluginMenu.inc.php'; ?>
+<!-- Title Page -->
+<h3>Manage your gallery</h3>
 
 <!-- Welcome Message -->
 <p class="webengText">
@@ -37,23 +37,22 @@
 </p>
 
 <!-- Gallery List -->
-<h3>Manage your gallery</h3>
 <table cellspacing="0" id="galleries_table">
 	<tr id="table_header">
 		<th class="id">
 			<span>ID</span>
 		</th>
 		<th class="user_pic">
-			<span>Avatar</span>
+			<span>AVATAR</span>
 		</th>
 		<th class="user">
-			<span>Details</span>
+			<span>DETAILS</span>
 		</th>
 		<th class="type">
-			<span>Type</span>
+			<span>TYPE</span>
 		</th>
 		<th class="action">
-			<span>Action</span>
+			<span>ACTION</span>
 		</th>
 	</tr>
 	<tr id="syg-loading">
@@ -80,5 +79,5 @@ if (count($galleries) == 0) { ?>
 	}
 	?>
 </ul>	
-<br/>
+<br/><br/>
 <?php require_once 'inc/contextMenu.inc.php'; ?>

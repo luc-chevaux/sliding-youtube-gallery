@@ -630,22 +630,23 @@ class SygPlugin extends SanityPluginFramework {
 	 * Action Forward to manage galleries
 	 * @return null
 	 */
-	public function forwardToStyles() {
-		// updated flag
-		$updated = false;
-		
+	public function forwardToStyles($updated = false) {
 		$output = '';
 		
+		// if we've updated a record set action to null
+		$action = ($updated == true) ? 'redirect' : $_GET['action'];
+		
 		// determine wich action to call
-		switch ($_GET['action']) {
+		switch ($action) {
 			case 'add':
-				$output = $this->forwardToAddStyle();
-				return $output;
-				break;
+				return $this->forwardToAddStyle();
 			case 'edit':
-				$output = $this->forwardToEditStyle();
-				return $output;
-				break;
+				return $this->forwardToEditStyle();
+			case 'delete':
+				return $this->forwardToDeleteStyle(); 
+			case 'redirect':
+				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_STYLES;
+				return $this->render('redirect');
 			default:
 				// prepare header
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
@@ -666,7 +667,6 @@ class SygPlugin extends SanityPluginFramework {
 				
 				// render adminStyles view
 				return $this->render('adminStyles');
-				break;
 		}
 	}
 
@@ -719,7 +719,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 
 			// render adminGallery view
-			return $this->forwardToHome();
+			return $this->forwardToGalleries($updated);
 		} else {
 			// gallery administration form section
 			// prepare header
@@ -774,7 +774,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 
 			// render adminGallery view
-			return $this->forwardToHome();
+			return $this->forwardToStyles($updated);
 		} else {
 			// gallery administration form section
 			// prepare header
@@ -871,7 +871,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 	
 			// render adminStyle view
-			return $this->forwardToHome();
+			return $this->forwardToStyles($updated);
 		} else {
 			// get the style id
 			$id = (int) $_GET['id'];

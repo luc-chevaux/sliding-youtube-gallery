@@ -22,6 +22,7 @@ class SygDao {
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlGetStyleById = SygConstant::SQL_GET_STYLE_BY_ID;
 	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
+	private $sqlDeleteStyleById = SygConstant::SQL_DELETE_STYLE_BY_ID;
 	private $sqlCountGalleries = SygConstant::SQL_COUNT_QUERY;
 	private $sqlCountStyles = SygConstant::SQL_COUNT_QUERY;
 	private $sqlCreateTable12X = SygConstant::SQL_CREATE_TABLE_1_2_X;
