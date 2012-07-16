@@ -131,7 +131,7 @@ jQuery.noConflict();
 						html = html + val.styleName;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + 'User Channel';
+						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
 						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: $.deleteStyle(\''+ val.id + '\');">Delete</a>';
