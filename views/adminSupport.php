@@ -22,9 +22,6 @@
 	<?php echo SygConstant::BE_DONATE_MESSAGE; ?>
 </p>
 
-<!-- Menu -->
-<?php include 'inc/pluginMenu.inc.php'; ?>
-
 <h2 class="webengText">What you can do?</h2>
 <p><strong>If you're experiencing problem with this plugin</strong> or just have some ideas to make it better, don't hesitate to send me an email at syg@webeng.it .
 <p><strong>If you're a blogger</strong> and you like this plugin, you may write a small article about this plugin. It would be amazing for my effort!

@@ -25,9 +25,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h3 {
-	font-size: 18px;
+	font-size: 22px;
 	font-weight: normal;
 	color: #464646;
+	margin: 10px auto;
 }
 
 .webengTitle {
@@ -105,7 +106,7 @@ label {
 
 #galleries_table {
 	width: 700px;
-	border-radius: 8px;
+	border-radius: 10px;
 	font-family: HandelGothicDLight !important;
 	font-size: 15px;
 	-moz-box-shadow: 0 0 5px #333;
@@ -116,7 +117,7 @@ label {
 #galleries_table th:FIRST-CHILD {
 	background: #333;
 	color: #fff;
-	border-radius: 6px 0px 0px 0px;
+	border-radius: 10px 0px 0px 0px;
 }
 
 #galleries_table th {
@@ -124,13 +125,13 @@ label {
 	color: #fff;
 	height: 30px;
 	font-family: HandelGothicDLight !important;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 #galleries_table th:LAST-CHILD {
 	background: #333;
 	color: #fff;
-	border-radius: 0px 6px 0px 0px;
+	border-radius: 0px 10px 0px 0px;
 }
 
 #galleries_table th span {
@@ -195,7 +196,7 @@ img.user_pic {
 	float: left;
 	margin-right: 16px; 
 	padding:5px;
-	border:solid 3px #ccc;
+	box-shadow: 0 0 5px #333333;
 	background-color: #333;
 	color:#ffffff;
 	border-radius: 10px;
