@@ -1,14 +1,14 @@
 <?php 
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
-header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
-header("Cache-Control: no-cache, must-revalidate" );
-header("Pragma: no-cache" );
-header("Content-type: application/json");
+header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
+header('Cache-Control: no-cache, must-revalidate' );
+header('Pragma: no-cache' );
+header('Content-type: application/json; charset=utf-8');
 
 // include wp loader
-$root = realpath(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))))));
+$root = realpath(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME'])))))));
 
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6
@@ -31,7 +31,7 @@ $plugin = SygPlugin::getInstance();
 
 if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 	switch ($_GET['table']) {
-		case "galleries": 
+		case 'galleries': 
 			if($_GET['page_number']) {
 				$page_number = $_GET['page_number'];
 				$current_page = $page_number;
@@ -42,8 +42,8 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 				$start = $page_number * $per_page;
 					
 				$dao = new SygDao();
-				$galleries = $dao->getAllSygGallery('OBJECT', $start, $per_page);
-			
+				$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
+
 				$gallery_to_json = array();
 			
 				foreach ($galleries as $gallery) {
@@ -51,9 +51,9 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 				}
 			
 				echo json_encode ($gallery_to_json);
-				die();
-			}	
-		case "styles":
+			}
+			break;
+		case 'styles':
 			if($_GET['page_number']) {
 				$page_number = $_GET['page_number'];
 				$current_page = $page_number;
@@ -64,19 +64,17 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 				$start = $page_number * $per_page;
 					
 				$dao = new SygDao();
-				$galleries = $dao->getAllSygStyles('OBJECT', $start, $per_page);
+				$styles = $dao->getAllSygStyles('OBJECT', $start, $per_page);
 					
-				$gallery_to_json = array();
+				$style_to_json = array();
 					
-				foreach ($galleries as $gallery) {
-					array_push($gallery_to_json, $gallery->getJsonData());
+				foreach ($styles as $style) {
+					array_push($style_to_json, $style->getJsonData());
 				}
 					
-				echo json_encode ($gallery_to_json);
-				die();
+				echo json_encode ($style_to_json);
 			}
-		default:	
-			null;
+			break;
 	}
 }
 ?>

@@ -135,7 +135,7 @@ class SygDao {
 	 * @param $output_type, $start, $per_page
 	 * @return $galleries
 	 */
-	public function getAllSygGallery($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
 		$galleries = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->galleries_table_name, $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);

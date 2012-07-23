@@ -590,39 +590,43 @@ class SygPlugin extends SanityPluginFramework {
 	 * Action Forward to manage galleries
 	 * @return null
 	 */
-	public function forwardToGalleries() {
-		// updated flag
-		$updated = false;
-		
+	public function forwardToGalleries($updated = false) {
 		$output = '';
 		
+		// if we've updated a record set action to null
+		$action = ($updated == true) ? 'redirect' : $_GET['action'];
+		
 		// determine wich action to call
-		switch ($_GET['action']) {
+		switch ($action) {
 			case 'add':
-				$output = $this->forwardToAddGallery();
-				return $output;
-				break;
+				return $this->forwardToAddGallery();
+			case 'edit':
+				return $this->forwardToEditGallery();
+			case 'delete':
+				return $this->forwardToDeleteGallery();
+			case 'redirect':
+				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_GALLERIES;
+				return $this->render('redirect');
 			default:
 				// prepare header
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
+				
 				// put galleries in the view
-				$galleries = $this->sygDao->getAllSygGallery();
-		
+				$galleries = $this->sygDao->getAllSygGalleries();
+
 				// put galleries in the view
 				$this->data['galleries'] = $galleries;
 		
 				// number of pages
 				$this->data['pages'] = ceil(
 						$this->sygDao->getGalleriesCount()
-								/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
 		
 				// generate token
 				$_SESSION['request_token'] = $this->getAuthToken();
 		
-				// render adminHome view
+				// render adminStyles view
 				return $this->render('adminGalleries');
-				break;
 		}
 	}
 
@@ -687,50 +691,58 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return null
 	 */
 	public function forwardToAddGallery() {
-
-		$updated = false;
-
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-			// database add gallery procedure
-			// get posted values
-			$data = serialize($_POST);
-
-			// check youtube user
-			$valid = $this->sygYouTube
-					->getUserProfile($_POST['syg_youtube_username']);
-
-			if ($valid) {
-				// create a new gallery
-				$syg = new SygGallery($data);
-
-				// update db
-				$this->sygDao->addSygGallery($syg);
-
-				// updated flag
-				$updated = true;
-
-				// updated flag
-				$this->data['updated'] = $updated;
+		
+			$updated = false;
+			
+			if (isset($_POST['syg_submit_hidden'])
+					&& $_POST['syg_submit_hidden'] == 'Y') {
+				// database add style procedure
+				// get posted values
+				$data = serialize($_POST);
+			
+				try {
+					// validate data
+					//SygValidate::getInstance().validateGallery($data);
+					//// check youtube user
+					//$valid = $this->sygYouTube
+					//->getUserProfile($_POST['syg_youtube_username']);
+			
+					// create a new gallery
+					$gallery = new SygGallery($data);
+			
+					// update db
+					$this->sygDao->addSygGallery($gallery);
+			
+					// updated flag
+					$updated = true;
+			
+					// updated flag
+					$this->data['updated'] = $updated;
+				} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblemFound();
+				} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+				}
+			
+				// render adminGallery view
+				return $this->forwardToGalleries($updated);
 			} else {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
-			}
-
-			// render adminGallery view
-			return $this->forwardToGalleries($updated);
-		} else {
-			// gallery administration form section
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-			// put an empty gallery in the view
-			$this->data['gallery'] = new SygGallery();
-
-			// render adminGallery view
-			return $this->render('adminGallery');
-		}
+				// gallery administration form section
+				// prepare header
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			
+				// put an empty gallery in the view
+				$this->data['gallery'] = new SygGallery();
+			
+				// render adminGallery view
+				return $this->render('adminGallery');
+			}	
+			
 	}
 
 	/**
