@@ -906,7 +906,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToDeleteGallery() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
-
+		
 		// delete gallery
 		$this->sygDao->deleteSygGallery($this->sygDao->getSygGalleryById($id));
 

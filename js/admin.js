@@ -159,7 +159,7 @@ jQuery.noConflict();
 						html = html + 'User Channel';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: $.deleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 					
