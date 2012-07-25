@@ -834,7 +834,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 
 			// render adminGallery view
-			return $this->forwardToHome();
+			return $this->forwardToGalleries($updated);
 		} else {
 			// get the gallery id
 			$id = (int) $_GET['id'];
