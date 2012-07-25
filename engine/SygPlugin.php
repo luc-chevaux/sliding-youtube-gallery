@@ -738,6 +738,9 @@ class SygPlugin extends SanityPluginFramework {
 			
 				// put an empty gallery in the view
 				$this->data['gallery'] = new SygGallery();
+				
+				// put styles to populate combo
+				$this->data['styles'] = $this->sygDao->getAllSygStyles();
 			
 				// render adminGallery view
 				return $this->render('adminGallery');
@@ -844,6 +847,9 @@ class SygPlugin extends SanityPluginFramework {
 
 			// put gallery in the view
 			$this->data['gallery'] = $this->sygDao->getSygGalleryById($id);
+
+			// put styles to populate combo
+			$this->data['styles'] = $this->sygDao->getAllSygStyles();
 
 			// render adminGallery view
 			return $this->render('adminGallery');

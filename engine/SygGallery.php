@@ -25,7 +25,7 @@ class SygGallery {
 	private $id;
 	
 	// recordset type
-	public static final $rsType = array('%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
+	public static $rsType = array('%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
 	/**
 	 * Constructor

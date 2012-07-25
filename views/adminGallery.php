@@ -3,6 +3,7 @@
 <!-- Extra Php Code -->
 <?php 	
 	$gallery = $this->data['gallery'];
+	$styles = $this->data['styles'];
 ?>
 
 <!-- User Message -->
@@ -27,9 +28,6 @@
 </div>
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
-
-<!-- plugin Menu -->
-<?php include 'inc/pluginMenu.inc.php'; ?>
 
 <!-- Welcome Message -->
 <p class="webengText">
@@ -66,6 +64,18 @@
 		<!-- video count -->
 		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
 		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
+	</fieldset>
+	
+	<!-- description appereance -->
+	<fieldset>
+		<legend><strong>Select your style</strong></legend>
+		<!-- duration -->
+		<label for="syg_style_id">Style </label>
+		<select name="syg_style_id" id="syg_style_id">
+			<?php foreach ($styles as $style) { ?>
+				<option value="<?php echo $style->getId(); ?>"><?php echo $style->getStyleName(); ?></option>
+			<?php } ?>
+		</select>
 	</fieldset>
 	
 	<!-- description appereance -->
