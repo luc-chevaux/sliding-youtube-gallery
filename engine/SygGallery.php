@@ -25,7 +25,7 @@ class SygGallery {
 	private $id;
 	
 	// recordset type
-	public static final $rsType = array('%d','%d','%d','%d','%d','%d','%s','%s','%d');
+	public static final $rsType = array('%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
 	/**
 	 * Constructor
@@ -103,7 +103,8 @@ class SygGallery {
 				'syg_description_showtags' 			=> $this->getDescShowTags(),
 				'syg_youtube_maxvideocount'			=> $this->getYtMaxVideoCount(),
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
-				'syg_youtube_username'				=> $this->getYtUsername(),	
+				'syg_youtube_username'				=> $this->getYtUsername(),
+				'syg_style_id'						=> $this->getStyleId(),
 				'id'								=> $this->getId());
 		return $dto;
 	}
