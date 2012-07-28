@@ -41,10 +41,21 @@
 	
 	<!-- youtube settings -->
 	<fieldset>
+		Based on channel feed <input type="radio" name="linguaggio" value="html"/>
+  		Based on video list <input type="radio" name="linguaggio" value="css"/>
+  
+  		<br/><br/>
+  		
 		<!-- user -->
 		<legend><strong>YouTube settings</strong></legend>
-		<label for="syg_youtube_username">YouTube User: </label>
+		<label for="syg_youtube_username">YouTube User: </label><br/>
 		<input type="text" id="syg_youtube_username" name="syg_youtube_username" value="<?php echo $gallery->getYtUsername(); ?>" size="30">
+		
+		<br/><br/>
+		
+		<!-- video list -->
+		<label for="syg_youtube_username">Video list: </label><br/>
+		<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_videolist" value=""></textarea>
 				
 		<br/><br/>
 
@@ -69,11 +80,11 @@
 	<!-- description appereance -->
 	<fieldset>
 		<legend><strong>Select your style</strong></legend>
-		<!-- duration -->
+		<!-- style -->
 		<label for="syg_style_id">Style </label>
 		<select name="syg_style_id" id="syg_style_id">
 			<?php foreach ($styles as $style) { ?>
-				<option value="<?php echo $style->getId(); ?>"><?php echo $style->getStyleName(); ?></option>
+				<option value="<?php echo $style->getId(); ?>" <?php if ($style->getId() == $gallery->getStyleId()) echo 'selected="selected"'; ?>><?php echo $style->getStyleName(); ?></option>
 			<?php } ?>
 		</select>
 	</fieldset>
