@@ -39,6 +39,19 @@
 	<input type="hidden" name="syg_submit_hidden" value="Y">
 	<input type="hidden" name="id" id="id" value="<?php echo $gallery->getId(); ?>">
 	
+	<!-- Define your new gallery -->
+	<fieldset>
+		<legend>Define your new gallery</legend>
+		
+		<!-- style name -->
+		<label for="syg_gallery_name"><strong>Name</strong></label>
+		<input type="text" id="syg_gallery_name" name="syg_gallery_name" value="<?php //echo $style->getStyleName(); ?>" size="15"/>
+		
+		<!-- style details -->
+		<label for="syg_gallery_details"><strong>Details</strong></label>
+		<input type="text" id="syg_gallery_details" name="syg_gallery_details" value="<?php //echo $style->getStyleDetails(); ?>" size="50"/>
+	</fieldset>
+	
 	<!-- youtube settings -->
 	<fieldset>
 		<legend><strong>Gallery content</strong></legend>
@@ -51,19 +64,19 @@
 		<!-- user -->
 		<div id="syg_youtube_username_panel">
 			<label for="syg_youtube_src">YouTube User: </label><br/>
-			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>" size="30">
+			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'feed') echo $gallery->getYtSrc(); ?>" size="30">
 		</div>
 		
 		<!-- video list -->
 		<div id="syg_youtube_list_panel">
 			<label for="syg_youtube_src">Video list: </label><br/>
-			<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>"></textarea>
+			<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_src"><?php if ($gallery->getGalleryType() == 'list') echo $gallery->getYtSrc(); ?></textarea>
 		</div>
 
 		<!-- user -->
 		<div id="syg_youtube_playlist_panel">
 			<label for="syg_youtube_src">YouTube playlist: </label><br/>
-			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>" size="30">
+			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'playlist') echo $gallery->getYtSrc(); ?>" size="30">
 		</div>
 		
 		<br/>

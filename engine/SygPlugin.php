@@ -814,9 +814,8 @@ class SygPlugin extends SanityPluginFramework {
 			// get posted values
 			$data = serialize($_POST);
 
-			// check youtube user
-			$valid = $this->sygYouTube
-					->getUserProfile($_POST['syg_youtube_username']);
+			// validate posted values (to implement)
+			$valid = true;
 
 			if ($valid) {
 				// create a new gallery

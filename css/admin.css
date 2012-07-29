@@ -105,7 +105,7 @@ label {
 /* table of galleries */ 
 
 #galleries_table {
-	width: 700px;
+	width: 900px;
 	border-radius: 10px;
 	font-family: HandelGothicDLight !important;
 	font-size: 15px;
@@ -164,11 +164,11 @@ img.user_pic {
 }
 
 #galleries_table th.action {
-	width: 200px;
+	width: 400px;
 }
 
 #galleries_table th.type {
-	width: 200px;
+	width: 50px;
 }
 
 #galleries_table tr.navigation {

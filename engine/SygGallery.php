@@ -13,6 +13,8 @@ class SygGallery {
 	private $userProfile;
 	
 	// object attributes
+	private $galleryName;
+	private $galleryDetails;
 	private $galleryType;
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
@@ -26,7 +28,7 @@ class SygGallery {
 	private $id;
 	
 	// recordset type
-	public static $rsType = array('%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
+	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
 	/**
 	 * Constructor
@@ -47,6 +49,8 @@ class SygGallery {
 	private function mapThis($result = null) {
 		$result = (object) $result;
 		
+		$this->setGalleryName($result->syg_gallery_name);
+		$this->setGalleryDetails($result->syg_gallery_details);
 		$this->setGalleryType($result->syg_gallery_type);
 		
 		// description option values
@@ -99,6 +103,8 @@ class SygGallery {
 	 */
 	public function toDto() {
 		$dto = array(
+				'syg_gallery_name'					=> $this->getGalleryName(),
+				'syg_gallery_details'				=> $this->getGalleryDetails(),
 				'syg_gallery_type'					=> $this->getGalleryType(),
 				'syg_description_show'				=> $this->getDescShow(),
 				'syg_description_showcategories'	=> $this->getDescShowCategories(),
@@ -299,6 +305,33 @@ class SygGallery {
 	 */
 	public function setId($id) {
 		$this->id = $id;
+	}
+	/**
+	 * @return the $galleryName
+	 */
+	public function getGalleryName() {
+		return $this->galleryName;
+	}
+
+	/**
+	 * @param field_type $galleryName
+	 */
+	public function setGalleryName($galleryName) {
+		$this->galleryName = $galleryName;
+	}
+
+	/**
+	 * @return the $galleryDetails
+	 */
+	public function getGalleryDetails() {
+		return $this->galleryDetails;
+	}
+
+	/**
+	 * @param field_type $galleryDetails
+	 */
+	public function setGalleryDetails($galleryDetails) {
+		$this->galleryDetails = $galleryDetails;
 	}
 }
 ?>

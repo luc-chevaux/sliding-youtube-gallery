@@ -153,12 +153,19 @@ jQuery.noConflict();
 						html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + val.ytSrc;
+						
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + 'User Channel';
+						html = html + val.galleryType;
 						html = html + '</td>';
 						html = html + '<td>';
+						if (val.galleryType == 'list') {
+							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">Watch the list</a> |';
+						} else if (val.galleryType == 'feed') {
+							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">(' + val.ytSrc + ') Visit the channel</a> |';
+						} else {
+							html = html + val.ytSrc;
+						}
 						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
@@ -231,7 +238,7 @@ jQuery.noConflict();
 		    	case 'feed':
 		    		// enable and set visible feed
 		    		$('#syg_youtube_username_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_username').attr('enabled','enabled');
+		    		$('#syg_youtube_username').removeAttr('disabled');
 		    		
 		    		// set list disabled and hidden
 		    		$('#syg_youtube_list_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
@@ -249,7 +256,7 @@ jQuery.noConflict();
 		    		
 		    		// enable and set visible list
 		    		$('#syg_youtube_list_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_list').attr('enabled','enabled');
+		    		$('#syg_youtube_list').removeAttr('disabled');
 		    		
 		    		// set playlist disabled and hidden
 		    		$('#syg_youtube_playlist_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
@@ -267,7 +274,7 @@ jQuery.noConflict();
 		    		
 		    		// set playlist disabled and hidden
 		    		$('#syg_youtube_playlist_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_playlist').attr('enabled','enabled');
+		    		$('#syg_youtube_playlist').removeAttr('disabled');
 		    		
 		    		break;
 		    	default:
