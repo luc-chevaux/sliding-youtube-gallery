@@ -153,7 +153,7 @@ jQuery.noConflict();
 						html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + val.ytUsername;
+						html = html + val.ytSrc;
 						html = html + '</td>';
 						html = html + '<td>';
 						html = html + 'User Channel';
@@ -174,7 +174,7 @@ jQuery.noConflict();
 							'height' : dHeight,
 							'titlePosition' : 'inside',
 							'titleFormat' : function() {
-								return '<div id="gallery-title"><h3>' + val.ytUsername + '</h3></div>';
+								return '<div id="gallery-title"><h3>' + val.ytSrc + '</h3></div>';
 							},
 							'centerOnScroll' : true,
 							'onComplete': function() {
@@ -214,15 +214,73 @@ jQuery.noConflict();
 			});
 		},
 		
-		initUi : function () {
+		initStyleUi : function () {
 			// add the aspect ratio function
 			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
 			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
-
+			
 			// init the color pickers
 			$.initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
 			$.initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
 			$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
+		},
+		
+		disableInput: function () {
+		    var value = $("input[@name=syg_gallery_type]:checked").val();
+		    switch (value) {
+		    	case 'feed':
+		    		// enable and set visible feed
+		    		$('#syg_youtube_username_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
+		    		$('#syg_youtube_username').attr('enabled','enabled');
+		    		
+		    		// set list disabled and hidden
+		    		$('#syg_youtube_list_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_list').attr('disabled','disabled');
+		    		
+		    		// set playlist disabled and hidden
+		    		$('#syg_youtube_playlist_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_playlist').attr('disabled','disabled');
+		    		
+		    		break;
+		    	case 'list':
+		    		// set feed disabled and hidden
+		    		$('#syg_youtube_username_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_username').attr('disabled','disabled');
+		    		
+		    		// enable and set visible list
+		    		$('#syg_youtube_list_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
+		    		$('#syg_youtube_list').attr('enabled','enabled');
+		    		
+		    		// set playlist disabled and hidden
+		    		$('#syg_youtube_playlist_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_playlist').attr('disabled','disabled');
+		    		
+		    		break;
+		    	case 'playlist':
+			    	// set feed disabled and hidden
+		    		$('#syg_youtube_username_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_username').attr('disabled','disabled');
+		    		
+		    		// set list disabled and hidden
+		    		$('#syg_youtube_list_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
+		    		$('#syg_youtube_list').attr('disabled','disabled');
+		    		
+		    		// set playlist disabled and hidden
+		    		$('#syg_youtube_playlist_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
+		    		$('#syg_youtube_playlist').attr('enabled','enabled');
+		    		
+		    		break;
+		    	default:
+		    		break;
+		    }
+		},
+		
+		initGalleryUi : function () {
+			$("input[name=syg_gallery_type]").each(function(){
+				$(this).click($.disableInput);
+			});
+			
+			$.disableInput();
 		},
 		
 		getQParam : function (name) {
@@ -250,8 +308,13 @@ jQuery(document).ready(function($) {
 	var id = $.getQParam('id');
 	
 	if (action == 'add' || action =='edit') {
-		// init the user interface
-		$.initUi();
+		if (page == 'syg-manage-galleries') {
+			// init the user interface
+			$.initGalleryUi();
+		} else {
+			// init the user interface
+			$.initStyleUi();
+		}
 	} else{
 		switch (page) {
 			case 'syg-manage-styles':

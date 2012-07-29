@@ -265,7 +265,7 @@ class SygPlugin extends SanityPluginFramework {
 			// set the table name
 			$syg_table_name = $wpdb->prefix . "syg";
 
-			$this->sygDao->createTable12x();
+			//$this->sygDao->createTable12x();
 
 			// transitory method
 			if (get_option('syg_youtube_username'))
@@ -394,7 +394,7 @@ class SygPlugin extends SanityPluginFramework {
 
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube
-						->getuserUploads($gallery->getYtUsername());
+						->getuserUploads($gallery->getYtSrc());
 
 				// truncate video feed
 				// create new feed
@@ -446,7 +446,7 @@ class SygPlugin extends SanityPluginFramework {
 
 				// get video feed from youtube 
 				$videoFeed = $this->sygYouTube
-						->getuserUploads($gallery->getYtUsername());
+						->getuserUploads($gallery->getYtSrc());
 
 				// truncate video feed
 				// create new feed

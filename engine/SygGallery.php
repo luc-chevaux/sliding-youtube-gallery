@@ -13,9 +13,10 @@ class SygGallery {
 	private $userProfile;
 	
 	// object attributes
+	private $galleryType;
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
-	private $ytUsername;
+	private $ytSrc;
 	private $styleId;
 	private $descShow;
 	private $descShowDuration;
@@ -25,7 +26,7 @@ class SygGallery {
 	private $id;
 	
 	// recordset type
-	public static $rsType = array('%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
+	public static $rsType = array('%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
 	/**
 	 * Constructor
@@ -46,6 +47,8 @@ class SygGallery {
 	private function mapThis($result = null) {
 		$result = (object) $result;
 		
+		$this->setGalleryType($result->syg_gallery_type);
+		
 		// description option values
 		$this->setDescShow($result->syg_description_show);
 		$this->setDescShowCategories($result->syg_description_showcategories);
@@ -56,13 +59,13 @@ class SygGallery {
 		// youtube option values
 		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
 		$this->setYtVideoFormat($result->syg_youtube_videoformat);
-		$this->setYtUsername($result->syg_youtube_username);
+		$this->setYtSrc($result->syg_youtube_src);
 		
 		// set style id
 		$this->setStyleId($result->syg_style_id);
 		
 		// set youtube user profile
-		($this->getYtUsername()) ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername())) : $this->setUserProfile(null);
+		//($this->getYtSrc()) ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername())) : $this->setUserProfile(null);
 		
 		// id
 		$this->setId($result->id);
@@ -96,6 +99,7 @@ class SygGallery {
 	 */
 	public function toDto() {
 		$dto = array(
+				'syg_gallery_type'					=> $this->getGalleryType(),
 				'syg_description_show'				=> $this->getDescShow(),
 				'syg_description_showcategories'	=> $this->getDescShowCategories(),
 				'syg_description_showduration'		=> $this->getDescShowDuration(),
@@ -103,7 +107,7 @@ class SygGallery {
 				'syg_description_showtags' 			=> $this->getDescShowTags(),
 				'syg_youtube_maxvideocount'			=> $this->getYtMaxVideoCount(),
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
-				'syg_youtube_username'				=> $this->getYtUsername(),
+				'syg_youtube_src'					=> $this->getYtSrc(),
 				'syg_style_id'						=> $this->getStyleId(),
 				'id'								=> $this->getId());
 		return $dto;
@@ -172,17 +176,17 @@ class SygGallery {
 	}
 
 	/**
-	 * @return the $ytUsername
+	 * @return the $ytSrc
 	 */
-	public function getYtUsername() {
-		return $this->ytUsername;
+	public function getYtSrc() {
+		return $this->ytSrc;
 	}
 
 	/**
-	 * @param field_type $ytUsername
+	 * @param field_type $ytSrc
 	 */
-	public function setYtUsername($ytUsername) {
-		$this->ytUsername = $ytUsername;
+	public function setYtSrc($ytSrc) {
+		$this->ytSrc = $ytSrc;
 	}
 
 	/**
@@ -267,6 +271,20 @@ class SygGallery {
 	 */
 	public function setDescShowCategories($descShowCategories) {
 		$this->descShowCategories = $descShowCategories;
+	}
+
+	/**
+	 * @return the $galleryType
+	 */
+	public function getGalleryType() {
+		return $this->galleryType;
+	}
+
+	/**
+	 * @param field_type $galleryType
+	 */
+	public function setGalleryType($galleryType) {
+		$this->galleryType = $galleryType;
 	}
 
 	/**

@@ -41,24 +41,50 @@
 	
 	<!-- youtube settings -->
 	<fieldset>
-		Based on channel feed <input type="radio" name="linguaggio" value="html"/>
-  		Based on video list <input type="radio" name="linguaggio" value="css"/>
-  
+		<legend><strong>Gallery content</strong></legend>
+		
+		Channel feed <input id="feed" type="radio" name="syg_gallery_type" value="feed" <?php if ($gallery->getGalleryType() == 'feed') echo 'checked="checked"'; ?> />
+  		Explicit video list <input id="list" type="radio" name="syg_gallery_type" value="list" <?php if ($gallery->getGalleryType() == 'list') echo 'checked="checked"'; ?> />
+  		YouTube playlist <input id="playlist" type="radio" name="syg_gallery_type" value="playlist" <?php if ($gallery->getGalleryType() == 'playlist') echo 'checked="checked"'; ?> />
   		<br/><br/>
   		
 		<!-- user -->
-		<legend><strong>YouTube settings</strong></legend>
-		<label for="syg_youtube_username">YouTube User: </label><br/>
-		<input type="text" id="syg_youtube_username" name="syg_youtube_username" value="<?php echo $gallery->getYtUsername(); ?>" size="30">
-		
-		<br/><br/>
+		<div id="syg_youtube_username_panel">
+			<label for="syg_youtube_src">YouTube User: </label><br/>
+			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>" size="30">
+		</div>
 		
 		<!-- video list -->
-		<label for="syg_youtube_username">Video list: </label><br/>
-		<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_videolist" value=""></textarea>
-				
-		<br/><br/>
+		<div id="syg_youtube_list_panel">
+			<label for="syg_youtube_src">Video list: </label><br/>
+			<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>"></textarea>
+		</div>
 
+		<!-- user -->
+		<div id="syg_youtube_playlist_panel">
+			<label for="syg_youtube_src">YouTube playlist: </label><br/>
+			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php echo $gallery->getYtSrc(); ?>" size="30">
+		</div>
+		
+		<br/>
+		
+		<!-- video count -->
+		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
+		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
+	</fieldset>
+	
+	<!-- description appereance -->
+	<fieldset>
+		<legend><strong>Layouts and styles</strong></legend>
+		
+		<!-- style -->
+		<label for="syg_style_id">Style </label>
+		<select name="syg_style_id" id="syg_style_id">
+			<?php foreach ($styles as $style) { ?>
+				<option value="<?php echo $style->getId(); ?>" <?php if ($style->getId() == $gallery->getStyleId()) echo 'selected="selected"'; ?>><?php echo $style->getStyleName(); ?></option>
+			<?php } ?>
+		</select>
+		
 		<!-- video format -->
 		<label for="syg_youtube_videoformat">Video Format: </label>
 		<select id="syg_youtube_videoformat" name="syg_youtube_videoformat">
@@ -70,22 +96,6 @@
 			<option value="640w" <?php if ($gallery->getYtVideoFormat() == '640w') echo 'selected="selected"'; ?>>640 X 360 (wide)</option>
 			<option value="853w" <?php if ($gallery->getYtVideoFormat() == '853w') echo 'selected="selected"'; ?>>853 X 480 (wide)</option>
 			<option value="1280w" <?php if ($gallery->getYtVideoFormat() == '1280w') echo 'selected="selected"'; ?>>1280 X 720 (wide)</option>
-		</select>
-		
-		<!-- video count -->
-		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
-		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
-	</fieldset>
-	
-	<!-- description appereance -->
-	<fieldset>
-		<legend><strong>Select your style</strong></legend>
-		<!-- style -->
-		<label for="syg_style_id">Style </label>
-		<select name="syg_style_id" id="syg_style_id">
-			<?php foreach ($styles as $style) { ?>
-				<option value="<?php echo $style->getId(); ?>" <?php if ($style->getId() == $gallery->getStyleId()) echo 'selected="selected"'; ?>><?php echo $style->getStyleName(); ?></option>
-			<?php } ?>
 		</select>
 	</fieldset>
 	
