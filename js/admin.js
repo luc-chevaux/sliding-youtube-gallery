@@ -153,6 +153,9 @@ jQuery.noConflict();
 						html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
 						html = html + '</td>';
 						html = html + '<td>';
+						html = html + val.galleryName;
+						html = html + '</td>';
+						html = html + '<td>';
 						
 						html = html + '</td>';
 						html = html + '<td>';
@@ -162,11 +165,11 @@ jQuery.noConflict();
 						if (val.galleryType == 'list') {
 							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">Watch the list</a> |';
 						} else if (val.galleryType == 'feed') {
-							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">(' + val.ytSrc + ') Visit the channel</a> |';
+							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">Visit the channel</a> |';
 						} else {
 							html = html + val.ytSrc;
 						}
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '">Preview</a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="" title=""><img></a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');">Delete</a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 					

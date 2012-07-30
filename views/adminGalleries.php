@@ -45,7 +45,10 @@
 		<th class="user_pic">
 			<span>AVATAR</span>
 		</th>
-		<th class="user">
+		<th class="name">
+			<span>NAME</span>
+		</th>
+		<th class="details">
 			<span>DETAILS</span>
 		</th>
 		<th class="type">
