@@ -33,9 +33,13 @@ require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygValidate.php');
 register_activation_hook(
 		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
 		'activate');
+		
+// register deactivation hook
 register_deactivation_hook(
 		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
 		'deactivate');
+		
+// register uninstall hook
 register_uninstall_hook(
 		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
 		'uninstall');
