@@ -27,6 +27,9 @@ class SygGallery {
 	private $descShowCategories;
 	private $id;
 	
+	// other attributes
+	private $thumbUrl;
+	
 	// recordset type
 	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
@@ -69,7 +72,7 @@ class SygGallery {
 		$this->setStyleId($result->syg_style_id);
 		
 		// set youtube user profile
-		//($this->getYtSrc()) ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtUsername())) : $this->setUserProfile(null);
+		($this->getGalleryType() == 'feed') ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc())) : $this->setUserProfile(null);
 		
 		// id
 		$this->setId($result->id);
@@ -151,6 +154,11 @@ class SygGallery {
 	 */
 	public function setUserProfile($userProfile) {
 		$this->userProfile = $userProfile;
+		if ($this->userProfile) { 
+			$this->thumbUrl = $userProfile->getThumbnail()->getUrl();
+		} else {
+			$this->thumbUrl = SygConstant::BE_ICON_VIDEO_GALLERY;
+		}
 	}
 
 	/**
@@ -333,5 +341,19 @@ class SygGallery {
 	public function setGalleryDetails($galleryDetails) {
 		$this->galleryDetails = $galleryDetails;
 	}
+	/**
+	 * @return the $thumbUrl
+	 */
+	public function getThumbUrl() {
+		return $this->thumbUrl;
+	}
+
+	/**
+	 * @param field_type $thumbUrl
+	 */
+	public function setThumbUrl($thumbUrl) {
+		$this->thumbUrl = $thumbUrl;
+	}
+
 }
 ?>

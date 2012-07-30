@@ -29,11 +29,6 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
-<!-- Welcome Message -->
-<p class="webengText">
-	<?php echo SygConstant::BE_MANAGE_GALLERY_MESSAGE; ?>
-</p>
-
 <!-- Gallery Form -->
 <form name="form1" method="post" action="">
 	<input type="hidden" name="syg_submit_hidden" value="Y">
@@ -45,11 +40,11 @@
 		
 		<!-- style name -->
 		<label for="syg_gallery_name"><strong>Name</strong></label>
-		<input type="text" id="syg_gallery_name" name="syg_gallery_name" value="<?php //echo $style->getStyleName(); ?>" size="15"/>
+		<input type="text" id="syg_gallery_name" name="syg_gallery_name" value="<?php echo $gallery->getGalleryName(); ?>" size="15"/>
 		
 		<!-- style details -->
 		<label for="syg_gallery_details"><strong>Details</strong></label>
-		<input type="text" id="syg_gallery_details" name="syg_gallery_details" value="<?php //echo $style->getStyleDetails(); ?>" size="50"/>
+		<input type="text" id="syg_gallery_details" name="syg_gallery_details" value="<?php echo $gallery->getGalleryDetails(); ?>" size="50"/>
 	</fieldset>
 	
 	<!-- youtube settings -->

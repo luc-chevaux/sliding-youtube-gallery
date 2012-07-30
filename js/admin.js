@@ -134,7 +134,7 @@ jQuery.noConflict();
 						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title=""><img></a><a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title=""><img></a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 						$('#galleries_table tr:last-child').after(html);
@@ -156,20 +156,14 @@ jQuery.noConflict();
 						html = html + val.galleryName;
 						html = html + '</td>';
 						html = html + '<td>';
-						
+						html = html + val.galleryDetails;
 						html = html + '</td>';
 						html = html + '<td>';
 						html = html + val.galleryType;
 						html = html + '</td>';
 						html = html + '<td>';
-						if (val.galleryType == 'list') {
-							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">Watch the list</a> |';
-						} else if (val.galleryType == 'feed') {
-							html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');">Visit the channel</a> |';
-						} else {
-							html = html + val.ytSrc;
-						}
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="" title=""><img></a> | <a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '">Edit</a> | <a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');">Delete</a>';
+						html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>';
+						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title=""><img></a><a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title=""><img></a><a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title=""><img></a>';
 						html = html + '</td>';
 						html = html + '</tr>';
 					
@@ -241,11 +235,11 @@ jQuery.noConflict();
 		    	case 'feed':
 		    		// enable and set visible feed
 		    		$('#syg_youtube_username_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_username').removeAttr('disabled');
+		    		$('#syg_youtube_username').removeAttr('disabled','disabled');
 		    		
 		    		// set list disabled and hidden
 		    		$('#syg_youtube_list_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
-		    		$('#syg_youtube_list').attr('disabled','disabled');
+		    		$('#syg_youtube_videolist').attr('disabled','disabled');
 		    		
 		    		// set playlist disabled and hidden
 		    		$('#syg_youtube_playlist_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
@@ -259,7 +253,7 @@ jQuery.noConflict();
 		    		
 		    		// enable and set visible list
 		    		$('#syg_youtube_list_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_list').removeAttr('disabled');
+		    		$('#syg_youtube_videolist').removeAttr('disabled','disabled');
 		    		
 		    		// set playlist disabled and hidden
 		    		$('#syg_youtube_playlist_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
@@ -273,11 +267,11 @@ jQuery.noConflict();
 		    		
 		    		// set list disabled and hidden
 		    		$('#syg_youtube_list_panel').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0.0}).css('height','0');
-		    		$('#syg_youtube_list').attr('disabled','disabled');
+		    		$('#syg_youtube_videolist').attr('disabled','disabled');
 		    		
 		    		// set playlist disabled and hidden
 		    		$('#syg_youtube_playlist_panel').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}).css('height','auto');
-		    		$('#syg_youtube_playlist').removeAttr('disabled');
+		    		$('#syg_youtube_playlist').removeAttr('disabled','disabled');
 		    		
 		    		break;
 		    	default:

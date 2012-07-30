@@ -163,12 +163,16 @@ img.user_pic {
 	width: 200px;
 }
 
+#galleries_table th.name {
+	width: 200px;
+}
+
 #galleries_table th.action {
-	width: 400px;
+	width: 155px;
 }
 
 #galleries_table th.type {
-	width: 50px;
+	width: 100px;
 }
 
 #galleries_table tr.navigation {
