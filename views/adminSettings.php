@@ -23,14 +23,8 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
-<!-- Welcome Message -->
-<p class="webengText">
-	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
-</p>
-
 <!-- General Setting -->
 <h3>General Settings</h3>
-<p>Here you can set the SlidingYoutubeGallery default behavior.</p>
 <form name="form1" method="post" action="">
 	<fieldset>
 		<legend><strong>YouTube settings</strong></legend>

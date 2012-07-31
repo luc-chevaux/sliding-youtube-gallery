@@ -17,11 +17,6 @@
 <h2 class="webengTitle"><a href="http://blog.webeng.it" target="_new" class="webengRed noDecoration">webEng</a> :: Sliding Youtube Gallery</h2><span><?php echo SygConstant::BE_SUPPORT_PAGE.' | '.SygConstant::BE_DONATION_CODE; ?></span>
 <hr/>
 
-<!-- Welcome Message -->
-<p class="webengText">
-	<?php echo SygConstant::BE_DONATE_MESSAGE; ?>
-</p>
-
 <h2 class="webengText">What you can do?</h2>
 <p><strong>If you're experiencing problem with this plugin</strong> or just have some ideas to make it better, don't hesitate to send me an email at syg@webeng.it .
 <p><strong>If you're a blogger</strong> and you like this plugin, you may write a small article about this plugin. It would be amazing for my effort!

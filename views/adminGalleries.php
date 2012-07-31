@@ -31,11 +31,6 @@
 <!-- Title Page -->
 <h3>Manage your gallery</h3>
 
-<!-- Welcome Message -->
-<p class="webengText">
-	<?php echo SygConstant::BE_WELCOME_MESSAGE; ?>
-</p>
-
 <!-- Gallery List -->
 <table cellspacing="0" id="galleries_table">
 	<tr id="table_header">
@@ -78,7 +73,7 @@ if (count($galleries) == 0) { ?>
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {
-		echo '<li id="'.$i.'">'.$i.'</li>';
+		echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
 	}
 	?>
 </ul>	

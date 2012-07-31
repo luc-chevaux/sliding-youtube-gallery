@@ -112,6 +112,8 @@ jQuery.noConflict();
 		 * function that loads the data in the table
 		 */ 
 		loadData : function (data) {
+			data = $.parseJSON(JSON.stringify(data));
+			alert (JSON.stringify(data));
 			var page = $.getQParam('page');
 			
 			var html;
@@ -205,12 +207,10 @@ jQuery.noConflict();
 				$.displayLoad();
 				// css styles
 				$('#syg-pagination-' + table + ' li')
-					.css({'border' : 'solid #dddddd 1px'})
-				  	.css({'color' : '#0063DC'});
+					.attr({'class' : 'other_page'});
 	
 				$(this)
-					.css({'color' : '#FF0084'})
-					.css({'border' : 'none'});
+					.attr({'class' : 'current_page'});
 	
 				// loading data
 				var pageNum = this.id;

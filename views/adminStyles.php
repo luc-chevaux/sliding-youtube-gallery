@@ -31,11 +31,6 @@
 <!-- Gallery List -->
 <h3><?php echo SygConstant::BE_MENU_MANAGE_STYLES; ?></h3>
 
-<!-- Welcome Message -->
-<p class="webengText">
-	<?php echo SygConstant::BE_MANAGE_STYLES_MESSAGE; ?>
-</p>
-
 <!-- Style List -->
 <table cellspacing="0" id="galleries_table">
 	<tr id="table_header">
@@ -72,7 +67,7 @@ if (count($styles) == 0) { ?>
 	<?php
 	// show page links
 	for($i=1; $i<=$this->data['pages']; $i++) {
-		echo '<li id="'.$i.'">'.$i.'</li>';
+		echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
 	}
 	?>
 </ul>	

@@ -13,7 +13,7 @@ class SygConstant {
 	 * Plugin configuration
 	 */
 	const SYG_VERSION = '1.2.5';
-	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 5;
+	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 4;
 
 	/**
 	 * Plugin running contexts
@@ -109,10 +109,6 @@ class SygConstant {
 	 */
 	
 	// user message
-	const BE_WELCOME_MESSAGE = 'Here you can manage your Sliding YouTube Galleries. To add a new gallery click on "add new gallery" button.<br/>If you want to edit a previously inserted gallery, please click on "edit" or "delete".<br/> Finally, you could have a preview of your gallery by clicking on "preview" button.';
-	const BE_MANAGE_STYLES_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
-	const BE_CONTACT_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
-	const BE_DONATE_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';

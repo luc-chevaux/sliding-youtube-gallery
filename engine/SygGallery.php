@@ -52,9 +52,27 @@ class SygGallery {
 	private function mapThis($result = null) {
 		$result = (object) $result;
 		
+		// id
+		$this->setId($result->id);
+		
 		$this->setGalleryName($result->syg_gallery_name);
 		$this->setGalleryDetails($result->syg_gallery_details);
-		$this->setGalleryType($result->syg_gallery_type);
+		
+		// youtube option values
+		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
+		$this->setYtVideoFormat($result->syg_youtube_videoformat);
+		$this->setYtSrc($result->syg_youtube_src);
+		
+		// set youtube user profile
+		($result->syg_gallery_type) ? $this->setGalleryType($result->syg_gallery_type) : $this->setGalleryType('feed');
+		
+		if ((($this->getGalleryType() == 'feed') && (!$this->getId())) || ($this->getGalleryType() != 'feed')) {
+			$this->setUserProfile(null);
+		} else {
+			$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc()));
+		}
+		
+
 		
 		// description option values
 		$this->setDescShow($result->syg_description_show);
@@ -63,19 +81,8 @@ class SygGallery {
 		$this->setDescShowRatings($result->syg_description_showratings);
 		$this->setDescShowTags($result->syg_description_showtags);
 		
-		// youtube option values
-		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
-		$this->setYtVideoFormat($result->syg_youtube_videoformat);
-		$this->setYtSrc($result->syg_youtube_src);
-		
 		// set style id
 		$this->setStyleId($result->syg_style_id);
-		
-		// set youtube user profile
-		($this->getGalleryType() == 'feed') ? $this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc())) : $this->setUserProfile(null);
-		
-		// id
-		$this->setId($result->id);
 		
 		// instantiate local dao
 		$sygDao = new SygDao();
