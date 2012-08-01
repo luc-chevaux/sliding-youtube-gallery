@@ -114,6 +114,12 @@ class SygConstant {
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
 	const BE_NO_STYLES_FOUND = 'No styles found in database';
 	
+	// @todo da rivedere
+	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
+	const BE_MANAGE_GALLERY_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
+	const BE_CONTACT_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
+	const BE_DONATE_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
+	
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';

@@ -72,8 +72,6 @@ class SygGallery {
 			$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc()));
 		}
 		
-
-		
 		// description option values
 		$this->setDescShow($result->syg_description_show);
 		$this->setDescShowCategories($result->syg_description_showcategories);
@@ -111,7 +109,7 @@ class SygGallery {
 	 * @param $full 
 	 * @return array
 	 */
-	public function toDto() {
+	public function toDto($full = false) {
 		$dto = array(
 				'syg_gallery_name'					=> $this->getGalleryName(),
 				'syg_gallery_details'				=> $this->getGalleryDetails(),
@@ -126,6 +124,32 @@ class SygGallery {
 				'syg_youtube_src'					=> $this->getYtSrc(),
 				'syg_style_id'						=> $this->getStyleId(),
 				'id'								=> $this->getId());
+		
+		if ($full) {
+			$full_array = $dto;
+			
+			$full_array['syg_box_background'] = $this->getSygStyle()->getBoxBackground();
+			$full_array['syg_box_padding'] = $this->getSygStyle()->getBoxPadding();
+			$full_array['syg_box_radius'] = $this->getSygStyle()->getBoxRadius();
+			$full_array['syg_box_width'] = $this->getSygStyle()->getBoxWidth();
+			$full_array['syg_description_fontcolor'] = $this->getSygStyle()->getDescFontColor();
+			$full_array['syg_description_fontsize']	= $this->getSygStyle()->getDescFontSize();
+			$full_array['syg_description_width'] = $this->getSygStyle()->getDescWidth();
+			$full_array['syg_thumbnail_bordercolor'] = $this->getSygStyle()->getThumbBorderColor();
+			$full_array['syg_thumbnail_borderradius'] = $this->getSygStyle()->getThumbBorderRadius();
+			$full_array['syg_thumbnail_bordersize']	= $this->getSygStyle()->getThumbBorderSize();
+			$full_array['syg_thumbnail_buttonopacity'] = $this->getSygStyle()->getThumbButtonOpacity();
+			$full_array['syg_thumbnail_distance'] = $this->getSygStyle()->getThumbDistance();
+			$full_array['syg_thumbnail_height']	= $this->getSygStyle()->getThumbHeight();
+			$full_array['syg_thumbnail_image'] = $this->getSygStyle()->getThumbImage();
+			$full_array['syg_thumbnail_width'] = $this->getSygStyle()->getThumbWidth();
+			$full_array['syg_thumbnail_overlaysize'] = $this->getSygStyle()->getThumbOverlaySize();
+			$full_array['syg_thumbnail_top'] = $this->getSygStyle()->getThumbTop();
+			$full_array['syg_thumbnail_left'] = $this->getSygStyle()->getThumbLeft();
+			$full_array['syg_thumbnail_url'] = $this->getSygStyle()->getThumbUrl();
+			
+			$dto = $full_array;
+		}
 		return $dto;
 	}
 	

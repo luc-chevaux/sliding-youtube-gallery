@@ -113,7 +113,6 @@ jQuery.noConflict();
 		 */ 
 		loadData : function (data) {
 			data = $.parseJSON(JSON.stringify(data));
-			alert (JSON.stringify(data));
 			var page = $.getQParam('page');
 			
 			var html;

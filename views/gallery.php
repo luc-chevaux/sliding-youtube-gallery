@@ -7,8 +7,8 @@ $feed = $this->data['feed'];
 $gallery = $this->data['gallery'];
 
 // gallery settings 
-$thumbImage = $gallery->getThumbImage();
-$overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
+$thumbImage = $gallery->getSygStyle()->getThumbImage();
+$overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
 <!-- User Message -->
 

@@ -51,5 +51,18 @@ class SygYouTube {
 		$videoFeed = $this->yt->getuserUploads($username);
 		return $videoFeed;
 	}
+	
+	/**
+	 * @name getVideoEntry
+	 * @category return a YouTube Video
+	 * @since 1.3.0
+	 * @param $video_code
+	 * @return $video
+	 */
+	function getVideoEntry($video_code) {
+		$this->yt->setMajorProtocolVersion(2);
+		$video = $this->yt->getVideoEntry($video_code);
+		return $video;
+	}
 }
 ?>

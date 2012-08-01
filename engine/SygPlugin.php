@@ -7,7 +7,6 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  * 
- * @todo Creare e separare una gestione degli stili (milestone v1.3)
  * @todo YouTube api key option (milestone v1.3)
  * @todo Paginazione gallerie pagina (milestone v1.3)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4)
@@ -392,19 +391,33 @@ class SygPlugin extends SanityPluginFramework {
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
 
-				// get video feed from youtube 
-				$videoFeed = $this->sygYouTube
-						->getuserUploads($gallery->getYtSrc());
-
-				// truncate video feed
-				// create new feed
-				$counter = 1;
-				$feed = new Zend_Gdata_YouTube_VideoFeed();
-				foreach ($videoFeed as $videoEntry) {
-					$feed->addEntry($videoEntry);
-					$i++;
-					if ($i == $gallery->getYtMaxVideoCount())
-						break;
+				
+				if ($gallery->getGalleryType() == 'feed') {
+					// get video feed from youtube 
+					$videoFeed = $this->sygYouTube
+							->getuserUploads($gallery->getYtSrc());
+	
+					// truncate video feed
+					// create new feed
+					$counter = 1;
+					$feed = new Zend_Gdata_YouTube_VideoFeed();
+					foreach ($videoFeed as $videoEntry) {
+						$feed->addEntry($videoEntry);
+						$i++;
+						if ($i == $gallery->getYtMaxVideoCount())
+							break;
+					}
+				} else if ($gallery->getGalleryType() == 'list') {
+					$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
+					
+					$feed = new Zend_Gdata_YouTube_VideoFeed();
+					foreach ($list_of_videos as $key => $value) {
+						$list_of_videos[$key] = str_replace ('v=', '', parse_url($value, PHP_URL_QUERY));
+						$videoEntry = $this->sygYouTube->getVideoEntry($list_of_videos[$key]);
+						$feed->addEntry($videoEntry);
+					}
+				} else if ($gallery->getGalleryType() == 'playlist') {
+					
 				}
 
 				// put the feed in the view
