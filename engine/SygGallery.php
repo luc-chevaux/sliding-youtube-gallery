@@ -34,9 +34,10 @@ class SygGallery {
 	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
 	
 	/**
-	 * Constructor
+	 * @name __construct
+	 * @category construct SygGallery object
+	 * @since 1.0.1
 	 * @param $key
-	 * @return null
 	 */
 	public function __construct($key = null) {
 		if (is_string($key)) $key = unserialize ($key);
@@ -45,9 +46,10 @@ class SygGallery {
 	}
 
 	/**
-	 * Map object from resultset
+	 * @name mapThis
+	 * @category data object mapping from resultset 
+	 * @since 1.0.1
 	 * @param $result
-	 * @return null
 	 */
 	private function mapThis($result = null) {
 		$result = (object) $result;
@@ -90,7 +92,9 @@ class SygGallery {
 	}
 	
 	/**
-	 * Return Json data string
+	 * @name getJsonData 
+	 * @category object data parser
+	 * @since 1.0.1
 	 * @return $json
 	 */
 	function getJsonData(){
@@ -105,9 +109,11 @@ class SygGallery {
 	}
 	
 	/**
-	 * Populate and return a dto with values
-	 * @param $full 
-	 * @return array
+	 * @name 
+	 * @category object data parser
+	 * @since 1.0.1
+	 * @param $full, if true export gallery with its owned style
+	 * @return $dto
 	 */
 	public function toDto($full = false) {
 		$dto = array(
@@ -154,12 +160,19 @@ class SygGallery {
 	}
 	
 	/**
+	 * @name getRsType
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $rsType
 	 */
 	public static function getRsType() {
 		return SygGallery::$rsType;
 	}
+	
 	/**
+	 * @name getSygStyle
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $sygStyle
 	 */
 	public function getSygStyle() {
@@ -167,13 +180,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $sygStyle
+	 * @name setSygStyle
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $sygStyle
 	 */
 	public function setSygStyle($sygStyle) {
 		$this->sygStyle = $sygStyle;
 	}
 
 	/**
+	 * @name getUserProfile
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $userProfile
 	 */
 	public function getUserProfile() {
@@ -181,7 +200,10 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $userProfile
+	 * @name setUserProfile
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $userProfile
 	 */
 	public function setUserProfile($userProfile) {
 		$this->userProfile = $userProfile;
@@ -193,6 +215,9 @@ class SygGallery {
 	}
 
 	/**
+	 * @name getYtVideoFormat
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $ytVideoFormat
 	 */
 	public function getYtVideoFormat() {
@@ -200,13 +225,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $ytVideoFormat
+	 * @name setYtVideoFormat
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $ytVideoFormat
 	 */
 	public function setYtVideoFormat($ytVideoFormat) {
 		$this->ytVideoFormat = $ytVideoFormat;
 	}
 
 	/**
+	 * @name getYtMaxVideoCount
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $ytMaxVideoCount
 	 */
 	public function getYtMaxVideoCount() {
@@ -214,13 +245,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $ytMaxVideoCount
+	 * @name setYtMaxVideoCount
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $ytMaxVideoCount
 	 */
 	public function setYtMaxVideoCount($ytMaxVideoCount) {
 		$this->ytMaxVideoCount = $ytMaxVideoCount;
 	}
 
 	/**
+	 * @name getYtSrc
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $ytSrc
 	 */
 	public function getYtSrc() {
@@ -228,13 +265,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $ytSrc
+	 * @name setYtSrc
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $ytSrc
 	 */
 	public function setYtSrc($ytSrc) {
 		$this->ytSrc = $ytSrc;
 	}
 
 	/**
+	 * @name getStyleId
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $styleId
 	 */
 	public function getStyleId() {
@@ -242,27 +285,39 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $styleId
+	 * @name setStyleId
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $styleId
 	 */
 	public function setStyleId($styleId) {
 		$this->styleId = $styleId;
 	}
 
 	/**
-	 * @return the $descShow
+	 * @name getYtSrc
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @return the $ytSrc
 	 */
 	public function getDescShow() {
 		return $this->descShow;
 	}
 
 	/**
-	 * @param field_type $descShow
+	 * @name setDescShow
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $descShow
 	 */
 	public function setDescShow($descShow) {
 		$this->descShow = $descShow;
 	}
 
 	/**
+	 * @name getDescShowDuration
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $descShowDuration
 	 */
 	public function getDescShowDuration() {
@@ -270,13 +325,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $descShowDuration
+	 * @name setDescShowDuration
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $descShowDuration
 	 */
 	public function setDescShowDuration($descShowDuration) {
 		$this->descShowDuration = $descShowDuration;
 	}
 
 	/**
+	 * @name getDescShowTags
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $descShowTags
 	 */
 	public function getDescShowTags() {
@@ -284,13 +345,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $descShowTags
+	 * @name setDescShowTags
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $descShowTags
 	 */
 	public function setDescShowTags($descShowTags) {
 		$this->descShowTags = $descShowTags;
 	}
 
 	/**
+	 * @name getDescShowRatings
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $descShowRatings
 	 */
 	public function getDescShowRatings() {
@@ -298,13 +365,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $descShowRatings
+	 * @name setDescShowRatings
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $descShowRatings
 	 */
 	public function setDescShowRatings($descShowRatings) {
 		$this->descShowRatings = $descShowRatings;
 	}
 
 	/**
+	 * @name getDescShowCategories
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $descShowCategories
 	 */
 	public function getDescShowCategories() {
@@ -312,13 +385,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $descShowCategories
+	 * @name setDescShowCategories
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $descShowCategories
 	 */
 	public function setDescShowCategories($descShowCategories) {
 		$this->descShowCategories = $descShowCategories;
 	}
 
 	/**
+	 * @name getGalleryType
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $galleryType
 	 */
 	public function getGalleryType() {
@@ -326,13 +405,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $galleryType
+	 * @name setGalleryType
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $galleryType
 	 */
 	public function setGalleryType($galleryType) {
 		$this->galleryType = $galleryType;
 	}
 
 	/**
+	 * @name getId
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $id
 	 */
 	public function getId() {
@@ -340,12 +425,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $id
+	 * @name setId
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $id
 	 */
 	public function setId($id) {
 		$this->id = $id;
 	}
+	
 	/**
+	 * @name getGalleryName
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $galleryName
 	 */
 	public function getGalleryName() {
@@ -353,13 +445,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $galleryName
+	 * @name setGalleryName
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $galleryName
 	 */
 	public function setGalleryName($galleryName) {
 		$this->galleryName = $galleryName;
 	}
 
 	/**
+	 * @name getGalleryDetails
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $galleryDetails
 	 */
 	public function getGalleryDetails() {
@@ -367,12 +465,19 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $galleryDetails
+	 * @name setGalleryDetails
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $galleryDetails
 	 */
 	public function setGalleryDetails($galleryDetails) {
 		$this->galleryDetails = $galleryDetails;
 	}
+	
 	/**
+	 * @name getThumbUrl
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $thumbUrl
 	 */
 	public function getThumbUrl() {
@@ -380,7 +485,10 @@ class SygGallery {
 	}
 
 	/**
-	 * @param field_type $thumbUrl
+	 * @name setThumbUrl
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $thumbUrl
 	 */
 	public function setThumbUrl($thumbUrl) {
 		$this->thumbUrl = $thumbUrl;

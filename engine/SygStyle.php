@@ -39,9 +39,10 @@ class SygStyle {
 	public static $rsType = array('%s','%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%d','%d','%d','%s','%d','%d','%d');
 	
 	/**
-	 * Constructor
+	 * @name __construct
+	 * @category construct SygDao object
+	 * @since 1.2.5
 	 * @param $key
-	 * @return null
 	 */
 	public function __construct($key = null) {
 		if (is_string($key)) $key = unserialize ($key);
@@ -49,9 +50,10 @@ class SygStyle {
 	}
 
 	/**
-	 * Map object from resultset
+	 * @name mapThis
+	 * @category data object mapping from resultset 
+	 * @since 1.2.5
 	 * @param $result
-	 * @return null
 	 */
 	private function mapThis($result = null) {
 		$result = (object) $result;
@@ -93,7 +95,9 @@ class SygStyle {
 	}
 	
 	/**
-	 * Return Json data string
+	 * @name getJsonData 
+	 * @category object data parser
+	 * @since 1.2.5
 	 * @return $json
 	 */
 	function getJsonData(){
@@ -108,9 +112,11 @@ class SygStyle {
 	}
 	
 	/**
-	 * Populate and return a dto with values
-	 * @param $full 
-	 * @return array
+	 * @name toDto
+	 * @category object data parser
+	 * @since 1.2.5
+	 * @param $full, if true export style with its calculated fields
+	 * @return $dto
 	 */
 	public function toDto($full = false) {
 		$dto = array('syg_style_name'			=> $this->getStyleName(),
@@ -145,6 +151,9 @@ class SygStyle {
 	}
 	
 	/**
+	 * @name getStyleName
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $styleName
 	 */
 	public function getStyleName() {
@@ -152,13 +161,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $styleName
+	 * @name setStyleName
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $styleName
 	 */
 	public function setStyleName($styleName) {
 		$this->styleName = $styleName;
 	}
 
 	/**
+	 * @name getBoxWidth
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $boxWidth
 	 */
 	public function getBoxWidth() {
@@ -166,13 +181,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $boxWidth
+	 * @name setBoxWidth
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $boxWidth
 	 */
 	public function setBoxWidth($boxWidth) {
 		$this->boxWidth = $boxWidth;
 	}
 
 	/**
+	 * @name getBoxBackground
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $boxBackground
 	 */
 	public function getBoxBackground() {
@@ -180,13 +201,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $boxBackground
+	 * @name setBoxBackground
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $boxBackground
 	 */
 	public function setBoxBackground($boxBackground) {
 		$this->boxBackground = $boxBackground;
 	}
 
 	/**
+	 * @name getBoxRadius
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $boxRadius
 	 */
 	public function getBoxRadius() {
@@ -194,13 +221,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $boxRadius
+	 * @name setBoxRadius
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $boxRadius
 	 */
 	public function setBoxRadius($boxRadius) {
 		$this->boxRadius = $boxRadius;
 	}
 
 	/**
+	 * @name getBoxPadding
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $boxPadding
 	 */
 	public function getBoxPadding() {
@@ -208,13 +241,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $boxPadding
+	 * @name setBoxPadding
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $boxPadding
 	 */
 	public function setBoxPadding($boxPadding) {
 		$this->boxPadding = $boxPadding;
 	}
 
 	/**
+	 * @name getThumbHeight
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbHeight
 	 */
 	public function getThumbHeight() {
@@ -222,13 +261,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbHeight
+	 * @name setThumbHeight
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbHeight
 	 */
 	public function setThumbHeight($thumbHeight) {
 		$this->thumbHeight = $thumbHeight;
 	}
 
 	/**
+	 * @name getThumbWidth
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbWidth
 	 */
 	public function getThumbWidth() {
@@ -236,13 +281,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbWidth
+	 * @name setThumbWidth
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbWidth
 	 */
 	public function setThumbWidth($thumbWidth) {
 		$this->thumbWidth = $thumbWidth;
 	}
 
 	/**
+	 * @name getThumbBorderSize
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbBorderSize
 	 */
 	public function getThumbBorderSize() {
@@ -250,13 +301,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbBorderSize
+	 * @name setThumbWidth
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbWidth
 	 */
 	public function setThumbBorderSize($thumbBorderSize) {
 		$this->thumbBorderSize = $thumbBorderSize;
 	}
 
 	/**
+	 * @name getThumbBorderColor
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbBorderColor
 	 */
 	public function getThumbBorderColor() {
@@ -264,13 +321,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbBorderColor
+	 * @name setThumbBorderColor
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbBorderColor
 	 */
 	public function setThumbBorderColor($thumbBorderColor) {
 		$this->thumbBorderColor = $thumbBorderColor;
 	}
 
 	/**
+	 * @name getThumbBorderRadius
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbBorderRadius
 	 */
 	public function getThumbBorderRadius() {
@@ -278,13 +341,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbBorderRadius
+	 * @name setThumbBorderRadius
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbBorderRadius
 	 */
 	public function setThumbBorderRadius($thumbBorderRadius) {
 		$this->thumbBorderRadius = $thumbBorderRadius;
 	}
 
 	/**
+	 * @name getThumbOverlaySize
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbOverlaySize
 	 */
 	public function getThumbOverlaySize() {
@@ -292,13 +361,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbOverlaySize
+	 * @name setThumbOverlaySize
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbOverlaySize
 	 */
 	public function setThumbOverlaySize($thumbOverlaySize) {
 		$this->thumbOverlaySize = $thumbOverlaySize;
 	}
 
 	/**
+	 * @name getThumbImage
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbImage
 	 */
 	public function getThumbImage() {
@@ -306,13 +381,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbImage
+	 * @name setThumbImage
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbImage
 	 */
 	public function setThumbImage($thumbImage) {
 		$this->thumbImage = $thumbImage;
 	}
 
 	/**
+	 * @name getThumbDistance
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbDistance
 	 */
 	public function getThumbDistance() {
@@ -320,13 +401,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbDistance
+	 * @name setThumbDistance
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbDistance
 	 */
 	public function setThumbDistance($thumbDistance) {
 		$this->thumbDistance = $thumbDistance;
 	}
 
 	/**
+	 * @name getThumbButtonOpacity
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbButtonOpacity
 	 */
 	public function getThumbButtonOpacity() {
@@ -334,13 +421,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbButtonOpacity
+	 * @name setThumbButtonOpacity
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbButtonOpacity
 	 */
 	public function setThumbButtonOpacity($thumbButtonOpacity) {
 		$this->thumbButtonOpacity = $thumbButtonOpacity;
 	}
 
 	/**
+	 * @name getThumbUrl
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbUrl
 	 */
 	public function getThumbUrl() {
@@ -348,13 +441,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbUrl
+	 * @name setThumbUrl
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbUrl
 	 */
 	public function setThumbUrl($thumbUrl) {
 		$this->thumbUrl = $thumbUrl;
 	}
 
 	/**
+	 * @name getPercOccW
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $percOccW
 	 */
 	public function getPercOccW() {
@@ -362,13 +461,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $percOccW
+	 * @name setPercOccW
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $percOccW
 	 */
 	public function setPercOccW($percOccW) {
 		$this->percOccW = $percOccW;
 	}
 
 	/**
+	 * @name getPercOccH
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $percOccH
 	 */
 	public function getPercOccH() {
@@ -376,13 +481,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $percOccH
+	 * @name setPercOccH
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $percOccH
 	 */
 	public function setPercOccH($percOccH) {
 		$this->percOccH = $percOccH;
 	}
 
 	/**
+	 * @name getThumbTop
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbTop
 	 */
 	public function getThumbTop() {
@@ -390,13 +501,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbTop
+	 * @name setThumbTop
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbTop
 	 */
 	public function setThumbTop($thumbTop) {
 		$this->thumbTop = $thumbTop;
 	}
 
 	/**
+	 * @name getThumbLeft
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $thumbLeft
 	 */
 	public function getThumbLeft() {
@@ -404,13 +521,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $thumbLeft
+	 * @name setThumbLeft
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $thumbLeft
 	 */
 	public function setThumbLeft($thumbLeft) {
 		$this->thumbLeft = $thumbLeft;
 	}
 
 	/**
+	 * @name getDescWidth
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $descWidth
 	 */
 	public function getDescWidth() {
@@ -418,13 +541,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $descWidth
+	 * @name setDescWidth
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $descWidth
 	 */
 	public function setDescWidth($descWidth) {
 		$this->descWidth = $descWidth;
 	}
 
 	/**
+	 * @name getDescFontSize
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $descFontSize
 	 */
 	public function getDescFontSize() {
@@ -432,13 +561,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $descFontSize
+	 * @name setDescFontSize
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $descFontSize
 	 */
 	public function setDescFontSize($descFontSize) {
 		$this->descFontSize = $descFontSize;
 	}
 
 	/**
+	 * @name getDescFontColor
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $descFontColor
 	 */
 	public function getDescFontColor() {
@@ -446,13 +581,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $descFontColor
+	 * @name setDescFontColor
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $descFontColor
 	 */
 	public function setDescFontColor($descFontColor) {
 		$this->descFontColor = $descFontColor;
 	}
 
 	/**
+	 * @name getStyleDetails
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $styleDetails
 	 */
 	public function getStyleDetails() {
@@ -460,13 +601,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $styleDetails
+	 * @name setStyleDetails
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $styleDetails
 	 */
 	public function setStyleDetails($styleDetails) {
 		$this->styleDetails = $styleDetails;
 	}
 
 	/**
+	 * @name getId
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $id
 	 */
 	public function getId() {
@@ -474,13 +621,19 @@ class SygStyle {
 	}
 
 	/**
-	 * @param field_type $id
+	 * @name setId
+	 * @category getters and setters
+	 * @since 1.2.5
+	 * @param $id
 	 */
 	public function setId($id) {
 		$this->id = $id;
 	}
 	
 	/**
+	 * @name getRsType
+	 * @category getters and setters
+	 * @since 1.2.5
 	 * @return the $rsType
 	 */
 	public static function getRsType() {
