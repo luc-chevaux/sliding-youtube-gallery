@@ -765,8 +765,9 @@ class SygPlugin extends SanityPluginFramework {
 		$output = '';
 		
 		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
-			update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
-			update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
+			
+			(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
+			(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
 			
 			$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
@@ -777,10 +778,10 @@ class SygPlugin extends SanityPluginFramework {
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 			
 			// get settings
-			$settings = $this->getSettings();
+			$options = $this->getOptions();
 			
 			// put settings in the view
-			$this->data['settings'] = $settings;
+			$this->data['options'] = $options;
 			
 			// render adminSettings view
 			return $this->render('adminSettings');
@@ -1069,16 +1070,17 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @name getSettings
+	 * @name getOptions
 	 * @category get plugin options
 	 * @since 1.3.0
 	 * @return $settings
 	 */
-	public function getSettings() {
-		$setting = array();
-		$setting['syg_option_apikey'] = get_option('syg_option_apikey');
-		$setting['syg_option_numrec'] = get_option('syg_option_numrec');
-		return $setting;
+	public function getOptions() {
+		$options = array();
+		$options['syg_option_apikey'] = get_option('syg_option_apikey');
+		$options['syg_option_numrec'] = get_option('syg_option_numrec');
+		
+		return $options;
 	}
 	
 	/**
