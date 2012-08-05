@@ -7,8 +7,6 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  * 
- * @todo YouTube api key option (milestone v1.3.0)
- * @todo Inserire e standardizzare i commenti (milestone v1.3.0)
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3.0)
  * @todo Background image (milesone v1.3.0)
  * @todo Paginazione gallerie pagina (milestone v1.3.0)
@@ -33,8 +31,10 @@ class SygPlugin extends SanityPluginFramework {
 	private static $instance = null;
 
 	/**
-	 * Return current instance of the plugin
-	 * @return self::$instance
+	 * @name getInstance
+	 * @category pattern
+	 * @since 1.2.5
+	 * @return $instance
 	 */
 	public static function getInstance() {
 		if (self::$instance == null) {
@@ -56,13 +56,12 @@ class SygPlugin extends SanityPluginFramework {
 	private $sygDao;
 
 	/**
-	 * Plugin constructor
-	 * @return null
+	 * @name __construct
+	 * @category construct SygPlugin object
+	 * @since 1.0.1
 	 */
 	public function __construct() {
-
-		$me = ABSPATH
-				. 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+		$me = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
 
 		parent::__construct(dirname($me));
 
@@ -78,8 +77,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Set the plugin environment
-	 * @return null
+	 * @name setEnvironment
+	 * @category configuration
+	 * @since 1.0.1
 	 */
 	private function setEnvironment() {
 		// set home root
@@ -103,8 +103,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Remove old option
-	 * @return null
+	 * @name removeOldOption
+	 * @category configuration
+	 * @since 1.2.5
 	 */
 	private static function removeOldOption() {
 		global $wpdb;
@@ -137,33 +138,32 @@ class SygPlugin extends SanityPluginFramework {
 		$syg_box_radius = get_option('syg_box_radius');
 		$syg_box_padding = get_option('syg_box_padding');
 
-		$wpdb
-				->insert($syg_table_name,
-						array('syg_box_background' => $syg_box_background,
-								'syg_box_padding' => $syg_box_padding,
-								'syg_box_radius' => $syg_box_radius,
-								'syg_box_width' => $syg_box_width,
-								'syg_description_fontcolor' => $syg_description_fontcolor,
-								'syg_description_fontsize' => $syg_description_fontsize,
-								'syg_description_show' => $syg_description_show,
-								'syg_description_showcategories' => $syg_description_showcategories,
-								'syg_description_showduration' => $syg_description_showduration,
-								'syg_description_showratings' => $syg_description_showratings,
-								'syg_description_showtags' => $syg_description_showtags,
-								'syg_description_width' => $syg_description_width,
-								'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
-								'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
-								'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
-								'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
-								'syg_thumbnail_distance' => $syg_thumbnail_distance,
-								'syg_thumbnail_height' => $syg_thumbnail_height,
-								'syg_thumbnail_image' => $syg_thumbnail_image,
-								'syg_thumbnail_width' => $syg_thumbnail_width,
-								'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
-								'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
-								'syg_youtube_videoformat' => $syg_youtube_videoformat,
-								'syg_youtube_username' => $syg_youtube_username),
-						SygGallery::getRsType());
+		$wpdb->insert($syg_table_name,
+			array('syg_box_background' => $syg_box_background,
+				'syg_box_padding' => $syg_box_padding,
+				'syg_box_radius' => $syg_box_radius,
+				'syg_box_width' => $syg_box_width,
+				'syg_description_fontcolor' => $syg_description_fontcolor,
+				'syg_description_fontsize' => $syg_description_fontsize,
+				'syg_description_show' => $syg_description_show,
+				'syg_description_showcategories' => $syg_description_showcategories,
+				'syg_description_showduration' => $syg_description_showduration,
+				'syg_description_showratings' => $syg_description_showratings,
+				'syg_description_showtags' => $syg_description_showtags,
+				'syg_description_width' => $syg_description_width,
+				'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
+				'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
+				'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
+				'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
+				'syg_thumbnail_distance' => $syg_thumbnail_distance,
+				'syg_thumbnail_height' => $syg_thumbnail_height,
+				'syg_thumbnail_image' => $syg_thumbnail_image,
+				'syg_thumbnail_width' => $syg_thumbnail_width,
+				'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
+				'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
+				'syg_youtube_videoformat' => $syg_youtube_videoformat,
+				'syg_youtube_username' => $syg_youtube_username),
+				SygGallery::getRsType());
 
 		if ($wpdb->insert_id) {
 			delete_option('syg_youtube_username');
@@ -197,12 +197,13 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Collect stats
-	 * @return null
+	 * @name notify
+	 * @category send statistics and data to plugin developer 
+	 * @since 1.2.5
+	 * @param $action
 	 */
 	private static function notify($action = null) {
-		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']
-				: $_SERVER['SERVER_NAME'];
+		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
 
 		if (SygUtil::isCurlInstalled()) {
 			$ch = curl_init();
@@ -221,8 +222,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Deactivation plugin hook
-	 * @return null
+	 * @name uninstall
+	 * @category uninstall plugin hook
+	 * @since 1.0.1
 	 */
 	public static function uninstall() {
 		global $wpdb;
@@ -244,8 +246,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Deactivation plugin hook
-	 * @return null
+	 * @name deactivation
+	 * @category deactivation plugin hook
+	 * @since 1.0.1
 	 */
 	public static function deactivation() {
 		// send stat
@@ -253,8 +256,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Activation plugin hook
-	 * @return null
+	 * @name activation
+	 * @category deactivation plugin hook
+	 * @since 1.0.1
 	 */
 	public static function activation() {
 		global $wpdb;
@@ -289,41 +293,59 @@ class SygPlugin extends SanityPluginFramework {
 	/* GETTERS AND SETTERS */
 
 	/**
-	 * @param field_type $homeRoot
+	 * @name setHomeRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $homeRoot
 	 */
 	private function setHomeRoot($homeRoot) {
 		$this->homeRoot = $homeRoot;
 	}
 
 	/**
-	 * @param field_type $pluginRoot
+	 * @name setPluginRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $pluginRoot
 	 */
 	private function setPluginRoot($pluginRoot) {
 		$this->pluginRoot = $pluginRoot;
 	}
 
 	/**
-	 * @param string $jsRoot
+	 * @name setJsRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $jsRoot
 	 */
 	private function setJsRoot($jsRoot) {
 		$this->jsRoot = $jsRoot;
 	}
 
 	/**
-	 * @param string $cssRoot
+	 * @name setCssRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $cssRoot
 	 */
 	private function setCssRoot($cssRoot) {
 		$this->cssRoot = $cssRoot;
 	}
 
 	/**
-	 * @param string $imgRoot
+	 * @name setImgRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @param $imgRoot
 	 */
 	private function setImgRoot($imgRoot) {
 		$this->imgRoot = $imgRoot;
 	}
 
 	/**
+	 * @name getHomeRoot
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $homeRoot
 	 */
 	public function getHomeRoot() {
@@ -331,12 +353,19 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @return the $pluginRoot
+	 * @name getPluginRoot
+	 * @category getters and setters
+	 * @since 1.0.1
+	 * @return the $homeRoot
 	 */
 	public function getPluginRoot() {
 		return $this->pluginRoot;
 	}
+	
 	/**
+	 * @name getJsRoot
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $jsRoot
 	 */
 	public function getJsRoot() {
@@ -344,6 +373,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * @name getCssRoot
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $cssRoot
 	 */
 	public function getCssRoot() {
@@ -351,6 +383,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * @name getImgRoot
+	 * @category getters and setters
+	 * @since 1.0.1
 	 * @return the $imgRoot
 	 */
 	public function getImgRoot() {
@@ -380,9 +415,11 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Get gallery wordpress hook function
-	 * @param $attributes 
-	 * @return null
+	 * @name getGallery
+	 * @category get a sliding youtube gallery
+	 * @since 1.0.1
+	 * @param $attributes
+	 * @return $output
 	 */
 	function getGallery($attributes) {
 		foreach ($attributes as $key => $var) {
@@ -460,9 +497,11 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Get page wordpress hook function
-	 * @param $attributes 
-	 * @return null
+	 * @name getVideoPage
+	 * @category get a video page
+	 * @since 1.0.1
+	 * @param $attributes
+	 * @return $output
 	 */
 	function getVideoPage($attributes) {
 		foreach ($attributes as $key => $var) {
@@ -512,8 +551,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Prepare HTML Headers with css/js injection
-	 * @return null
+	 * @name getVideoPage
+	 * @category prepare header with the right js and css inclusion
+	 * @since 1.0.1
+	 * @param &$view, $context
 	 */
 	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE) {
 		// define resources path
@@ -620,8 +661,11 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to manage galleries
-	 * @return null
+	 * @name forwardToGalleries
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @param $updated
+	 * @return $output
 	 */
 	public function forwardToGalleries($updated = false) {
 		$output = '';
@@ -664,8 +708,11 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to manage galleries
-	 * @return null
+	 * @name forwardToStyles
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @param $updated
+	 * @return $output
 	 */
 	public function forwardToStyles($updated = false) {
 		$output = '';
@@ -708,20 +755,43 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to setting page
-	 * @return null
+	 * @name forwardToSettings
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @param $updated
+	 * @return $output
 	 */
-	public function forwardToSettings() {
-		// prepare header 
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	public function forwardToSettings($updated = false) {
+		$output = '';
+		
+		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+			update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
+			update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
+			
+			$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
-		// render generalSettings view
-		return $this->render('adminSettings');
+			// render adminStyles view
+			return $this->render('redirect');
+		} else {
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			
+			// get settings
+			$settings = $this->getSettings();
+			
+			// put settings in the view
+			$this->data['settings'] = $settings;
+			
+			// render adminSettings view
+			return $this->render('adminSettings');
+		}
 	}
 
 	/**
-	 * Action Forward to add gallery
-	 * @return null
+	 * @name forwardToAddGallery
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToAddGallery() {
 		
@@ -782,8 +852,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to add style
-	 * @return null
+	 * @name forwardToAddStyle
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToAddStyle() {
 
@@ -837,8 +909,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to edit gallery
-	 * @return null
+	 * @name forwardToEditGallery
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToEditGallery() {
 		if (isset($_POST['syg_submit_hidden'])
@@ -889,8 +963,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 	
 	/**
-	 * Action Forward to edit gallery
-	 * @return null
+	 * @name forwardToEditStyle
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToEditStyle() {
 		if (isset($_POST['syg_submit_hidden'])
@@ -938,8 +1014,9 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to edit gallery
-	 * @return null
+	 * @name forwardToDeleteGallery
+	 * @category admin forward
+	 * @since 1.0.1
 	 */
 	public function forwardToDeleteGallery() {
 		// get the gallery id
@@ -952,8 +1029,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 	
 	/**
-	 * Action Forward to edit style
-	 * @return null
+	 * @name forwardToDeleteStyle
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToDeleteStyle() {
 		// get the gallery id
@@ -966,8 +1045,10 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Action Forward to donation page
-	 * @return null
+	 * @name forwardToSupport
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $output
 	 */
 	public function forwardToSupport() {
 		// prepare header
@@ -978,21 +1059,45 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * Get Ajax Auth Token
-	 * @return null
+	 * @name getAuthToken
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $token
 	 */
 	private function getAuthToken() {
 		return $token;
 	}
 
 	/**
-	 * Verify Ajax Auth Token
-	 * @return null
+	 * @name getSettings
+	 * @category get plugin options
+	 * @since 1.3.0
+	 * @return $settings
+	 */
+	public function getSettings() {
+		$setting = array();
+		$setting['syg_option_apikey'] = get_option('syg_option_apikey');
+		$setting['syg_option_numrec'] = get_option('syg_option_numrec');
+		return $setting;
+	}
+	
+	/**
+	 * @name verifyAuthToken
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @return $authorized
 	 */
 	public function verifyAuthToken($str) {
 		return true;
 	}
 
+	/**
+	 * @name getViewCtx
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @param $id
+	 * @return $context
+	 */
 	public function getViewCtx($id = null) {
 		if (is_int((int) $id)) {
 			$dao = new SygDao();

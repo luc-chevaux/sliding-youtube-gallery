@@ -26,10 +26,22 @@
 <!-- General Setting -->
 <h3>General Settings</h3>
 <form name="form1" method="post" action="">
+	<input type="hidden" name="syg_submit_hidden" value="Y">
+	
+	<!-- youtube settings -->
 	<fieldset>
 		<legend><strong>YouTube settings</strong></legend>
 		<label for="developer_key">Developer Key: </label>
-		<input type="text" id="developer_key" name="developer_key" value="" size="20">
+		<input type="text" id="syg_option_apikey" name="syg_option_apikey" value="" size="20">
 	</fieldset>
+	
+	<!-- plugin settings -->
+	<fieldset>
+		<legend><strong>Plugin settings</strong></legend>
+		<label for="developer_key">Number of records displayed: </label>
+		<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="" size="20">
+	</fieldset>
+	<hr/>
+	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
 </form>
 <?php require_once 'inc/contextMenu.inc.php'; ?>
