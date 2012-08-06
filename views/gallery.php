@@ -1,7 +1,7 @@
 <!-- Php Inclusion -->
 
 <!-- Extra Php Code -->
-<?php 
+<?php
 // gallery data retreival
 $feed = $this->data['feed'];
 $gallery = $this->data['gallery'];

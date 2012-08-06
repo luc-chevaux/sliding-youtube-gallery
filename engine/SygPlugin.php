@@ -10,7 +10,6 @@
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3.0)
  * @todo Background image (milesone v1.3.0)
  * @todo Paginazione gallerie pagina (milestone v1.3.0)
- * @todo Creare la pagina contact con invio mail (milestone v1.3.0)
  * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
  * @todo Aggiungere opzione disabilita video correlati (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)

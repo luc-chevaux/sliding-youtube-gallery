@@ -18,6 +18,7 @@ class SygGallery {
 	private $galleryType;
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
+	private $ytDisableRelatedVideo;
 	private $ytSrc;
 	private $styleId;
 	private $descShow;
@@ -31,7 +32,7 @@ class SygGallery {
 	private $thumbUrl;
 	
 	// recordset type
-	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d');
+	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d','%d');
 	
 	/**
 	 * @name __construct
@@ -63,6 +64,7 @@ class SygGallery {
 		// youtube option values
 		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
 		$this->setYtVideoFormat($result->syg_youtube_videoformat);
+		$this->setYtDisableRelatedVideo($result->syg_youtube_disablerel);
 		$this->setYtSrc($result->syg_youtube_src);
 		
 		// set youtube user profile
@@ -129,6 +131,7 @@ class SygGallery {
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
 				'syg_youtube_src'					=> $this->getYtSrc(),
 				'syg_style_id'						=> $this->getStyleId(),
+				'syg_youtube_disablerel'			=> $this->getYtDisableRelatedVideo(),
 				'id'								=> $this->getId());
 		
 		if ($full) {
@@ -493,6 +496,25 @@ class SygGallery {
 	public function setThumbUrl($thumbUrl) {
 		$this->thumbUrl = $thumbUrl;
 	}
+	
+	/**
+	 * @name getYtDisableRelatedVideo
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @return $ytDisableRelatedVideo
+	 */
+	public function getYtDisableRelatedVideo() {
+		return $this->ytDisableRelatedVideo;
+	}
 
+	/**
+	 * @name setYtDisableRelatedVideo
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @param $ytDisableRelatedVideo
+	 */
+	public function setYtDisableRelatedVideo($ytDisableRelatedVideo) {
+		$this->ytDisableRelatedVideo = $ytDisableRelatedVideo;
+	}
 }
 ?>
