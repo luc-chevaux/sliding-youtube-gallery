@@ -7,8 +7,8 @@ $feed = $this->data['feed'];
 $gallery = $this->data['gallery'];
 
 // gallery settings 
-$thumbImage = $gallery->getThumbImage();
-$overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
+$thumbImage = $gallery->getSygStyle()->getThumbImage();
+$overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
 <!-- User Message -->
 
@@ -83,5 +83,14 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 			</tr>
 		</table>
 		<?php } ?>
+		
+		<ul id="syg-pagination-galleries">
+			<?php
+			// show page links
+			for($i=1; $i<=$this->data['pages']; $i++) {
+				echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
+			}
+			?>
+		</ul>	
 	</div>
 </div>

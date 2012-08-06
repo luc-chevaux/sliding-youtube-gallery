@@ -7,11 +7,11 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  * 
- * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3.0)
- * @todo Background image (milesone v1.3.0)
  * @todo Paginazione gallerie pagina (milestone v1.3.0)
  * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
+ * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3.0)
+ * @todo Background image (milesone v1.3.0)
  * @todo Superare piano di test back-end (milestone v1.3.0)
  * @todo Superare piano di test front end (milestone v1.3.0)
  * 
@@ -432,51 +432,8 @@ class SygPlugin extends SanityPluginFramework {
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
 
-				
-				if ($gallery->getGalleryType() == 'feed') {
-					// get video feed from youtube 
-					$videoFeed = $this->sygYouTube
-							->getuserUploads($gallery->getYtSrc());
-	
-					// truncate video feed
-					// create new feed
-					$counter = 1;
-					$feed = new Zend_Gdata_YouTube_VideoFeed();
-					foreach ($videoFeed as $videoEntry) {
-						$feed->addEntry($videoEntry);
-						$i++;
-						if ($i == $gallery->getYtMaxVideoCount())
-							break;
-					}
-				} else if ($gallery->getGalleryType() == 'list') {
-					$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
-					
-					$feed = new Zend_Gdata_YouTube_VideoFeed();
-					foreach ($list_of_videos as $key => $value) {
-						$list_of_videos[$key] = str_replace ('v=', '', parse_url($value, PHP_URL_QUERY));
-						$videoEntry = $this->sygYouTube->getVideoEntry($list_of_videos[$key]);
-						$feed->addEntry($videoEntry);
-					}
-				} else if ($gallery->getGalleryType() == 'playlist') {
-					$playlist_id = str_replace ('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
-					$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
-					$feed_to_object = $content->feed->entry;
-					
-					if(count($feed_to_object)) {
-						
-						$feed = new Zend_Gdata_YouTube_VideoFeed();
-						foreach($feed_to_object as $item) { 
-							//var_dump($item);
-							$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
-							$videoEntry = $this->sygYouTube->getVideoEntry($videoId);
-							$feed->addEntry($videoEntry);
-						} 
-					}
-				}
-
-
 				// put the feed in the view
-				$this->data['feed'] = $feed;
+				$this->data['feed'] = $this->getVideoFeed($gallery);
 
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
@@ -492,6 +449,52 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->render('exception');
 			}
 		}
+	}
+	
+	/**
+	 * @name getVideoFeed
+	 * @category get a youtube video feed
+	 * @since 1.3.0
+	 * @param $gallery
+	 * @throws Exception
+	 * @return $feed
+	 */
+	public function getVideoFeed(SygGallery $gallery) {
+		$feed = new Zend_Gdata_YouTube_VideoFeed();
+		if ($gallery->getGalleryType() == 'feed') {
+			$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
+			$counter = 1;
+			
+			foreach ($videoFeed as $videoEntry) {
+				$feed->addEntry($videoEntry);
+				$i++;
+				if ($i == $gallery->getYtMaxVideoCount())
+					break;
+			}
+		} else if ($gallery->getGalleryType() == 'list') {
+			$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
+			foreach ($list_of_videos as $key => $value) {
+				$list_of_videos[$key] = str_replace ('v=', '', parse_url($value, PHP_URL_QUERY));
+				$videoEntry = $this->sygYouTube->getVideoEntry($list_of_videos[$key]);
+				$feed->addEntry($videoEntry);
+			}
+		} else if ($gallery->getGalleryType() == 'playlist') {
+			$playlist_id = str_replace ('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
+			$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
+			$feed_to_object = $content->feed->entry;
+			if(count($feed_to_object)) {
+				foreach($feed_to_object as $item) {
+					//var_dump($item);
+					$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
+					$videoEntry = $this->sygYouTube->getVideoEntry($videoId);
+					$feed->addEntry($videoEntry);
+				}
+			}
+		}
+		
+		// @todo truncate feed 
+		
+		return $feed;
 	}
 
 	/**
@@ -514,23 +517,8 @@ class SygPlugin extends SanityPluginFramework {
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
 
-				// get video feed from youtube 
-				$videoFeed = $this->sygYouTube
-						->getuserUploads($gallery->getYtSrc());
-
-				// truncate video feed
-				// create new feed
-				$counter = 1;
-				$feed = new Zend_Gdata_YouTube_VideoFeed();
-				foreach ($videoFeed as $videoEntry) {
-					$feed->addEntry($videoEntry);
-					$i++;
-					if ($i == $gallery->getYtMaxVideoCount())
-						break;
-				}
-
 				// put the feed in the view
-				$this->data['feed'] = $feed;
+				$this->data['feed'] = $this->getVideoFeed($gallery);
 
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
@@ -766,6 +754,7 @@ class SygPlugin extends SanityPluginFramework {
 			
 			(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
 			(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
+			(!get_option('syg_option_pagenumrec')) ? add_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']) : update_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']);
 			
 			$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
@@ -1077,6 +1066,7 @@ class SygPlugin extends SanityPluginFramework {
 		$options = array();
 		$options['syg_option_apikey'] = get_option('syg_option_apikey');
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
+		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		
 		return $options;
 	}

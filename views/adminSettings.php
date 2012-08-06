@@ -41,8 +41,13 @@
 	<!-- plugin settings -->
 	<fieldset>
 		<legend><strong>Plugin settings</strong></legend>
-		<label for="developer_key">Number of records displayed: </label>
+		<label for="syg_option_numrec">Number of records displayed in admin section: </label>
 		<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="20">
+		
+		<br/><br/>
+		
+		<label for="syg_option_pagenumrec">Number of records displayed in video page: </label>
+		<input type="text" id="syg_option_pagenumrec" name="syg_option_pagenumrec" value="<?php echo $options['syg_option_pagenumrec']; ?>" size="20">
 	</fieldset>
 	<hr/>
 	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
