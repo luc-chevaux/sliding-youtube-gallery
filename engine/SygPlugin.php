@@ -11,7 +11,6 @@
  * @todo Background image (milesone v1.3.0)
  * @todo Paginazione gallerie pagina (milestone v1.3.0)
  * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
- * @todo Aggiungere opzione disabilita video correlati (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
  * @todo Superare piano di test back-end (milestone v1.3.0)
  * @todo Superare piano di test front end (milestone v1.3.0)

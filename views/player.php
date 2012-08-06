@@ -39,6 +39,11 @@ if ($type == 'n') {
 	$height = SygUtil::getWideHeight($width);
 }
 
+// disable related video
+if ($syg_youtube_disablerel == 1) {
+	$video .= '?rel=0';
+}
+
 ?>
 <iframe class="youtube-box" width="<?php echo $width; ?>" height="<?php echo $height; ?>" src="<?php echo "http://www.youtube.com/embed/".$video ?>" frameborder="0" allowfullscreen>
 </iframe>
