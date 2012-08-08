@@ -29,7 +29,7 @@ class SygYouTube {
 	 * @param $username
 	 * @return $userProfile
 	 */
-	function getUserProfile($username) {
+	public function getUserProfile($username) {
 		try {
 			$this->yt->setMajorProtocolVersion(2);
 			$userProfile = $this->yt->getUserProfile($username);
@@ -46,7 +46,7 @@ class SygYouTube {
 	 * @param $username
 	 * @return $videoFeed
 	 */
-	function getUserUploads($username) {
+	public function getUserUploads($username) {
 		$this->yt->setMajorProtocolVersion(2);
 		$videoFeed = $this->yt->getuserUploads($username);
 		return $videoFeed;
@@ -57,9 +57,9 @@ class SygYouTube {
 	 * @category return a YouTube Video
 	 * @since 1.3.0
 	 * @param $video_code
-	 * @return $video
+	 * @return Zend_Gdata_YouTube_VideoEntry $video
 	 */
-	function getVideoEntry($video_code) {
+	public function getVideoEntry($video_code) {
 		$this->yt->setMajorProtocolVersion(2);
 		$video = $this->yt->getVideoEntry($video_code);
 		return $video;

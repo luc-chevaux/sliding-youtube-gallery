@@ -455,11 +455,11 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name getVideoFeed
 	 * @category get a youtube video feed
 	 * @since 1.3.0
-	 * @param $gallery
+	 * @param $gallery, $start, $per_page
 	 * @throws Exception
 	 * @return $feed
 	 */
-	public function getVideoFeed(SygGallery $gallery) {
+	public function getVideoFeed(SygGallery $gallery, $start = NULL, $per_page = NULL) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
 			$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
@@ -467,8 +467,8 @@ class SygPlugin extends SanityPluginFramework {
 			
 			foreach ($videoFeed as $videoEntry) {
 				$feed->addEntry($videoEntry);
-				$i++;
-				if ($i == $gallery->getYtMaxVideoCount())
+				$counter++;
+				if ($counter == $gallery->getYtMaxVideoCount())
 					break;
 			}
 		} else if ($gallery->getGalleryType() == 'list') {
@@ -492,7 +492,22 @@ class SygPlugin extends SanityPluginFramework {
 			}
 		}
 		
-		// @todo truncate feed 
+		// truncate feed 
+		if ($gallery->getYtMaxVideoCount() < $feed->count()) {
+			for ($i=$gallery->getYtMaxVideoCount();$i<$feed->count();$i++) {
+				$feed->offsetUnset($i);
+			}
+		}
+		
+		// feed pagination
+		if ($start && $per_page) {
+			$start--;
+			$feed_page = new Zend_Gdata_YouTube_VideoFeed();
+			for ($i=$start;$i<$per_page;$i++) {
+				$feed_page->addEntry($feed->offsetGet($i));
+			}
+			$feed = $feed_page;
+		}
 		
 		return $feed;
 	}
