@@ -125,5 +125,22 @@ class SygUtil {
 	public static function isCurlInstalled() {
 		$installed = (in_array ('curl', get_loaded_extensions())) ? true : false;
 	}
+	
+	/**
+	 * @name getJsonData
+	 * @category object data parser
+	 * @since 1.2.5
+	 * @return $json
+	 */
+	public static function getJsonData($needle){
+		$var = get_object_vars($needle);
+		foreach($var as &$value){
+			if(is_object($value) && method_exists($value,'getJsonData')){
+				$value = $value->getJsonData();
+			}
+		}
+		$json = $var;
+		return $json;
+	}
 }
 ?>

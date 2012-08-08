@@ -93,17 +93,24 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$start = $page_number * $per_page;
 					
 					$dao = new SygDao();
-					$gallery = $dao->getSygGalleryById($_GET['id']);
-					
-					$videos = $plugin->getVideoFeed($gallery, $start, $per_page);
-					
-					echo $videos->count();
+										
+					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
 					
 					$videos_to_json = array();
+					$element = array();
 					
-					foreach ($videos as $video) {
-						array_push($videos_to_json, serialize($video));
-						//var_dump(serialize($video));
+					foreach ($videos as $entry) {
+						
+						$element['video_id'] = $entry->getVideoId();
+						$element['video_description'] = $entry->getVideoDescription();
+						$element['video_duration'] = $entry->getVideoDuration();
+						$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
+						$element['video_title'] = $entry->getVideoTitle();
+						$element['video_category'] =$entry->getVideoCategory();
+						$element['video_tags'] = $entry->getVideoTags();
+						$element['video_rating_info'] = $entry->getVideoRatingInfo();
+						
+						array_push($videos_to_json, $element);
 					}
 						
 					echo json_encode ($videos_to_json);
