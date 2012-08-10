@@ -47,12 +47,16 @@ class SygPlugin extends SanityPluginFramework {
 	private $jsRoot;
 	private $cssRoot;
 	private $imgRoot;
+	private $jsonQueryIfUrl;
 
 	private $syg = array();
 
 	private $sygYouTube;
 	private $sygDao;
 
+	  /*************************/
+	 /* CONFIGURATION METHODS */
+	/*************************/
 	/**
 	 * @name __construct
 	 * @category construct SygPlugin object
@@ -84,7 +88,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->homeRoot = site_url();
 
 		// set the plugin path
-		$this->setPluginRoot(SygConstant::WP_PLUGIN_PATH);
+		$this->setPluginRoot(WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
 
 		// set the css path
 		$this->setCssRoot(WP_PLUGIN_URL . SygConstant::WP_CSS_PATH);
@@ -94,6 +98,9 @@ class SygPlugin extends SanityPluginFramework {
 
 		// set the img path
 		$this->setImgRoot(WP_PLUGIN_URL . SygConstant::WP_IMG_PATH);
+		
+		// set json query interface url
+		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_URL);
 
 		// set local object
 		$this->sygYouTube = new SygYouTube();
@@ -219,6 +226,14 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+	  /*****************************/
+	 /* END CONFIGURATION METHODS */
+	/*****************************/
+	
+	  /********************************/
+	 /* WORDPRESS PLUGIN ACTION HOOK */
+	/********************************/
+	
 	/**
 	 * @name uninstall
 	 * @category uninstall plugin hook
@@ -288,8 +303,13 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
-	/* GETTERS AND SETTERS */
-
+	  /************************************/
+	 /* END WORDPRESS PLUGIN ACTION HOOK */
+	/************************************/
+	
+	  /***********************/
+	 /* GETTERS AND SETTERS */
+	/***********************/
 	/**
 	 * @name setHomeRoot
 	 * @category getters and setters
@@ -338,6 +358,16 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	private function setImgRoot($imgRoot) {
 		$this->imgRoot = $imgRoot;
+	}
+
+	/**
+	 * @name setJsonQueryIfUrl
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @param $jsonQueryIfUrl
+	 */
+	public function setJsonQueryIfUrl($jsonQueryIfUrl) {
+		$this->jsonQueryIfUrl = $jsonQueryIfUrl;
 	}
 
 	/**
@@ -390,8 +420,24 @@ class SygPlugin extends SanityPluginFramework {
 		return $this->imgRoot;
 	}
 
-	/* END GETTERS AND SETTER */
-
+	/**
+	 * @name getJsonQueryIfUrl
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @return the $jsonQueryIfUrl
+	 */
+	public function getJsonQueryIfUrl() {
+		return $this->jsonQueryIfUrl;
+	}
+	
+	  /***************************/
+	 /* END GETTERS AND SETTER  */
+	/***************************/
+	
+	  /**************************/
+	 /* FRONT END CORE METHODS */
+	/**************************/
+	
 	/**
 	 * Get gallery settings returning its DTO
 	 * @param $id 
@@ -532,12 +578,13 @@ class SygPlugin extends SanityPluginFramework {
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
 
-				// put the feed in the view
-				$this->data['feed'] = $this->getVideoFeed($gallery);
-
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
 
+				// number of pages
+				$options = $this->getOptions();
+				$this->data['pages'] = ceil($gallery->countGalleryEntry() / $options['syg_option_pagenumrec']);
+				
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -661,6 +708,14 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+	  /******************************/
+	 /* END FRONT END CORE METHODS */
+	/******************************/
+	
+	  /**************************/
+	 /* ADMIN SECTION FORWARDS */
+	/**************************/
+	
 	/**
 	 * @name forwardToGalleries
 	 * @category admin forward
@@ -1061,6 +1116,14 @@ class SygPlugin extends SanityPluginFramework {
 		return $this->render('adminSupport');
 	}
 
+	  /******************************/
+	 /* END ADMIN SECTION FORWARDS */
+	/******************************/
+	
+	  /********************/
+	 /* SECURITY METHODS */
+	/********************/
+	
 	/**
 	 * @name getAuthToken
 	 * @category admin forward
@@ -1112,5 +1175,9 @@ class SygPlugin extends SanityPluginFramework {
 		}
 		return false;
 	}
+	
+	  /************************/
+	 /* END SECURITY METHODS */
+	/************************/
 }
 ?>

@@ -59,10 +59,35 @@ class SygYouTube {
 	 * @param $video_code
 	 * @return Zend_Gdata_YouTube_VideoEntry $video
 	 */
-	public function getVideoEntry($video_code) {
+	public function getVideoEntry($video_code = null) {
 		$this->yt->setMajorProtocolVersion(2);
 		$video = $this->yt->getVideoEntry($video_code);
 		return $video;
+	}
+	
+	public function countGalleryEntry($src = null, $gallery_type = null, $max_video_count = null) {
+		$count = 0;
+		if ($src && $gallery_type && $max_video_count) {
+			$feed = new Zend_Gdata_YouTube_VideoFeed();
+			if ($gallery_type == 'feed') {
+				$feed = $this->sygYouTube->getuserUploads($src);
+				$count = $feed->count();
+			} else if ($gallery_type == 'list') {
+				$list_of_videos = preg_split( '/\r\n|\r|\n/', $src);
+				$count = count($list_of_videos);
+			} else if ($gallery_type == 'playlist') {
+				$playlist_id = str_replace ('list=PL', '', parse_url($src, PHP_URL_QUERY));
+				$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
+				$feed_to_object = $content->feed->entry;
+				$count = count($feed_to_object);
+			}
+			
+			// truncate feed
+			if ($max_video_count < $count) {
+				$count = $gallery->getYtMaxVideoCount();
+			}
+		} 
+		return $count;
 	}
 }
 ?>
