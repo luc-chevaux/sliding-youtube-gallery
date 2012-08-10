@@ -9,6 +9,9 @@
  */
 
 class SygGallery {
+	
+	private $sygYouTube;
+	private $sygDao;
 	private $sygStyle;
 	private $userProfile;
 	
@@ -43,6 +46,7 @@ class SygGallery {
 	public function __construct($key = null) {
 		if (is_string($key)) $key = unserialize ($key);
 		$this->sygYouTube = new SygYouTube();
+		$this->sygDao = new SygDao();		
 		$this->mapThis($key);
 	}
 
@@ -86,11 +90,18 @@ class SygGallery {
 		// set style id
 		$this->setStyleId($result->syg_style_id);
 		
-		// instantiate local dao
-		$sygDao = new SygDao();
-		
 		// load style setting
-		$this->sygStyle = $sygDao->getSygStyleById($this->getStyleId());
+		$this->sygStyle = $this->sygDao->getSygStyleById($this->getStyleId());
+	}
+	
+	/**
+	 * @name countGalleryEntry
+	 * @category count feed element for this gallery
+	 * @since 1.3.0
+	 * @return $count
+	 */
+	public function countGalleryEntry() {
+		return $this->sygYouTube->countGalleryEntry ($this->getYtSrc(), $this->getGalleryType(), $this->getYtMaxVideoCount());
 	}
 	
 	/**
