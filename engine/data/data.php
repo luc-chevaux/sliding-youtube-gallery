@@ -97,18 +97,20 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
 					
 					$videos_to_json = array();
-					$element = array();
 					
 					foreach ($videos as $entry) {
 						
 						$element['video_id'] = $entry->getVideoId();
 						$element['video_description'] = $entry->getVideoDescription();
-						$element['video_duration'] = $entry->getVideoDuration();
+						$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
 						$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
 						$element['video_title'] = $entry->getVideoTitle();
 						$element['video_category'] =$entry->getVideoCategory();
 						$element['video_tags'] = $entry->getVideoTags();
 						$element['video_rating_info'] = $entry->getVideoRatingInfo();
+						/*$entry = new Zend_Gdata_YouTube_VideoEntry();*/
+						$thumbnails = $entry->getVideoThumbnails();
+						$element['video_thumbshot'] = $thumbnails[1]['url'];
 						
 						array_push($videos_to_json, $element);
 					}
