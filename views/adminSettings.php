@@ -34,19 +34,31 @@
 	<!-- youtube settings -->
 	<fieldset>
 		<legend><strong>YouTube settings</strong></legend>
-		<label for="developer_key">Developer Key: </label>
+		<label for="developer_key">Developer Key (not necessary): </label>
 		<input type="text" id="syg_option_apikey" name="syg_option_apikey" value="<?php echo $options['syg_option_apikey']; ?>" size="20">
 	</fieldset>
 	
-	<!-- plugin settings -->
+	<!-- plugin admin settings -->
 	<fieldset>
-		<legend><strong>Plugin settings</strong></legend>
-		<label for="syg_option_numrec">Number of records displayed in admin section: </label>
+		<legend><strong>Plugin admin settings</strong></legend>
+		<label for="syg_option_numrec">Number of records displayed: </label>
 		<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="20">
+	</fieldset>
+	
+	<!-- video page settings -->
+	<fieldset>
+		<legend><strong>Video page settings</strong></legend>
+		
+		<label for="syg_option_paginationarea">Pagination display area: </label>
+		<select id="syg_option_paginationarea" name="syg_option_paginationarea">
+			<option value="top" <?php if ($options['syg_option_paginationarea'] == 'top') echo 'selected="selected"'; ?>>Top</option>
+			<option value="bottom" <?php if ($options['syg_option_paginationarea'] == 'bottom') echo 'selected="selected"'; ?>>Bottom</option>
+			<option value="both" <?php if ($options['syg_option_paginationarea'] == 'both') echo 'selected="selected"'; ?>>Both</option>			
+		</select>
 		
 		<br/><br/>
 		
-		<label for="syg_option_pagenumrec">Number of records displayed in video page: </label>
+		<label for="syg_option_pagenumrec">Number of records displayed: </label>
 		<input type="text" id="syg_option_pagenumrec" name="syg_option_pagenumrec" value="<?php echo $options['syg_option_pagenumrec']; ?>" size="20">
 	</fieldset>
 	<hr/>

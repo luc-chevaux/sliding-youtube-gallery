@@ -59,6 +59,7 @@ jQuery.noConflict();
 		displayLoad : function () {
 			$('#syg_video_container #hook').fadeIn(900,0);
 			$('#syg_video_container #hook').html('<img src="<?php echo $syg->getImgRoot(); ?>ui/bigLoader.gif" />');
+			
 		},
 	
 		/**
@@ -75,7 +76,7 @@ jQuery.noConflict();
 			data = $.parseJSON(JSON.stringify(data));
 			var html;
 			
-			$('table[id^=video_entry_table-]').remove();
+			$('table[class^=video_entry_table-]').remove();
 		
 			$.hideLoad();
 			$.each(data, function(key, val) {
@@ -140,6 +141,9 @@ jQuery.noConflict();
 				
 				$('#syg_video_container #hook').after(html);
 			});
+			
+			// add fancybox
+			$.addFancyBoxSupport();
 		},
 		  
 		/**
@@ -162,6 +166,24 @@ jQuery.noConflict();
 			});
 		},
 		
+		/**
+		 * function that add pagination event per table
+		 */
+		addFancyBoxSupport : function () {
+			// add fancybox to each sygVideo css class
+			$(".sygVideo").fancybox({
+				'width' : <?php echo $width; ?>,  
+				'height' : <?php echo $height; ?>,
+				'autoScale' : true,  
+				'transitionIn' : 'none',  
+				'transitionOut' : 'none',  
+				'type' : 'iframe',  
+				'hideOnOverlayClick' : false,
+				'autoDimensions' : false,
+				'padding' : 0
+			});
+		},
+		
 		getQParam : function (name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 			var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -180,20 +202,7 @@ jQuery.noConflict();
  # load fancybox and visual effects				# 
  ************************************************/ 
 
-jQuery(document).ready(function($){
-	// add fancybox to each sygVideo css class
-	$(".sygVideo").fancybox({
-		'width' : <?php echo $width; ?>,  
-		'height' : <?php echo $height; ?>,
-		'autoScale' : true,  
-		'transitionIn' : 'none',  
-		'transitionOut' : 'none',  
-		'type' : 'iframe',  
-		'hideOnOverlayClick' : false,
-		'autoDimensions' : false,
-		'padding' : 0
-	});
-	
+jQuery(document).ready(function($){	
 	// load if page contains a list
 	if ($('#syg_video_container').length){
 	

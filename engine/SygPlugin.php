@@ -505,7 +505,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @throws Exception
 	 * @return $feed
 	 */
-	public function getVideoFeed(SygGallery $gallery, $start = NULL, $per_page = NULL) {
+	public function getVideoFeed(SygGallery $gallery, $start = null, $per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
 			$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
@@ -545,11 +545,10 @@ class SygPlugin extends SanityPluginFramework {
 			}
 		}
 		
-		// feed pagination
-		if ($start && $per_page) {
-			$start--;
+		// feed pagination		
+		if (($start !== null) && ($per_page !== null)) {
 			$feed_page = new Zend_Gdata_YouTube_VideoFeed();
-			for ($i=$start;$i<$per_page;$i++) {
+			for ($i=$start;$i<($start + $per_page);$i++) {
 				$feed_page->addEntry($feed->offsetGet($i));
 			}
 			$feed = $feed_page;
@@ -583,6 +582,9 @@ class SygPlugin extends SanityPluginFramework {
 
 				// number of pages
 				$options = $this->getOptions();
+				$this->data['options'] = $options;
+				
+				// calculate pages
 				$this->data['pages'] = ceil($gallery->countGalleryEntry() / $options['syg_option_pagenumrec']);
 				
 				// set front end option
@@ -825,6 +827,7 @@ class SygPlugin extends SanityPluginFramework {
 			(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
 			(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
 			(!get_option('syg_option_pagenumrec')) ? add_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']) : update_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']);
+			(!get_option('syg_option_paginationarea')) ? add_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']) : update_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']);
 			
 			$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
@@ -1145,6 +1148,7 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_apikey'] = get_option('syg_option_apikey');
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
 		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
+		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
 		
 		return $options;
 	}

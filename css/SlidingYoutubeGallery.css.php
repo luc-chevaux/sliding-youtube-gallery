@@ -22,7 +22,32 @@ $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);
 extract ($option);
-?>
+?>#syg-pagination-galleries, #syg-pagination-styles {
+	text-align:center;
+	margin-left:15px;
+}
+
+#syg-pagination-galleries li, #syg-pagination-styles li {	
+	list-style: none;
+	float: left;
+	margin-right: 16px; 
+	padding:5px;
+	box-shadow: 0 0 5px #333333;
+	background-color: #333;
+	color:#ffffff;
+	border-radius: 10px;
+	width: 20px;
+	height: 20px;
+}
+
+#syg-pagination-galleries li:hover, #syg-pagination-styles li:hover { 
+	color:#FF0084; 
+	cursor: pointer; 
+}
+
+.current_page {
+	color: red !important;
+}
 
 /* general styles */
 
@@ -186,4 +211,38 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 
 #gallery-title {
 
+}
+
+#paginator-top, #paginator-bottom {
+	display: block;
+	width: 100%;
+	clear: both;
+	magin: 0;
+	padding: 0;
+}
+
+#syg-page-pagination {
+	text-align:center;
+}
+
+#syg-page-pagination li {	
+	list-style: none;
+	float: left;
+	margin-right: 16px; 
+	padding:5px;
+	box-shadow: 0 0 5px #333333;
+	background-color: #333;
+	color:#ffffff;
+	border-radius: 10px;
+	width: 20px;
+	height: 20px;
+}
+
+#syg-page-pagination li:hover { 
+	color:#FF0084; 
+	cursor: pointer; 
+}
+
+.current_page {
+	color: red !important;
 }

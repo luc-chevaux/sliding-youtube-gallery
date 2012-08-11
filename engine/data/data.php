@@ -81,25 +81,16 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 		switch ($_GET['query']) {
 			case 'videos':
 				if($_GET['page_number']) {
-					
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
-					$page_number -= 1;
-					
+					$page_number -= 1;		
 					$options = $plugin->getOptions();
-					
 					$per_page = $options['syg_option_pagenumrec']; // Per page records
-					
 					$start = $page_number * $per_page;
-					
 					$dao = new SygDao();
-										
 					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
-					
 					$videos_to_json = array();
-					
 					foreach ($videos as $entry) {
-						
 						$element['video_id'] = $entry->getVideoId();
 						$element['video_description'] = $entry->getVideoDescription();
 						$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
@@ -111,15 +102,14 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						/*$entry = new Zend_Gdata_YouTube_VideoEntry();*/
 						$thumbnails = $entry->getVideoThumbnails();
 						$element['video_thumbshot'] = $thumbnails[1]['url'];
-						
 						array_push($videos_to_json, $element);
 					}
-						
 					echo json_encode ($videos_to_json);
 				}
 				break;
 			default: 
-				NULL; break;
+				NULL; 
+				break;
 		}
 	}
 }
