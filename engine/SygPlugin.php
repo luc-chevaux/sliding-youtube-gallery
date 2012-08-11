@@ -7,14 +7,13 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  * 
- * @todo Paginazione gallerie pagina (milestone v1.3.0)
+ * @todo sistemare css video page
  * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
- * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.3.0)
- * @todo Background image (milesone v1.3.0)
- * @todo Superare piano di test back-end (milestone v1.3.0)
- * @todo Superare piano di test front end (milestone v1.3.0)
  * 
+ * 
+ * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
+ * @todo Background image (milesone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4)
  */
 
@@ -612,7 +611,7 @@ class SygPlugin extends SanityPluginFramework {
 		$view['imgPath'] = $this->getImgRoot();
 		$view['jsPath'] = $this->getJsRoot();
 		// define plugin url
-		$view['pluginUrl'] = $this->homeRoot . $this->getPluginRoot();
+		$view['pluginUrl'] = $this->getPluginRoot();
 
 		switch ($context) {
 		case SygConstant::SYG_CTX_BE:

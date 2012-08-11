@@ -205,7 +205,7 @@ jQuery.noConflict();
 jQuery(document).ready(function($){	
 	// load if page contains a list
 	if ($('#syg_video_container').length){
-	
+		/* video page */
 		// loading images
 		$.displayLoad();
 		
@@ -214,5 +214,8 @@ jQuery(document).ready(function($){
 		
 		// add pagination events
 		$.addPaginationClickEvent();
+	} else {
+		/* video gallery */
+		$.addFancyBoxSupport();
 	}
 });  

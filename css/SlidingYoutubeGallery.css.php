@@ -22,7 +22,9 @@ $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);
 extract ($option);
-?>#syg-pagination-galleries, #syg-pagination-styles {
+?>
+
+#syg-pagination-galleries, #syg-pagination-styles {
 	text-align:center;
 	margin-left:15px;
 }
@@ -114,6 +116,11 @@ h4.video_title-<?php echo $id; ?> a {
 	border-width: 0px 0px 0px 0px;
 	margin: 0;
 	padding: 0;
+	
+}
+
+#syg_video_page-<?php echo $id; ?> {
+	background-color: <?php echo $syg_box_background; ?>;
 }
 
 .video_entry_table-<?php echo $id; ?> td p {
