@@ -8,6 +8,7 @@
  * @version: 1.2.5
  * 
  * @todo sistemare css video page
+ * @todo ripristinare preview
  * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
  * 
@@ -854,21 +855,15 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToAddGallery() {
-		
 			$updated = false;
-			
-			if (isset($_POST['syg_submit_hidden'])
-					&& $_POST['syg_submit_hidden'] == 'Y') {
+			if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
 				// database add style procedure
 				// get posted values
 				$data = serialize($_POST);
 			
 				try {
 					// validate data
-					//SygValidate::getInstance().validateGallery($data);
-					//// check youtube user
-					//$valid = $this->sygYouTube
-					//->getUserProfile($_POST['syg_youtube_username']);
+					SygValidate::getInstance()->validateGallery($data);
 			
 					// create a new gallery
 					$gallery = new SygGallery($data);
@@ -918,18 +913,16 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToAddStyle() {
-
 		$updated = false;
-
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
+		if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
+			
 			// database add style procedure
 			// get posted values
 			$data = serialize($_POST);
 
 			try {
 				// validate data
-				//SygValidate::getInstance().validateStyle($data);
+				SygValidate::getInstance()->validateStyle($data);
 
 				// create a new gallery
 				$style = new SygStyle($data);
@@ -975,33 +968,41 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToEditGallery() {
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
+		$updated = false;
+		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+			
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
 
-			// validate posted values (to implement)
-			$valid = true;
-
-			if ($valid) {
+			try {
+				// validate data
+				SygValidate::getInstance()->validateGallery($data);
+				
 				// create a new gallery
 				$syg = new SygGallery($data);
-
+	
 				// update db
 				$this->sygDao->updateSygGallery($syg);
-
+	
 				// updated flag
 				$updated = true;
-
+	
 				// updated flag
 				$this->data['updated'] = $updated;
-			} else {
+			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
-				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblemFound();
+				$updated = false;
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$updated = false;
 			}
-
+			
 			// render adminGallery view
 			return $this->forwardToGalleries($updated);
 		} else {
@@ -1029,16 +1030,17 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToEditStyle() {
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
+		$updated = false;
+		if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
+			
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
 	
-			// validate posted values (to implement)
-			$valid = true;
-	
-			if ($valid) {
+			try {
+				// validate data
+				SygValidate::getInstance()->validateStyle($data);
+				
 				// create a new gallery
 				$style = new SygStyle($data);
 	
@@ -1050,10 +1052,15 @@ class SygPlugin extends SanityPluginFramework {
 	
 				// updated flag
 				$this->data['updated'] = $updated;
-			} else {
+			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
-				$this->data['exception_message'] = SygConstant::BE_VALIDATE_USER_NOT_FOUND;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblemFound();
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
 			}
 	
 			// render adminStyle view
