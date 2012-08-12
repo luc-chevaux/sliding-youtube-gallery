@@ -8,7 +8,6 @@
  * @version: 1.2.5
  * 
  * @todo sistemare css video page
- * @todo ripristinare preview
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
  * 
  * 
