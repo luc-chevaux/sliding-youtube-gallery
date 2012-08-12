@@ -1056,7 +1056,7 @@ class SygPlugin extends SanityPluginFramework {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblemFound();
+				$this->data['exception_detail'] = $ex->getProblems();
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;

@@ -136,7 +136,6 @@ class SygConstant {
 	/**
 	 * Exceptions
 	 */
-	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
 	
 	const MSG_EX_STYLE_NOT_VALID = 'An error was found while updating your style.';
 	const COD_EX_STYLE_NOT_VALID = '1001';
@@ -144,5 +143,11 @@ class SygConstant {
 	const COD_EX_GALLERY_NOT_VALID = '1002';
 	const MSG_EX_SETTING_NOT_VALID = 'An error was found while updating plugin settings.';
 	const COD_EX_SETTING_NOT_VALID = '1003';
+	
+	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
+	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value';
+	const BE_VALIDATE_NOT_LESS_VALUE = 'value is not less than %d';
+	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value';
+	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s';
 }
 ?>
