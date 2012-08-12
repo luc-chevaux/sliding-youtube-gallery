@@ -150,5 +150,8 @@ class SygConstant {
 	const BE_VALIDATE_NOT_LESS_VALUE = 'value is not less than %d';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s';
+	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user';
+	const BE_VALIDATE_NOT_A_VALID_VIDEO = '%s is not a valid youtube video';
+	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s is not a valid youtube playlist';
 }
 ?>
