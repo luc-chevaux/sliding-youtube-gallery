@@ -9,7 +9,6 @@
  * 
  * @todo sistemare css video page
  * @todo ripristinare preview
- * @todo Creare il servizio di validazione dei form (milestone v1.3.0)
  * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
  * 
  * 
