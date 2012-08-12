@@ -3,6 +3,7 @@
 <!-- Extra Php Code -->
 
 <!-- User Message -->
+<?php include 'inc/statusBar.inc.php'; ?>
 
 <!-- Css Inclusion -->
 <style type="text/css">

@@ -19,7 +19,8 @@ class SygValidateException extends Exception {
 	 * @since 1.3.0
 	 * @param $message, $code
 	 */
-	public function __construct($message, $code = 0, Exception $previous = null) {
+	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
+		$this->problems = $problems;
 		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
 			parent::__construct($message, $code, $previous);
 		} else {
@@ -99,18 +100,18 @@ class SygValidate {
 		
 		// syg_thumbnail_height intero
 		
-		if (!(filter_var($data['syg_thumbnail_height'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_thumbnail_height']))) {
 			array_push($problemFound, array('field' => 'syg_thumbnail_height', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		 
 		// syg_thumbnail_width intero
-		if (!(filter_var($data['syg_thumbnail_width'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_thumbnail_width']))) {
 			array_push($problemFound, array('field' => 'syg_thumbnail_width', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
 		// syg_thumbnail_bordersize intero <= 10		
-		if (!(filter_var($data['syg_thumbnail_bordersize'], FILTER_VALIDATE_INT) && $data['syg_thumbnail_bordersize'] <= 10 )) {
-			if (!(filter_var($data['syg_thumbnail_bordersize'], FILTER_VALIDATE_INT))) { 
+		if (!(is_int($data['syg_thumbnail_bordersize']) && $data['syg_thumbnail_bordersize'] <= 10 )) {
+			if (!(is_int($data['syg_thumbnail_bordersize']))) { 
 				array_push($problemFound, array('field' => 'syg_thumbnail_bordersize', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 			} else {
 				if (!($data['syg_thumbnail_bordersize'] <= 10)) {
@@ -120,8 +121,8 @@ class SygValidate {
 		}
 		
 		// syg_thumbnail_borderradius intero <=20
-		if (!(filter_var($data['syg_thumbnail_borderradius'], FILTER_VALIDATE_INT) && $data['syg_thumbnail_borderradius'] <= 20)) {
-			if (!(filter_var($data['syg_thumbnail_bordersize'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_thumbnail_borderradius']) && $data['syg_thumbnail_borderradius'] <= 20)) {
+			if (!(is_int($data['syg_thumbnail_bordersize']))) {
 				array_push($problemFound, array('field' => 'syg_thumbnail_borderradius', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 			} else {
 				if (!($data['syg_thumbnail_bordersize'] <= 20)) {
@@ -131,13 +132,13 @@ class SygValidate {
 		}
 		
 		// syg_thumbnail_distance intero
-		if (!(filter_var($data['syg_thumbnail_distance'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_thumbnail_distance']))) {
 			array_push($problemFound, array('field' => 'syg_thumbnail_distance', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
 		// syg_thumbnail_buttonopacity reale tra 0 e 1
-		if (!(filter_var($data['syg_thumbnail_buttonopacity'], FILTER_VALIDATE_FLOAT) && $data['syg_thumbnail_buttonopacity'] >= 0 && $data['syg_thumbnail_buttonopacity'] <= 1)) {
-			if (!(filter_var($data['syg_thumbnail_buttonopacity'], FILTER_VALIDATE_FLOAT))) {
+		if (!(is_float($data['syg_thumbnail_buttonopacity']) && $data['syg_thumbnail_buttonopacity'] >= 0 && $data['syg_thumbnail_buttonopacity'] <= 1)) {
+			if (!(is_float($data['syg_thumbnail_buttonopacity']))) {
 				array_push($problemFound, array('field' => 'syg_thumbnail_buttonopacity', 'msg' => SygConstant::BE_VALIDATE_NOT_A_FLOAT));
 			} else {
 				if (!($data['syg_thumbnail_buttonopacity'] >= 0 && $data['syg_thumbnail_buttonopacity'] <= 1)) {
@@ -147,13 +148,13 @@ class SygValidate {
 		}
 		
 		// syg_box_width intero
-		if (!(filter_var($data['syg_box_width'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_box_width']))) {
 			array_push($problemFound, array('field' => 'syg_box_width', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
 		// syg_box_radius intero <=20
-		if (!(filter_var($data['syg_box_radius'], FILTER_VALIDATE_INT) && ($data['syg_box_radius'] <= 20))) {
-			if (!(filter_var($data['syg_box_radius'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_box_radius']) && ($data['syg_box_radius'] <= 20))) {
+			if (!(is_int($data['syg_box_radius']))) {
 				array_push($problemFound, array('field' => 'syg_box_radius', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 			} else {
 				if (!($data['syg_box_radius'] <= 20)) {
@@ -163,19 +164,18 @@ class SygValidate {
 		}
 		
 		// syg_box_padding intero
-		if (!(filter_var($data['syg_box_padding'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_box_padding']))) {
 			array_push($problemFound, array('field' => 'syg_box_padding', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
 		// syg_description_fontsize intero
-		if (!(filter_var($data['syg_description_fontsize'], FILTER_VALIDATE_INT))) {
+		if (!(is_int($data['syg_description_fontsize']))) {
 			array_push($problemFound, array('field' => 'syg_description_fontsize', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
-		var_dump ($problemFound);
 		
 		if (count($problemFound) > 0) {
 			// throws exception
-			 throw new SygValidateException(SygConstant::MSG_EX_STYLE_NOT_VALID, SygConstant::COD_EX_STYLE_NOT_VALID);
+			 throw new SygValidateException($problemFound, SygConstant::MSG_EX_STYLE_NOT_VALID, SygConstant::COD_EX_STYLE_NOT_VALID);
 		} else {
 			return true;
 		}

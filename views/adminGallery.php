@@ -7,13 +7,7 @@
 ?>
 
 <!-- User Message -->
-<?php if ($this->data['updated']) {?>
-	<div class="updated"><p><strong>Settings saved.</strong></p></div>
-<?php } ?>
-
-<?php if ($this->data['exception']) {?>
-	<div class="error"><p><strong><?php echo $this->data['exception_message']; ?></strong></p></div>
-<?php } ?>
+<?php include 'inc/statusBar.inc.php'; ?>
 
 <!-- Css Inclusion -->
 <style type="text/css">
