@@ -172,7 +172,8 @@ class SygValidate {
 		if (!(is_int($data['syg_description_fontsize']))) {
 			array_push($problemFound, array('field' => 'syg_description_fontsize', 'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
-		
+		 var_dump($problemFound);
+		 die();
 		if (count($problemFound) > 0) {
 			// throws exception
 			 throw new SygValidateException($problemFound, SygConstant::MSG_EX_STYLE_NOT_VALID, SygConstant::COD_EX_STYLE_NOT_VALID);
