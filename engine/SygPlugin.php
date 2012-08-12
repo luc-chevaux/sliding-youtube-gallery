@@ -820,32 +820,47 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToSettings($updated = false) {
-		$output = '';
-		
+		$updated = false;
 		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
-			
-			(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
-			(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
-			(!get_option('syg_option_pagenumrec')) ? add_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']) : update_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']);
-			(!get_option('syg_option_paginationarea')) ? add_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']) : update_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']);
-			
-			$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
+			// database add/edit settings procedure
+			// get posted values
+			$data = serialize($_POST);
+			try {
+				// validate data
+				$valid = SygValidate::validateSettings($data);
+				
+				(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
+				(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
+				(!get_option('syg_option_pagenumrec')) ? add_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']) : update_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']);
+				(!get_option('syg_option_paginationarea')) ? add_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']) : update_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']);
+				
+				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
-			// render adminStyles view
-			return $this->render('redirect');
-		} else {
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-			
-			// get settings
-			$options = $this->getOptions();
-			
-			// put settings in the view
-			$this->data['options'] = $options;
-			
-			// render adminSettings view
-			return $this->render('adminSettings');
-		}
+				// render adminStyles view
+				return $this->render('redirect');
+			} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblems();
+			} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+			}
+		} 
+		
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		
+		// get settings
+		$options = $this->getOptions();
+		
+		// put settings in the view
+		$this->data['options'] = $options;
+		
+		// render adminSettings view
+		return $this->render('adminSettings');
 	}
 
 	/**
@@ -857,7 +872,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToAddGallery() {
 			$updated = false;
 			if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
-				// database add style procedure
+				// database add gallery procedure
 				// get posted values
 				$data = serialize($_POST);
 			
