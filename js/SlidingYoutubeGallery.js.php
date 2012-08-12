@@ -20,9 +20,6 @@ require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPl
 
 $syg = SygPlugin::getInstance();
 
-/*$syg = new SygPlugin();
-$syg->getPluginRoot()*/
-
 $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 
