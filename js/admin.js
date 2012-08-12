@@ -170,16 +170,17 @@ jQuery.noConflict();
 					
 						$('#galleries_table tr:last-child').after(html);
 						  
-						var dHeight     =  parseInt(val.thumbHeight) + (parseInt(val.boxPadding)*2) ;
-						var dWidth     =  parseInt(val.boxWidth) + (parseInt(val.boxPadding)*2) ;
+						var dHeight     =  parseInt(val.sygStyle.thumbHeight) + (parseInt(val.sygStyle.boxPadding)*2) ;
+						var dWidth     =  parseInt(val.sygStyle.boxWidth) + (parseInt(val.sygStyle.boxPadding)*2) ;
 						
+						// set preview action
 						$('.iframe_' + val.id).fancybox({ 
 							'padding' : 30,
 							'width' : dWidth,
 							'height' : dHeight,
 							'titlePosition' : 'inside',
 							'titleFormat' : function() {
-								return '<div id="gallery-title"><h3>' + val.ytSrc + '</h3></div>';
+								return '<div id="gallery-title"><h3>' + val.galleryName + '</h3></div>';
 							},
 							'centerOnScroll' : true,
 							'onComplete': function() {
