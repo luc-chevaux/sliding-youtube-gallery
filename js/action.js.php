@@ -40,7 +40,7 @@ jQuery(window).load(function() {
 		
 		//Get menu width
 		var divWidth = <?php echo $syg_box_width; ?>;
-		
+				
 		//Remove scrollbars	
 		div.css({overflow: 'hidden'});
 		
