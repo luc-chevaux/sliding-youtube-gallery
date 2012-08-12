@@ -863,7 +863,7 @@ class SygPlugin extends SanityPluginFramework {
 			
 				try {
 					// validate data
-					SygValidate::getInstance()->validateGallery($data);
+					$valid = SygValidate::validateGallery($data);
 			
 					// create a new gallery
 					$gallery = new SygGallery($data);
@@ -876,34 +876,33 @@ class SygPlugin extends SanityPluginFramework {
 			
 					// updated flag
 					$this->data['updated'] = $updated;
+					
+					// render adminGallery view
+					return $this->forwardToGalleries($updated);
 				} catch (SygValidateException $ex) {
 					// set the error
 					$this->data['exception'] = true;
 					$this->data['exception_message'] = $ex->getMessage();
-					$this->data['exception_detail'] = $ex->getProblemFound();
+					$this->data['exception_detail'] = $ex->getProblems();
 				} catch (Exception $ex) {
 					// set the error
 					$this->data['exception'] = true;
 					$this->data['exception_message'] = $ex->getMessage();
 				}
+			}
 			
-				// render adminGallery view
-				return $this->forwardToGalleries($updated);
-			} else {
-				// gallery administration form section
-				// prepare header
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			// gallery administration form section
+			// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 			
-				// put an empty gallery in the view
-				$this->data['gallery'] = new SygGallery();
-				
-				// put styles to populate combo
-				$this->data['styles'] = $this->sygDao->getAllSygStyles();
+			// put an empty gallery in the view
+			$this->data['gallery'] = new SygGallery();
 			
-				// render adminGallery view
-				return $this->render('adminGallery');
-			}	
-			
+			// put styles to populate combo
+			$this->data['styles'] = $this->sygDao->getAllSygStyles();
+		
+			// render adminGallery view
+			return $this->render('adminGallery');			
 	}
 
 	/**
@@ -922,7 +921,7 @@ class SygPlugin extends SanityPluginFramework {
 
 			try {
 				// validate data
-				SygValidate::getInstance()->validateStyle($data);
+				$valid = SygValidate::validateStyle($data);
 
 				// create a new gallery
 				$style = new SygStyle($data);
@@ -935,30 +934,29 @@ class SygPlugin extends SanityPluginFramework {
 
 				// updated flag
 				$this->data['updated'] = $updated;
+				
+				// render adminGallery view
+				return $this->forwardToStyles($updated);
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblemFound();
+				$this->data['exception_detail'] = $ex->getProblems();
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 			}
-
-			// render adminGallery view
-			return $this->forwardToStyles($updated);
-		} else {
-			// gallery administration form section
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-			// put an empty gallery in the view
-			$this->data['style'] = new SygStyle();
-
-			// render adminGallery view
-			return $this->render('adminStyle');
 		}
+		// gallery administration form section
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// put an empty gallery in the view
+		$this->data['style'] = new SygStyle();
+
+		// render adminGallery view
+		return $this->render('adminStyle');
 	}
 
 	/**
@@ -977,7 +975,7 @@ class SygPlugin extends SanityPluginFramework {
 
 			try {
 				// validate data
-				SygValidate::getInstance()->validateGallery($data);
+				$valid = SygValidate::getInstance()->validateGallery($data);
 				
 				// create a new gallery
 				$syg = new SygGallery($data);
@@ -990,37 +988,35 @@ class SygPlugin extends SanityPluginFramework {
 	
 				// updated flag
 				$this->data['updated'] = $updated;
+				
+				// render adminGallery view
+				return $this->forwardToGalleries($updated);
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				$this->data['exception_detail'] = $ex->getProblemFound();
-				$updated = false;
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$updated = false;
 			}
-			
-			// render adminGallery view
-			return $this->forwardToGalleries($updated);
-		} else {
-			// get the gallery id
-			$id = (int) $_GET['id'];
-
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-			// put gallery in the view
-			$this->data['gallery'] = $this->sygDao->getSygGalleryById($id);
-
-			// put styles to populate combo
-			$this->data['styles'] = $this->sygDao->getAllSygStyles();
-			
-			// render adminGallery view
-			return $this->render('adminGallery');
 		}
+		
+		// get the gallery id
+		$id = (int) $_GET['id'];
+
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// put gallery in the view
+		$this->data['gallery'] = $this->sygDao->getSygGalleryById($id);
+
+		// put styles to populate combo
+		$this->data['styles'] = $this->sygDao->getAllSygStyles();
+		
+		// render adminGallery view
+		return $this->render('adminGallery');
 	}
 	
 	/**
@@ -1036,10 +1032,10 @@ class SygPlugin extends SanityPluginFramework {
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
-	
+
 			try {
 				// validate data
-				SygValidate::getInstance()->validateStyle($data);
+				$valid = SygValidate::validateStyle($data);
 				
 				// create a new gallery
 				$style = new SygStyle($data);
@@ -1052,6 +1048,10 @@ class SygPlugin extends SanityPluginFramework {
 	
 				// updated flag
 				$this->data['updated'] = $updated;
+				
+				// render adminStyle view
+				return $this->forwardToStyles($updated);
+				
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
@@ -1062,22 +1062,20 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 			}
-	
-			// render adminStyle view
-			return $this->forwardToStyles($updated);
-		} else {
-			// get the style id
-			$id = (int) $_GET['id'];
-	
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-	
-			// put style in the view
-			$this->data['style'] = $this->sygDao->getSygStyleById($id);
-
-			// render adminStyle view
-			return $this->render('adminStyle');
 		}
+		
+		// get the style id
+		$id = (int) $_GET['id'];
+
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// put style in the view
+		$this->data['style'] = $this->sygDao->getSygStyleById($id);
+
+		// render adminStyle view
+		return $this->render('adminStyle');
+		
 	}
 
 	/**

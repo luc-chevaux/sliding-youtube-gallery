@@ -104,6 +104,7 @@ class SygConstant {
 	const SYG_BOX_DEFAULT_BACKGROUND_COLOR = "#cccccc";
 	const SYG_THUMB_DEFAULT_WIDTH = 200;
 	const SYG_THUMB_DEFAULT_HEIGHT = 150;
+	const SYG_THUMB_DEFAULT_IMAGE = 1;
 
 	/**
 	 * GUI constants

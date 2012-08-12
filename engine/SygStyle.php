@@ -36,7 +36,7 @@ class SygStyle {
 	private $id;
 	
 	// recordset type
-	public static $rsType = array('%s','%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%d','%d','%d','%s','%d','%d','%d');
+	public static $rsType = array('%s','%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%f','%d','%d','%d','%d','%d','%d');
 	
 	/**
 	 * @name __construct
@@ -80,7 +80,7 @@ class SygStyle {
 		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
 		$this->setThumbDistance($result->syg_thumbnail_distance);
 		$this->setThumbHeight(($result->syg_thumbnail_height > 0) ? $result->syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
-		$this->setThumbImage($result->syg_thumbnail_image);
+		$this->setThumbImage((!empty($result->syg_thumbnail_image)) ? $result->syg_thumbnail_image : SygConstant::SYG_THUMB_DEFAULT_IMAGE);
 		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
 		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
 		

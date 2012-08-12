@@ -7,7 +7,8 @@
 		<p>
 			<strong><?php echo $this->data['exception_message']; ?></strong>
 			<ul>
-				<?php foreach ($this->data['exception_detail'] as $problem) { ?>
+				<?php $detail = $this->data['exception_detail']; ?>
+				<?php foreach ($detail as $problem) { ?>
 					<li><?php echo $problem['field'].' - '.$problem['msg']; ?></li>
 				<?php }?>
 			</ul>
