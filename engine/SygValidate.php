@@ -80,7 +80,7 @@ class SygValidate {
 	 * @throws SygValidateException
 	 */
 	public static function validateStyle($data) {
-
+		// unserialize data
 		$data = unserialize($data);
 
 		// validation code
@@ -216,14 +216,75 @@ class SygValidate {
 	 * @throws SygValidateException
 	 */
 	public static function validateGallery($data) {
-		// validation code
+		// unserialize data
+		$data = unserialize($data);
 
-		// validazione congiunta syg_gallery_type e syg_gallery_type e syg_youtube_src
+		// validation code
+		$problemFound = array();
+
+		// validazione congiunta syg_gallery_type e syg_youtube_src
+		switch ($syg_gallery_type) {
+		case "feed":
+			// check youtube user
+			$youtube = new SygYouTube();
+			$profile = $youtube->getUserProfile($data['syg_youtube_src']);
+			if (!$profile) {
+				array_push($problemFound,
+						array('field' => 'syg_youtube_src',
+								'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_YT_USER));
+			}
+			break;
+		case "list":
+			// check for every video
+			$list_of_videos = preg_split('/\r\n|\r|\n/', $data['syg_youtube_src']);
+			foreach ($list_of_videos as $key => $value) {
+				$list_of_videos[$key] = str_replace('v=', '',
+						parse_url($value, PHP_URL_QUERY));
+				$videoEntry = $this->sygYouTube
+						->getVideoEntry($list_of_videos[$key]);
+				if (!videoEntry) {
+					array_push($problemFound,
+							array('field' => 'syg_youtube_src',
+									'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_VIDEO));
+				}
+			}
+			break;
+		case "playlist":
+			// check for the playlist
+			$playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
+			$content = json_decode(
+					file_get_contents(
+							'http://gdata.youtube.com/feeds/api/playlists/'
+									. $playlist_id
+									. '/?v=2&alt=json&feature=plcp'));
+			$feed_to_object = $content->feed->entry;
+			if (!$feed_to_object) {
+				array_push($problemFound,
+						array('field' => 'syg_youtube_src',
+								'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST));
+			}
+			break;
+		default:
+			break;
+		}
+
 		// syg_youtube_maxvideocount intero 
+		if (!(preg_match('/^\d+$/', $data['syg_youtube_maxvideocount']))) {
+			array_push($problemFound,
+					array('field' => 'syg_youtube_maxvideocount',
+							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
 
 		// throws exception
-		throw new SygValidateException(SygConstant::MSG_EX_GALLERY_NOT_VALID,
-				SygConstant::COD_EX_GALLERY_NOT_VALID);
+		if (count($problemFound) > 0) {
+			// throws exception
+			$exc = new SygValidateException($problemFound,
+					SygConstant::MSG_EX_GALLERY_NOT_VALID,
+					SygConstant::COD_EX_GALLERY_NOT_VALID);
+			throw $exc;
+		} else {
+			return true;
+		}
 	}
 
 	/**
@@ -234,14 +295,36 @@ class SygValidate {
 	 * @throws SygValidateException
 	 */
 	public static function validateSettings($data) {
+		// unserialize data
+		$data = unserialize($data);
+		
 		// validation code
-
+		$problemFound = array();
+		
 		// syg_option_numrec intero
+		if (!(preg_match('/^\d+$/', $data['syg_option_numrec']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_numrec',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
 		// syg_option_pagenumrec intero
-
+		if (!(preg_match('/^\d+$/', $data['syg_option_pagenumrec']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_pagenumrec',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
 		// throws exception
-		throw new SygValidateException(SygConstant::MSG_EX_SETTING_NOT_VALID,
-				SygConstant::COD_EX_SETTING_NOT_VALID);
+		if (count($problemFound) > 0) {
+			// throws exception
+			$exc = new SygValidateException($problemFound,
+					SygConstant::MSG_EX_SETTING_NOT_VALID,
+					SygConstant::COD_EX_SETTING_NOT_VALID);
+			throw $exc;
+		} else {
+			return true;
+		}
 	}
 }
 ?>
