@@ -21,7 +21,7 @@ class SygConstant {
 	const SYG_CTX_FE = "SYG_CTX_FE";
 	const SYG_CTX_BE = "SYG_CTX_BE";
 	const SYG_CTX_WS = "SYG_CTX_WS";
-	
+
 	/**
 	 * Plugin running action
 	 */
@@ -29,7 +29,7 @@ class SygConstant {
 	const BE_ACTION_MANAGE_STYLES = 'syg-manage-styles';
 	const BE_ACTION_MANAGE_SETTINGS = 'syg-manage-settings';
 	const BE_ACTION_CONTACTS = 'syg-contacts';
-	
+
 	/**
 	 * Notification details
 	 */
@@ -37,7 +37,7 @@ class SygConstant {
 	const BE_ACTION_ACTIVATION = 'activation';
 	const BE_ACTION_DEACTIVATION = 'deactivation';
 	const BE_EMAIL_NOTIFIED = 'subscription@webeng.it';
-	
+
 	/**
 	 * Static and general URI
 	 */
@@ -50,9 +50,9 @@ class SygConstant {
 	/**
 	 * User interface images url
 	 */
-	
-	const BE_ICON_VIDEO_GALLERY= '../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/custom_gallery.png';
-	
+
+	const BE_ICON_VIDEO_GALLERY = '../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/custom_gallery.png';
+
 	/**
 	 * Sql query
 	 */
@@ -91,11 +91,11 @@ class SygConstant {
 	`syg_box_padding` int(11) NOT NULL,
 	PRIMARY KEY  (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
-	
+
 	/**
 	 * Default values for gallery
 	 */
-	
+
 	/**
 	 * Default values for styles
 	 */
@@ -109,42 +109,42 @@ class SygConstant {
 	/**
 	 * GUI constants
 	 */
-	
+
 	// user message
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
 	const BE_NO_STYLES_FOUND = 'No styles found in database';
-	
+
 	// @todo da rivedere
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_GALLERY_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
 	const BE_CONTACT_MESSAGE = 'Il lorem ipsum è un insieme di parole utilizzato da grafici, designer, programmatori e tipografi come testo riempitivo in bozzetti e prove grafiche[1]. È un testo privo di senso, composto da parole in lingua latina (spesso storpiate), riprese pseudocasualmente da uno scritto di Cicerone del 45 a.C.';
 	const BE_DONATE_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
-	
+
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';
 	const BE_MENU_MANAGE_STYLES = 'Manage Styles';
 	const BE_MENU_MANAGE_SETTINGS = 'General Settings';
 	const BE_MENU_CONTACTS_AND_SUPPORT = 'Contact & Support';
-	
+
 	// context menu
 	const BE_MENU_ADD_NEW_STYLE = 'Add new Style';
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
-	
+
 	/**
 	 * Exceptions
 	 */
-	
+
 	const MSG_EX_STYLE_NOT_VALID = 'An error was found while updating your style.';
 	const COD_EX_STYLE_NOT_VALID = '1001';
 	const MSG_EX_GALLERY_NOT_VALID = 'An error was found while updating your gallery.';
 	const COD_EX_GALLERY_NOT_VALID = '1002';
 	const MSG_EX_SETTING_NOT_VALID = 'An error was found while updating plugin settings.';
 	const COD_EX_SETTING_NOT_VALID = '1003';
-	
+
 	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
 	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value';
 	const BE_VALIDATE_NOT_LESS_VALUE = 'value is not less than %d';
