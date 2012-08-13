@@ -631,7 +631,7 @@ class SygPlugin extends SanityPluginFramework {
 
 			// js to include
 			wp_register_script('sliding-youtube-gallery-admin',
-					$view['jsPath'] . 'admin.js', array(),
+					$view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(),
 					SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('sliding-youtube-gallery-admin');
 			
