@@ -1,6 +1,6 @@
 <?php if (($options['syg_option_paginationarea'] == 'top') || ($options['syg_option_paginationarea'] == 'bottom') || ($options['syg_option_paginationarea'] == 'both')) { ?>
-	<div id="paginator-<?php echo $paginator_area; ?>">			
-		<ul id="syg-page-pagination">
+	<div id="paginator-<?php echo $paginator_area.'-'.$gallery->getId(); ?>">			
+		<ul id="pagination-<?php echo $paginator_area.'-'.$gallery->getId(); ?>">
 			<?php
 			// show page links
 			for($i=1; $i<=$this->data['pages']; $i++) {

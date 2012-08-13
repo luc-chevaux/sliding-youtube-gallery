@@ -54,16 +54,17 @@ jQuery.noConflict();
 		 * function to display splash image
 		 */
 		displayLoad : function () {
-			$('#syg_video_container #hook').fadeIn(900,0);
-			$('#syg_video_container #hook').html('<img src="<?php echo $syg->getImgRoot(); ?>ui/loader/loader_flat_1.gif" />');
-			
+			$('table[class^=video_entry_table-]').remove();
+			$('#syg_video_container').css('height', '100px');
+			$('#syg_video_container #hook').fadeIn(900,0);			
 		},
 	
 		/**
 		 * function to hide splash image
 		 */
 		hideLoad : function () {
-			$('#syg_video_container #hook').fadeOut('slow');
+			$('#syg_video_container #hook').fadeOut('fast');
+			$('#syg_video_container').css('height', 'auto');
 		},
 		
 		/* 
@@ -148,17 +149,37 @@ jQuery.noConflict();
 		 */
 		addPaginationClickEvent : function () {
 			// add galleries pagination click event
-			$('#syg-page-pagination li').click(function(){
+			
+			/* top pagination */
+			$('#pagination-top-<?php echo $_GET['id']; ?> li').click(function(){
+				
 				$.displayLoad();
 				// css styles
-				$('#syg-page-pagination li')
+				$('#pagination-top-<?php echo $_GET['id']; ?> li')
 					.attr({'class' : 'other_page'});
 				
 				var buttonPressed = $(this).attr('id');
-				var button =  buttonPressed.replace('top-','').replace('bottom-','');
+				var button =  buttonPressed.replace('top-','');
+				
+				$('#top-' + button).attr({'class' : 'current_page'});
+				
+				// loading data
+				var pageNum = button;
+				$.getJSON('<?php echo $syg->getJsonQueryIfUrl(); ?>?query=videos&page_number=' + pageNum + '&id=<?php echo $_GET['id']?>', function (data) {$.loadData(data);});
+			});
+			
+			/* bottom pagination */
+			$('#pagination-bottom-<?php echo $_GET['id']; ?> li').click(function(){
+				
+				$.displayLoad();
+				// css styles
+				$('#pagination-bottom-<?php echo $_GET['id']; ?> li')
+					.attr({'class' : 'other_page'});
+				
+				var buttonPressed = $(this).attr('id');
+				var button =  buttonPressed.replace('bottom-','');
 				
 				$('#bottom-' + button).attr({'class' : 'current_page'});
-				$('#top-' + button).attr({'class' : 'current_page'});
 				
 				// loading data
 				var pageNum = button;
