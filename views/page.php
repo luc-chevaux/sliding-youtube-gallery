@@ -27,7 +27,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		include 'inc/paginator.inc.php'; 
 		?>
 		
-		<div id="syg_video_container">
+		<div id="syg_video_container-<?php echo $gallery->getId();?>">
 			<div id="hook"></div>
 		</div>
 		
