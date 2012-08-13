@@ -185,7 +185,7 @@ h4.video_title-<?php echo $id; ?> a {
     display: inline-block;
 }
 
-#syg_video_container {
+#syg_video_container-<?php echo $id; ?> {
 	clear: both;
 	display: inline-block;
 	width: 100%;
