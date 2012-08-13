@@ -55,7 +55,7 @@ jQuery.noConflict();
 		 */
 		displayLoad : function () {
 			$('#syg_video_container #hook').fadeIn(900,0);
-			$('#syg_video_container #hook').html('<img src="<?php echo $syg->getImgRoot(); ?>ui/bigLoader.gif" />');
+			$('#syg_video_container #hook').html('<img src="<?php echo $syg->getImgRoot(); ?>ui/loader/loader_flat_1.gif" />');
 			
 		},
 	

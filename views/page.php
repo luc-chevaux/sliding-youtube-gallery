@@ -21,34 +21,19 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 
 <div id="syg_video_page-<?php echo $gallery->getId();?>">
 	<div class="syg_video_page_container-<?php echo $gallery->getId();?>" id="syg_video_page_container-<?php echo $gallery->getId();?>">
-		<?php if (($options['syg_option_paginationarea'] == 'top') || ($options['syg_option_paginationarea'] == 'both')) { ?>
-		<div id="paginator-top">			
-			<ul id="syg-page-pagination">
-				<?php
-				// show page links
-				for($i=1; $i<=$this->data['pages']; $i++) {
-					echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
-				}
-				?>
-			</ul>
-		</div>
-		<?php } ?>
+		
+		<?php 
+		$paginator_area = 'top';
+		include 'inc/paginator.inc.php'; 
+		?>
 		
 		<div id="syg_video_container">
 			<div id="hook"></div>
 		</div>
 		
-		<?php if (($options['syg_option_paginationarea'] == 'bottom') || ($options['syg_option_paginationarea'] == 'both')) { ?>
-		<div id="paginator-bottom">			
-			<ul id="syg-page-pagination">
-				<?php
-				// show page links
-				for($i=1; $i<=$this->data['pages']; $i++) {
-					echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
-				}
-				?>
-			</ul>
-		</div>
-		<?php } ?>
+		<?php 
+		$paginator_area = 'bottom';
+		include 'inc/paginator.inc.php'; 
+		?>
 	</div>
 </div>

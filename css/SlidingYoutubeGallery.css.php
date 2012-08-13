@@ -48,7 +48,7 @@ extract ($option);
 }
 
 .current_page {
-	color: red !important;
+	color: <?php echo $syg_thumbnail_bordercolor; ?> !important;
 }
 
 /* general styles */
@@ -190,6 +190,7 @@ h4.video_title-<?php echo $id; ?> a {
 #syg_video_container {
 	clear: both;
 	display: inline-block;
+	width: 100%;
 }
 
 div.sc_menu-<?php echo $id; ?> {
@@ -258,20 +259,24 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	list-style: none;
 	float: left;
 	margin-left: <?php echo $syg_box_padding; ?>px;
-	padding:5px;
-	box-shadow: 0 0 5px #333333;
-	background-color: #333;
-	color:#ffffff;
-	border-radius: 10px;
-	width: 20px;
-	height: 20px;
+	padding: <?php echo intval($syg_box_padding*0.3); ?>px;;
+	box-shadow: 0 0 8px <?php echo $syg_thumbnail_bordercolor; ?>;
+	background-color: <?php echo $syg_description_fontcolor; ?>;
+	color: <?php echo $syg_box_background; ?>;
+	border-radius: <?php echo intval($syg_box_radius*0.5); ?>px;
+	font-size: <?php echo intval($syg_description_fontsize*0.8); ?>px;
+	height: <?php echo intval(($syg_description_fontsize*0.8) + (($syg_box_padding * 0.2) * 2)); ?>px;
+	width: <?php echo intval(($syg_description_fontsize*0.8) + (($syg_box_padding * 0.2) * 2)); ?>px;
 }
 
 #syg-page-pagination li:hover { 
-	color:#FF0084; 
 	cursor: pointer; 
 }
 
 .current_page {
 	color: red !important;
+}
+
+#hook {
+	display: inline-block;
 }
