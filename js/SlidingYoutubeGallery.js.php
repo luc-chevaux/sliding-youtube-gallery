@@ -96,13 +96,13 @@ jQuery.noConflict();
 				html = html + '<img class="play-icon-<?php echo $_GET['id'];?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">';
 				
 				<?php if ($syg_description_showduration) { ?>
-					html = html + '<span class="video_duration-<?php echo $_GET['id'];?>">' + val.video_duration + '</span>';
+					html = html + '<span class="video_duration-<?php echo $_GET['id']; ?>">' + val.video_duration + '</span>';
 				<?php } ?>
 				html = html + '</a>';
 				html = html + '</td>';
 				
 				html = html + '<td class="syg_video_page_description">';
-				html = html + '<h4 class="video_title"><a href="' + val.video_watch_page_url + '" target="_blank">' + val.video_title + '</a></h4>';
+				html = html + '<h4 class="video_title-<?php echo $_GET['id']; ?>"><a href="' + val.video_watch_page_url + '" target="_blank">' + val.video_title + '</a></h4>';
 				<?php if ($syg_description_show) { ?>
 					html = html + '<p>' + val.video_description + '</p>';
 				<?php }?>

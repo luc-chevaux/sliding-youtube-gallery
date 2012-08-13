@@ -20,7 +20,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 <!-- Gallery -->
 
 <div id="syg_video_page-<?php echo $gallery->getId();?>">
-	<div class="syg_video_page_container-<?php echo $gallery->getId();?>" id="<?php echo $gallery->getId();?>">
+	<div class="syg_video_page_container-<?php echo $gallery->getId();?>" id="syg_video_page_container-<?php echo $gallery->getId();?>">
 		<?php if (($options['syg_option_paginationarea'] == 'top') || ($options['syg_option_paginationarea'] == 'both')) { ?>
 		<div id="paginator-top">			
 			<ul id="syg-page-pagination">

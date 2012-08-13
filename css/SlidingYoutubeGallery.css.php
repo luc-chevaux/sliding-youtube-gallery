@@ -100,14 +100,14 @@ span.video_duration-<?php echo $id; ?> {
 
 h4.video_title-<?php echo $id; ?> {
 	color: <?php echo $syg_description_fontcolor; ?>;
-	font-size: 115%;
+	font-size: 130%;
 	font-weight: bold;
 	width: 100%;
 	border-bottom: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;
 }
 
 h4.video_title-<?php echo $id; ?> a {
-	color: inherit;
+	color: <?php echo $syg_thumbnail_bordercolor; ?>;
 	text-decoration: none;
 }
 
@@ -119,8 +119,25 @@ h4.video_title-<?php echo $id; ?> a {
 	
 }
 
+.syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> td {
+	border-width: 0px 0px 0px 0px;
+	vertical-align: top;
+	color: <?php echo $syg_description_fontcolor; ?>;
+	font-size: <?php echo $syg_description_fontsize; ?>px;
+}
+
+.syg_video_page_container-<?php echo $id; ?> {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
 #syg_video_page-<?php echo $id; ?> {
 	background-color: <?php echo $syg_box_background; ?>;
+	border-radius: <?php echo $syg_box_radius; ?>px;
+    -webkit-border-radius: <?php echo $syg_box_radius; ?>px;
+    -moz-border-radius: <?php echo $syg_box_radius; ?>px;
+    padding: <?php echo $syg_box_padding; ?>px;
 }
 
 .video_entry_table-<?php echo $id; ?> td p {
@@ -141,11 +158,6 @@ h4.video_title-<?php echo $id; ?> a {
 .video_entry_table-<?php echo $id; ?> td span.video_categories {
 	font-size: 80%;
 	display: block;
-}
-
-.syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> td{
-	border-width: 0px 0px 0px 0px;
-	vertical-align: top;
 }
 
 .syg_video_page_thumb-<?php echo $id; ?> {
@@ -173,6 +185,11 @@ h4.video_title-<?php echo $id; ?> a {
     -moz-border-radius: <?php echo $syg_box_radius; ?>px;
     width: <?php echo $syg_box_width; ?>px;
     display: inline-block;
+}
+
+#syg_video_container {
+	clear: both;
+	display: inline-block;
 }
 
 div.sc_menu-<?php echo $id; ?> {
@@ -221,10 +238,15 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 }
 
 #paginator-top, #paginator-bottom {
-	display: block;
-	width: 100%;
+	display: inline-block;
+	float: right;
 	clear: both;
 	magin: 0;
+	padding: 0;
+}
+
+#paginator-top ul, #paginator-bottom ul {
+	margin: 0;
 	padding: 0;
 }
 
@@ -235,7 +257,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 #syg-page-pagination li {	
 	list-style: none;
 	float: left;
-	margin-right: 16px; 
+	margin-left: <?php echo $syg_box_padding; ?>px;
 	padding:5px;
 	box-shadow: 0 0 5px #333333;
 	background-color: #333;
