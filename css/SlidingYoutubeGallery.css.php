@@ -260,7 +260,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	float: left;
 	margin-left: <?php echo $syg_box_padding; ?>px;
 	padding: <?php echo intval($syg_box_padding*0.3); ?>px;;
-	box-shadow: 0 0 8px <?php echo $syg_thumbnail_bordercolor; ?>;
+	box-shadow: 0 0 3px <?php echo $syg_thumbnail_bordercolor; ?>;
 	background-color: <?php echo $syg_description_fontcolor; ?>;
 	color: <?php echo $syg_box_background; ?>;
 	border-radius: <?php echo intval($syg_box_radius*0.5); ?>px;
@@ -271,10 +271,6 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 
 #syg-page-pagination li:hover { 
 	cursor: pointer; 
-}
-
-.current_page {
-	color: red !important;
 }
 
 #hook {

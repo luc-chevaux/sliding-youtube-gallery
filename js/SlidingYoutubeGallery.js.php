@@ -153,12 +153,15 @@ jQuery.noConflict();
 				// css styles
 				$('#syg-page-pagination li')
 					.attr({'class' : 'other_page'});
-	
-				$(this)
-					.attr({'class' : 'current_page'});
-	
+				
+				var buttonPressed = $(this).attr('id');
+				var button =  buttonPressed.replace('top-','').replace('bottom-','');
+				
+				$('#bottom-' + button).attr({'class' : 'current_page'});
+				$('#top-' + button).attr({'class' : 'current_page'});
+				
 				// loading data
-				var pageNum = this.id;
+				var pageNum = button;
 				$.getJSON('<?php echo $syg->getJsonQueryIfUrl(); ?>?query=videos&page_number=' + pageNum + '&id=<?php echo $_GET['id']?>', function (data) {$.loadData(data);});
 			});
 		},

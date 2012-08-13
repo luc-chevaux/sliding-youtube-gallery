@@ -70,7 +70,7 @@ class SygYouTube {
 		if ($src && $gallery_type && $max_video_count) {
 			$feed = new Zend_Gdata_YouTube_VideoFeed();
 			if ($gallery_type == 'feed') {
-				$feed = $this->sygYouTube->getuserUploads($src);
+				$feed = $this->yt->getuserUploads($src);
 				$count = $feed->count();
 			} else if ($gallery_type == 'list') {
 				$list_of_videos = preg_split( '/\r\n|\r|\n/', $src);
@@ -84,7 +84,7 @@ class SygYouTube {
 			
 			// truncate feed
 			if ($max_video_count < $count) {
-				$count = $gallery->getYtMaxVideoCount();
+				$count = $max_video_count;
 			}
 		} 
 		return $count;

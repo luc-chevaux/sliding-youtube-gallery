@@ -4,7 +4,7 @@
 			<?php
 			// show page links
 			for($i=1; $i<=$this->data['pages']; $i++) {
-				echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
+				echo ($i == 1) ? '<li id="'.$paginator_area.'-'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$paginator_area.'-'.$i.'">'.$i.'</li>';
 			}
 			?>
 		</ul>

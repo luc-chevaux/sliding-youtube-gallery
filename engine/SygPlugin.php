@@ -988,7 +988,7 @@ class SygPlugin extends SanityPluginFramework {
 
 			try {
 				// validate data
-				$valid = SygValidate::getInstance()->validateGallery($data);
+				$valid = SygValidate::validateGallery($data);
 				
 				// create a new gallery
 				$syg = new SygGallery($data);
