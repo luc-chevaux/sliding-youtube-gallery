@@ -81,6 +81,7 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 		switch ($_GET['query']) {
 			case 'videos':
 				if($_GET['page_number']) {
+					
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
 					$page_number -= 1;		
@@ -90,6 +91,7 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$dao = new SygDao();
 					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
 					$videos_to_json = array();
+					
 					foreach ($videos as $entry) {
 						$element['video_id'] = $entry->getVideoId();
 						$element['video_description'] = $entry->getVideoDescription();

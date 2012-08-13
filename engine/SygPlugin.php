@@ -506,15 +506,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function getVideoFeed(SygGallery $gallery, $start = null, $per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
-			$videoFeed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
-			$counter = 1;
-			
-			foreach ($videoFeed as $videoEntry) {
-				$feed->addEntry($videoEntry);
-				$counter++;
-				if ($counter == $gallery->getYtMaxVideoCount())
-					break;
-			}
+			$feed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());		
 		} else if ($gallery->getGalleryType() == 'list') {
 			$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
 			foreach ($list_of_videos as $key => $value) {
@@ -537,8 +529,10 @@ class SygPlugin extends SanityPluginFramework {
 		}
 		
 		// truncate feed 
-		if ($gallery->getYtMaxVideoCount() < $feed->count()) {
-			for ($i=$gallery->getYtMaxVideoCount();$i<$feed->count();$i++) {
+		$feed_count = $feed->count();
+		if ($gallery->getYtMaxVideoCount() < $feed_count) {
+			$feed_count--;
+			for ($i=$gallery->getYtMaxVideoCount();$i<=$feed_count;$i++) {
 				$feed->offsetUnset($i);
 			}
 		}
