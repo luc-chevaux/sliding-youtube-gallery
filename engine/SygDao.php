@@ -18,6 +18,10 @@ class SygDao {
 
 	// Query used in DAO
 	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
+	
+	// transitory variable
+	private $sqlGetAllGalleries12X = SygConstant::SQL_GET_ALL_GALLERIES_1_2_X;
+	
 	private $sqlGetAllStyles = SygConstant::SQL_GET_ALL_STYLES;
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlGetStyleById = SygConstant::SQL_GET_STYLE_BY_ID;
@@ -151,6 +155,20 @@ class SygDao {
 	}
 	
 	/**
+	 * @name getAllSygGallery12X
+	 * @category Get a syg gallery list from database
+	 * @since 1.2.5
+	 * @param $output_type, $start, $per_page
+	 * @return $galleries
+	 */
+	public function getAllSygGalleries12X($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+		$galleries = array();
+		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries12X, $this->galleries_table_name.'_OLD_V12X', $start, $per_page));
+		$results = $this->db->get_results($query, $output_type);
+		return $results;
+	}
+	
+	/**
 	 * @name getAllStyles
 	 * @category Get a syg style list from database
 	 * @since 1.2.5
@@ -264,13 +282,9 @@ class SygDao {
 	 * @param 
 	 * @return dbDelta($query)
 	 */
-	public function parseOldData($installed_ver, $target_ver) {
-		if (!$installed_ver){
-			// we're updating from version 1.0.1
-			
-			// get the table name
-			$syg_table_name = $wpdb->prefix . "syg";
-			
+	public function updateData($installed_ver, $target_ver) {
+		if (!$installed_ver) {
+			// we're updating from version 1.0.1			
 			$syg_youtube_username = get_option('syg_youtube_username');
 			$syg_youtube_videoformat = get_option('syg_youtube_videoformat');
 			$syg_youtube_maxvideocount = get_option('syg_youtube_maxvideocount');
@@ -296,37 +310,132 @@ class SygDao {
 			$syg_box_radius = get_option('syg_box_radius');
 			$syg_box_padding = get_option('syg_box_padding');
 			
-			//$this->sygDao->;
+			// create and separate a style
+			$style = new SygStyle();
 			
-			$wpdb->insert($syg_table_name,
-					array('syg_box_background' => $syg_box_background,
-							'syg_box_padding' => $syg_box_padding,
-							'syg_box_radius' => $syg_box_radius,
-							'syg_box_width' => $syg_box_width,
-							'syg_description_fontcolor' => $syg_description_fontcolor,
-							'syg_description_fontsize' => $syg_description_fontsize,
-							'syg_description_show' => $syg_description_show,
-							'syg_description_showcategories' => $syg_description_showcategories,
-							'syg_description_showduration' => $syg_description_showduration,
-							'syg_description_showratings' => $syg_description_showratings,
-							'syg_description_showtags' => $syg_description_showtags,
-							'syg_description_width' => $syg_description_width,
-							'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
-							'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
-							'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
-							'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
-							'syg_thumbnail_distance' => $syg_thumbnail_distance,
-							'syg_thumbnail_height' => $syg_thumbnail_height,
-							'syg_thumbnail_image' => $syg_thumbnail_image,
-							'syg_thumbnail_width' => $syg_thumbnail_width,
-							'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
-							'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
-							'syg_youtube_videoformat' => $syg_youtube_videoformat,
-							'syg_youtube_username' => $syg_youtube_username),
-							SygGallery::getRsType());
+			// style name
+			$style->setStyleName('Custom Style');
+			$style->setStyleDetails('This style has been generated automatically from your latest update');
+			
+			// box option values
+			$style->setBoxBackground(($syg_box_background) ? $syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
+			$style->setBoxPadding($syg_box_padding);
+			$style->setBoxRadius($syg_box_radius);
+			$style->setBoxWidth($syg_box_width);
+			
+			// description option values
+			$style->setDescFontColor(($syg_description_fontcolor) ? ($syg_description_fontcolor) : SygConstant::SYG_DESC_DEFAULT_FONT_COLOR);
+			$style->setDescFontSize($syg_description_fontsize);
+			$style->setDescWidth(($syg_description_width > 0) ? $syg_description_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+			
+			// thumbnail option values
+			$style->setThumbBorderColor(($syg_thumbnail_bordercolor) ? $syg_thumbnail_bordercolor : SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
+			$style->setThumbBorderRadius($syg_thumbnail_borderradius);
+			$style->setThumbBorderSize($syg_thumbnail_bordersize);
+			$style->setThumbButtonOpacity($syg_thumbnail_buttonopacity);
+			$style->setThumbDistance($syg_thumbnail_distance);
+			$style->setThumbHeight(($syg_thumbnail_height > 0) ? $syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
+			$style->setThumbImage((!empty($syg_thumbnail_image)) ? $syg_thumbnail_image : SygConstant::SYG_THUMB_DEFAULT_IMAGE);
+			$style->setThumbWidth(($syg_thumbnail_width > 0) ? $syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+			$style->setThumbOverlaySize($syg_thumbnail_overlaysize);
+			
+			// store style into db
+			$style_id = $this->addSygStyle($style);
+			
+			// create the gallery and add into database
+			$gallery = new SygGallery();
+			
+			// gallery name
+			$gallery->setGalleryName($syg_youtube_username);
+			$gallery->setGalleryDetails('This style has been generated automatically from your latest update');
+			
+			// youtube option values
+			$gallery->setYtMaxVideoCount($syg_youtube_maxvideocount);
+			$gallery->setYtVideoFormat($syg_youtube_videoformat);
+			$gallery->setYtDisableRelatedVideo(true);
+			$gallery->setYtSrc($syg_youtube_username);
+			
+			// set youtube user profile
+			$gallery->setGalleryType('feed');
+			
+			// description option values
+			$this->setDescShow($syg_description_show);
+			$this->setDescShowCategories($syg_description_showcategories);
+			$this->setDescShowDuration($syg_description_showduration);
+			$this->setDescShowRatings($syg_description_showratings);
+			$this->setDescShowTags($syg_description_showtags);
+			
+			// set style id
+			$this->setStyleId($style_id);			
+			
+			// store gallery into db
+			$gallery_id = $this->addSygGallery($gallery);
 		} else if (strpos($installed_ver, '1.2.')) {
 			// we're updating from version 1.2.x
+			$galleries = $this->getAllSygGalleries12X('OBJECT', 0, 100000);
 			
+			foreach ($galleries as $gallery) {
+				// create and separate a style
+				$style = new SygStyle();
+					
+				// style name
+				$style->setStyleName('Custom Style');
+				$style->setStyleDetails('This style has been generated automatically from your latest update');
+					
+				// box option values
+				$style->setBoxBackground(($gallery->syg_box_background) ? $gallery->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
+				$style->setBoxPadding($gallery->syg_box_padding);
+				$style->setBoxRadius($gallery->syg_box_radius);
+				$style->setBoxWidth($gallery->syg_box_width);
+					
+				// description option values
+				$style->setDescFontColor(($gallery->syg_description_fontcolor) ? ($gallery->syg_description_fontcolor) : SygConstant::SYG_DESC_DEFAULT_FONT_COLOR);
+				$style->setDescFontSize($gallery->syg_description_fontsize);
+				$style->setDescWidth(($gallery->syg_description_width > 0) ? $gallery->syg_description_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+					
+				// thumbnail option values
+				$style->setThumbBorderColor(($gallery->syg_thumbnail_bordercolor) ? $gallery->syg_thumbnail_bordercolor : SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
+				$style->setThumbBorderRadius($gallery->syg_thumbnail_borderradius);
+				$style->setThumbBorderSize($gallery->syg_thumbnail_bordersize);
+				$style->setThumbButtonOpacity($gallery->syg_thumbnail_buttonopacity);
+				$style->setThumbDistance($gallery->syg_thumbnail_distance);
+				$style->setThumbHeight(($gallery->syg_thumbnail_height > 0) ? $gallery->syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
+				$style->setThumbImage((!empty($gallery->syg_thumbnail_image)) ? $gallery->syg_thumbnail_image : SygConstant::SYG_THUMB_DEFAULT_IMAGE);
+				$style->setThumbWidth(($gallery->syg_thumbnail_width > 0) ? $gallery->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+				$style->setThumbOverlaySize($gallery->syg_thumbnail_overlaysize);
+					
+				// store style into db
+				$style_id = $this->addSygStyle($style);
+				
+				// create the gallery and add into database
+				$gallery = new SygGallery();
+					
+				// gallery name
+				$gallery->setGalleryName($gallery->syg_youtube_username);
+				$gallery->setGalleryDetails($gallery->syg_youtube_username.' gallery default style');
+					
+				// youtube option values
+				$gallery->setYtMaxVideoCount($gallery->syg_youtube_maxvideocount);
+				$gallery->setYtVideoFormat($gallery->syg_youtube_videoformat);
+				$gallery->setYtDisableRelatedVideo(true);
+				$gallery->setYtSrc($gallery->syg_youtube_username);
+					
+				// set youtube user profile
+				$gallery->setGalleryType('feed');
+					
+				// description option values
+				$this->setDescShow($gallery->syg_description_show);
+				$this->setDescShowCategories($gallery->syg_description_showcategories);
+				$this->setDescShowDuration($gallery->syg_description_showduration);
+				$this->setDescShowRatings($gallery->syg_description_showratings);
+				$this->setDescShowTags($gallery->syg_description_showtags);
+					
+				// set style id
+				$this->setStyleId($style_id);
+					
+				// store gallery into db
+				$gallery_id = $this->addSygGallery($gallery);
+			}
 		}
 	}
 	
@@ -411,7 +520,7 @@ class SygDao {
 			$this->createTableGalleries13x();
 
 			// parse old data
-			$this->parseOldData($installed_ver, $target_ver);
+			$this->updateData($installed_ver, $target_ver);
 			
 			// we're updating from version 1.0.1
 			if (get_option('syg_youtube_username')) SygPlugin::removeOldOption();
@@ -432,7 +541,7 @@ class SygDao {
 			$this->createTableGalleries13x();
 			
 			// parse old data
-			$this->parseOldData($installed_ver, $target_ver);
+			$this->updateData($installed_ver, $target_ver);
 		}
 	}
 }
