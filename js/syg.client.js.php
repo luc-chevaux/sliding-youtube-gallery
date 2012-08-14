@@ -36,6 +36,9 @@ if ($type == 'n') {
 
 $width += 20;
 $height += 20;
+
+$uiType = $_GET['ui'];
+
 ?>
 
 /************************************************
@@ -44,33 +47,36 @@ $height += 20;
  ************************************************/ 
 
 jQuery(document).ready(function($){
-	gid = <?php echo $id; ?>
+	var options = new Array();
+	var gid = new Array();
 	
-	options['plugin_root']
-	options['description_show']
-	options['video_thumbnail']
-	options['img_root']
-	options['description_showduration']
-	options['description_showcategories']
-	options['description_showtags']
-	options['description_showratings']
-	options['json_query_if_url']
-	options['width']
-	options['height']
+	gid['<?php echo $id; ?>'] = <?php echo $id; ?>;	
+	options['plugin_root'] = '<?php echo $syg->getPluginRoot(); ?>'; // string
+	options['img_root'] = '<?php echo $syg->getImgRoot(); ?>'; // string
+	options['thumbnail_image'] = '<?php echo $syg_thumbnail_image; ?>'; // string
+	options['description_show'] = <?php echo (boolean)$syg_description_show; ?>; // boolean
+	options['description_showduration'] = <?php echo (boolean)$syg_description_showduration; ?>; // boolean
+	options['description_showcategories'] = <?php echo (boolean)$syg_description_showcategories; ?>; // boolean
+	options['description_showtags'] = <?php echo (boolean)$syg_description_showtags; ?>; // boolean
+	options['description_showratings'] = <?php echo (boolean)$syg_description_showratings; ?>; // boolean
+	
+	options['json_query_if_url'] = '<?php echo $syg->getJsonQueryIfUrl(); ?>'; // string
+	
+	options['width'] = <?php echo $width; ?>; // int
+	options['height'] = <?php echo $height; ?>; // int
 		
-	// load if page contains a list
-	if ($('#syg_video_container-' + gid).length){
+	<?php if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_PAGE) { ?>		
 		/* video page */
 		// loading images
-		$.displayLoad(gid);
+		$.displayLoad(gid['<?php echo $id; ?>']);
 		
 		// get the data
-		$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid, function (data) {$.loadData(data, gid, options);});
+		$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'], function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
 		
 		// add pagination events
-		$.addPaginationClickEvent(gid, options);
-	} else {
+		$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
+	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
-		$.addFancyBoxSupport(gid, options);
-	}
+		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
+	<?php }?>
 });  

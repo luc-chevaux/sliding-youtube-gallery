@@ -23,6 +23,11 @@ class SygConstant {
 	const SYG_CTX_WS = "SYG_CTX_WS";
 
 	/**
+	 * Plugin component type 
+	 */
+	const SYG_PLUGIN_COMPONENT_GALLERY = 'gallery';
+	const SYG_PLUGIN_COMPONENT_PAGE = 'page';
+	/**
 	 * Plugin running action
 	 */
 	const BE_ACTION_MANAGE_GALLERIES = 'syg-manage-galleries';

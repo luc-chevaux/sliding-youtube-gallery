@@ -482,6 +482,9 @@ class SygPlugin extends SanityPluginFramework {
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
 
+				// put component type in the view (javascript optimization)
+				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
+				
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -579,6 +582,9 @@ class SygPlugin extends SanityPluginFramework {
 				// calculate pages
 				$this->data['pages'] = ceil($gallery->countGalleryEntry() / $options['syg_option_pagenumrec']);
 				
+				// put component type in the view (javascript optimization)
+				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
+				
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -651,14 +657,11 @@ class SygPlugin extends SanityPluginFramework {
 			wp_enqueue_script('mousewheel');
 			break;
 		case SygConstant::SYG_CTX_FE:
-		// define plugin resources url in the view
+			// define plugin resources url in the view
 			$gallery = $view['gallery'];
 			$view['sygCssUrl_' . $gallery->getId()] = $view['cssPath']
 					. 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
-			$view['sygJsUrl_' . $gallery->getId()] = $view['jsPath']
-					. 'SlidingYoutubeGallery.js.php?id=' . $gallery->getId();
-
-			// define presentation plugin resources
+			$view['sygJsUrl'] = $view['jsPath']	. 'SlidingYoutubeGallery.js';
 			$view['fancybox_js_url'] = $view['jsPath']
 					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
 			$view['easing_js_url'] = $view['jsPath']
@@ -681,16 +684,20 @@ class SygPlugin extends SanityPluginFramework {
 			wp_enqueue_script('jquery');
 
 			// js to include
-			wp_register_script('sliding-youtube-gallery-' . $gallery->getId(),
-					$view['sygJsUrl_' . $gallery->getId()], array(),
+			// include sliding youtube gallery js library
+			wp_register_script('sliding-youtube-gallery',
+					$view['sygJsUrl'], array(),
 					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('sliding-youtube-gallery-' . $gallery->getId());
+			wp_enqueue_script('sliding-youtube-gallery');
+			// include fancybox js library
 			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
 					SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('fancybox');
+			// include easing js library
 			wp_register_script('easing', $view['easing_js_url'], array(),
 					SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('easing');
+			// include mousewheel js library
 			wp_register_script('mousewheel', $view['mousewheel_js_url'],
 					array(), SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('mousewheel');
