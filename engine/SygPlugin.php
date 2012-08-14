@@ -7,9 +7,6 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  * 
- * @todo sistemare css video page
- * @todo Creare il codice di aggiornamento del database (milestone v1.3.0)
- * 
  * 
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
  * @todo Background image (milesone v1.4.0)
