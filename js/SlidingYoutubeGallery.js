@@ -124,11 +124,14 @@ jQuery.noConflict();
 				// css styles
 				$('#pagination-top-' + gid + ' li')
 					.attr({'class' : 'other_page'});
+				$('#pagination-bottom-' + gid + ' li')
+				.attr({'class' : 'other_page'});
 				
 				var buttonPressed = $(this).attr('id');
 				var button =  buttonPressed.replace('top-','');
 				
 				$('#top-' + button).attr({'class' : 'current_page'});
+				$('#bottom-' + button).attr({'class' : 'current_page'});
 				
 				// loading data
 				var pageNum = button;
@@ -142,11 +145,14 @@ jQuery.noConflict();
 				// css styles
 				$('#pagination-bottom-' + gid + ' li')
 					.attr({'class' : 'other_page'});
+				$('#pagination-top-' + gid + ' li')
+				.attr({'class' : 'other_page'});
 				
 				var buttonPressed = $(this).attr('id');
 				var button =  buttonPressed.replace('bottom-','');
 				
 				$('#bottom-' + button).attr({'class' : 'current_page'});
+				$('#top-' + button).attr({'class' : 'current_page'});
 				
 				// loading data
 				var pageNum = button;
