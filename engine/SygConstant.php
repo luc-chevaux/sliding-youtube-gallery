@@ -12,7 +12,7 @@ class SygConstant {
 	/**
 	 * Plugin configuration
 	 */
-	const SYG_VERSION = '1.2.5';
+	const SYG_VERSION = '1.3.0';
 	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 4;
 
 	/**
@@ -68,7 +68,7 @@ class SygConstant {
 	const SQL_DELETE_GALLERY_BY_ID = 'DELETE FROM %s WHERE id = %d';
 	const SQL_DELETE_STYLE_BY_ID = 'DELETE FROM %s WHERE id = %d';
 	const SQL_COUNT_QUERY = 'SELECT COUNT(*) AS CNT FROM %s';
-	const SQL_CREATE_TABLE_1_2_X = "CREATE TABLE IF NOT EXISTS %s (
+	const SQL_CREATE_TABLE_1_2_X = 'CREATE TABLE IF NOT EXISTS %s (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`syg_youtube_username` varchar(255) NOT NULL,
 	`syg_youtube_videoformat` varchar(255) NOT NULL,
@@ -95,8 +95,53 @@ class SygConstant {
 	`syg_box_radius` int(11) NOT NULL,
 	`syg_box_padding` int(11) NOT NULL,
 	PRIMARY KEY  (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
+	const SQL_CREATE_TABLE_STYLES_1_3_X = 'CREATE TABLE IF NOT EXISTS %s (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`syg_style_name` varchar(255) NOT NULL,
+	`syg_style_details` text NOT NULL,
+	`syg_thumbnail_height` int(11) NOT NULL,
+	`syg_thumbnail_width` int(11) NOT NULL,
+	`syg_thumbnail_bordersize` int(11) NOT NULL,
+	`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+	`syg_thumbnail_borderradius` int(11) NOT NULL,
+	`syg_thumbnail_distance` int(11) NOT NULL,
+	`syg_thumbnail_overlaysize` int(11) NOT NULL,
+	`syg_thumbnail_image` varchar(255) NOT NULL,
+	`syg_thumbnail_buttonopacity` float NOT NULL,
+	`syg_description_width` int(11) NOT NULL,
+	`syg_description_fontsize` int(11) NOT NULL,
+	`syg_description_fontcolor` varchar(255) NOT NULL,
+	`syg_box_width` int(11) NOT NULL,
+	`syg_box_background` varchar(255) NOT NULL,
+	`syg_box_radius` int(11) NOT NULL,
+	`syg_box_padding` int(11) NOT NULL,
+	PRIMARY KEY (`id`)
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+	
+	const SQL_CREATE_TABLE_GALLERIES_1_3_X = 'CREATE TABLE IF NOT EXISTS %s (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`syg_youtube_src` text NOT NULL,
+	`syg_youtube_videoformat` varchar(255) NOT NULL,
+	`syg_youtube_maxvideocount` int(11) NOT NULL,
+	`syg_youtube_disablerel` tinyint(1) NOT NULL,
+	`syg_description_show` tinyint(1) NOT NULL,
+	`syg_description_showduration` tinyint(1) NOT NULL,
+	`syg_description_showtags` tinyint(1) NOT NULL,
+	`syg_description_showratings` tinyint(1) NOT NULL,
+	`syg_description_showcategories` tinyint(1) NOT NULL,
+	`syg_style_id` int(11) NOT NULL,
+	`syg_gallery_type` enum(\'feed\',\'list\',\'playlist\') NOT NULL,
+	`syg_gallery_name` varchar(255) NOT NULL,
+	`syg_gallery_details` text NOT NULL,
+	PRIMARY KEY (`id`)
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=%d;';
+	
+	const SQL_COPY_TABLE = 'CREATE TABLE %s LIKE %s';
+	const SQL_COPY_DATA = 'INSERT INTO %s SELECT * FROM %s';
+	const SQL_CHECK_TABLE_EXIST = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
+	const SQL_REMOVE_TABLE = '';
 	/**
 	 * Default values for gallery
 	 */

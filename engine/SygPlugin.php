@@ -110,63 +110,8 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category configuration
 	 * @since 1.2.5
 	 */
-	private static function removeOldOption() {
+	public static function removeOldOption() {
 		global $wpdb;
-
-		// get the table name
-		$syg_table_name = $wpdb->prefix . "syg";
-
-		$syg_youtube_username = get_option('syg_youtube_username');
-		$syg_youtube_videoformat = get_option('syg_youtube_videoformat');
-		$syg_youtube_maxvideocount = get_option('syg_youtube_maxvideocount');
-		$syg_thumbnail_height = get_option('syg_thumbnail_height');
-		$syg_thumbnail_width = get_option('syg_thumbnail_width');
-		$syg_thumbnail_bordersize = get_option('syg_thumbnail_bordersize');
-		$syg_thumbnail_bordercolor = get_option('syg_thumbnail_bordercolor');
-		$syg_thumbnail_borderradius = get_option('syg_thumbnail_borderradius');
-		$syg_thumbnail_distance = get_option('syg_thumbnail_distance');
-		$syg_thumbnail_overlaysize = get_option('syg_thumbnail_overlaysize');
-		$syg_thumbnail_image = get_option('syg_thumbnail_image');
-		$syg_thumbnail_buttonopacity = get_option('syg_thumbnail_buttonopacity');
-		$syg_description_width = get_option('syg_description_width');
-		$syg_description_fontsize = get_option('syg_description_fontsize');
-		$syg_description_fontcolor = get_option('syg_description_fontcolor');
-		$syg_description_show = get_option('syg_description_show');
-		$syg_description_showduration = get_option('syg_description_showduration');
-		$syg_description_showtags = get_option('syg_description_showtags');
-		$syg_description_showratings = get_option('syg_description_showratings');
-		$syg_description_showcategories = get_option('syg_description_showcategories');
-		$syg_box_width = get_option('syg_box_width');
-		$syg_box_background = get_option('syg_box_background');
-		$syg_box_radius = get_option('syg_box_radius');
-		$syg_box_padding = get_option('syg_box_padding');
-
-		$wpdb->insert($syg_table_name,
-			array('syg_box_background' => $syg_box_background,
-				'syg_box_padding' => $syg_box_padding,
-				'syg_box_radius' => $syg_box_radius,
-				'syg_box_width' => $syg_box_width,
-				'syg_description_fontcolor' => $syg_description_fontcolor,
-				'syg_description_fontsize' => $syg_description_fontsize,
-				'syg_description_show' => $syg_description_show,
-				'syg_description_showcategories' => $syg_description_showcategories,
-				'syg_description_showduration' => $syg_description_showduration,
-				'syg_description_showratings' => $syg_description_showratings,
-				'syg_description_showtags' => $syg_description_showtags,
-				'syg_description_width' => $syg_description_width,
-				'syg_thumbnail_bordercolor' => $syg_thumbnail_bordercolor,
-				'syg_thumbnail_borderradius' => $syg_thumbnail_borderradius,
-				'syg_thumbnail_bordersize' => $syg_thumbnail_bordersize,
-				'syg_thumbnail_buttonopacity' => $syg_thumbnail_buttonopacity,
-				'syg_thumbnail_distance' => $syg_thumbnail_distance,
-				'syg_thumbnail_height' => $syg_thumbnail_height,
-				'syg_thumbnail_image' => $syg_thumbnail_image,
-				'syg_thumbnail_width' => $syg_thumbnail_width,
-				'syg_thumbnail_overlaysize' => $syg_thumbnail_overlaysize,
-				'syg_youtube_maxvideocount' => $syg_youtube_maxvideocount,
-				'syg_youtube_videoformat' => $syg_youtube_videoformat,
-				'syg_youtube_username' => $syg_youtube_username),
-				SygGallery::getRsType());
 
 		if ($wpdb->insert_id) {
 			delete_option('syg_youtube_username');
@@ -276,28 +221,24 @@ class SygPlugin extends SanityPluginFramework {
 		global $syg_db_version;
 
 		// set db version
-		$syg_db_version = SygConstant::SYG_VERSION;
+		$target_syg_db_version = SygConstant::SYG_VERSION;
 
 		// get the current db version
 		$installed_ver = get_option("syg_db_version");
 
-		if ($installed_ver != $syg_db_version) {
-			// set the table name
-			$syg_table_name = $wpdb->prefix . "syg";
-
-			//$this->sygDao->createTable12x();
-
-			// transitory method
-			if (get_option('syg_youtube_username'))
-				self::removeOldOption();
-
-			// add or update db version option
-			(!get_option("syg_db_version")) ? add_option("syg_db_version",
-							$syg_db_version)
-					: update_option("syg_db_version", $syg_db_version);
-
-			// send stat
-			self::notify(SygConstant::BE_ACTION_ACTIVATION);
+		if ($installed_ver != $target_syg_db_version) {
+			try {
+				// update database structure
+				$this->sygDao->updateVersion($installed_ver, $target_syg_db_version);
+					
+				// add or update db version option
+				(!get_option("syg_db_version")) ? add_option("syg_db_version", $target_syg_db_version) : update_option("syg_db_version", $target_syg_db_version);
+				
+				// send stat
+				self::notify(SygConstant::BE_ACTION_ACTIVATION);
+			} catch (Exception $ex) {
+				
+			}
 		}
 	}
 
