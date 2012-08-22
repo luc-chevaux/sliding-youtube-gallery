@@ -145,7 +145,9 @@ class SygConstant {
 	const SQL_COPY_TABLE = 'CREATE TABLE %s LIKE %s';
 	const SQL_COPY_DATA = 'INSERT INTO %s SELECT * FROM %s';
 	const SQL_CHECK_TABLE_EXIST = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
+	const SQL_CHECK_AUTO_INCREMENT = 'SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
 	const SQL_REMOVE_TABLE = 'DROP TABLE %s';
+	const SQL_SET_AUTOINCREMENT = 'ALTER TABLE %s AUTO_INCREMENT = %d';
 	/**
 	 * Default values for gallery
 	 */

@@ -35,7 +35,9 @@ class SygDao {
 	private $sqlCopyTable = SygConstant::SQL_COPY_TABLE;
 	private $sqlCopyData = SygConstant::SQL_COPY_DATA;
 	private $sqlCheckTableExist = SygConstant::SQL_CHECK_TABLE_EXIST;
+	private $sqlCheckAutoIncrement = SygConstant::SQL_CHECK_AUTO_INCREMENT;
 	private $sqlRemoveTable = SygConstant::SQL_REMOVE_TABLE;
+	
 	/**
 	 * @name __construct
 	 * @category construct SygDao object
@@ -258,7 +260,14 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTableGalleries13x() {
-		$query = $this->db->prepare(sprintf($this->sqlCreateTableGalleries13x, $this->galleries_table_name)); // @todo autoincrement issue
+		$query = $this->db->prepare(sprintf($this->sqlCheckAutoIncrement, DB_NAME, $this->galleries_table_name.'_OLD_V12X'));
+		
+		$autoincrement = (int) $this->db->get_var($query, 0, 0);
+		var_dump($query);
+		var_dump($autoincrement);
+		wp_die('asd');
+		
+		$query = $this->db->prepare(sprintf($this->sqlCreateTableGalleries13x, $this->galleries_table_name, $autoincrement));
 		// run the dbDelta function and return its values
 		return dbDelta($query);
 	}
@@ -270,7 +279,7 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTableStyles13x() {
-		$query = $this->db->prepare(sprintf($this->sqlCreateTableStyles13x, $this->styles_table_name)); // @todo autoincrement issue
+		$query = $this->db->prepare(sprintf($this->sqlCreateTableStyles13x, $this->styles_table_name));
 		// run the dbDelta function and return its values
 		return dbDelta($query);
 	}
@@ -470,6 +479,8 @@ class SygDao {
 	 */
 	function tableExists($tablename) {
 		$query = $this->db->prepare(sprintf($this->sqlCheckTableExist, DB_NAME, $tablename));
+		var_dump($query);
+		wp_die();
 		$res = $this->db->get_results($query, 'ARRAY_A');		 
 		return $this->db->num_rows == 1;
 	}
@@ -483,7 +494,7 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function backupTables($installed_ver, $target_ver) {
-		if (strpos($installed_ver, '1.2.')) {
+		if (strpos($installed_ver, '1.2.') == 0) {
 			$this->copyTable($this->galleries_table_name, $this->galleries_table_name.'_OLD_V12X');
 		}
 	}
@@ -497,7 +508,7 @@ class SygDao {
 	 */
 	public function removeTable($table) {
 		$query = $this->db->prepare(sprintf($this->sqlRemoveTable, $table));
-		return dbDelta($query);
+		return $this->db->query($query);
 	}
 	
 	/**
@@ -508,7 +519,7 @@ class SygDao {
 	 * @param $target_ver
 	 * @return dbDelta($query)
 	 */
-	public function updateVersion($installed_ver, $target_ver) {
+	public function updateVersion($installed_ver, $target_ver) {		
 		// we have to update database structure
 		if (!$installed_ver){
 			// we're updating from version 1.0.1
@@ -525,9 +536,9 @@ class SygDao {
 			// we're updating from version 1.0.1
 			if (get_option('syg_youtube_username')) SygPlugin::removeOldOption();
 			
-		} else if (strpos($installed_ver, '1.2.')) {
+		} else if (strpos($installed_ver, '1.2.') == 0) {			
 			// we're updating from version 1.2.x
-		
+			
 			// backup_tables
 			$this->backupTables($installed_ver, $target_ver);
 			

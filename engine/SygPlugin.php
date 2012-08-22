@@ -225,8 +225,11 @@ class SygPlugin extends SanityPluginFramework {
 
 		if ($installed_ver != $target_syg_db_version) {
 			try {
+				// create a brand new dao
+				$dao = new SygDao();
+				
 				// update database structure
-				$this->sygDao->updateVersion($installed_ver, $target_syg_db_version);
+				$dao->updateVersion($installed_ver, $target_syg_db_version);
 					
 				// add or update db version option
 				(!get_option("syg_db_version")) ? add_option("syg_db_version", $target_syg_db_version) : update_option("syg_db_version", $target_syg_db_version);
