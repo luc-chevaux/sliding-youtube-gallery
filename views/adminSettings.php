@@ -56,10 +56,63 @@
 		
 		<br/><br/>
 		
-		<label for="syg_option_pagenumrec">Number of records displayed: </label>
+		<label for="syg_option_pagenumrec">Number of records in page: </label>
 		<input type="text" id="syg_option_pagenumrec" name="syg_option_pagenumrec" value="<?php echo $options['syg_option_pagenumrec']; ?>" size="20">
 	</fieldset>
 	<hr/>
+	
+	<!-- paginator settings -->
+	<fieldset>
+		<legend><strong>Paginator style settings</strong></legend>
+		
+		<!-- border radius -->
+		<label for="syg_option_paginator_borderradius">Border Radius: </label>
+		<input type="text" id="syg_option_paginator_borderradius" name="syg_option_paginator_borderradius" value="<?php echo $options['syg_option_paginator_borderradius']; ?>" size="3">
+		
+		<!-- border size -->
+		<label for="syg_option_paginator_bordersize">Border Size: </label>
+		<input type="text" id="syg_option_paginator_bordersize" name="syg_option_paginator_bordersize" value="<?php echo $options['syg_option_paginator_bordersize']; ?>" size="3">
+		
+		<!-- shadow size -->
+		<label for="syg_option_paginator_shadowsize">Shadow Size: </label>
+		<input type="text" id="syg_option_paginator_shadowsize" name="syg_option_paginator_shadowsize" value="<?php echo $options['syg_option_paginator_shadowsize']; ?>" size="3">
+		
+		<!-- font size -->
+		<label for="syg_option_paginator_fontsize">Font Size: </label>
+		<input type="text" id="syg_option_paginator_fontsize" name="syg_option_paginator_fontsize" value="<?php echo $options['syg_option_paginator_fontsize']; ?>" size="3">
+		
+		<br/><br/>
+		
+		<!-- border color -->
+		<label for="syg_option_paginator_bordercolor">Border Color: </label>
+		<input onchange="updateColorPicker(\'paginator_bordercolor_selector\',this)" type="hidden" id="syg_option_paginator_bordercolor" name="syg_option_paginator_bordercolor" value="<?php echo $options['syg_option_paginator_bordercolor']; ?>" size="3">
+		<div id="paginator_bordercolor_selector">
+			<div style="background-color: #efefef;"></div>
+		</div>
+		
+		<!-- background color -->
+		<label for="syg_option_paginator_bgcolor">Background Color: </label>
+		<input onchange="updateColorPicker(\'paginator_bgcolor_selector\',this)" type="hidden" id="syg_option_paginator_bgcolor" name="syg_option_paginator_bgcolor" value="<?php echo $options['syg_option_paginator_bgcolor']; ?>" size="3">
+		<div id="paginator_bgcolor_selector">
+			<div style="background-color: #efefef;"></div>
+		</div>
+		
+		<!-- shadow color -->
+		<label for="syg_option_paginator_shadowcolor">Shadow Color: </label>
+		<input onchange="updateColorPicker(\'paginator_shadowcolor_selector\',this)" type="hidden" id="syg_option_paginator_shadowcolor" name="syg_option_paginator_shadowcolor" value="<?php echo $options['syg_option_paginator_shadowcolor']; ?>" size="3">
+		<div id="paginator_shadowcolor_selector">
+			<div style="background-color: #efefef;"></div>
+		</div>
+		
+		<!-- font color -->
+		<label for="syg_option_paginator_fontcolor">Font Color: </label>
+		<input onchange="updateColorPicker(\'paginator_fontcolor_selector\',this)" type="hidden" id="syg_option_paginator_fontcolor" name="syg_option_paginator_fontcolor" value="<?php echo $options['syg_option_paginator_fontcolor']; ?>" size="3">
+		<div id="paginator_fontcolor_selector">
+			<div style="background-color: #efefef;"></div>
+		</div>
+	</fieldset>
+	<hr/>
+	
 	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
 </form>
 <?php require_once 'inc/contextMenu.inc.php'; ?>
