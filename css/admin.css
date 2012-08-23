@@ -92,11 +92,23 @@ label {
 	padding-right: 0;
 }
 
-#thumb_bordercolor_selector, #box_backgroundcolor_selector, #desc_fontcolor_selector {
+#thumb_bordercolor_selector, 
+#box_backgroundcolor_selector,
+#desc_fontcolor_selector,
+#paginator_bordercolor_selector,
+#paginator_shadowcolor_selector,
+#paginator_bgcolor_selector,
+#paginator_fontcolor_selector {
 	display: inline-block;
 }
 
-#thumb_bordercolor_selector div, #box_backgroundcolor_selector div, #desc_fontcolor_selector div {
+#thumb_bordercolor_selector div, 
+#box_backgroundcolor_selector div, 
+#desc_fontcolor_selector div,
+#paginator_bordercolor_selector div,
+#paginator_shadowcolor_selector div,
+#paginator_bgcolor_selector div,
+#paginator_fontcolor_selector div {
     background: url("../img/colorpicker/select.png") repeat scroll center center transparent;
     height: 15px;
     width: 15px;
