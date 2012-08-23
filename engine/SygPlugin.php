@@ -103,6 +103,22 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * @name setDefaultOption
+	 * @category configuration
+	 * @since 1.3.0
+	 */
+	public function setDefaultOption() {
+		if (!get_option('syg_option_apikey')) 
+			add_option ('syg_option_apikey', SygConstant::SYG_OPTION_DEFAULT_API_KEY);
+		if (!get_option('syg_option_numrec')) 
+			add_option ('syg_option_numrec', SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
+		if (!get_option('syg_option_pagenumrec'))
+			add_option ('syg_option_pagenumrec', SygConstant::SYG_OPTION_DEFAULT_PAGENUM_REC);
+		if (!get_option('syg_option_paginationarea'))
+			add_option ('syg_option_paginationarea', SygConstant::SYG_OPTION_DEFAULT_PAGINATION_AREA);
+	}
+	
+	/**
 	 * @name removeOldOption
 	 * @category configuration
 	 * @since 1.2.5
@@ -230,6 +246,9 @@ class SygPlugin extends SanityPluginFramework {
 				
 				// update database structure
 				$dao->updateVersion($installed_ver, $target_syg_db_version);
+				
+				// set default option
+				$this->setDefaultOption();
 					
 				// add or update db version option
 				(!get_option("syg_db_version")) ? add_option("syg_db_version", $target_syg_db_version) : update_option("syg_db_version", $target_syg_db_version);
