@@ -424,7 +424,7 @@ class SygDao {
 					
 				// gallery name
 				$galleryOut->setGalleryName($gallery->syg_youtube_username);
-				$galleryOut->setGalleryDetails($gallery->syg_youtube_username.' gallery default style');
+				$galleryOut->setGalleryDetails($gallery->syg_youtube_username.' gallery');
 					
 				// youtube option values
 				$galleryOut->setYtMaxVideoCount($gallery->syg_youtube_maxvideocount);
