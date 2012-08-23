@@ -93,7 +93,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// set the img path
 		$this->setImgRoot(WP_PLUGIN_URL . SygConstant::WP_IMG_PATH);
-		
+
 		// set json query interface url
 		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_URL);
 
@@ -108,16 +108,44 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.3.0
 	 */
 	public function setDefaultOption() {
-		if (!get_option('syg_option_apikey')) 
-			add_option ('syg_option_apikey', SygConstant::SYG_OPTION_DEFAULT_API_KEY);
-		if (!get_option('syg_option_numrec')) 
-			add_option ('syg_option_numrec', SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
+		if (!get_option('syg_option_apikey'))
+			add_option('syg_option_apikey',
+					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
+		if (!get_option('syg_option_numrec'))
+			add_option('syg_option_numrec',
+					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
 		if (!get_option('syg_option_pagenumrec'))
-			add_option ('syg_option_pagenumrec', SygConstant::SYG_OPTION_DEFAULT_PAGENUM_REC);
+			add_option('syg_option_pagenumrec',
+					SygConstant::SYG_OPTION_DEFAULT_PAGENUM_REC);
 		if (!get_option('syg_option_paginationarea'))
-			add_option ('syg_option_paginationarea', SygConstant::SYG_OPTION_DEFAULT_PAGINATION_AREA);
+			add_option('syg_option_paginationarea',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATION_AREA);
+		if (!get_option('syg_option_paginator_borderradius'))
+			add_option('syg_option_paginator_borderradius',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERRADIUS);
+		if (!get_option('syg_option_paginator_bordersize'))
+			add_option('syg_option_paginator_bordersize',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERSIZE);
+		if (!get_option('syg_option_paginator_bordercolor'))
+			add_option('syg_option_paginator_bordercolor',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERCOLOR);
+		if (!get_option('syg_option_paginator_bgcolor'))
+			add_option('syg_option_paginator_bgcolor',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BGCOLOR);
+		if (!get_option('syg_option_paginator_shadowcolor'))
+			add_option('syg_option_paginator_shadowcolor',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWCOLOR);
+		if (!get_option('syg_option_paginator_shadowsize'))
+			add_option('syg_option_paginator_shadowsize',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWSIZE);
+		if (!get_option('syg_option_paginator_fontcolor'))
+			add_option('syg_option_paginator_fontcolor',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTCOLOR);
+		if (!get_option('syg_option_paginator_fontsize'))
+			add_option('syg_option_paginator_fontsize',
+					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTSIZE);
 	}
-	
+
 	/**
 	 * @name removeOldOption
 	 * @category configuration
@@ -164,7 +192,8 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $action
 	 */
 	private static function notify($action = null) {
-		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']
+				: $_SERVER['SERVER_NAME'];
 
 		if (SygUtil::isCurlInstalled()) {
 			$ch = curl_init();
@@ -182,14 +211,31 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+	/**
+	 * @name getViewCtx
+	 * @category admin forward
+	 * @since 1.0.1
+	 * @param $id
+	 * @return $context
+	 */
+	public function getViewCtx($id = null) {
+		if (is_int((int) $id)) {
+			$dao = new SygDao();
+			$this->data['gallery'] = $dao->getSygGalleryById($id);
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+			return $this->data;
+		}
+		return false;
+	}
+
 	  /*****************************/
 	 /* END CONFIGURATION METHODS */
 	/*****************************/
-	
+
 	  /********************************/
 	 /* WORDPRESS PLUGIN ACTION HOOK */
 	/********************************/
-	
+
 	/**
 	 * @name uninstall
 	 * @category uninstall plugin hook
@@ -198,14 +244,16 @@ class SygPlugin extends SanityPluginFramework {
 	public static function uninstall() {
 		global $wpdb;
 
+		// get table name
+		$galleryTable = $wpdb->prefix . 'syg';
+		$styleTable = $wpdb->prefix . 'syg_OLD_V12X';
+		$backupTable = $wpdb->prefix . 'syg_styles';
+
 		// remove table
-		$syg_table_name = $wpdb->prefix . "syg";
-
-		// must create table if not exists
-		$sql = "DROP TABLE IF EXISTS " . $syg_table_name . "";
-
-		// execute clean 
-		$wpdb->query($sql);
+		$dao = new SygDao();
+		$dao->removeTable($galleryTable);
+		$dao->removeTable($styleTable);
+		$dao->removeTable($backupTable);
 
 		// remove options
 		delete_option("syg_db_version");
@@ -243,20 +291,23 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// create a brand new dao
 				$dao = new SygDao();
-				
+
 				// update database structure
 				$dao->updateVersion($installed_ver, $target_syg_db_version);
-				
+
 				// set default option
 				$this->setDefaultOption();
-					
+
 				// add or update db version option
-				(!get_option("syg_db_version")) ? add_option("syg_db_version", $target_syg_db_version) : update_option("syg_db_version", $target_syg_db_version);
-				
+				(!get_option("syg_db_version")) ? add_option("syg_db_version",
+								$target_syg_db_version)
+						: update_option("syg_db_version",
+								$target_syg_db_version);
+
 				// send stat
 				self::notify(SygConstant::BE_ACTION_ACTIVATION);
 			} catch (Exception $ex) {
-				
+
 			}
 		}
 	}
@@ -264,7 +315,7 @@ class SygPlugin extends SanityPluginFramework {
 	  /************************************/
 	 /* END WORDPRESS PLUGIN ACTION HOOK */
 	/************************************/
-	
+
 	  /***********************/
 	 /* GETTERS AND SETTERS */
 	/***********************/
@@ -347,7 +398,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function getPluginRoot() {
 		return $this->pluginRoot;
 	}
-	
+
 	/**
 	 * @name getJsRoot
 	 * @category getters and setters
@@ -387,15 +438,15 @@ class SygPlugin extends SanityPluginFramework {
 	public function getJsonQueryIfUrl() {
 		return $this->jsonQueryIfUrl;
 	}
-	
+
 	  /***************************/
 	 /* END GETTERS AND SETTER  */
 	/***************************/
-	
+
 	  /**************************/
 	 /* FRONT END CORE METHODS */
 	/**************************/
-	
+
 	/**
 	 * Get gallery settings returning its DTO
 	 * @param $id 
@@ -444,7 +495,7 @@ class SygPlugin extends SanityPluginFramework {
 
 				// put component type in the view (javascript optimization)
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-				
+
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -457,7 +508,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 		}
 	}
-	
+
 	/**
 	 * @name getVideoFeed
 	 * @category get a youtube video feed
@@ -466,23 +517,31 @@ class SygPlugin extends SanityPluginFramework {
 	 * @throws Exception
 	 * @return $feed
 	 */
-	public function getVideoFeed(SygGallery $gallery, $start = null, $per_page = null) {
+	public function getVideoFeed(SygGallery $gallery, $start = null,
+			$per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
-			$feed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());		
+			$feed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
 		} else if ($gallery->getGalleryType() == 'list') {
-			$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
+			$list_of_videos = preg_split('/\r\n|\r|\n/', $gallery->getYtSrc());
 			foreach ($list_of_videos as $key => $value) {
-				$list_of_videos[$key] = str_replace ('v=', '', parse_url($value, PHP_URL_QUERY));
-				$videoEntry = $this->sygYouTube->getVideoEntry($list_of_videos[$key]);
+				$list_of_videos[$key] = str_replace('v=', '',
+						parse_url($value, PHP_URL_QUERY));
+				$videoEntry = $this->sygYouTube
+						->getVideoEntry($list_of_videos[$key]);
 				$feed->addEntry($videoEntry);
 			}
 		} else if ($gallery->getGalleryType() == 'playlist') {
-			$playlist_id = str_replace ('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
-			$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
+			$playlist_id = str_replace('list=PL', '',
+					parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
+			$content = json_decode(
+					file_get_contents(
+							'http://gdata.youtube.com/feeds/api/playlists/'
+									. $playlist_id
+									. '/?v=2&alt=json&feature=plcp'));
 			$feed_to_object = $content->feed->entry;
-			if(count($feed_to_object)) {
-				foreach($feed_to_object as $item) {
+			if (count($feed_to_object)) {
+				foreach ($feed_to_object as $item) {
 					//var_dump($item);
 					$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
 					$videoEntry = $this->sygYouTube->getVideoEntry($videoId);
@@ -490,25 +549,25 @@ class SygPlugin extends SanityPluginFramework {
 				}
 			}
 		}
-		
+
 		// truncate feed 
 		$feed_count = $feed->count();
 		if ($gallery->getYtMaxVideoCount() < $feed_count) {
 			$feed_count--;
-			for ($i=$gallery->getYtMaxVideoCount();$i<=$feed_count;$i++) {
+			for ($i = $gallery->getYtMaxVideoCount(); $i <= $feed_count; $i++) {
 				$feed->offsetUnset($i);
 			}
 		}
-		
+
 		// feed pagination		
 		if (($start !== null) && ($per_page !== null)) {
 			$feed_page = new Zend_Gdata_YouTube_VideoFeed();
-			for ($i=$start;$i<($start + $per_page);$i++) {
+			for ($i = $start; $i < ($start + $per_page); $i++) {
 				$feed_page->addEntry($feed->offsetGet($i));
 			}
 			$feed = $feed_page;
 		}
-		
+
 		return $feed;
 	}
 
@@ -538,13 +597,15 @@ class SygPlugin extends SanityPluginFramework {
 				// number of pages
 				$options = $this->getOptions();
 				$this->data['options'] = $options;
-				
+
 				// calculate pages
-				$this->data['pages'] = ceil($gallery->countGalleryEntry() / $options['syg_option_pagenumrec']);
-				
+				$this->data['pages'] = ceil(
+						$gallery->countGalleryEntry()
+								/ $options['syg_option_pagenumrec']);
+
 				// put component type in the view (javascript optimization)
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
-				
+
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -600,7 +661,7 @@ class SygPlugin extends SanityPluginFramework {
 					$view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(),
 					SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('sliding-youtube-gallery-admin');
-			
+
 			wp_register_script('sliding-youtube-gallery-colorpicker',
 					$view['jsPath'] . 'colorpicker.js', array(),
 					SygConstant::SYG_VERSION, true);
@@ -617,11 +678,11 @@ class SygPlugin extends SanityPluginFramework {
 			wp_enqueue_script('mousewheel');
 			break;
 		case SygConstant::SYG_CTX_FE:
-			// define plugin resources url in the view
+		// define plugin resources url in the view
 			$gallery = $view['gallery'];
 			$view['sygCssUrl_' . $gallery->getId()] = $view['cssPath']
 					. 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
-			$view['sygJsUrl'] = $view['jsPath']	. 'SlidingYoutubeGallery.js';
+			$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js';
 			$view['fancybox_js_url'] = $view['jsPath']
 					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
 			$view['easing_js_url'] = $view['jsPath']
@@ -645,9 +706,8 @@ class SygPlugin extends SanityPluginFramework {
 
 			// js to include
 			// include sliding youtube gallery js library
-			wp_register_script('sliding-youtube-gallery',
-					$view['sygJsUrl'], array(),
-					SygConstant::SYG_VERSION, true);
+			wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'],
+					array(), SygConstant::SYG_VERSION, true);
 			wp_enqueue_script('sliding-youtube-gallery');
 			// include fancybox js library
 			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
@@ -672,11 +732,11 @@ class SygPlugin extends SanityPluginFramework {
 	  /******************************/
 	 /* END FRONT END CORE METHODS */
 	/******************************/
-	
+
 	  /**************************/
 	 /* ADMIN SECTION FORWARDS */
 	/**************************/
-	
+
 	/**
 	 * @name forwardToGalleries
 	 * @category admin forward
@@ -686,41 +746,42 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToGalleries($updated = false) {
 		$output = '';
-		
+
 		// if we've updated a record set action to null
 		$action = ($updated == true) ? 'redirect' : $_GET['action'];
-		
+
 		// determine wich action to call
 		switch ($action) {
-			case 'add':
-				return $this->forwardToAddGallery();
-			case 'edit':
-				return $this->forwardToEditGallery();
-			case 'delete':
-				return $this->forwardToDeleteGallery();
-			case 'redirect':
-				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_GALLERIES;
-				return $this->render('redirect');
-			default:
-				// prepare header
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-				
-				// put galleries in the view
-				$galleries = $this->sygDao->getAllSygGalleries();
+		case 'add':
+			return $this->forwardToAddGallery();
+		case 'edit':
+			return $this->forwardToEditGallery();
+		case 'delete':
+			return $this->forwardToDeleteGallery();
+		case 'redirect':
+			$this->data['redirect_url'] = '?page='
+					. SygConstant::BE_ACTION_MANAGE_GALLERIES;
+			return $this->render('redirect');
+		default:
+		// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 
-				// put galleries in the view
-				$this->data['galleries'] = $galleries;
-		
-				// number of pages
-				$this->data['pages'] = ceil(
-						$this->sygDao->getGalleriesCount()
-						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
-		
-				// generate token
-				$_SESSION['request_token'] = $this->getAuthToken();
-		
-				// render adminStyles view
-				return $this->render('adminGalleries');
+			// put galleries in the view
+			$galleries = $this->sygDao->getAllSygGalleries();
+
+			// put galleries in the view
+			$this->data['galleries'] = $galleries;
+
+			// number of pages
+			$this->data['pages'] = ceil(
+					$this->sygDao->getGalleriesCount()
+							/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+
+			// generate token
+			$_SESSION['request_token'] = $this->getAuthToken();
+
+			// render adminStyles view
+			return $this->render('adminGalleries');
 		}
 	}
 
@@ -733,41 +794,42 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToStyles($updated = false) {
 		$output = '';
-		
+
 		// if we've updated a record set action to null
 		$action = ($updated == true) ? 'redirect' : $_GET['action'];
-		
+
 		// determine wich action to call
 		switch ($action) {
-			case 'add':
-				return $this->forwardToAddStyle();
-			case 'edit':
-				return $this->forwardToEditStyle();
-			case 'delete':
-				return $this->forwardToDeleteStyle(); 
-			case 'redirect':
-				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_STYLES;
-				return $this->render('redirect');
-			default:
-				// prepare header
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-				
-				// put galleries in the view
-				$styles = $this->sygDao->getAllSygStyles();
-				
-				// put galleries in the view
-				$this->data['styles'] = $styles;
-				
-				// number of pages
-				$this->data['pages'] = ceil(
-						$this->sygDao->getStylesCount()
-						/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
-				
-				// generate token
-				$_SESSION['request_token'] = $this->getAuthToken();
-				
-				// render adminStyles view
-				return $this->render('adminStyles');
+		case 'add':
+			return $this->forwardToAddStyle();
+		case 'edit':
+			return $this->forwardToEditStyle();
+		case 'delete':
+			return $this->forwardToDeleteStyle();
+		case 'redirect':
+			$this->data['redirect_url'] = '?page='
+					. SygConstant::BE_ACTION_MANAGE_STYLES;
+			return $this->render('redirect');
+		default:
+		// prepare header
+			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+			// put galleries in the view
+			$styles = $this->sygDao->getAllSygStyles();
+
+			// put galleries in the view
+			$this->data['styles'] = $styles;
+
+			// number of pages
+			$this->data['pages'] = ceil(
+					$this->sygDao->getStylesCount()
+							/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+
+			// generate token
+			$_SESSION['request_token'] = $this->getAuthToken();
+
+			// render adminStyles view
+			return $this->render('adminStyles');
 		}
 	}
 
@@ -780,44 +842,103 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToSettings($updated = false) {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
 			// database add/edit settings procedure
 			// get posted values
 			$data = serialize($_POST);
 			try {
 				// validate data
 				$valid = SygValidate::validateSettings($data);
-				
-				(!get_option('syg_option_apikey')) ? add_option ('syg_option_apikey', $_POST['syg_option_apikey']) : update_option ('syg_option_apikey', $_POST['syg_option_apikey']);
-				(!get_option('syg_option_numrec')) ? add_option ('syg_option_numrec', $_POST['syg_option_numrec']) : update_option ('syg_option_numrec', $_POST['syg_option_numrec']);
-				(!get_option('syg_option_pagenumrec')) ? add_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']) : update_option ('syg_option_pagenumrec', $_POST['syg_option_pagenumrec']);
-				(!get_option('syg_option_paginationarea')) ? add_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']) : update_option ('syg_option_paginationarea', $_POST['syg_option_paginationarea']);
-				
-				$this->data['redirect_url'] = '?page='.SygConstant::BE_ACTION_MANAGE_SETTINGS;
+
+				(!get_option('syg_option_apikey')) ? add_option(
+								'syg_option_apikey',
+								$_POST['syg_option_apikey'])
+						: update_option('syg_option_apikey',
+								$_POST['syg_option_apikey']);
+				(!get_option('syg_option_numrec')) ? add_option(
+								'syg_option_numrec',
+								$_POST['syg_option_numrec'])
+						: update_option('syg_option_numrec',
+								$_POST['syg_option_numrec']);
+				(!get_option('syg_option_pagenumrec')) ? add_option(
+								'syg_option_pagenumrec',
+								$_POST['syg_option_pagenumrec'])
+						: update_option('syg_option_pagenumrec',
+								$_POST['syg_option_pagenumrec']);
+				(!get_option('syg_option_paginationarea')) ? add_option(
+								'syg_option_paginationarea',
+								$_POST['syg_option_paginationarea'])
+						: update_option('syg_option_paginationarea',
+								$_POST['syg_option_paginationarea']);
+
+				(!get_option('syg_option_paginator_borderradius')) ? add_option(
+								'syg_option_paginator_borderradius',
+								$_POST['syg_option_paginator_borderradius'])
+						: update_option('syg_option_paginator_borderradius',
+								$_POST['syg_option_paginator_borderradius']);
+				(!get_option('syg_option_paginator_bordersize')) ? add_option(
+								'syg_option_paginator_bordersize',
+								$_POST['syg_option_paginator_bordersize'])
+						: update_option('syg_option_paginator_bordersize',
+								$_POST['syg_option_paginator_bordersize']);
+				(!get_option('syg_option_paginator_bordercolor')) ? add_option(
+								'syg_option_paginator_bordercolor',
+								$_POST['syg_option_paginator_bordercolor'])
+						: update_option('syg_option_paginator_bordercolor',
+								$_POST['syg_option_paginator_bordercolor']);
+				(!get_option('syg_option_paginator_bgcolor')) ? add_option(
+								'syg_option_paginator_bgcolor',
+								$_POST['syg_option_paginator_bgcolor'])
+						: update_option('syg_option_paginator_bgcolor',
+								$_POST['syg_option_paginator_bgcolor']);
+				(!get_option('syg_option_paginator_shadowcolor')) ? add_option(
+								'syg_option_paginator_shadowcolor',
+								$_POST['syg_option_paginator_shadowcolor'])
+						: update_option('syg_option_paginator_shadowcolor',
+								$_POST['syg_option_paginator_shadowcolor']);
+				(!get_option('syg_option_paginator_shadowsize')) ? add_option(
+								'syg_option_paginator_shadowsize',
+								$_POST['syg_option_paginator_shadowsize'])
+						: update_option('syg_option_paginator_shadowsize',
+								$_POST['syg_option_paginator_shadowsize']);
+				(!get_option('syg_option_paginator_fontcolor')) ? add_option(
+								'syg_option_paginator_fontcolor',
+								$_POST['syg_option_paginator_fontcolor'])
+						: update_option('syg_option_paginator_fontcolor',
+								$_POST['syg_option_paginator_fontcolor']);
+				(!get_option('syg_option_paginator_fontsize')) ? add_option(
+								'syg_option_paginator_fontsize',
+								$_POST['syg_option_paginator_fontsize'])
+						: update_option('syg_option_paginator_fontsize',
+								$_POST['syg_option_paginator_fontsize']);
+
+				$this->data['redirect_url'] = '?page='
+						. SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
 				// render adminStyles view
 				return $this->render('redirect');
 			} catch (SygValidateException $ex) {
-					// set the error
-					$this->data['exception'] = true;
-					$this->data['exception_message'] = $ex->getMessage();
-					$this->data['exception_detail'] = $ex->getProblems();
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblems();
 			} catch (Exception $ex) {
-					// set the error
-					$this->data['exception'] = true;
-					$this->data['exception_message'] = $ex->getMessage();
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
 			}
-		} 
-		
+		}
+
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-		
+
 		// get settings
 		$options = $this->getOptions();
-		
+
 		// put settings in the view
 		$this->data['options'] = $options;
-		
+
 		// render adminSettings view
 		return $this->render('adminSettings');
 	}
@@ -829,54 +950,55 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToAddGallery() {
-			$updated = false;
-			if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
-				// database add gallery procedure
-				// get posted values
-				$data = serialize($_POST);
-			
-				try {
-					// validate data
-					$valid = SygValidate::validateGallery($data);
-			
-					// create a new gallery
-					$gallery = new SygGallery($data);
-			
-					// update db
-					$this->sygDao->addSygGallery($gallery);
-			
-					// updated flag
-					$updated = true;
-			
-					// updated flag
-					$this->data['updated'] = $updated;
-					
-					// render adminGallery view
-					return $this->forwardToGalleries($updated);
-				} catch (SygValidateException $ex) {
-					// set the error
-					$this->data['exception'] = true;
-					$this->data['exception_message'] = $ex->getMessage();
-					$this->data['exception_detail'] = $ex->getProblems();
-				} catch (Exception $ex) {
-					// set the error
-					$this->data['exception'] = true;
-					$this->data['exception_message'] = $ex->getMessage();
-				}
+		$updated = false;
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+			// database add gallery procedure
+			// get posted values
+			$data = serialize($_POST);
+
+			try {
+				// validate data
+				$valid = SygValidate::validateGallery($data);
+
+				// create a new gallery
+				$gallery = new SygGallery($data);
+
+				// update db
+				$this->sygDao->addSygGallery($gallery);
+
+				// updated flag
+				$updated = true;
+
+				// updated flag
+				$this->data['updated'] = $updated;
+
+				// render adminGallery view
+				return $this->forwardToGalleries($updated);
+			} catch (SygValidateException $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblems();
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
 			}
-			
-			// gallery administration form section
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-			
-			// put an empty gallery in the view
-			$this->data['gallery'] = new SygGallery();
-			
-			// put styles to populate combo
-			$this->data['styles'] = $this->sygDao->getAllSygStyles();
-		
-			// render adminGallery view
-			return $this->render('adminGallery');			
+		}
+
+		// gallery administration form section
+		// prepare header
+		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+
+		// put an empty gallery in the view
+		$this->data['gallery'] = new SygGallery();
+
+		// put styles to populate combo
+		$this->data['styles'] = $this->sygDao->getAllSygStyles();
+
+		// render adminGallery view
+		return $this->render('adminGallery');
 	}
 
 	/**
@@ -887,8 +1009,9 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToAddStyle() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
-			
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+
 			// database add style procedure
 			// get posted values
 			$data = serialize($_POST);
@@ -908,7 +1031,7 @@ class SygPlugin extends SanityPluginFramework {
 
 				// updated flag
 				$this->data['updated'] = $updated;
-				
+
 				// render adminGallery view
 				return $this->forwardToStyles($updated);
 			} catch (SygValidateException $ex) {
@@ -941,8 +1064,9 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToEditGallery() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
-			
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
@@ -950,19 +1074,19 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// validate data
 				$valid = SygValidate::validateGallery($data);
-				
+
 				// create a new gallery
 				$syg = new SygGallery($data);
-	
+
 				// update db
 				$this->sygDao->updateSygGallery($syg);
-	
+
 				// updated flag
 				$updated = true;
-	
+
 				// updated flag
 				$this->data['updated'] = $updated;
-				
+
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
 			} catch (SygValidateException $ex) {
@@ -976,7 +1100,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception_message'] = $ex->getMessage();
 			}
 		}
-		
+
 		// get the gallery id
 		$id = (int) $_GET['id'];
 
@@ -988,11 +1112,11 @@ class SygPlugin extends SanityPluginFramework {
 
 		// put styles to populate combo
 		$this->data['styles'] = $this->sygDao->getAllSygStyles();
-		
+
 		// render adminGallery view
 		return $this->render('adminGallery');
 	}
-	
+
 	/**
 	 * @name forwardToEditStyle
 	 * @category admin forward
@@ -1001,8 +1125,9 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToEditStyle() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
-			
+		if (isset($_POST['syg_submit_hidden'])
+				&& $_POST['syg_submit_hidden'] == 'Y') {
+
 			// database update procedure
 			// get posted values
 			$data = serialize($_POST);
@@ -1010,22 +1135,22 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// validate data
 				$valid = SygValidate::validateStyle($data);
-				
+
 				// create a new gallery
 				$style = new SygStyle($data);
-	
+
 				// update db
 				$this->sygDao->updateSygStyle($style);
-	
+
 				// updated flag
 				$updated = true;
-	
+
 				// updated flag
 				$this->data['updated'] = $updated;
-				
+
 				// render adminStyle view
 				return $this->forwardToStyles($updated);
-				
+
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
@@ -1037,7 +1162,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception_message'] = $ex->getMessage();
 			}
 		}
-		
+
 		// get the style id
 		$id = (int) $_GET['id'];
 
@@ -1049,7 +1174,7 @@ class SygPlugin extends SanityPluginFramework {
 
 		// render adminStyle view
 		return $this->render('adminStyle');
-		
+
 	}
 
 	/**
@@ -1060,13 +1185,13 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToDeleteGallery() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
-		
+
 		// delete gallery
 		$this->sygDao->deleteSygGallery($this->sygDao->getSygGalleryById($id));
 
 		die();
 	}
-	
+
 	/**
 	 * @name forwardToDeleteStyle
 	 * @category admin forward
@@ -1076,10 +1201,10 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToDeleteStyle() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
-	
+
 		// delete gallery
 		$this->sygDao->deleteSygStyle($this->sygDao->getSygStyleById($id));
-	
+
 		die();
 	}
 
@@ -1100,11 +1225,11 @@ class SygPlugin extends SanityPluginFramework {
 	  /******************************/
 	 /* END ADMIN SECTION FORWARDS */
 	/******************************/
-	
+
 	  /********************/
 	 /* SECURITY METHODS */
 	/********************/
-	
+
 	/**
 	 * @name getAuthToken
 	 * @category admin forward
@@ -1127,10 +1252,17 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
 		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
-		
+		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
+		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
+		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
+		$options['syg_option_paginator_bgcolor'] = get_option('syg_option_paginator_bgcolor');
+		$options['syg_option_paginator_shadowcolor'] = get_option('syg_option_paginator_shadowcolor');
+		$options['syg_option_paginator_fontcolor'] = get_option('syg_option_paginator_fontcolor');
+		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
+		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
 		return $options;
 	}
-	
+
 	/**
 	 * @name verifyAuthToken
 	 * @category admin forward
@@ -1141,23 +1273,6 @@ class SygPlugin extends SanityPluginFramework {
 		return true;
 	}
 
-	/**
-	 * @name getViewCtx
-	 * @category admin forward
-	 * @since 1.0.1
-	 * @param $id
-	 * @return $context
-	 */
-	public function getViewCtx($id = null) {
-		if (is_int((int) $id)) {
-			$dao = new SygDao();
-			$this->data['gallery'] = $dao->getSygGalleryById($id);
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-			return $this->data;
-		}
-		return false;
-	}
-	
 	  /************************/
 	 /* END SECURITY METHODS */
 	/************************/
