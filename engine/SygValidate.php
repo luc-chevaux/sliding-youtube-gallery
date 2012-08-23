@@ -301,17 +301,45 @@ class SygValidate {
 		// validation code
 		$problemFound = array();
 		
-		// syg_option_numrec intero
+		// syg_option_numrec int
 		if (!(preg_match('/^\d+$/', $data['syg_option_numrec']))) {
 			array_push($problemFound,
 			array('field' => 'syg_option_numrec',
 			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
-		// syg_option_pagenumrec intero
+		// syg_option_pagenumrec int
 		if (!(preg_match('/^\d+$/', $data['syg_option_pagenumrec']))) {
 			array_push($problemFound,
 			array('field' => 'syg_option_pagenumrec',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
+		// syg_option_paginator_borderradius int
+		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_borderradius']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_paginator_borderradius',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
+		// syg_option_paginator_bordersize int
+		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_bordersize']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_paginator_bordersize',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
+		// syg_option_paginator_shadowsize int
+		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_shadowsize']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_paginator_shadowsize',
+			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+		}
+		
+		// syg_option_paginator_fontsize int
+		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_fontsize']))) {
+			array_push($problemFound,
+			array('field' => 'syg_option_paginator_fontsize',
 			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
 		}
 		
