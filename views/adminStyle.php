@@ -72,13 +72,9 @@
 		<!-- border color -->
 		<label for="syg_thumbnail_bordercolor">Border Color: </label>
 		<input onchange="updateColorPicker(\'thumb_bordercolor_selector\',this)" type="hidden" id="syg_thumbnail_bordercolor" name="syg_thumbnail_bordercolor" value="<?php echo $style->getThumbBorderColor(); ?>" size="5"/>
-		
-		<!-- color picker -->
 		<div id="thumb_bordercolor_selector">
 		<div style="background-color: #333333;"></div>
 		</div>
-	
-		<br/><br/>
 	</fieldset>
 
 	<fieldset>
@@ -125,7 +121,6 @@
 		<!-- background color -->
 		<label for="syg_box_background">Background color: </label>
 		<input onchange="updateColorPicker(\'box_backgroundcolor_selector\',this)" type="hidden" id="syg_box_background" name="syg_box_background" value="<?php echo $style->getBoxBackground(); ?>" size="5"/>
-	
 		<div id="box_backgroundcolor_selector">
 			<div style="background-color: #efefef;"></div>
 		</div>
@@ -139,7 +134,6 @@
 		<!-- description font color -->
 		<label for="syg_description_fontcolor">Font color: </label>
 		<input onchange="updateColorPicker(\'desc_fontcolor_selector\',this)" type="hidden" id="syg_description_fontcolor" name="syg_description_fontcolor" value="<?php echo $style->getDescFontColor(); ?>" size="5"/>
-		
 		<div id="desc_fontcolor_selector">
 			<div style="background-color: #333333;"></div>
 		</div>
