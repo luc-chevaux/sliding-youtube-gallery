@@ -260,12 +260,15 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTableGalleries13x() {
-		$query = $this->db->prepare(sprintf($this->sqlCheckAutoIncrement, DB_NAME, $this->galleries_table_name.'_OLD_V12X'));
-		
-		$autoincrement = (int) $this->db->get_var($query, 0, 0);
-		var_dump($query);
-		var_dump($autoincrement);
-		wp_die('asd');
+		if ($this->tableExists($this->galleries_table_name.'_OLD_V12X')) {
+			// check autoincrement, version >= 1.2.5
+			$query = $this->db->prepare(sprintf($this->sqlCheckAutoIncrement, DB_NAME, $this->galleries_table_name.'_OLD_V12X'));
+			$autoincrement = (int) $this->db->get_var($query, 0, 0);
+			var_dump($query);
+			wp_die();
+		} else {
+			$autoincrement = 1;
+		}
 		
 		$query = $this->db->prepare(sprintf($this->sqlCreateTableGalleries13x, $this->galleries_table_name, $autoincrement));
 		// run the dbDelta function and return its values
@@ -356,7 +359,7 @@ class SygDao {
 			
 			// gallery name
 			$gallery->setGalleryName($syg_youtube_username);
-			$gallery->setGalleryDetails('This style has been generated automatically from your latest update');
+			$gallery->setGalleryDetails('This gallery has been generated automatically from your latest update');
 			
 			// youtube option values
 			$gallery->setYtMaxVideoCount($syg_youtube_maxvideocount);
@@ -368,18 +371,18 @@ class SygDao {
 			$gallery->setGalleryType('feed');
 			
 			// description option values
-			$this->setDescShow($syg_description_show);
-			$this->setDescShowCategories($syg_description_showcategories);
-			$this->setDescShowDuration($syg_description_showduration);
-			$this->setDescShowRatings($syg_description_showratings);
-			$this->setDescShowTags($syg_description_showtags);
+			$gallery->setDescShow($syg_description_show);
+			$gallery->setDescShowCategories($syg_description_showcategories);
+			$gallery->setDescShowDuration($syg_description_showduration);
+			$gallery->setDescShowRatings($syg_description_showratings);
+			$gallery->setDescShowTags($syg_description_showtags);
 			
 			// set style id
-			$this->setStyleId($style_id);			
+			$gallery->setStyleId($style_id);			
 			
 			// store gallery into db
 			$gallery_id = $this->addSygGallery($gallery);
-		} else if (strpos($installed_ver, '1.2.')) {
+		} else if (strpos($installed_ver, '1.2.') == 0) {
 			// we're updating from version 1.2.x
 			$galleries = $this->getAllSygGalleries12X('OBJECT', 0, 100000);
 			
@@ -388,7 +391,7 @@ class SygDao {
 				$style = new SygStyle();
 					
 				// style name
-				$style->setStyleName('Custom Style');
+				$style->setStyleName($gallery->syg_youtube_username . 'Custom Style');
 				$style->setStyleDetails('This style has been generated automatically from your latest update');
 					
 				// box option values
@@ -417,33 +420,33 @@ class SygDao {
 				$style_id = $this->addSygStyle($style);
 				
 				// create the gallery and add into database
-				$gallery = new SygGallery();
+				$galleryOut = new SygGallery();
 					
 				// gallery name
-				$gallery->setGalleryName($gallery->syg_youtube_username);
-				$gallery->setGalleryDetails($gallery->syg_youtube_username.' gallery default style');
+				$galleryOut->setGalleryName($gallery->syg_youtube_username);
+				$galleryOut->setGalleryDetails($gallery->syg_youtube_username.' gallery default style');
 					
 				// youtube option values
-				$gallery->setYtMaxVideoCount($gallery->syg_youtube_maxvideocount);
-				$gallery->setYtVideoFormat($gallery->syg_youtube_videoformat);
-				$gallery->setYtDisableRelatedVideo(true);
-				$gallery->setYtSrc($gallery->syg_youtube_username);
+				$galleryOut->setYtMaxVideoCount($gallery->syg_youtube_maxvideocount);
+				$galleryOut->setYtVideoFormat($gallery->syg_youtube_videoformat);
+				$galleryOut->setYtDisableRelatedVideo(true);
+				$galleryOut->setYtSrc($gallery->syg_youtube_username);
 					
 				// set youtube user profile
-				$gallery->setGalleryType('feed');
+				$galleryOut->setGalleryType('feed');
 					
 				// description option values
-				$this->setDescShow($gallery->syg_description_show);
-				$this->setDescShowCategories($gallery->syg_description_showcategories);
-				$this->setDescShowDuration($gallery->syg_description_showduration);
-				$this->setDescShowRatings($gallery->syg_description_showratings);
-				$this->setDescShowTags($gallery->syg_description_showtags);
+				$galleryOut->setDescShow($gallery->syg_description_show);
+				$galleryOut->setDescShowCategories($gallery->syg_description_showcategories);
+				$galleryOut->setDescShowDuration($gallery->syg_description_showduration);
+				$galleryOut->setDescShowRatings($gallery->syg_description_showratings);
+				$galleryOut->setDescShowTags($gallery->syg_description_showtags);
 					
 				// set style id
-				$this->setStyleId($style_id);
+				$galleryOut->setStyleId($style_id);
 					
 				// store gallery into db
-				$gallery_id = $this->addSygGallery($gallery);
+				$gallery_id = $this->addSygGallery($galleryOut);
 			}
 		}
 	}
@@ -460,10 +463,13 @@ class SygDao {
 		if($this->tableExists($to)) {
 			$success = false;
 		} else {
+			// copy table structure
 			$query = $this->db->prepare(sprintf($this->sqlCopyTable, $to, $from));
 			$success = true | dbDelta($query);
+			
+			// copy table data
 			$query = $this->db->prepare(sprintf($this->sqlCopyData, $to, $from));
-			$success = $success | dbDelta($query);	
+			$success = $success | dbDelta($query);
 		}
 		 
 		return $success;
@@ -473,16 +479,14 @@ class SygDao {
 	 * @name tableExists
 	 * @category Check if table exists
 	 * @since 1.3.0
-	 * @param $installed_ver
-	 * @param $target_ver
-	 * @return dbDelta($query)
+	 * @param $tablename
+	 * @return bool
 	 */
 	function tableExists($tablename) {
 		$query = $this->db->prepare(sprintf($this->sqlCheckTableExist, DB_NAME, $tablename));
-		var_dump($query);
-		wp_die();
-		$res = $this->db->get_results($query, 'ARRAY_A');		 
-		return $this->db->num_rows == 1;
+		$exist= $this->db->get_var($query, 0, 0);
+		$exist = (int) $exist;
+		return $exist == 1;
 	}
 	
 	/**
@@ -522,7 +526,7 @@ class SygDao {
 	public function updateVersion($installed_ver, $target_ver) {		
 		// we have to update database structure
 		if (!$installed_ver){
-			// we're updating from version 1.0.1
+			// we're updating from version 1.0.1 or null version
 			
 			// create styles table
 			$this->createTableStyles13x();
@@ -530,12 +534,14 @@ class SygDao {
 			// create galleries table
 			$this->createTableGalleries13x();
 
-			// parse old data
-			$this->updateData($installed_ver, $target_ver);
-			
-			// we're updating from version 1.0.1
-			if (get_option('syg_youtube_username')) SygPlugin::removeOldOption();
-			
+			// parse and update data only if updating from 1.0.1 
+			if (get_option('syg_youtube_username')) {
+				// parse old data
+				$this->updateData($installed_ver, $target_ver);
+					
+				// we're updating from version 1.0.1
+				SygPlugin::removeOldOption();
+			}			
 		} else if (strpos($installed_ver, '1.2.') == 0) {			
 			// we're updating from version 1.2.x
 			

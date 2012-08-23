@@ -32,7 +32,7 @@
 	<!-- youtube settings -->
 	<fieldset>
 		<legend><strong>YouTube settings</strong></legend>
-		<label for="developer_key">Developer Key (not necessary): </label>
+		<label for="developer_key">Developer Key (Experimental not necessary): </label>
 		<input type="text" id="syg_option_apikey" name="syg_option_apikey" value="<?php echo $options['syg_option_apikey']; ?>" size="20">
 	</fieldset>
 	
