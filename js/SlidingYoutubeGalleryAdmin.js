@@ -229,6 +229,22 @@ jQuery.noConflict();
 			$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
 		},
 		
+		initGalleryUi : function () {
+			$("input[name=syg_gallery_type]").each(function(){
+				$(this).click($.disableInput);
+			});
+			
+			$.disableInput();
+		},
+		
+		initSettingsUi: function () {
+			// init the color pickers
+			$.initColorPicker('paginator_bordercolor_selector', $('#syg_option_paginator_bordercolor'));
+			$.initColorPicker('paginator_bgcolor_selector', $('#syg_option_paginator_bgcolor'), '#efefef');
+			$.initColorPicker('paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
+			$.initColorPicker('paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
+		},
+		
 		disableInput: function () {
 		    var value = $("input[@name=syg_gallery_type]:checked").val();
 		    switch (value) {
@@ -279,14 +295,6 @@ jQuery.noConflict();
 		    }
 		},
 		
-		initGalleryUi : function () {
-			$("input[name=syg_gallery_type]").each(function(){
-				$(this).click($.disableInput);
-			});
-			
-			$.disableInput();
-		},
-		
 		getQParam : function (name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 			var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -311,25 +319,31 @@ jQuery(document).ready(function($) {
 	var page = $.getQParam('page');
 	var id = $.getQParam('id');
 	
+	// if we're doing some action init ui component
 	if (action == 'add' || action =='edit') {
 		if (page == 'syg-manage-galleries') {
 			// init the user interface
 			$.initGalleryUi();
-		} else {
+		} else if (page == 'syg-manage-styles') {
 			// init the user interface
 			$.initStyleUi();
 		}
 	} else{
 		switch (page) {
 			case 'syg-manage-styles':
+				// init pagination for styles
 				var table = 'styles';
 				break;
 			case 'syg-manage-galleries':
+				// init pagination for galleries
 				var table = 'galleries';
 				break;
+			case 'syg-manage-settings':
+				// init settings
+				$.initSettingsUi();
+				return true;
 			default:
-				break;
-				return null;
+				return false;
 		}
 	
 		// loading images
