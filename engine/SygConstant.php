@@ -161,6 +161,14 @@ class SygConstant {
 	const SYG_THUMB_DEFAULT_WIDTH = 200;
 	const SYG_THUMB_DEFAULT_HEIGHT = 150;
 	const SYG_THUMB_DEFAULT_IMAGE = 1;
+	
+	/**
+	 * Plugin Default options
+	 */
+	const SYG_OPTION_DEFAULT_API_KEY = 'not present';
+	const SYG_OPTION_DEFAULT_NUM_REC = '5';
+	const SYG_OPTION_DEFAULT_PAGENUM_REC = '5';
+	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';	
 
 	/**
 	 * GUI constants
