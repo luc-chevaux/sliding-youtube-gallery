@@ -59,30 +59,35 @@ class SygYouTube {
 		$query = new Zend_Gdata_YouTube_VideoQuery($url);
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 
-		// mvc < total uploads? -> GET LESS VIDEOS FROM THE CHANNEL
+		// mvc < total uploads? -> GET LESS VIDEOS FROM THE CHANNEL (TRUNCATION)
 		if ($gallery->getYtMaxVideoCount() < $totalUpload) {
 			if (($start !== null) && ($per_page !== null)) {
 				// request the right number of videos according to pagination
 				
 			} else {
 				// request the right number of videos without pagination
-				
+				$start = 1;
+				$query->setStartIndex($start);
+				$query->setMaxResults($gallery->getYtMaxVideoCount());
+				$feed = $this->yt->getVideoFeed($query);
 			}
 		} 
-		// mvc >= total uploads? -> GET ALL VIDEOS FROM THE CHANNEL
+		// mvc >= total uploads? -> GET ALL VIDEOS FROM THE CHANNEL (NO TRUNCATION)
 		else if ($gallery->getYtMaxVideoCount() >= $totalUpload) {
 			if (($start !== null) && ($per_page !== null)) {
 		 		// request the right number of videos according to pagination
 				$start++;
-				$query->setStartIndex($start);
-				$query->setMaxResults($per_page);
-				$feed = $this->yt->getVideoFeed($query);
+				$maxResult = $per_page;
 			} else {
 				// request all the videos without pagination
-				$feed = $this->yt->retrieveAllEntriesForFeed($this->yt->getuserUploads($username));
+				$start = 1;
+				$maxResult = $totalUpload;
 			}
+			$query->setStartIndex($start);
+			$query->setMaxResults($maxResult);
+			$feed = $this->yt->getVideoFeed($query);
 		}
-		
+
 		return $feed;
 	}
 	
