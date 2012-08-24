@@ -141,7 +141,7 @@ jQuery.noConflict();
 			/* bottom pagination */
 			$('#pagination-bottom-' + gid + ' li').click(function(){
 				
-				$.displayLoad();
+				$.displayLoad(gid);
 				// css styles
 				$('#pagination-bottom-' + gid + ' li')
 					.attr({'class' : 'other_page'});
