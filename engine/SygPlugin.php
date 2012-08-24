@@ -517,60 +517,19 @@ class SygPlugin extends SanityPluginFramework {
 	 * @throws Exception
 	 * @return $feed
 	 */
-	public function getVideoFeed(SygGallery $gallery, $start = null,
-			$per_page = null) {
+	public function getVideoFeed(SygGallery $gallery, $start = null,	$per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
-			$feed = $this->sygYouTube->getuserUploads($gallery->getYtSrc());
+			$feed = $this->sygYouTube->getUserUploads($gallery, $start, $per_page);
 		} else if ($gallery->getGalleryType() == 'list') {
-			$list_of_videos = preg_split('/\r\n|\r|\n/', $gallery->getYtSrc());
-			foreach ($list_of_videos as $key => $value) {
-				$list_of_videos[$key] = str_replace('v=', '',
-						parse_url($value, PHP_URL_QUERY));
-				$videoEntry = $this->sygYouTube
-						->getVideoEntry($list_of_videos[$key]);
-				$feed->addEntry($videoEntry);
-			}
+			$feed = $this->sygYouTube->getUserList($gallery, $start, $per_page);
 		} else if ($gallery->getGalleryType() == 'playlist') {
-			$playlist_id = str_replace('list=PL', '',
-					parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
-			$content = json_decode(
-					file_get_contents(
-							'http://gdata.youtube.com/feeds/api/playlists/'
-									. $playlist_id
-									. '/?v=2&alt=json&feature=plcp'));
-			$feed_to_object = $content->feed->entry;
-			if (count($feed_to_object)) {
-				foreach ($feed_to_object as $item) {
-					//var_dump($item);
-					$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
-					$videoEntry = $this->sygYouTube->getVideoEntry($videoId);
-					$feed->addEntry($videoEntry);
-				}
-			}
+			$feed = $this->sygYouTube->getUserPlaylist($gallery, $start, $per_page);
 		}
-
-		// truncate feed 
-		$feed_count = $feed->count();
-		if ($gallery->getYtMaxVideoCount() < $feed_count) {
-			$feed_count--;
-			for ($i = $gallery->getYtMaxVideoCount(); $i <= $feed_count; $i++) {
-				$feed->offsetUnset($i);
-			}
-		}
-
-		// feed pagination		
-		if (($start !== null) && ($per_page !== null)) {
-			$feed_page = new Zend_Gdata_YouTube_VideoFeed();
-			for ($i = $start; $i < ($start + $per_page); $i++) {
-				$feed_page->addEntry($feed->offsetGet($i));
-			}
-			$feed = $feed_page;
-		}
-
+		
 		return $feed;
 	}
-
+	
 	/**
 	 * @name getVideoPage
 	 * @category get a video page
@@ -773,9 +732,10 @@ class SygPlugin extends SanityPluginFramework {
 			$this->data['galleries'] = $galleries;
 
 			// number of pages
+			$options = $this->getOptions();
 			$this->data['pages'] = ceil(
 					$this->sygDao->getGalleriesCount()
-							/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+							/ $options['syg_option_numrec']);
 
 			// generate token
 			$_SESSION['request_token'] = $this->getAuthToken();
@@ -821,9 +781,10 @@ class SygPlugin extends SanityPluginFramework {
 			$this->data['styles'] = $styles;
 
 			// number of pages
+			$options = $this->getOptions();
 			$this->data['pages'] = ceil(
 					$this->sygDao->getStylesCount()
-							/ SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED);
+							/ $options['syg_option_numrec']);
 
 			// generate token
 			$_SESSION['request_token'] = $this->getAuthToken();
