@@ -190,26 +190,29 @@ class SygYouTube {
 	 * @param $username
 	 * @return $videoFeed
 	 */
-	public function countGalleryEntry($src = null, $gallery_type = null, $max_video_count = null) {
+	public function countGalleryEntry(SygGallery $gallery) {
 		$count = 0;
-		if ($src && $gallery_type && $max_video_count) {
+		if ($gallery->getYtSrc() && $gallery->getGalleryType() && $gallery->getYtMaxVideoCount()) {
 			$feed = new Zend_Gdata_YouTube_VideoFeed();
-			if ($gallery_type == 'feed') {
-				$feed = $this->yt->getuserUploads($src);
+			if ($gallery->getGalleryType() == 'feed') {
+				$feed = $this->getuserUploads($gallery);
 				$count = $feed->count();
-			} else if ($gallery_type == 'list') {
-				$list_of_videos = preg_split( '/\r\n|\r|\n/', $src);
+			} else if ($gallery->getGalleryType() == 'list') {
+				$list_of_videos = preg_split( '/\r\n|\r|\n/', $gallery->getYtSrc());
 				$count = count($list_of_videos);
-			} else if ($gallery_type == 'playlist') {
-				$playlist_id = str_replace ('list=PL', '', parse_url($src, PHP_URL_QUERY));
+				// truncate feed
+				if ($gallery->getYtMaxVideoCount() < $count) {
+					$count = $gallery->getYtMaxVideoCount();
+				}
+			} else if ($gallery->getGalleryType() == 'playlist') {
+				$playlist_id = str_replace ('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
 				$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
 				$feed_to_object = $content->feed->entry;
 				$count = count($feed_to_object);
-			}
-			
-			// truncate feed
-			if ($max_video_count < $count) {
-				$count = $max_video_count;
+				// truncate feed
+				if ($gallery->getYtMaxVideoCount() < $count) {
+					$count = $gallery->getYtMaxVideoCount();
+				}
 			}
 		} 
 		return $count;
