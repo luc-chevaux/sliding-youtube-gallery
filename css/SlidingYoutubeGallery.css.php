@@ -22,6 +22,8 @@ $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);
 extract ($option);
+$pluginOpt = $syg->getOptions();
+extract ($pluginOpt);
 ?>
 
 #syg-pagination-galleries, #syg-pagination-styles {
