@@ -23,8 +23,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	<div class="syg_video_page_container-<?php echo $gallery->getId();?>" id="syg_video_page_container-<?php echo $gallery->getId();?>">
 		
 		<?php 
-		$paginator_area = 'top';
-		include 'inc/paginator.inc.php'; 
+		if (($options['syg_option_paginationarea'] == 'top') || ($options['syg_option_paginationarea'] == 'both')) {
+			$paginator_area = 'top';
+			include 'inc/paginator.inc.php';
+		} 
 		?>
 		
 		<div id="syg_video_container-<?php echo $gallery->getId();?>">
@@ -32,8 +34,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		</div>
 		
 		<?php 
-		$paginator_area = 'bottom';
-		include 'inc/paginator.inc.php'; 
+		if (($options['syg_option_paginationarea'] == 'bottom') || ($options['syg_option_paginationarea'] == 'both')) {
+			$paginator_area = 'bottom';
+			include 'inc/paginator.inc.php'; 
+		}
 		?>
 	</div>
 </div>
