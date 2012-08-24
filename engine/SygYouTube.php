@@ -31,7 +31,7 @@ class SygYouTube {
 	 */
 	public function getUserProfile($username) {
 		try {
-			$this->yt->setMajorProtocolVersion(2);
+			$this->yt->setMajorProtocolVersion(2); 
 			$userProfile = $this->yt->getUserProfile($username);
 		} catch (Zend_Gdata_App_HttpException $exception) {
 			$userprofile = null;
@@ -51,20 +51,36 @@ class SygYouTube {
 	public function getUserUploads(SygGallery $gallery, $start = null, $per_page = null) {
 		$username = $gallery->getYtSrc();
 		$maxVideoCount = $gallery->getYtMaxVideoCount(); 
-		
-		// truncate feed
-		
-		// paginate feed 
-		
+		$userProfile = new Zend_Gdata_YouTube_UserProfileEntry();
+		$userprofile = $this->getUserProfile($gallery->getYtSrc());
+		$totalUpload = $userprofile->getFeedLink('http://gdata.youtube.com/schemas/2007#user.uploads')->countHint;
 		$this->yt->setMajorProtocolVersion(2);
-		if (($start !== null) && ($per_page !== null)) {
-			// return a video subset			
-			
-			$feed = new Zend_Gdata_YouTube_VideoFeed();
-			
-		} else {
-			// return all videos (warning)
-			$feed = $this->yt->retrieveAllEntriesForFeed($this->yt->getuserUploads($username));
+		$url = Zend_Gdata_YouTube::USER_URI .'/'. $username .'/'. Zend_Gdata_YouTube::UPLOADS_URI_SUFFIX;
+		$query = new Zend_Gdata_YouTube_VideoQuery($url);
+		$feed = new Zend_Gdata_YouTube_VideoFeed();
+
+		// mvc < total uploads? -> GET LESS VIDEOS FROM THE CHANNEL
+		if ($gallery->getYtMaxVideoCount() < $totalUpload) {
+			if (($start !== null) && ($per_page !== null)) {
+				// request the right number of videos according to pagination
+				
+			} else {
+				// request the right number of videos without pagination
+				
+			}
+		} 
+		// mvc >= total uploads? -> GET ALL VIDEOS FROM THE CHANNEL
+		else if ($gallery->getYtMaxVideoCount() >= $totalUpload) {
+			if (($start !== null) && ($per_page !== null)) {
+		 		// request the right number of videos according to pagination
+				$start++;
+				$query->setStartIndex($start);
+				$query->setMaxResults($per_page);
+				$feed = $this->yt->getVideoFeed($query);
+			} else {
+				// request all the videos without pagination
+				$feed = $this->yt->retrieveAllEntriesForFeed($this->yt->getuserUploads($username));
+			}
 		}
 		
 		return $feed;
@@ -110,11 +126,11 @@ class SygYouTube {
 		if (count($feed_to_object)) {
 			foreach ($feed_to_object as $item) {
 				$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
-				$videoEntry = $this->sygYouTube->getVideoEntry($videoId);
+				$videoEntry = $this->getVideoEntry($videoId);
 				$feed->addEntry($videoEntry);
 			}
 		}
-		$feed = $this->sygYouTube->adjustFeed($feed, $gallery, $start, $per_page);
+		$feed = $this->adjustFeed($feed, $gallery, $start, $per_page);
 		return $feed;
 	}
 	
