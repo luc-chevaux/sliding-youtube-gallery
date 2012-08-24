@@ -13,7 +13,6 @@ class SygConstant {
 	 * Plugin configuration
 	 */
 	const SYG_VERSION = '1.3.0';
-	const SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED = 4;
 
 	/**
 	 * Plugin running contexts
