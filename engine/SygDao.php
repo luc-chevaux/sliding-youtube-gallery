@@ -146,7 +146,7 @@ class SygDao {
 	 * @param $output_type, $start, $per_page
 	 * @return $galleries
 	 */
-	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->galleries_table_name, $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);
@@ -163,7 +163,7 @@ class SygDao {
 	 * @param $output_type, $start, $per_page
 	 * @return $galleries
 	 */
-	public function getAllSygGalleries12X($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygGalleries12X($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries12X, $this->galleries_table_name.'_OLD_V12X', $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);
@@ -177,7 +177,7 @@ class SygDao {
 	 * @param $output_type, $start, $per_page
 	 * @return $styles
 	 */
-	public function getAllSygStyles($output_type = 'OBJECT', $start = 0, $per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED) {
+	public function getAllSygStyles($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$styles = array();
 		$query = $this->db->prepare(sprintf($this->sqlGetAllStyles, $this->styles_table_name, $start, $per_page));
 		$results = $this->db->get_results($query, $output_type);
