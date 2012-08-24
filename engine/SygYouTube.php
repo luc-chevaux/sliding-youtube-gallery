@@ -19,6 +19,7 @@ class SygYouTube {
 	 */
 	public function __construct() {
 		Zend_Loader::loadClass('Zend_Gdata_YouTube');
+		Zend_Loader::loadClass('Zend_Gdata_YouTube_VideoQuery');
 		$this->yt = new Zend_Gdata_YouTube();
 	}
 	
@@ -62,15 +63,15 @@ class SygYouTube {
 		// mvc < total uploads? -> GET LESS VIDEOS FROM THE CHANNEL (TRUNCATION)
 		if ($gallery->getYtMaxVideoCount() < $totalUpload) {
 			// get truncated feed
-			$start = 1;
-			$query->setStartIndex($start);
+			$startIndex = 1; 
+			$query->setStartIndex($startIndex);
 			$query->setMaxResults($gallery->getYtMaxVideoCount());
 			$feed = $this->yt->getVideoFeed($query);
 			
 			if (($start !== null) && ($per_page !== null)) {
 				// return the right number of videos according to pagination
 				// calling the adjustFeed function
-				$feed = $this->adjustFeed($feed, $gallery);
+				$feed = $this->adjustFeed($feed, $gallery, $start, $per_page);
 			}
 		} 
 		// mvc >= total uploads? -> GET ALL VIDEOS FROM THE CHANNEL (NO TRUNCATION)
@@ -102,6 +103,7 @@ class SygYouTube {
 	 * @return $feed
 	 */
 	public function getUserList(SygGallery $gallery, $start = null, $per_page = null) {
+		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		$list_of_videos = preg_split('/\r\n|\r|\n/', $gallery->getYtSrc());
 		foreach ($list_of_videos as $key => $value) {
 			$list_of_videos[$key] = str_replace('v=', '', parse_url($value, PHP_URL_QUERY));
@@ -122,6 +124,7 @@ class SygYouTube {
 	 * @return $feed
 	 */
 	public function getUserPlaylist(SygGallery $gallery, $start = null, $per_page = null) {
+		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		$playlist_id = str_replace('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
 		$content = json_decode(
 				file_get_contents(
