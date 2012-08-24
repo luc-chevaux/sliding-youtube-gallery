@@ -1,6 +1,6 @@
 <?php 
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
 header('Cache-Control: no-cache, must-revalidate' );
@@ -37,20 +37,15 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
 					$page_number -= 1;
-						
-					$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
-						
+					$options = $plugin->getOptions();
+					$per_page = $options['syg_option_numrec']; // Per page records
 					$start = $page_number * $per_page;
-						
 					$dao = new SygDao();
 					$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
-	
 					$gallery_to_json = array();
-				
 					foreach ($galleries as $gallery) {
 						array_push($gallery_to_json, $gallery->getJsonData());
 					}
-				
 					echo json_encode ($gallery_to_json);
 				}
 				break;
@@ -59,20 +54,15 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
 					$page_number -= 1;
-						
-					$per_page = SygConstant::SYG_CONFIG_NUMBER_OF_RECORDS_DISPLAYED; // Per page records
-	
+					$options = $plugin->getOptions();
+					$per_page = $options['syg_option_numrec']; // Per page records
 					$start = $page_number * $per_page;
-						
 					$dao = new SygDao();
 					$styles = $dao->getAllSygStyles('OBJECT', $start, $per_page);
-						
 					$style_to_json = array();
-						
 					foreach ($styles as $style) {
 						array_push($style_to_json, $style->getJsonData());
 					}
-						
 					echo json_encode ($style_to_json);
 				}
 				break;
@@ -81,7 +71,6 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 		switch ($_GET['query']) {
 			case 'videos':
 				if($_GET['page_number']) {
-					
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
 					$page_number -= 1;		
@@ -91,7 +80,6 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$dao = new SygDao();
 					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
 					$videos_to_json = array();
-					
 					foreach ($videos as $entry) {
 						$element['video_id'] = $entry->getVideoId();
 						$element['video_description'] = $entry->getVideoDescription();
@@ -106,7 +94,7 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						$element['video_thumbshot'] = $thumbnails[1]['url'];
 						array_push($videos_to_json, $element);
 					}
-					echo json_encode ($videos_to_json);
+					echo json_encode (array_reverse($videos_to_json));
 				}
 				break;
 			default: 
