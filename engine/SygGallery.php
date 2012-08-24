@@ -101,7 +101,7 @@ class SygGallery {
 	 * @return $count
 	 */
 	public function countGalleryEntry() {
-		return $this->sygYouTube->countGalleryEntry ($this->getYtSrc(), $this->getGalleryType(), $this->getYtMaxVideoCount());
+		return $this->sygYouTube->countGalleryEntry ($this);
 	}
 	
 	/**
