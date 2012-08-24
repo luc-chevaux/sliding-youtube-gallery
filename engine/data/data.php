@@ -89,7 +89,6 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						$element['video_category'] =$entry->getVideoCategory();
 						$element['video_tags'] = $entry->getVideoTags();
 						$element['video_rating_info'] = $entry->getVideoRatingInfo();
-						/*$entry = new Zend_Gdata_YouTube_VideoEntry();*/
 						$thumbnails = $entry->getVideoThumbnails();
 						$element['video_thumbshot'] = $thumbnails[1]['url'];
 						array_push($videos_to_json, $element);
