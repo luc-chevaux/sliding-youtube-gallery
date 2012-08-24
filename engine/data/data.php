@@ -78,7 +78,9 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$per_page = $options['syg_option_pagenumrec']; // Per page records
 					$start = $page_number * $per_page;
 					$dao = new SygDao();
+					
 					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
+					
 					$videos_to_json = array();
 					foreach ($videos as $entry) {
 						$element['video_id'] = $entry->getVideoId();
