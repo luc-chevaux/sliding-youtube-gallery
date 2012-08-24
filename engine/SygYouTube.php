@@ -61,15 +61,16 @@ class SygYouTube {
 
 		// mvc < total uploads? -> GET LESS VIDEOS FROM THE CHANNEL (TRUNCATION)
 		if ($gallery->getYtMaxVideoCount() < $totalUpload) {
+			// get truncated feed
+			$start = 1;
+			$query->setStartIndex($start);
+			$query->setMaxResults($gallery->getYtMaxVideoCount());
+			$feed = $this->yt->getVideoFeed($query);
+			
 			if (($start !== null) && ($per_page !== null)) {
-				// request the right number of videos according to pagination
-				
-			} else {
-				// request the right number of videos without pagination
-				$start = 1;
-				$query->setStartIndex($start);
-				$query->setMaxResults($gallery->getYtMaxVideoCount());
-				$feed = $this->yt->getVideoFeed($query);
+				// return the right number of videos according to pagination
+				// calling the adjustFeed function
+				$feed = $this->adjustFeed($feed, $gallery);
 			}
 		} 
 		// mvc >= total uploads? -> GET ALL VIDEOS FROM THE CHANNEL (NO TRUNCATION)
