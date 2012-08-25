@@ -5,7 +5,7 @@
  * 
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  * 
  * 
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
@@ -216,7 +216,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category admin forward
 	 * @since 1.0.1
 	 * @param $id
-	 * @return $context
+	 * @return array $context
 	 */
 	public function getViewCtx($id = null) {
 		if (is_int((int) $id)) {
@@ -448,9 +448,9 @@ class SygPlugin extends SanityPluginFramework {
 	/**************************/
 
 	/**
-	 * Get gallery settings returning its DTO
+	 * @name Get gallery settings returning its DTO
 	 * @param $id 
-	 * @return array
+	 * @return array $settings
 	 */
 	public function getGallerySettings($id = null) {
 		// cast id to an int
@@ -464,7 +464,8 @@ class SygPlugin extends SanityPluginFramework {
 		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 
 		// return gallery in dto format
-		return $gallery->toDto(true);
+		$settings = $gallery->toDto(true); 
+		return $settings;
 	}
 
 	/**
@@ -513,9 +514,11 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name getVideoFeed
 	 * @category get a youtube video feed
 	 * @since 1.3.0
-	 * @param $gallery, $start, $per_page
+	 * @param $gallery
+	 * @param $start
+	 * @param $per_page
 	 * @throws Exception
-	 * @return $feed
+	 * @return mixed $feed
 	 */
 	public function getVideoFeed(SygGallery $gallery, $start = null,	$per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
@@ -579,10 +582,11 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @name getVideoPage
+	 * @name prepareHeader
 	 * @category prepare header with the right js and css inclusion
 	 * @since 1.0.1
-	 * @param &$view, $context
+	 * @param &$view
+	 * @param $context
 	 */
 	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE) {
 		// define resources path
@@ -1157,7 +1161,6 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name forwardToDeleteStyle
 	 * @category admin forward
 	 * @since 1.0.1
-	 * @return $output
 	 */
 	public function forwardToDeleteStyle() {
 		// get the gallery id
@@ -1205,7 +1208,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name getOptions
 	 * @category get plugin options
 	 * @since 1.3.0
-	 * @return $settings
+	 * @return array $options
 	 */
 	public function getOptions() {
 		$options = array();
@@ -1213,6 +1216,8 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
 		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
+		
+		/* paginator options */
 		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
 		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
 		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
@@ -1221,6 +1226,7 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_paginator_fontcolor'] = get_option('syg_option_paginator_fontcolor');
 		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
 		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
+		
 		return $options;
 	}
 
