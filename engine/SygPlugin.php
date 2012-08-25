@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.3.0
+ * @version: 1.3.1
  * 
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
  * @todo Background image (milesone v1.4.0)
