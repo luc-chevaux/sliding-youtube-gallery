@@ -5,17 +5,17 @@
  *
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  */
 
 class SygGallery {
-	
+	// plugin objects
 	private $sygYouTube;
 	private $sygDao;
 	private $sygStyle;
 	private $userProfile;
-	
-	// object attributes
+
+	// this object attributes
 	private $galleryName;
 	private $galleryDetails;
 	private $galleryType;
@@ -98,7 +98,7 @@ class SygGallery {
 	 * @name countGalleryEntry
 	 * @category count feed element for this gallery
 	 * @since 1.3.0
-	 * @return $count
+	 * @return int $count
 	 */
 	public function countGalleryEntry() {
 		return $this->sygYouTube->countGalleryEntry ($this);
@@ -108,7 +108,7 @@ class SygGallery {
 	 * @name getJsonData 
 	 * @category object data parser
 	 * @since 1.0.1
-	 * @return $json
+	 * @return string $json
 	 */
 	function getJsonData(){
 		$var = get_object_vars($this);
@@ -126,7 +126,7 @@ class SygGallery {
 	 * @category object data parser
 	 * @since 1.0.1
 	 * @param $full, if true export gallery with its owned style
-	 * @return $dto
+	 * @return array $dto
 	 */
 	public function toDto($full = false) {
 		$dto = array(
@@ -177,7 +177,7 @@ class SygGallery {
 	 * @name getRsType
 	 * @category getters and setters
 	 * @since 1.0.1
-	 * @return the $rsType
+	 * @return array $rsType
 	 */
 	public static function getRsType() {
 		return SygGallery::$rsType;
