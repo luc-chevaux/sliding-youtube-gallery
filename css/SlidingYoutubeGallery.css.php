@@ -261,15 +261,19 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 #pagination-top-<?php echo $id; ?> li, #pagination-bottom-<?php echo $id; ?> li {	
 	list-style: none;
 	float: left;
+	line-height: 1;
 	margin-left: <?php echo $syg_box_padding; ?>px;
-	padding: <?php echo intval($syg_box_padding*0.3); ?>px;;
-	box-shadow: 0 0 3px <?php echo $syg_thumbnail_bordercolor; ?>;
-	background-color: <?php echo $syg_description_fontcolor; ?>;
-	color: <?php echo $syg_box_background; ?>;
-	border-radius: <?php echo intval($syg_box_radius*0.5); ?>px;
-	font-size: <?php echo intval($syg_description_fontsize*0.8); ?>px;
-	height: <?php echo intval(($syg_description_fontsize*0.8) + (($syg_box_padding * 0.2) * 2)); ?>px;
-	width: <?php echo intval(($syg_description_fontsize*0.8) + (($syg_box_padding * 0.2) * 2)); ?>px;
+	padding: <?php echo intval($syg_box_padding*0.4); ?>px;
+	
+	box-shadow: 0 0 <?php echo $syg_option_paginator_shadowsize; ?>px <?php echo $syg_option_paginator_shadowcolor; ?>;
+	background-color: <?php echo $syg_option_paginator_bgcolor; ?>;
+	color: <?php echo $syg_option_paginator_fontcolor; ?>;
+	border-radius: <?php echo $syg_option_paginator_borderradius; ?>px;
+	border: <?php echo $syg_option_paginator_bordersize; ?>px <?php echo $syg_option_paginator_bordercolor;?> solid;
+	font-size: <?php echo $syg_option_paginator_fontsize; ?>px;
+	
+	height: <?php echo $syg_option_paginator_fontsize; ?>px;
+	width: <?php echo $syg_option_paginator_fontsize; ?>px;
 }
 
 #pagination-top-<?php echo $id; ?> li:hover, #pagination-bottom-<?php echo $id; ?> li:hover { 
