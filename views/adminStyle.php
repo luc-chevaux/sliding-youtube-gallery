@@ -24,7 +24,7 @@
 
 <!-- Welcome Message -->
 <p class="webengText">
-	<?php echo SygConstant::BE_MANAGE_GALLERY_MESSAGE; ?>
+	<?php echo SygConstant::BE_MANAGE_STYLE_MESSAGE; ?>
 </p>
 
 <!-- Gallery Form -->
