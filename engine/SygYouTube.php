@@ -28,7 +28,7 @@ class SygYouTube {
 	 * @category return youTube user profile object
 	 * @since 1.0.1
 	 * @param $username
-	 * @return $userProfile
+	 * @return mixed $userProfile
 	 */
 	public function getUserProfile($username) {
 		try {
@@ -47,7 +47,7 @@ class SygYouTube {
 	 * @param SygGallery $gallery
 	 * @param $start = null
 	 * @param $per_page = null
-	 * @return $feed
+	 * @return Zend_Gdata_YouTube_VideoFeed $feed
 	 */
 	public function getUserUploads(SygGallery $gallery, $start = null, $per_page = null) {
 		$username = $gallery->getYtSrc();
@@ -100,7 +100,7 @@ class SygYouTube {
 	 * @param SygGallery $gallery
 	 * @param $start = null
 	 * @param $per_page = null
-	 * @return $feed
+	 * @return Zend_Gdata_YouTube_VideoFeed $feed
 	 */
 	public function getUserList(SygGallery $gallery, $start = null, $per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
@@ -121,7 +121,7 @@ class SygYouTube {
 	 * @param SygGallery $gallery
 	 * @param $start = null
 	 * @param $per_page = null
-	 * @return $feed
+	 * @return Zend_Gdata_YouTube_VideoFeed $feed
 	 */
 	public function getUserPlaylist(SygGallery $gallery, $start = null, $per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
@@ -146,9 +146,12 @@ class SygYouTube {
 	/**
 	 * @name adjustFeed
 	 * @category return youTube user uploads
-	 * @since 1.0.1
-	 * @param $username
-	 * @return $videoFeed
+	 * @since 1.3.0
+	 * @param $feed
+	 * @param $gallery
+	 * @param $start = null
+	 * @param $per_page = null
+	 * @return Zend_Gdata_YouTube_VideoFeed $feed
 	 */
 	private function adjustFeed(Zend_Gdata_YouTube_VideoFeed $feed, SygGallery $gallery, $start = null, $per_page = null) {
 		// truncate feed
@@ -190,8 +193,8 @@ class SygYouTube {
 	 * @name countGalleryEntry
 	 * @category return displayed video count
 	 * @since 1.3.0
-	 * @param $username
-	 * @return $videoFeed
+	 * @param $gallery
+	 * @return int $count
 	 */
 	public function countGalleryEntry(SygGallery $gallery) {
 		$count = 0;
