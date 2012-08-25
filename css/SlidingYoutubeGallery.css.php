@@ -292,6 +292,6 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 }
 
 .current_page {
-	color: <?php echo $syg_thumbnail_bordercolor; ?> !important;
+	color: <?php echo $syg_option_paginator_fontcolor; ?> !important;
 }
 /* end pagination */
