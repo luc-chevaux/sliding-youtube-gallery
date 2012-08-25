@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  */
 
 require_once (ABSPATH . 'wp-admin/includes/plugin.php');
@@ -18,10 +18,8 @@ class SygDao {
 
 	// Query used in DAO
 	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
-	
-	// transitory variable
+	// transitory query
 	private $sqlGetAllGalleries12X = SygConstant::SQL_GET_ALL_GALLERIES_1_2_X;
-	
 	private $sqlGetAllStyles = SygConstant::SQL_GET_ALL_STYLES;
 	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
 	private $sqlGetStyleById = SygConstant::SQL_GET_STYLE_BY_ID;
@@ -58,7 +56,7 @@ class SygDao {
 	 * @category Add a syg gallery to database
 	 * @since 1.2.5
 	 * @param SygGallery $gallery to add
-	 * @return $id latest inserted id
+	 * @return int $id latest inserted id
 	 */
 	public function addSygGallery(SygGallery $gallery) {
 		$this->db->insert($this->galleries_table_name, 
@@ -73,8 +71,8 @@ class SygDao {
 	 * @name addSygStyle
 	 * @category Add a syg style to database
 	 * @since 1.2.5
-	 * @param SygStyle $gallery to add
-	 * @return $id latest inserted id
+	 * @param SygStyle $style to add
+	 * @return int $id latest inserted id
 	 */
 	public function addSygStyle(SygStyle $style) {
 		$this->db->insert($this->styles_table_name,
@@ -143,8 +141,10 @@ class SygDao {
 	 * @name getAllSygGallery
 	 * @category Get a syg gallery list from database
 	 * @since 1.2.5
-	 * @param $output_type, $start, $per_page
-	 * @return $galleries
+	 * @param $output_type
+	 * @param $start
+	 * @param $per_page
+	 * @return array of $galleries
 	 */
 	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
@@ -160,8 +160,10 @@ class SygDao {
 	 * @name getAllSygGallery12X
 	 * @category Get a syg gallery list from database
 	 * @since 1.2.5
-	 * @param $output_type, $start, $per_page
-	 * @return $galleries
+	 * @param $output_type
+	 * @param $start
+	 * @param $per_page
+	 * @return array of $galleries
 	 */
 	public function getAllSygGalleries12X($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
@@ -174,8 +176,10 @@ class SygDao {
 	 * @name getAllStyles
 	 * @category Get a syg style list from database
 	 * @since 1.2.5
-	 * @param $output_type, $start, $per_page
-	 * @return $styles
+	 * @param $output_type
+	 * @param $start
+	 * @param $per_page
+	 * @return array of $styles
 	 */
 	public function getAllSygStyles($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$styles = array();
@@ -191,7 +195,8 @@ class SygDao {
 	 * @name getSygGalleryById
 	 * @category Get a syg gallery from database
 	 * @since 1.2.5
-	 * @param $id, $output_type
+	 * @param $id
+	 * @param $output_type
 	 * @return $gallery
 	 */
 	public function getSygGalleryById($id, $output_type = 'OBJECT') {
@@ -205,7 +210,8 @@ class SygDao {
 	 * @name getSygStyleById
 	 * @category Get a syg style from database
 	 * @since 1.2.5
-	 * @param $id, $output_type
+	 * @param $id
+	 * @param $output_type
 	 * @return $style
 	 */
 	public function getSygStyleById($id, $output_type = 'OBJECT') {
@@ -219,7 +225,7 @@ class SygDao {
 	 * @name getGalleriesCount
 	 * @category Count galleries
 	 * @since 1.2.5
-	 * @return $count
+	 * @return int $count
 	 */
 	public function getGalleriesCount() {
 		$query = $this->db->prepare(sprintf($this->sqlCountGalleries, $this->galleries_table_name));
@@ -232,7 +238,7 @@ class SygDao {
 	 * @name getStylesCount
 	 * @category Count styles
 	 * @since 1.2.5
-	 * @return $count
+	 * @return int $count
 	 */
 	public function getStylesCount() {
 		$query = $this->db->prepare(sprintf($this->sqlCountStyles, $this->styles_table_name));
@@ -291,8 +297,8 @@ class SygDao {
 	 * @name parseOldData
 	 * @category parse old data
 	 * @since 1.3.0
-	 * @param 
-	 * @return dbDelta($query)
+	 * @param $installed_ver
+	 * @param $target_ver
 	 */
 	public function updateData($installed_ver, $target_ver) {
 		if (!$installed_ver) {
@@ -457,7 +463,7 @@ class SygDao {
 	 * @since 1.3.0
 	 * @param $from
 	 * @param $to
-	 * @return dbDelta($query)
+	 * @return bool $success
 	 */
 	function copyTable($from, $to) {
 		if($this->tableExists($to)) {
@@ -480,7 +486,7 @@ class SygDao {
 	 * @category Check if table exists
 	 * @since 1.3.0
 	 * @param $tablename
-	 * @return bool
+	 * @return bool $exist
 	 */
 	function tableExists($tablename) {
 		$query = $this->db->prepare(sprintf($this->sqlCheckTableExist, DB_NAME, $tablename));
@@ -495,7 +501,6 @@ class SygDao {
 	 * @since 1.3.0
 	 * @param $installed_ver
 	 * @param $target_ver
-	 * @return dbDelta($query)
 	 */
 	public function backupTables($installed_ver, $target_ver) {
 		if (strpos($installed_ver, '1.2.') == 0) {
@@ -521,7 +526,6 @@ class SygDao {
 	 * @since 1.3.0
 	 * @param $installed_ver
 	 * @param $target_ver
-	 * @return dbDelta($query)
 	 */
 	public function updateVersion($installed_ver, $target_ver) {		
 		// we have to update database structure
