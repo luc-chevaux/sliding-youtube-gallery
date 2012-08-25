@@ -3,7 +3,7 @@
 /**
  * @name SygValidateException
  * @category Sliding Youtube Gallery Custom Exception Class
- * @since 1.2.5
+ * @since 1.3.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.0

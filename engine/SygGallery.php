@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Plugin Gallery Data Bean
- *
+ * @name Sliding Youtube Gallery Plugin Gallery Data Bean
+ * @category Sliding Youtube Gallery Object
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.0

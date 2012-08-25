@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Constant Class
- *
+ * @name Sliding Youtube Gallery Constant Class
+ * @category Sliding Youtube Gallery Constant Object
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.0

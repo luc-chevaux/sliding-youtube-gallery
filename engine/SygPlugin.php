@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Plugin Controller
- * 
+ * @name Sliding Youtube Gallery Plugin Controller
+ * @category Plugin mvc controller
+ * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.0
- * 
  * 
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
  * @todo Background image (milesone v1.4.0)
@@ -296,7 +296,7 @@ class SygPlugin extends SanityPluginFramework {
 				$dao->updateVersion($installed_ver, $target_syg_db_version);
 
 				// set default option
-				$this->setDefaultOption();
+				self::setDefaultOption();
 
 				// add or update db version option
 				(!get_option("syg_db_version")) ? add_option("syg_db_version",

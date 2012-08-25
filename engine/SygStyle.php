@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Sliding Youtube Gallery Plugin Style Data Bean
- *
+ * @name Sliding Youtube Gallery Plugin Style Data Bean
+ * @category Sliding Youtube Gallery Style Object
+ * @since 1.3.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.0
