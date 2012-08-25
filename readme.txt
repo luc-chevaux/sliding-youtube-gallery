@@ -12,9 +12,7 @@ SYG is a nice plugin that gives you a fast way, to add multiple and fully custom
 == Description ==
 Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add multiple and fully customizable ajax video galleries, directly in your blog! You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.
 You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.
-Users can get the video played as a nice fancybox player.
-
-If you have problems during the update, please read UPGRADE NOTICE @ plugin wp support forum available on the plugin homepage.  
+Users can get the video played as a nice fancybox player. If you have problems during the update, please read UPGRADE NOTICE @ plugin wp support forum available on the plugin homepage.  
 
 == Installation ==
 - Using the WordPress dashboard
