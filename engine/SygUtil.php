@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  */
 
 class SygUtil {
@@ -18,7 +18,7 @@ class SygUtil {
 	 * @category Get height from width (w/normal aspect ratio)
 	 * @since 1.2.5
 	 * @param $width
-	 * @return $height
+	 * @return int $height
 	 */
 	public static function getNormalHeight($width) {
 		$height = round($width * self::$nAspectRatio);
@@ -30,7 +30,7 @@ class SygUtil {
 	 * @category Get height from width (w/wide aspect ratio)
 	 * @since 1.2.5
 	 * @param $width
-	 * @return $height
+	 * @return int $height
 	 */
 	public static function getWideHeight($width) {
 		$height = round($width * self::$wAspectRatio);
@@ -42,7 +42,7 @@ class SygUtil {
 	 * @category Extract type from videoformat
 	 * @since 1.0.1
 	 * @param $videoFormat
-	 * @return $type
+	 * @return string $type
 	 */
 	public static function extractType($videoFormat) {
 		$start = strlen($videoFormat)-1;
@@ -55,7 +55,7 @@ class SygUtil {
 	 * @category Extract width from videoformat
 	 * @since 1.0.1
 	 * @param $videoFormat
-	 * @return $width
+	 * @return int $width
 	 */
 	public static function extractWidth($videoFormat) {
 		$start = 0;
@@ -69,7 +69,7 @@ class SygUtil {
 	 * @category Return an array with time elements
 	 * @since 1.2.5
 	 * @param $seconds
-	 * @return array
+	 * @return array $time
 	 */
 	private static function Sec2Time($seconds) {
 		if(is_numeric($seconds)) {
@@ -105,7 +105,7 @@ class SygUtil {
 	 * @category Format a video duration in hh:mi:ss
 	 * @since 1.2.5
 	 * @param $duration
-	 * @return $videoDuration
+	 * @return string $videoDuration
 	 */
 	public static function formatDuration ($duration = null) {
 		$duration = self::Sec2Time($duration);
@@ -130,7 +130,7 @@ class SygUtil {
 	 * @name getJsonData
 	 * @category object data parser
 	 * @since 1.2.5
-	 * @return $json
+	 * @return string $json
 	 */
 	public static function getJsonData($needle){
 		$var = get_object_vars($needle);
