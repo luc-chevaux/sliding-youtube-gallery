@@ -54,11 +54,11 @@ jQuery(document).ready(function($){
 	options['plugin_root'] = '<?php echo $syg->getPluginRoot(); ?>'; // string
 	options['img_root'] = '<?php echo $syg->getImgRoot(); ?>'; // string
 	options['thumbnail_image'] = '<?php echo $syg_thumbnail_image; ?>'; // string
-	options['description_show'] = <?php echo (boolean)$syg_description_show; ?>; // boolean
-	options['description_showduration'] = <?php echo (boolean)$syg_description_showduration; ?>; // boolean
-	options['description_showcategories'] = <?php echo (boolean)$syg_description_showcategories; ?>; // boolean
-	options['description_showtags'] = <?php echo (boolean)$syg_description_showtags; ?>; // boolean
-	options['description_showratings'] = <?php echo (boolean)$syg_description_showratings; ?>; // boolean
+	options['description_show'] = <?php echo $syg_description_show; ?>; // boolean
+	options['description_showduration'] = <?php echo $syg_description_showduration; ?>; // boolean
+	options['description_showcategories'] = <?php echo $syg_description_showcategories; ?>; // boolean
+	options['description_showtags'] = <?php echo $syg_description_showtags; ?>; // boolean
+	options['description_showratings'] = <?php echo $syg_description_showratings; ?>; // boolean
 	
 	options['json_query_if_url'] = '<?php echo $syg->getJsonQueryIfUrl(); ?>'; // string
 	
