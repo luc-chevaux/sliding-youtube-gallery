@@ -5,11 +5,11 @@
  *
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  */
 
 class SygStyle {
-	// object attributes
+	// this object attributes
 	private $styleName;
 	private $styleDetails;
 	private $boxWidth;
@@ -98,7 +98,7 @@ class SygStyle {
 	 * @name getJsonData 
 	 * @category object data parser
 	 * @since 1.2.5
-	 * @return $json
+	 * @return string $json
 	 */
 	function getJsonData(){
 		$var = get_object_vars($this);
@@ -116,7 +116,7 @@ class SygStyle {
 	 * @category object data parser
 	 * @since 1.2.5
 	 * @param $full, if true export style with its calculated fields
-	 * @return $dto
+	 * @return array $dto
 	 */
 	public function toDto($full = false) {
 		$dto = array('syg_style_name'			=> $this->getStyleName(),
