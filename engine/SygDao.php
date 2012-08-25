@@ -397,7 +397,7 @@ class SygDao {
 				$style = new SygStyle();
 					
 				// style name
-				$style->setStyleName($gallery->syg_youtube_username . 'Custom Style');
+				$style->setStyleName($gallery->syg_youtube_username . ' Custom Style');
 				$style->setStyleDetails('This style has been generated automatically from your latest update');
 					
 				// box option values
