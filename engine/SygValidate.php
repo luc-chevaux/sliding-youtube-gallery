@@ -6,7 +6,7 @@
  * @since 1.2.5
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.2.5
+ * @version: 1.3.0
  */
 
 class SygValidateException extends Exception {
@@ -17,7 +17,10 @@ class SygValidateException extends Exception {
 	 * @name __construct
 	 * @category construct SygValidateException object
 	 * @since 1.3.0
-	 * @param $message, $code
+	 * @param $problems
+	 * @param $message
+	 * @param $code
+	 * @param $previous
 	 */
 	public function __construct($problems, $message, $code = 0,
 			Exception $previous = null) {
@@ -35,7 +38,7 @@ class SygValidateException extends Exception {
 	 * @category return a string map which is representation of the object
 	 * @since 1.3.0
 	 * @throws Exception
-	 * @return String representation of the object
+	 * @return string $this
 	 */
 	public function __toString() {
 		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
@@ -45,7 +48,7 @@ class SygValidateException extends Exception {
 	 * @name getProblems
 	 * @category getters and setters
 	 * @since 1.3.0
-	 * @return $problemFound attribute array 
+	 * @return array $problemFound
 	 */
 	public function getProblems() {
 		return $this->problems;
