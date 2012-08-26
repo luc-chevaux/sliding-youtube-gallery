@@ -33,6 +33,10 @@ Users can get the video played as a nice fancybox player. If you have problems d
 
 For more information about this plugin, please visit [webEng blog](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/ "webEng blog") and post comments, questions and advices in order to make this plugin better.
 
+= How do I setup youtube sources? =
+
+If you want to display user's channel feed, you have to insert only the username. If you want to display a YouTube playlist, you have to specify the full playlist url. If you want to specify manually a video list, you must insert videos url separated by new line.
+
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
 To display a Sliding YouTube Gallery in a page or post, you must use the short code [syg_gallery id=your_gallery_id] .
