@@ -52,19 +52,19 @@
   		
 		<!-- user -->
 		<div id="syg_youtube_username_panel">
-			<label for="syg_youtube_src">YouTube User (enter the name of the user you want to dispay gallery): </label><br/>
+			<label for="syg_youtube_src">YouTube User [enter the name of the user you want to dispay gallery (e.g. acdc)]: </label><br/>
 			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'feed') echo $gallery->getYtSrc(); ?>" size="30">
 		</div>
 		
 		<!-- video list -->
 		<div id="syg_youtube_list_panel">
-			<label for="syg_youtube_src">Video list (enter a list of valid full video url in each line): </label><br/>
+			<label for="syg_youtube_src">Video list [enter a list of valid video url in each line (e.g. http://www.youtube.com/watch?v=xRQnJyP77tY)]: </label><br/>
 			<textarea rows="5" cols="70" id="syg_youtube_videolist" name="syg_youtube_src"><?php if ($gallery->getGalleryType() == 'list') echo $gallery->getYtSrc(); ?></textarea>
 		</div>
 
 		<!-- user -->
 		<div id="syg_youtube_playlist_panel">
-			<label for="syg_youtube_src">YouTube playlist (enter the standard youtube url for playlist): </label><br/>
+			<label for="syg_youtube_src">YouTube playlist [enter the standard youtube url for playlist (e.g. http://www.youtube.com/playlist?list=PLB53095C7A4A6F63D)]: </label><br/>
 			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'playlist') echo $gallery->getYtSrc(); ?>" size="30">
 		</div>
 		
