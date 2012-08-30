@@ -529,7 +529,7 @@ class SygDao {
 	 */
 	public function updateVersion($installed_ver, $target_ver) {		
 		// we have to update database structure
-		if (!$installed_ver){
+		if (!$installed_ver) {
 			// we're updating from version 1.0.1 or null version
 			
 			// create styles table
@@ -564,6 +564,9 @@ class SygDao {
 			// parse old data
 			$this->updateData($installed_ver, $target_ver);
 		}
+		
+		// set default option
+		SygPlugin::setDefaultOption();
 	}
 }
 ?>
