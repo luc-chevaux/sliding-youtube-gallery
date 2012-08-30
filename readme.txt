@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
 Tested up to: 3.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -35,7 +35,7 @@ For more information about this plugin, please visit [webEng blog](http://blog.w
 
 = How do I setup youtube sources? =
 
-If you want to display user's channel feed, you have to insert only the username. If you want to display a YouTube playlist, you have to specify the full playlist url. If you want to specify manually a video list, you must insert videos url separated by new line.
+If you want to display user's channel feed, you have to insert only the username. If you want to display a YouTube playlist, you have to specify the full playlist url. If you want to specify manually a video list, you must insert videos url separated by a new line.
 
 = How do I display a Sliding YouTube Gallery in a page or post? =
 
@@ -66,6 +66,11 @@ To customize your galleries you can use the plugin administration page. If you n
 5. Settings Page
 
 == Changelog ==
+
+= 1.3.2 = 
+* For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
+* In gallery administration was added some extra details concerning youtube source syntax.
+
 = 1.3.1 =
 * Fixed some minor bugs
 
@@ -97,6 +102,10 @@ To customize your galleries you can use the plugin administration page. If you n
 * Video count setting bug, was fixed.
 
 == Upgrade Notice ==
+
+= 1.3.2 = 
+- For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
+- In gallery administration was added some extra details concerning youtube source syntax.
 
 = 1.3.1 =
 - UPGRADE TROUBLESHOOTING
