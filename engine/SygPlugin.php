@@ -107,7 +107,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category configuration
 	 * @since 1.3.0
 	 */
-	public function setDefaultOption() {
+	public static function setDefaultOption() {
 		if (!get_option('syg_option_apikey'))
 			add_option('syg_option_apikey',
 					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
@@ -294,9 +294,6 @@ class SygPlugin extends SanityPluginFramework {
 
 				// update database structure
 				$dao->updateVersion($installed_ver, $target_syg_db_version);
-
-				// set default option
-				self::setDefaultOption();
 
 				// add or update db version option
 				(!get_option("syg_db_version")) ? add_option("syg_db_version",
