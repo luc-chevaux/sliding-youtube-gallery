@@ -89,19 +89,25 @@ class SygValidate {
 		// validation code
 		$problemFound = array();
 
+		// syg_style_name stringa
+		if (!(preg_match('/^\s*\S.*$/', $data['syg_style_name']))) {
+			array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_style_name'),
+							'msg' => SygConstant::BE_VALIDATE_STRING_NOT_EMPTY));
+		}
+		
 		// syg_thumbnail_height intero
-
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_height']))) {
 			array_push($problemFound,
-					array('field' => 'syg_thumbnail_height',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_thumbnail_height'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_height'])));
 		}
 
 		// syg_thumbnail_width intero
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_width']))) {
 			array_push($problemFound,
-					array('field' => 'syg_thumbnail_width',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_thumbnail_width'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_width'])));
 		}
 
 		// syg_thumbnail_bordersize intero <= 10		
@@ -109,13 +115,13 @@ class SygValidate {
 				&& strval($data['syg_thumbnail_bordersize'] <= 10))) {
 			if (!(preg_match('/^\d+$/', $data['syg_thumbnail_bordersize']))) {
 				array_push($problemFound,
-						array('field' => 'syg_thumbnail_bordersize',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+						array('field' => SygUtil::getLabel('syg_thumbnail_bordersize'),
+								'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_bordersize'])));
 			} else {
 				if (!(strval($data['syg_thumbnail_bordersize']) <= 10)) {
 					array_push($problemFound,
-							array('field' => 'syg_thumbnail_bordersize',
-									'msg' => SygConstant::BE_VALIDATE_NOT_LESS_VALUE));
+							array('field' => SygUtil::getLabel('syg_thumbnail_bordersize'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_LESS_VALUE, $data['syg_thumbnail_bordersize'], 10)));
 				}
 			}
 		}
@@ -125,13 +131,13 @@ class SygValidate {
 				&& strval($data['syg_thumbnail_borderradius'] <= 20))) {
 			if (!(preg_match('/^\d+$/', $data['syg_thumbnail_bordersize']))) {
 				array_push($problemFound,
-						array('field' => 'syg_thumbnail_borderradius',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+						array('field' => SygUtil::getLabel('syg_thumbnail_borderradius'),
+								'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_borderradius'])));
 			} else {
 				if (!(strval($data['syg_thumbnail_bordersize']) <= 20)) {
 					array_push($problemFound,
-							array('field' => 'syg_thumbnail_borderradius',
-									'msg' => SygConstant::BE_VALIDATE_NOT_LESS_VALUE));
+							array('field' => SygUtil::getLabel('syg_thumbnail_borderradius'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_LESS_VALUE, $data['syg_thumbnail_bordersize'], 20)));
 				}
 			}
 		}
@@ -139,8 +145,8 @@ class SygValidate {
 		// syg_thumbnail_distance intero
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_distance']))) {
 			array_push($problemFound,
-					array('field' => 'syg_thumbnail_distance',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_thumbnail_distance'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_distance'])));
 		}
 
 		// syg_thumbnail_buttonopacity reale tra 0 e 1
@@ -151,14 +157,14 @@ class SygValidate {
 			if (!(preg_match('/\d+(\.\d{1,2})?/',
 					$data['syg_thumbnail_buttonopacity']))) {
 				array_push($problemFound,
-						array('field' => 'syg_thumbnail_buttonopacity',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_FLOAT));
+						array('field' => SygUtil::getLabel('syg_thumbnail_buttonopacity'),
+								'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_FLOAT, $data['syg_thumbnail_buttonopacity'])));
 			} else {
 				if (!(strval($data['syg_thumbnail_buttonopacity']) >= 0
 						&& strval($data['syg_thumbnail_buttonopacity']) <= 1)) {
 					array_push($problemFound,
-							array('field' => 'syg_thumbnail_buttonopacity',
-									'msg' => SygConstant::BE_VALIDATE_NOT_IN_RANGE));
+							array('field' => SygUtil::getLabel('syg_thumbnail_buttonopacity'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_thumbnail_buttonopacity'], 0, 1)));
 				}
 			}
 		}
@@ -166,8 +172,8 @@ class SygValidate {
 		// syg_box_width intero
 		if (!(preg_match('/^\d+$/', $data['syg_box_width']))) {
 			array_push($problemFound,
-					array('field' => 'syg_box_width',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_box_width'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_box_width'])));
 		}
 
 		// syg_box_radius intero <=20
@@ -175,13 +181,13 @@ class SygValidate {
 				&& (strval($data['syg_box_radius']) <= 20))) {
 			if (!(preg_match('/^\d+$/', $data['syg_box_radius']))) {
 				array_push($problemFound,
-						array('field' => 'syg_box_radius',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+						array('field' => SygUtil::getLabel('syg_box_radius'),
+								'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_box_radius'])));
 			} else {
 				if (!(strval($data['syg_box_radius']) <= 20)) {
 					array_push($problemFound,
-							array('field' => 'syg_box_radius',
-									'msg' => SygConstant::BE_VALIDATE_NOT_LESS_VALUE));
+							array('field' => SygUtil::getLabel('syg_box_radius'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_LESS_VALUE, $data['syg_box_radius'], 20)));
 				}
 			}
 		}
@@ -189,19 +195,19 @@ class SygValidate {
 		// syg_box_padding intero
 		if (!(preg_match('/^\d+$/', $data['syg_box_padding']))) {
 			array_push($problemFound,
-					array('field' => 'syg_box_padding',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_box_padding'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_box_padding'])));
 		}
 
 		// syg_description_fontsize intero
 		if (!(preg_match('/^\d+$/', $data['syg_description_fontsize']))) {
 			array_push($problemFound,
-					array('field' => 'syg_description_fontsize',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_description_fontsize'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_description_fontsize'])));
 		}
 
 		if (count($problemFound) > 0) {
-			// throws exception			
+			// throws exception
 			$exc = new SygValidateException($problemFound,
 					SygConstant::MSG_EX_STYLE_NOT_VALID,
 					SygConstant::COD_EX_STYLE_NOT_VALID);
@@ -225,57 +231,81 @@ class SygValidate {
 		// validation code
 		$problemFound = array();
 
+		// create youtube object for validation
+		$youtube = new SygYouTube();
+		
 		// validazione congiunta syg_gallery_type e syg_youtube_src
-		switch ($syg_gallery_type) {
-		case "feed":
-			// check youtube user
-			$youtube = new SygYouTube();
-			$profile = $youtube->getUserProfile($data['syg_youtube_src']);
-			if (!$profile) {
-				array_push($problemFound,
-						array('field' => 'syg_youtube_src',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_YT_USER));
-			}
-			break;
-		case "list":
-			// check for every video
-			$list_of_videos = preg_split('/\r\n|\r|\n/', $data['syg_youtube_src']);
-			foreach ($list_of_videos as $key => $value) {
-				$list_of_videos[$key] = str_replace('v=', '',
-						parse_url($value, PHP_URL_QUERY));
-				$videoEntry = $this->sygYouTube
-						->getVideoEntry($list_of_videos[$key]);
-				if (!videoEntry) {
+		switch ($data['syg_gallery_type']) {
+			case "feed":
+				// check youtube user
+				$profile = $youtube->getUserProfile($data['syg_youtube_src']);
+				if (!$profile) {
 					array_push($problemFound,
-							array('field' => 'syg_youtube_src',
-									'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_VIDEO));
+							array('field' => SygUtil::getLabel('syg_youtube_src_feed'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_YT_USER, $data['syg_youtube_src'])));
 				}
-			}
-			break;
-		case "playlist":
-			// check for the playlist
-			$playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
-			$content = json_decode(
-					file_get_contents(
-							'http://gdata.youtube.com/feeds/api/playlists/'
-									. $playlist_id
-									. '/?v=2&alt=json&feature=plcp'));
-			$feed_to_object = $content->feed->entry;
-			if (!$feed_to_object) {
-				array_push($problemFound,
-						array('field' => 'syg_youtube_src',
-								'msg' => SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST));
-			}
-			break;
-		default:
-			break;
+				break;
+			case "list":
+				// check for every video
+				$list_of_videos = preg_split('/\r\n|\r|\n/', $data['syg_youtube_src']);
+				// remove empty elements
+				$list_of_videos = array_filter($list_of_videos, 'strlen');
+				
+				foreach ($list_of_videos as $key => $value) {
+					$qsUrl = $list_of_videos[$key];
+					
+					if (preg_match('/^(http:\/\/)?(?:www\.)?youtube.com\/watch\?(?=.*v=\w+)(?:\S+)?$/', $qsUrl)) {
+						// parse query string
+						$qsArr = array();
+						parse_str (parse_url($qsUrl, PHP_URL_QUERY), $qsArr);
+						
+						// get video id
+						$videoId = $qsArr['v'];
+						
+						try {
+							// get video entry
+							if (!empty($videoId)) $videoEntry = $youtube->getVideoEntry($videoId);
+						} catch (Zend_Gdata_App_HttpException $ex) {
+							array_push($problemFound,
+								array('field' => SygUtil::getLabel('syg_youtube_src_list'),
+										'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_VIDEO, $list_of_videos[$key])));
+						} catch (Exception $ex) {
+							array_push($problemFound,
+								array('field' => SygUtil::getLabel('syg_youtube_src_list'),
+										'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_VIDEO_EXT, $list_of_videos[$key], $ex->getMessage()))
+							);
+						}
+					} else {
+						array_push($problemFound,
+							array('field' => SygUtil::getLabel('syg_youtube_src_list'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_YT_URL, $qsUrl)));
+					}
+				}
+				break;
+			case "playlist":
+				// check for the playlist
+				$playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
+				$content = json_decode(
+						file_get_contents(
+								'http://gdata.youtube.com/feeds/api/playlists/'
+										. $playlist_id
+										. '/?v=2&alt=json&feature=plcp'));
+				$feed_to_object = $content->feed->entry;
+				if (!$feed_to_object) {
+					array_push($problemFound,
+							array('field' => SygUtil::getLabel('syg_youtube_src_playlist'),
+									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST, $data['syg_youtube_src'])));
+				}
+				break;
+			default:
+				break;
 		}
 
 		// syg_youtube_maxvideocount intero 
 		if (!(preg_match('/^\d+$/', $data['syg_youtube_maxvideocount']))) {
 			array_push($problemFound,
-					array('field' => 'syg_youtube_maxvideocount',
-							'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+					array('field' => SygUtil::getLabel('syg_youtube_maxvideocount'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_youtube_maxvideocount'])));
 		}
 
 		// throws exception
@@ -307,43 +337,55 @@ class SygValidate {
 		// syg_option_numrec int
 		if (!(preg_match('/^\d+$/', $data['syg_option_numrec']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_numrec',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+				array('field' => SygUtil::getLabel('syg_option_numrec'),
+						'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_numrec'])));
+		} else {
+			if ($data['syg_option_numrec'] < 2) {
+				array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_numrec'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_LESS_VALUE, 2)));
+			}
 		}
 		
 		// syg_option_pagenumrec int
 		if (!(preg_match('/^\d+$/', $data['syg_option_pagenumrec']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_pagenumrec',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+				array('field' => SygUtil::getLabel('syg_option_pagenumrec'),
+						'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_pagenumrec'])));
+		} else {
+			if ($data['syg_option_pagenumrec'] < 2) {
+				array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_pagenumrec'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_LESS_VALUE, 2)));
+			}
 		}
 		
 		// syg_option_paginator_borderradius int
 		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_borderradius']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_paginator_borderradius',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+			array('field' => SygUtil::getLabel('syg_option_paginator_borderradius'),
+			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_borderradius'])));
 		}
 		
 		// syg_option_paginator_bordersize int
 		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_bordersize']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_paginator_bordersize',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+			array('field' => SygUtil::getLabel('syg_option_paginator_bordersize'),
+			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_bordersize'])));
 		}
 		
 		// syg_option_paginator_shadowsize int
 		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_shadowsize']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_paginator_shadowsize',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+			array('field' => SygUtil::getLabel('syg_option_paginator_shadowsize'),
+			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_shadowsize'])));
 		}
 		
 		// syg_option_paginator_fontsize int
 		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_fontsize']))) {
 			array_push($problemFound,
-			array('field' => 'syg_option_paginator_fontsize',
-			'msg' => SygConstant::BE_VALIDATE_NOT_A_INTEGER));
+			array('field' => SygUtil::getLabel('syg_option_paginator_fontsize'),
+			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_fontsize'])));
 		}
 		
 		// throws exception
