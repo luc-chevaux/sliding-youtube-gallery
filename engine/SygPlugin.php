@@ -812,7 +812,7 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// validate data
 				$valid = SygValidate::validateSettings($data);
-
+				
 				(!get_option('syg_option_apikey')) ? add_option(
 								'syg_option_apikey',
 								$_POST['syg_option_apikey'])
@@ -1055,7 +1055,7 @@ class SygPlugin extends SanityPluginFramework {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblemFound();
+				$this->data['exception_detail'] = $ex->getProblems();
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
