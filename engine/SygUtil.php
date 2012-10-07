@@ -142,5 +142,27 @@ class SygUtil {
 		$json = $var;
 		return $json;
 	}
+	
+	/**
+	 * @name injectValues
+	 * @category placeholder values injection
+	 * @since 1.2.5
+	 * @return string $json
+	 */
+	public static function injectValues() {
+		$args = func_get_args();
+		$toParse = array_shift ($args);
+		return vsprintf ($toParse, $args);
+	}
+	
+	/**
+	 * @name getLabel
+	 * @category get a label from SygConstant by input name
+	 * @since 1.3.3
+	 * @return string $label
+	 */
+	public static function getLabel($label) {
+		return constant('SygConstant::'.$label);
+	}
 }
 ?>
