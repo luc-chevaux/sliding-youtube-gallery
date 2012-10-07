@@ -218,12 +218,46 @@ class SygConstant {
 	 * Validation message
 	 */
 	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
+	const BE_VALIDATE_STRING_NOT_EMPTY = 'must be a not empty string';
 	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value';
-	const BE_VALIDATE_NOT_LESS_VALUE = 'value is not less than %d';
+	const BE_VALIDATE_NOT_LESS_VALUE = '%d must be less or equal than %d';
+	const BE_VALIDATE_LESS_VALUE = 'can\'t be less than %d';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s';
 	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user';
+	const BE_VALIDATE_NOT_A_VALID_YT_URL = '%s is not a valid youtube url';
 	const BE_VALIDATE_NOT_A_VALID_VIDEO = '%s is not a valid youtube video';
+	const BE_VALIDATE_NOT_A_VALID_VIDEO_EXT = '%s is not a valid youtube video. Exception %s was raised.';
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s is not a valid youtube playlist';
+	
+	/**
+	 * Forms label
+	 */
+	const syg_thumbnail_height = 'Height';
+	const syg_thumbnail_width = 'Width';
+	const syg_thumbnail_bordersize = 'Border size';
+	const syg_thumbnail_borderradius = 'Border radius';
+	const syg_thumbnail_distance = 'Distance';
+	const syg_thumbnail_buttonopacity = 'Button opacity';
+	
+	const syg_box_width = 'Box width';
+	const syg_box_radius = 'Box radius';
+	const syg_box_padding = 'Box padding';
+	
+	const syg_description_fontsize = 'Font size';
+	const syg_style_name = 'Name';
+	
+	const syg_youtube_maxvideocount = 'Maximum Video Count';
+	const syg_youtube_src = '';
+	const syg_youtube_src_feed = 'YouTube user';
+	const syg_youtube_src_list = 'Video list';
+	const syg_youtube_src_playlist = 'YouTube playlist';
+	
+	const syg_option_numrec = 'Number of records displayed';
+	const syg_option_pagenumrec = 'Number of records in page';
+	const syg_option_paginator_borderradius = 'Border Radius';
+	const syg_option_paginator_bordersize = 'Border Size';
+	const syg_option_paginator_shadowsize = 'Shadow Size';
+	const syg_option_paginator_fontsize = 'Font Size';
 }
 ?>
