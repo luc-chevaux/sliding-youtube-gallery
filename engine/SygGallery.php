@@ -175,6 +175,82 @@ class SygGallery {
 	}
 	
 	/**
+	 * @name sanitizeYouTubeSource
+	 * @category sanitize a given youtube resource (url)
+	 * @since 1.3.3
+	 */
+	public function sanitizeYouTubeSource() {
+		switch ($this->getGalleryType()) {
+			case "feed":
+				// null
+				break;
+			case "list":
+				// check for every video
+				$list_of_videos = preg_split('/\r\n|\r|\n/', $this->getYtSrc());
+				
+				// init buffer
+				$buffer = '';
+				// init counter
+				$i = 1;
+				// remove empty elements
+				$list_of_videos = array_filter($list_of_videos, 'strlen');
+				// count videos
+				$count = count($list_of_videos);
+				
+				foreach ($list_of_videos as $key => $value) {
+					$qsUrl = $list_of_videos[$key];
+						
+					// parse query string
+					$qsArr = array();
+					parse_str (parse_url($qsUrl, PHP_URL_QUERY), $qsArr);
+
+					// parse host 
+					$host = parse_url($qsUrl, PHP_URL_HOST);
+					
+					// parse path
+					$path = parse_url($qsUrl, PHP_URL_PATH);
+					
+					// get video id
+					$videoId = $qsArr['v'];
+					
+					if (!empty($videoId)) {
+						$qs = '?v='.$videoId;
+					
+						// set the sane url into buffer
+						$saneUrl = $host.$path.$qs;
+						$buffer .= ($i < $count) ? $saneUrl.PHP_EOL : $saneUrl;
+					}
+					
+					$i++;
+				}
+				
+				// override youtube src with sanitized one
+				$this->setYtSrc($buffer);
+				
+				break;
+			case "playlist":
+				$qsUrl = $this->getYtSrc();
+						
+				// parse query string
+				$qsArr = array();
+				parse_str (parse_url($qsUrl, PHP_URL_QUERY), $qsArr);
+						
+				// get video id
+				$pId = $qsArr['list'];
+						
+				// check for the playlist http://www.youtube.com/playlist?list=PLB53095C7A4A6F63D
+				// $playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
+				$stdPlUrl = 'http://www.youtube.com/playlist?list='.$pId;
+				
+				$this->setYtSrc($stdPlUrl);
+				
+				break;
+			default:
+				break;
+		}
+	}
+	
+	/**
 	 * @name getRsType
 	 * @category getters and setters
 	 * @since 1.0.1

@@ -283,18 +283,33 @@ class SygValidate {
 				}
 				break;
 			case "playlist":
-				// check for the playlist
-				$playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
-				$content = json_decode(
-						file_get_contents(
-								'http://gdata.youtube.com/feeds/api/playlists/'
-										. $playlist_id
-										. '/?v=2&alt=json&feature=plcp'));
-				$feed_to_object = $content->feed->entry;
-				if (!$feed_to_object) {
+				if (filter_var($data['syg_youtube_src'], FILTER_VALIDATE_URL)) {
+					$qsUrl = $data['syg_youtube_src'];
+					
+					// parse query string
+					$qsArr = array();
+					parse_str (parse_url($qsUrl, PHP_URL_QUERY), $qsArr);
+					
+					// get video id
+					$pId = $qsArr['list'];
+					
+					// check for the playlist http://www.youtube.com/playlist?list=PLB53095C7A4A6F63D
+					// $playlist_id = str_replace('list=PL', '', parse_url($data['syg_youtube_src'], PHP_URL_QUERY));
+					$content = json_decode(
+							file_get_contents(
+									'http://gdata.youtube.com/feeds/api/playlists/'
+											. $pId
+											. '/?v=2&alt=json&feature=plcp'));
+					$feed_to_object = $content->feed->entry;
+					if (!$feed_to_object) {
+						array_push($problemFound,
+								array('field' => SygUtil::getLabel('syg_youtube_src_playlist'),
+										'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST, $data['syg_youtube_src'])));
+					}
+				} else {
 					array_push($problemFound,
-							array('field' => SygUtil::getLabel('syg_youtube_src_playlist'),
-									'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST, $data['syg_youtube_src'])));
+								array('field' => SygUtil::getLabel('syg_youtube_src_playlist'),
+										'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL, $data['syg_youtube_src'])));
 				}
 				break;
 			default:

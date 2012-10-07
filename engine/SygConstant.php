@@ -218,17 +218,18 @@ class SygConstant {
 	 * Validation message
 	 */
 	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
-	const BE_VALIDATE_STRING_NOT_EMPTY = 'must be a not empty string';
-	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value';
-	const BE_VALIDATE_NOT_LESS_VALUE = '%d must be less or equal than %d';
-	const BE_VALIDATE_LESS_VALUE = 'can\'t be less than %d';
-	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value';
-	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s';
-	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user';
-	const BE_VALIDATE_NOT_A_VALID_YT_URL = '%s is not a valid youtube url';
-	const BE_VALIDATE_NOT_A_VALID_VIDEO = '%s is not a valid youtube video';
+	const BE_VALIDATE_STRING_NOT_EMPTY = 'must be a not empty string.';
+	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value.';
+	const BE_VALIDATE_NOT_LESS_VALUE = '%d must be less or equal than %d.';
+	const BE_VALIDATE_LESS_VALUE = 'can\'t be less than %d.';
+	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value.';
+	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s.';
+	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user.';
+	const BE_VALIDATE_NOT_A_VALID_YT_URL = '%s is not a valid youtube url.';
+	const BE_VALIDATE_NOT_A_VALID_VIDEO = '%s is not a valid youtube video.';
 	const BE_VALIDATE_NOT_A_VALID_VIDEO_EXT = '%s is not a valid youtube video. Exception %s was raised.';
-	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s is not a valid youtube playlist';
+	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s youtube playlist does not exist.';
+	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
 	
 	/**
 	 * Forms label
