@@ -59,6 +59,10 @@ class SygDao {
 	 * @return int $id latest inserted id
 	 */
 	public function addSygGallery(SygGallery $gallery) {
+		// sanitize youtube source
+		$gallery->sanitizeYouTubeSource();
+		
+		// execute the insert
 		$this->db->insert($this->galleries_table_name, 
 					$gallery->toDto(), 
 					$gallery->getRsType()
@@ -90,6 +94,10 @@ class SygDao {
 	 * @param SygGallery $gallery to update
 	 */	
 	public function updateSygGallery(SygGallery $gallery) {
+		// sanitize youtube source
+		$gallery->sanitizeYouTubeSource();
+		
+		// execute the update
 		$this->db->update(
 				$this->galleries_table_name,
 				$gallery->toDto(),
