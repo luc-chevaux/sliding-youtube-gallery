@@ -54,6 +54,9 @@ if (!is_admin()) {
 	// back end code block
 	// attach the admin menu to the hook
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
+	
+	// add admin notices
+	add_action('admin_notices', 'sygNotice');
 }
 
 /* FRONT END METHODS */
@@ -78,6 +81,10 @@ function getVideoPage($atts) {
 }
 
 /* BACK END METHODS */
+
+function sygNotice () {
+	SygPlugin::sygNotice();
+}
 
 // Sliding youtube gallery options page
 function SlidingYoutubeGalleryAdmin() {
