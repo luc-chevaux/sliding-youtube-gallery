@@ -49,8 +49,8 @@ class SygPlugin extends SanityPluginFramework {
 	private $sygYouTube;
 	private $sygDao;
 
-	  /*************************/
-	 /* CONFIGURATION METHODS */
+	/*************************/
+	/* CONFIGURATION METHODS */
 	/*************************/
 	/**
 	 * @name __construct
@@ -58,7 +58,8 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.0.1
 	 */
 	public function __construct() {
-		$me = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+		$me = ABSPATH
+				. 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
 
 		parent::__construct(dirname($me));
 
@@ -228,13 +229,49 @@ class SygPlugin extends SanityPluginFramework {
 		return false;
 	}
 
-	  /*****************************/
-	 /* END CONFIGURATION METHODS */
+	/*****************************/
+	/* END CONFIGURATION METHODS */
 	/*****************************/
 
-	  /********************************/
-	 /* WORDPRESS PLUGIN ACTION HOOK */
 	/********************************/
+	/* WORDPRESS PLUGIN ACTION HOOK */
+	/********************************/
+
+	/**
+	 * @name sygNotice
+	 * @category display admin notices in wordpress dashboard
+	 * @since 1.3.3
+	 */
+	public static function sygNotice() {
+		global $pagenow;
+		if (($pagenow == 'admin.php')
+				&& (($_GET['page'] == SygConstant::BE_ACTION_MANAGE_STYLES)
+					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_GALLERIES)
+					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_SETTINGS)
+					|| ($_GET['page'] == SygConstant::BE_ACTION_CONTACTS))) {
+			// create a brand new dao
+			$dao = new SygDao();
+
+			$checkStyles = (bool) $dao->getStylesCount();
+			$checkGallery = (bool) $dao->getGalleriesCount();
+			$checkOptions = (bool) SygValidate::validateSettings(serialize(SygPlugin::getInstance()->getOptions()));
+			
+			if ((!$checkStyles) || (!$checkGallery) || (!$checkOptions)) {
+				echo '<div class="updated">';
+				echo '<p><strong>Sliding YouTube Gallery</strong></p><p>';
+				if (!$checkStyles) {
+					echo SygConstant::BE_NO_STYLES_FOUND_ADM_WRN;
+				}
+				if (!$checkGallery) { 
+					echo SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN;
+				}
+				if (!$checkOptions) {
+					echo SygConstant::BE_WRONG_SETTINGS_ADM_WRN;
+				}
+				echo '</p></div>';
+			}
+		}
+	}
 
 	/**
 	 * @name uninstall
@@ -309,12 +346,12 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
-	  /************************************/
-	 /* END WORDPRESS PLUGIN ACTION HOOK */
+	/************************************/
+	/* END WORDPRESS PLUGIN ACTION HOOK */
 	/************************************/
 
-	  /***********************/
-	 /* GETTERS AND SETTERS */
+	/***********************/
+	/* GETTERS AND SETTERS */
 	/***********************/
 	/**
 	 * @name setHomeRoot
@@ -436,12 +473,12 @@ class SygPlugin extends SanityPluginFramework {
 		return $this->jsonQueryIfUrl;
 	}
 
-	  /***************************/
-	 /* END GETTERS AND SETTER  */
+	/***************************/
+	/* END GETTERS AND SETTER  */
 	/***************************/
 
-	  /**************************/
-	 /* FRONT END CORE METHODS */
+	/**************************/
+	/* FRONT END CORE METHODS */
 	/**************************/
 
 	/**
@@ -461,7 +498,7 @@ class SygPlugin extends SanityPluginFramework {
 		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
 
 		// return gallery in dto format
-		$settings = $gallery->toDto(true); 
+		$settings = $gallery->toDto(true);
 		return $settings;
 	}
 
@@ -517,19 +554,22 @@ class SygPlugin extends SanityPluginFramework {
 	 * @throws Exception
 	 * @return mixed $feed
 	 */
-	public function getVideoFeed(SygGallery $gallery, $start = null,	$per_page = null) {
+	public function getVideoFeed(SygGallery $gallery, $start = null,
+			$per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		if ($gallery->getGalleryType() == 'feed') {
-			$feed = $this->sygYouTube->getUserUploads($gallery, $start, $per_page);
+			$feed = $this->sygYouTube
+					->getUserUploads($gallery, $start, $per_page);
 		} else if ($gallery->getGalleryType() == 'list') {
 			$feed = $this->sygYouTube->getUserList($gallery, $start, $per_page);
 		} else if ($gallery->getGalleryType() == 'playlist') {
-			$feed = $this->sygYouTube->getUserPlaylist($gallery, $start, $per_page);
+			$feed = $this->sygYouTube
+					->getUserPlaylist($gallery, $start, $per_page);
 		}
-		
+
 		return $feed;
 	}
-	
+
 	/**
 	 * @name getVideoPage
 	 * @category get a video page
@@ -689,12 +729,12 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
-	  /******************************/
-	 /* END FRONT END CORE METHODS */
+	/******************************/
+	/* END FRONT END CORE METHODS */
 	/******************************/
 
-	  /**************************/
-	 /* ADMIN SECTION FORWARDS */
+	/**************************/
+	/* ADMIN SECTION FORWARDS */
 	/**************************/
 
 	/**
@@ -812,7 +852,7 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// validate data
 				$valid = SygValidate::validateSettings($data);
-				
+
 				(!get_option('syg_option_apikey')) ? add_option(
 								'syg_option_apikey',
 								$_POST['syg_option_apikey'])
@@ -1183,12 +1223,12 @@ class SygPlugin extends SanityPluginFramework {
 		return $this->render('adminSupport');
 	}
 
-	  /******************************/
-	 /* END ADMIN SECTION FORWARDS */
+	/******************************/
+	/* END ADMIN SECTION FORWARDS */
 	/******************************/
 
-	  /********************/
-	 /* SECURITY METHODS */
+	/********************/
+	/* SECURITY METHODS */
 	/********************/
 
 	/**
@@ -1213,17 +1253,25 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
 		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
-		
+
 		/* paginator options */
-		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
-		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
-		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
-		$options['syg_option_paginator_bgcolor'] = get_option('syg_option_paginator_bgcolor');
-		$options['syg_option_paginator_shadowcolor'] = get_option('syg_option_paginator_shadowcolor');
-		$options['syg_option_paginator_fontcolor'] = get_option('syg_option_paginator_fontcolor');
-		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
-		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
-		
+		$options['syg_option_paginator_borderradius'] = get_option(
+				'syg_option_paginator_borderradius');
+		$options['syg_option_paginator_bordersize'] = get_option(
+				'syg_option_paginator_bordersize');
+		$options['syg_option_paginator_bordercolor'] = get_option(
+				'syg_option_paginator_bordercolor');
+		$options['syg_option_paginator_bgcolor'] = get_option(
+				'syg_option_paginator_bgcolor');
+		$options['syg_option_paginator_shadowcolor'] = get_option(
+				'syg_option_paginator_shadowcolor');
+		$options['syg_option_paginator_fontcolor'] = get_option(
+				'syg_option_paginator_fontcolor');
+		$options['syg_option_paginator_shadowsize'] = get_option(
+				'syg_option_paginator_shadowsize');
+		$options['syg_option_paginator_fontsize'] = get_option(
+				'syg_option_paginator_fontsize');
+
 		return $options;
 	}
 
@@ -1237,8 +1285,8 @@ class SygPlugin extends SanityPluginFramework {
 		return true;
 	}
 
-	  /************************/
-	 /* END SECURITY METHODS */
+	/************************/
+	/* END SECURITY METHODS */
 	/************************/
 }
 ?>
