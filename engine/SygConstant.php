@@ -185,6 +185,9 @@ class SygConstant {
 	 * GUI constants
 	 */
 	// user message
+	const BE_NO_GALLERY_FOUND_ADM_WRN = 'Hey! There\'s no youtube gallery in your blog. Why don\'t you create one <a href="">here?</a><br/>';
+	const BE_NO_STYLES_FOUND_ADM_WRN = 'Before you create a new gallery, you must create your first style. Create <a href="">here!</a><br/>';
+	const BE_WRONG_SETTINGS_ADM_WRN = 'Something is going wrong with your current settings. <a href="">Go to settings.</a><br/>';
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
