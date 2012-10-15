@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
 Tested up to: 3.4
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -12,7 +12,7 @@ SYG is a nice plugin that gives you a fast way, to add multiple and fully custom
 == Description ==
 Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add multiple and fully customizable ajax video galleries, directly in your blog! You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.
 You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.
-Users can get the video played as a nice fancybox player. If you have problems during the update, please read UPGRADE NOTICE @ plugin wp support forum available on the plugin homepage.  
+Users can get the video played as a nice fancybox player. If you have problems during the update, please read UPGRADE NOTICE @ [Sliding YouTube Gallery support forum](http://wordpress.org/support/plugin/sliding-youtube-gallery "Sliding YouTube Gallery support forum").  
 
 == Installation ==
 - Using the WordPress dashboard
@@ -28,6 +28,9 @@ Users can get the video played as a nice fancybox player. If you have problems d
 	- Activate the plugin through the ‘Plugins’ menu in wordpress
 
 == Frequently Asked Questions ==
+
+= Where do I find support forum? =
+You could find more information about bugs and issues at [Sliding YouTube Gallery support forum](http://wordpress.org/support/plugin/sliding-youtube-gallery "Sliding YouTube Gallery support forum"). 
 
 = Where could I have more information about this plugin? =
 
@@ -67,6 +70,12 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Changelog ==
 
+= 1.3.3 =
+* Gallery and video validation
+* Style validation
+* Admin alerts and notices
+* User alerts 
+
 = 1.3.2 = 
 * For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
 * In gallery administration was added some extra details concerning youtube source syntax.
@@ -103,11 +112,23 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Upgrade Notice ==
 
+= 1.3.3 =
+- Gallery and video validation
+- Style validation
+- Admin alerts and notices
+- User alerts 
+- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
+
 = 1.3.2 = 
 - For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
 - In gallery administration was added some extra details concerning youtube source syntax.
+- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
 
 = 1.3.1 =
+- Fixed some minor bugs
+- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
+
+= 1.3.0 =
 - UPGRADE TROUBLESHOOTING
 If you experience some problem in the update please let me know. You can however restore the old version (1.2.5) as the following :
 - Deactivate the plugin if active
@@ -120,24 +141,15 @@ If you experience some problem in the update please let me know. You can however
 - Execute the query: INSERT INTO `wp_options` (`option_name`, `option_value`, `autoload`) VALUES ('syg_db_version', '1.3.0', 'yes')
 - Manually download previous version of the plugin and extract into wp-content/plugins
 - Reactivate the plugin
- 
-- MAIN FEATURES
-Support for multiple gallery in one page
-Multiple gallery styles
-Creation of gallery from a YouTube playlist
-Creation of gallery from a explicit YouTube video url list
-Disable related videos option
-Pagination in video page
-New and dedicated plugin menu 
 
 = 1.2.5 =
-Fix Missing redirect to plugin homepage after successful savings
-Fix blank page in some configuration
-Fix gallery position inside post
-Fix javascript and css problems in certain template
-Fix problem when calling functions in template
-Fix path problems with css and js when wordpress is installed on a sub-directory
+- Fix Missing redirect to plugin homepage after successful savings
+- Fix blank page in some configuration
+- Fix gallery position inside post
+- Fix javascript and css problems in certain template
+- Fix problem when calling functions in template
+- Fix path problems with css and js when wordpress is installed on a sub-directory
 
 = 1.0.1 =
-Initial Release, beta.
-Video count setting bug, was fixed.
+- Initial Release, beta.
+- Video count setting bug, was fixed.
