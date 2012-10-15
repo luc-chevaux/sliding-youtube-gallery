@@ -205,13 +205,18 @@ class SygDao {
 	 * @since 1.2.5
 	 * @param $id
 	 * @param $output_type
+	 * @throws SygGalleryNotFoundException
 	 * @return $gallery
 	 */
 	public function getSygGalleryById($id, $output_type = 'OBJECT') {
 		$query = $this->db->prepare(sprintf($this->sqlGetGalleryById, $this->galleries_table_name, $id));
 		$result = $this->db->get_row($query, $output_type);
-		$gallery = new SygGallery($result);
-		return $gallery;
+		if ($result) {
+			$gallery = new SygGallery($result);
+			return $gallery;
+		} else {
+			throw new SygGalleryNotFoundException(SygConstant::MSG_EX_GALLERY_NOT_FOUND);
+		}
 	}
 	
 	/**

@@ -66,6 +66,47 @@ class SygValidateException extends Exception {
 }
 
 /**
+ * @name SygGalleryNotFoundException
+ * @category Sliding Youtube Gallery Custom Exception Class
+ * @since 1.3.0
+ * @author: Luca Martini @ webEng
+ * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
+ * @version: 1.3.4
+ */
+
+class SygGalleryNotFoundException extends Exception {
+
+	/**
+	 * @name __construct
+	 * @category construct SygValidateException object
+	 * @since 1.3.4
+	 * @param $problems
+	 * @param $message
+	 * @param $code
+	 * @param $previous
+	 */
+	public function __construct($message, $code = 0, Exception $previous = null) {
+
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			parent::__construct($message, $code, $previous);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	/**
+	 * @name __toString
+	 * @category return a string map which is representation of the object
+	 * @since 1.3.4
+	 * @throws Exception
+	 * @return string $this
+	 */
+	public function __toString() {
+		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+	}
+}
+
+/**
  * @name SygValidate
  * @category Sliding Youtube Gallery Validate Class
  * @since 1.2.5

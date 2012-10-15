@@ -8,9 +8,10 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.2
  * 
+ * @todo form invio mail segnalazione guasti (milestone v1.4.0)
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
  * @todo Background image (milesone v1.4.0)
- * @todo widget wordpress + Implementare scroll verticale (milestone v1.4)
+ * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
  */
 
 include_once 'Zend/Loader.php';
@@ -274,6 +275,45 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * @name checkUpdateProcess
+	 * @category check update process
+	 * @since 1.3.3
+	 */
+	public static function checkUpdateProcess() {
+		global $wpdb;
+		global $syg_db_version;
+		
+		// set db version
+		$target_syg_db_version = SygConstant::SYG_VERSION;
+		
+		// get the current db version
+		$installed_ver = get_option("syg_db_version");
+		
+		if ($installed_ver != $target_syg_db_version) {
+			try {
+				// create a brand new dao
+				$dao = new SygDao();
+		
+				// update database structure
+				$dao->updateVersion($installed_ver, $target_syg_db_version);
+		
+				// add or update db version option
+				(!get_option("syg_db_version")) ? add_option("syg_db_version",
+						$target_syg_db_version)
+						: update_option("syg_db_version",
+								$target_syg_db_version);
+		
+				// send stat
+				self::notify(SygConstant::BE_ACTION_ACTIVATION);
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+			}
+		}
+	}
+	
+	/**
 	 * @name uninstall
 	 * @category uninstall plugin hook
 	 * @since 1.0.1
@@ -315,35 +355,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.0.1
 	 */
 	public static function activation() {
-		global $wpdb;
-		global $syg_db_version;
-
-		// set db version
-		$target_syg_db_version = SygConstant::SYG_VERSION;
-
-		// get the current db version
-		$installed_ver = get_option("syg_db_version");
-
-		if ($installed_ver != $target_syg_db_version) {
-			try {
-				// create a brand new dao
-				$dao = new SygDao();
-
-				// update database structure
-				$dao->updateVersion($installed_ver, $target_syg_db_version);
-
-				// add or update db version option
-				(!get_option("syg_db_version")) ? add_option("syg_db_version",
-								$target_syg_db_version)
-						: update_option("syg_db_version",
-								$target_syg_db_version);
-
-				// send stat
-				self::notify(SygConstant::BE_ACTION_ACTIVATION);
-			} catch (Exception $ex) {
-
-			}
-		}
+		self::checkUpdateProcess();
 	}
 
 	/************************************/
@@ -490,13 +502,15 @@ class SygPlugin extends SanityPluginFramework {
 		// cast id to an int
 		$id = (int) $id;
 
-		// get the gallery
-		$dao = new SygDao();
-		$gallery = $dao->getSygGalleryById($id);
-
-		// set youtube profile object in the gallery
-		// $gallery->setUserProfile ($this->sygYouTube->getUserProfile($gallery->getYtUsername()));
-
+		if ($id == 0) {
+			// generate a fake gallery
+			$gallery = new SygGallery();
+		} else {
+			// get the gallery
+			$dao = new SygDao();
+			$gallery = $dao->getSygGalleryById($id);
+		}
+		
 		// return gallery in dto format
 		$settings = $gallery->toDto(true);
 		return $settings;
@@ -536,6 +550,12 @@ class SygPlugin extends SanityPluginFramework {
 
 				// render gallery snippet code
 				return $this->render('gallery');
+			} catch (SygGalleryNotFoundException $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
@@ -610,6 +630,12 @@ class SygPlugin extends SanityPluginFramework {
 
 				// render gallery snippet code
 				return $this->render('page');
+			}  catch (SygGalleryNotFoundException $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
@@ -678,10 +704,15 @@ class SygPlugin extends SanityPluginFramework {
 			wp_enqueue_script('mousewheel');
 			break;
 		case SygConstant::SYG_CTX_FE:
-		// define plugin resources url in the view
-			$gallery = $view['gallery'];
-			$view['sygCssUrl_' . $gallery->getId()] = $view['cssPath']
-					. 'SlidingYoutubeGallery.css.php?id=' . $gallery->getId();
+			if (empty($view['gallery'])) {
+				$galleryId = 0;
+			} else {
+				$gallery = $view['gallery'];
+				$galleryId = $gallery->getId();
+			}
+			
+			$view['sygCssUrl_' . $galleryId] = $view['cssPath']
+					. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
 			$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js';
 			$view['fancybox_js_url'] = $view['jsPath']
 					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
@@ -693,10 +724,10 @@ class SygPlugin extends SanityPluginFramework {
 					. '/fancybox/jquery.fancybox-1.3.4.css';
 
 			// css injection
-			wp_register_style('sliding-youtube-gallery-' . $gallery->getId(),
-					$view['sygCssUrl_' . $gallery->getId()], array(),
+			wp_register_style('sliding-youtube-gallery-' . $galleryId,
+					$view['sygCssUrl_' . $galleryId], array(),
 					SygConstant::SYG_VERSION, 'screen');
-			wp_enqueue_style('sliding-youtube-gallery-' . $gallery->getId());
+			wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
 			wp_register_style('fancybox', $view['fancybox_css_url'], array(),
 					SygConstant::SYG_VERSION, 'screen');
 			wp_enqueue_style('fancybox');
@@ -812,7 +843,7 @@ class SygPlugin extends SanityPluginFramework {
 					. SygConstant::BE_ACTION_MANAGE_STYLES;
 			return $this->render('redirect');
 		default:
-		// prepare header
+			// prepare header
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 
 			// put galleries in the view

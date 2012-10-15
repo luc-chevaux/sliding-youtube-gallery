@@ -242,6 +242,29 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 
 }
 
+.syg_gallery_error {
+	border: 1px #bc0f11 solid;
+	padding: 5px;
+	margin: 5px;
+	background-color: #ed0000;
+	color: white;
+}
+
+.syg_gallery_error h2 {
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px #bc0f11 solid;
+	color: white;
+}
+
+.syg_gallery_error p {
+	margin: 3px 0px 3px 0px;
+	padding: 0;
+	font-size: 14px;
+	font-weight: bold;
+}
+
 /* pagination */
 
 #paginator-top-<?php echo $id; ?>, #paginator-bottom-<?php echo $id; ?> {
@@ -294,4 +317,5 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 .current_page {
 	color: <?php echo $syg_option_paginator_fontcolor; ?> !important;
 }
+
 /* end pagination */

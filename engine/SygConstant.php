@@ -212,11 +212,16 @@ class SygConstant {
 	 */
 	const MSG_EX_STYLE_NOT_VALID = 'An error was found while updating your style.';
 	const COD_EX_STYLE_NOT_VALID = '1001';
+	
 	const MSG_EX_GALLERY_NOT_VALID = 'An error was found while updating your gallery.';
 	const COD_EX_GALLERY_NOT_VALID = '1002';
+	
 	const MSG_EX_SETTING_NOT_VALID = 'An error was found while updating plugin settings.';
 	const COD_EX_SETTING_NOT_VALID = '1003';
-
+	
+	const MSG_EX_GALLERY_NOT_FOUND = 'Opss... Gallery not found, please check your ID!';
+	const COD_EX_GALLERY_NOT_FOUND = '1004';
+	
 	/**
 	 * Validation message
 	 */

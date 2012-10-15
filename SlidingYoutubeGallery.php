@@ -51,6 +51,9 @@ if (!is_admin()) {
 	add_shortcode('syg_gallery', 'getGallery');
 	add_shortcode('syg_page', 'getVideoPage');
 } else {
+	// plugin update function callback
+	add_action('admin_init', 'sygCheckUpdateProcess');
+	
 	// back end code block
 	// attach the admin menu to the hook
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
@@ -84,6 +87,10 @@ function getVideoPage($atts) {
 
 function sygNotice () {
 	SygPlugin::sygNotice();
+}
+
+function sygCheckUpdateProcess() {
+	SygPlugin::checkUpdateProcess();
 }
 
 // Sliding youtube gallery options page
