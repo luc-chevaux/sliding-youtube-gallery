@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.3.3
+ * @version: 1.3.4
  * 
  * @todo form invio mail segnalazione guasti (milestone v1.4.0)
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
@@ -43,6 +43,8 @@ class SygPlugin extends SanityPluginFramework {
 	private $jsRoot;
 	private $cssRoot;
 	private $imgRoot;
+	
+	// this attribute set the json query interface script url (data.php)
 	private $jsonQueryIfUrl;
 
 	private $syg = array();
@@ -255,7 +257,21 @@ class SygPlugin extends SanityPluginFramework {
 
 			$checkStyles = (bool) $dao->getStylesCount();
 			$checkGallery = (bool) $dao->getGalleriesCount();
-			$checkOptions = (bool) SygValidate::validateSettings(serialize(SygPlugin::getInstance()->getOptions()));
+			
+			// try to validate options
+			try {
+				$checkOptions = (bool) SygValidate::validateSettings(serialize(SygPlugin::getInstance()->getOptions()));
+			} catch (SygValidateException $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblems();
+			} catch (Exception $ex) {
+				// set the error
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+			}
+			
 			
 			if ((!$checkStyles) || (!$checkGallery) || (!$checkOptions)) {
 				echo '<div class="updated">';
