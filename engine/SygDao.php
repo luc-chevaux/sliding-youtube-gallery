@@ -283,8 +283,6 @@ class SygDao {
 			// check autoincrement, version >= 1.2.5
 			$query = $this->db->prepare(sprintf($this->sqlCheckAutoIncrement, DB_NAME, $this->galleries_table_name.'_OLD_V12X'));
 			$autoincrement = (int) $this->db->get_var($query, 0, 0);
-			var_dump($query);
-			wp_die();
 		} else {
 			$autoincrement = 1;
 		}
