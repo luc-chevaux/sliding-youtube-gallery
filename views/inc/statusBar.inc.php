@@ -2,6 +2,20 @@
 	<div class="updated"><p><strong>Settings saved.</strong></p></div>
 <?php } ?>
 
+<?php if ($this->data['warning']) {?>
+	<div class="updated">
+		<p>
+			<strong>Information</strong>
+			<ul>
+				<?php $detail = $this->data['warning'];  ?>
+				<?php foreach ($detail as $problem) { ?>
+					<li><?php echo $problem['field'].' - '.$problem['msg']; ?></li>
+				<?php }?>
+			</ul>
+		</p>
+	</div>
+<?php } ?>
+
 <?php if ($this->data['exception']) {?>
 	<div class="error">
 		<p>
