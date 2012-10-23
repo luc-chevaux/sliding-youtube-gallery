@@ -257,15 +257,20 @@ class SygPlugin extends SanityPluginFramework {
 			$checkStyles = (bool) $this->sygDao->getStylesCount();
 			$checkGallery = (bool) $this->sygDao->getGalleriesCount();
 			
-			$problemFound = array();
+			$warning = array();
 			
+			// check if gallery exist
 			if (!$checkGallery) {
-				array_push($problemFound, array('field' => '', 'msg' => SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN));
+				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN));
 			}
 			
+			// check if style exist
 			if (!$checkStyles) {
-				array_push($problemFound, array('field' => '', 'msg' => SygConstant::BE_NO_STYLES_FOUND_ADM_WRN));
+				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_NO_STYLES_FOUND_ADM_WRN));
 			}
+			
+			// place warnings in the view
+			$this->data['warning'] = $warning;
 			
 			// try to validate options
 			try {
@@ -273,10 +278,8 @@ class SygPlugin extends SanityPluginFramework {
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
-				$exc = new SygValidateException($ex->getProblems(), SygConstant::BE_WRONG_SETTINGS_ADM_WRN);
-				$merged = array_merge($problemFound, $exc->getProblems());
-				$this->data['exception_message'] = $exc->getMessage();
-				$this->data['exception_detail'] = $merged;
+				$this->data['exception_message'] = $ex->getMessage();
+				$this->data['exception_detail'] = $ex->getProblems();
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
