@@ -245,18 +245,27 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category display admin notices in wordpress dashboard
 	 * @since 1.3.3
 	 */
-	public static function sygNotice() {
+	public function sygNotice() {
 		global $pagenow;
 		if (($pagenow == 'admin.php')
 				&& (($_GET['page'] == SygConstant::BE_ACTION_MANAGE_STYLES)
 					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_GALLERIES)
 					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_SETTINGS)
-					|| ($_GET['page'] == SygConstant::BE_ACTION_CONTACTS))) {
-			// create a brand new dao
-			$dao = new SygDao();
+					|| ($_GET['page'] == SygConstant::BE_ACTION_CONTACTS)) 
+				&& !(isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y')) {
 
-			$checkStyles = (bool) $dao->getStylesCount();
-			$checkGallery = (bool) $dao->getGalleriesCount();
+			$checkStyles = (bool) $this->sygDao->getStylesCount();
+			$checkGallery = (bool) $this->sygDao->getGalleriesCount();
+			
+			$problemFound = array();
+			
+			if (!$checkGallery) {
+				array_push($problemFound, array('field' => '', 'msg' => SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN));
+			}
+			
+			if (!$checkStyles) {
+				array_push($problemFound, array('field' => '', 'msg' => SygConstant::BE_NO_STYLES_FOUND_ADM_WRN));
+			}
 			
 			// try to validate options
 			try {
@@ -264,28 +273,14 @@ class SygPlugin extends SanityPluginFramework {
 			} catch (SygValidateException $ex) {
 				// set the error
 				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
+				$exc = new SygValidateException($ex->getProblems(), SygConstant::BE_WRONG_SETTINGS_ADM_WRN);
+				$merged = array_merge($problemFound, $exc->getProblems());
+				$this->data['exception_message'] = $exc->getMessage();
+				$this->data['exception_detail'] = $merged;
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
-			}
-			
-			
-			if ((!$checkStyles) || (!$checkGallery) || (!$checkOptions)) {
-				echo '<div class="updated">';
-				echo '<p><strong>Sliding YouTube Gallery</strong></p><p>';
-				if (!$checkStyles) {
-					echo SygConstant::BE_NO_STYLES_FOUND_ADM_WRN;
-				}
-				if (!$checkGallery) { 
-					echo SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN;
-				}
-				if (!$checkOptions) {
-					echo SygConstant::BE_WRONG_SETTINGS_ADM_WRN;
-				}
-				echo '</p></div>';
 			}
 		}
 	}
@@ -891,6 +886,7 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToSettings($updated = false) {
 		$updated = false;
+	
 		if (isset($_POST['syg_submit_hidden'])
 				&& $_POST['syg_submit_hidden'] == 'Y') {
 			// database add/edit settings procedure
@@ -899,64 +895,66 @@ class SygPlugin extends SanityPluginFramework {
 			try {
 				// validate data
 				$valid = SygValidate::validateSettings($data);
-
-				(!get_option('syg_option_apikey')) ? add_option(
+				
+				(get_option('syg_option_apikey')) ? add_option(
 								'syg_option_apikey',
 								$_POST['syg_option_apikey'])
 						: update_option('syg_option_apikey',
 								$_POST['syg_option_apikey']);
-				(!get_option('syg_option_numrec')) ? add_option(
+				
+				(get_option('syg_option_numrec') === false) ? add_option(
 								'syg_option_numrec',
 								$_POST['syg_option_numrec'])
 						: update_option('syg_option_numrec',
 								$_POST['syg_option_numrec']);
-				(!get_option('syg_option_pagenumrec')) ? add_option(
+				
+				(get_option('syg_option_pagenumrec') === false) ? add_option(
 								'syg_option_pagenumrec',
 								$_POST['syg_option_pagenumrec'])
 						: update_option('syg_option_pagenumrec',
 								$_POST['syg_option_pagenumrec']);
-				(!get_option('syg_option_paginationarea')) ? add_option(
+				(get_option('syg_option_paginationarea') === false) ? add_option(
 								'syg_option_paginationarea',
 								$_POST['syg_option_paginationarea'])
 						: update_option('syg_option_paginationarea',
 								$_POST['syg_option_paginationarea']);
 
-				(!get_option('syg_option_paginator_borderradius')) ? add_option(
+				(get_option('syg_option_paginator_borderradius') === false) ? add_option(
 								'syg_option_paginator_borderradius',
 								$_POST['syg_option_paginator_borderradius'])
 						: update_option('syg_option_paginator_borderradius',
 								$_POST['syg_option_paginator_borderradius']);
-				(!get_option('syg_option_paginator_bordersize')) ? add_option(
+				(get_option('syg_option_paginator_bordersize') === false) ? add_option(
 								'syg_option_paginator_bordersize',
 								$_POST['syg_option_paginator_bordersize'])
 						: update_option('syg_option_paginator_bordersize',
 								$_POST['syg_option_paginator_bordersize']);
-				(!get_option('syg_option_paginator_bordercolor')) ? add_option(
+				(get_option('syg_option_paginator_bordercolor') === false) ? add_option(
 								'syg_option_paginator_bordercolor',
 								$_POST['syg_option_paginator_bordercolor'])
 						: update_option('syg_option_paginator_bordercolor',
 								$_POST['syg_option_paginator_bordercolor']);
-				(!get_option('syg_option_paginator_bgcolor')) ? add_option(
+				(get_option('syg_option_paginator_bgcolor') === false) ? add_option(
 								'syg_option_paginator_bgcolor',
 								$_POST['syg_option_paginator_bgcolor'])
 						: update_option('syg_option_paginator_bgcolor',
 								$_POST['syg_option_paginator_bgcolor']);
-				(!get_option('syg_option_paginator_shadowcolor')) ? add_option(
+				(get_option('syg_option_paginator_shadowcolor') === false) ? add_option(
 								'syg_option_paginator_shadowcolor',
 								$_POST['syg_option_paginator_shadowcolor'])
 						: update_option('syg_option_paginator_shadowcolor',
 								$_POST['syg_option_paginator_shadowcolor']);
-				(!get_option('syg_option_paginator_shadowsize')) ? add_option(
+				(get_option('syg_option_paginator_shadowsize') === false) ? add_option(
 								'syg_option_paginator_shadowsize',
 								$_POST['syg_option_paginator_shadowsize'])
 						: update_option('syg_option_paginator_shadowsize',
 								$_POST['syg_option_paginator_shadowsize']);
-				(!get_option('syg_option_paginator_fontcolor')) ? add_option(
+				(get_option('syg_option_paginator_fontcolor') === false) ? add_option(
 								'syg_option_paginator_fontcolor',
 								$_POST['syg_option_paginator_fontcolor'])
 						: update_option('syg_option_paginator_fontcolor',
 								$_POST['syg_option_paginator_fontcolor']);
-				(!get_option('syg_option_paginator_fontsize')) ? add_option(
+				(get_option('syg_option_paginator_fontsize') === false) ? add_option(
 								'syg_option_paginator_fontsize',
 								$_POST['syg_option_paginator_fontsize'])
 						: update_option('syg_option_paginator_fontsize',
