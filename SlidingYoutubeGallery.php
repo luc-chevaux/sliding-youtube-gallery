@@ -86,7 +86,9 @@ function getVideoPage($atts) {
 /* BACK END METHODS */
 
 function sygNotice () {
-	SygPlugin::sygNotice();
+	$syg = SygPlugin::getInstance();
+	$syg->sygNotice();
+	return true;
 }
 
 function sygCheckUpdateProcess() {
