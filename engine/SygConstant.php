@@ -187,14 +187,14 @@ class SygConstant {
 	// user message
 	const BE_NO_GALLERY_FOUND_ADM_WRN = 'Hey! There\'s no youtube gallery in your blog. Why don\'t you create one <a href="">here?</a><br/>';
 	const BE_NO_STYLES_FOUND_ADM_WRN = 'Before you create a new gallery, you must create your first style. Create <a href="">here!</a><br/>';
-	const BE_WRONG_SETTINGS_ADM_WRN = 'Something is going wrong with your current settings. <a href="">Go to settings.</a><br/>';
+	const BE_WRONG_SETTINGS_ADM_WRN = 'Something is going wrong with your current settings. <a href="?page=syg-manage-settings">Go to settings.</a><br/>';
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
 	const BE_NO_GALLERY_FOUND = 'No gallery found in database';
 	const BE_NO_STYLES_FOUND = 'No styles found in database';
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_STYLE_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
-
+	
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';
