@@ -182,6 +182,11 @@ class SygConstant {
 	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';		
 	
 	/**
+	 * YouTube default options
+	 */
+	const SYG_OPTION_YT_QUERY_RESULTS = 50;
+	
+	/**
 	 * GUI constants
 	 */
 	// user message
@@ -228,7 +233,7 @@ class SygConstant {
 	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
 	const BE_VALIDATE_STRING_NOT_EMPTY = 'must be a not empty string.';
 	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value.';
-	const BE_VALIDATE_NOT_LESS_VALUE = '%d must be less or equal than %d.';
+	const BE_VALIDATE_NOT_LESS_VALUE = 'You entered %d. Its value must be less or equal than %d.';
 	const BE_VALIDATE_LESS_VALUE = 'can\'t be less than %d.';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value.';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s.';
