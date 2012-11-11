@@ -573,6 +573,8 @@ class SygPlugin extends SanityPluginFramework {
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				return $this->render('exception');
 			}
 		}
@@ -653,6 +655,8 @@ class SygPlugin extends SanityPluginFramework {
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				return $this->render('exception');
 			}
 		}
