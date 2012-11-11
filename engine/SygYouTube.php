@@ -126,11 +126,18 @@ class SygYouTube {
 	public function getUserPlaylist(SygGallery $gallery, $start = null, $per_page = null) {
 		$feed = new Zend_Gdata_YouTube_VideoFeed();
 		$playlist_id = str_replace('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
-		$content = json_decode(
-				file_get_contents(
-						'http://gdata.youtube.com/feeds/api/playlists/'
-						. $playlist_id
-						. '/?v=2&alt=json&feature=plcp'));
+		// set the query url for playlist
+		$query_url = 'http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp';
+		// fix the index, gdata url don't use 0 as first index
+		$yt_index = $start + 1;
+		// check if querying a subset of data
+		if ($start && $per_page) {			 
+			$query_url .= '&start-index='.$yt_index.'&max-results='.$per_page;
+		} else {
+			$query_url .= '&start-index='.$yt_index.'&max-results='.SygConstant::SYG_OPTION_YT_QUERY_RESULTS;
+		}
+		// decode json
+		$content = json_decode(file_get_contents($query_url));
 		$feed_to_object = $content->feed->entry;
 		if (count($feed_to_object)) {
 			foreach ($feed_to_object as $item) {
@@ -212,7 +219,7 @@ class SygYouTube {
 				}
 			} else if ($gallery->getGalleryType() == 'playlist') {
 				$playlist_id = str_replace ('list=PL', '', parse_url($gallery->getYtSrc(), PHP_URL_QUERY));
-				$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp'));
+				$content = json_decode(file_get_contents('http://gdata.youtube.com/feeds/api/playlists/'.$playlist_id.'/?v=2&alt=json&feature=plcp&start-index=1&max-results='.SygConstant::SYG_OPTION_YT_QUERY_RESULTS));
 				$feed_to_object = $content->feed->entry;
 				$count = count($feed_to_object);
 				// truncate feed
