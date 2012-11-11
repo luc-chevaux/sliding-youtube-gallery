@@ -358,11 +358,17 @@ class SygValidate {
 		}
 
 		// syg_youtube_maxvideocount intero 
-		if (!(preg_match('/^\d+$/', $data['syg_youtube_maxvideocount']))) {
+		if ((preg_match('/^\d+$/', $data['syg_youtube_maxvideocount'])) && ($data['syg_youtube_maxvideocount'] > SygConstant::SYG_OPTION_YT_QUERY_RESULTS)) {
+			array_push($problemFound,
+				array('field' => SygUtil::getLabel('syg_youtube_maxvideocount'),
+						'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_LESS_VALUE, $data['syg_youtube_maxvideocount'], SygConstant::SYG_OPTION_YT_QUERY_RESULTS)));
+		} else if (!(preg_match('/^\d+$/', $data['syg_youtube_maxvideocount']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_youtube_maxvideocount'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_youtube_maxvideocount'])));
 		}
+		
+		
 
 		// throws exception
 		if (count($problemFound) > 0) {
