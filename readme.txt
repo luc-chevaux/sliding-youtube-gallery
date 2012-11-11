@@ -70,6 +70,9 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Changelog ==
 
+= 1.3.6 =
+* Fixed playlist wrong video count
+
 = 1.3.5 =
 * Fixed minor bugs
 
@@ -117,6 +120,9 @@ To customize your galleries you can use the plugin administration page. If you n
 * Video count setting bug, was fixed.
 
 == Upgrade Notice ==
+
+= 1.3.6 =
+- Fixed playlist wrong video count
 
 = 1.3.5 =
 - Fixed minor bugs
