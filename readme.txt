@@ -46,7 +46,7 @@ To display a Sliding YouTube Gallery in a page or post, you must use the short c
 
 = How do I display a Sliding YouTube Gallery in a Template? =
 
-To display a Sliding YouTube Gallery within a template you must call the getGallery(array("id" => your_gallery_id)) function. For example `<?php echo getGallery(array("id" => 1)); ?>`.
+To display a Sliding YouTube Gallery within a template you must call the getGallery(array('id' => your_gallery_id)) function. For example `<?php echo getGallery(array('id' => 1)); ?>`.
 
 = How do I display a simple video page in a page or post? =
 
@@ -54,7 +54,7 @@ To display a video page in a page or post, you must use the short code [syg_page
 
 = How do I display a simple video page in a Template? =
 
-To display a video page within a template you must use the getVideoPage(array("id" => your_gallery_id)) function. For example `<?php echo getVideoPage(array("id" => 1)); ?>`.
+To display a video page within a template you must use the getVideoPage(array('id' => your_gallery_id)) function. For example `<?php echo getVideoPage(array('id' => 1)); ?>`.
 
 = How can I override css settings? =
 
