@@ -230,7 +230,7 @@ jQuery.noConflict();
 		},
 		
 		initGalleryUi : function () {
-			$("input[name=syg_gallery_type]").each(function(){
+			$('input[name="syg_gallery_type"]').each(function(){
 				$(this).click($.disableInput);
 			});
 			

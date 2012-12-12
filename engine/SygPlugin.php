@@ -12,6 +12,7 @@
  * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
  * @todo Background image (milesone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
+ * @todo chmoddare le cartelle di cache in fase di installazione
  */
 
 include_once 'Zend/Loader.php';
@@ -244,6 +245,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name sygNotice
 	 * @category display admin notices in wordpress dashboard
 	 * @since 1.3.3
+	 * @todo aggiungere check permission filesystem
 	 */
 	public function sygNotice() {
 		global $pagenow;
@@ -256,7 +258,11 @@ class SygPlugin extends SanityPluginFramework {
 
 			$checkStyles = (bool) $this->sygDao->getStylesCount();
 			$checkGallery = (bool) $this->sygDao->getGalleriesCount();
-			
+			$checkFSPermission = (bool) (is_writable(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR) && 
+										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR) && 
+										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR) &&
+										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR));
+			// define a warning array
 			$warning = array();
 			
 			// check if gallery exist
@@ -267,6 +273,10 @@ class SygPlugin extends SanityPluginFramework {
 			// check if style exist
 			if (!$checkStyles) {
 				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_NO_STYLES_FOUND_ADM_WRN));
+			}
+			
+			if (!$checkFSPermission) {
+				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_FS_NOT_WRITEABLE));
 			}
 			
 			// place warnings in the view
@@ -302,6 +312,12 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// get the current db version
 		$installed_ver = get_option("syg_db_version");
+		
+		// chmod cache directory to ensure that is writeable
+		chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
+		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
+		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
+		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
 		
 		if ($installed_ver != $target_syg_db_version) {
 			try {
@@ -1027,6 +1043,9 @@ class SygPlugin extends SanityPluginFramework {
 				// updated flag
 				$this->data['updated'] = $updated;
 
+				// cache gallery
+				$this->cacheGallery($gallery);
+				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
 			} catch (SygValidateException $ex) {
@@ -1132,6 +1151,9 @@ class SygPlugin extends SanityPluginFramework {
 				// create a new gallery
 				$syg = new SygGallery($data);
 
+				// cache gallery
+				$this->cacheGallery($syg);
+				
 				// update db
 				$this->sygDao->updateSygGallery($syg);
 
@@ -1140,7 +1162,7 @@ class SygPlugin extends SanityPluginFramework {
 
 				// updated flag
 				$this->data['updated'] = $updated;
-
+				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
 			} catch (SygValidateException $ex) {
@@ -1273,6 +1295,85 @@ class SygPlugin extends SanityPluginFramework {
 
 		// render contact view
 		return $this->render('adminSupport');
+	}
+	
+	/**
+	 * @name cacheGallery
+	 * @category cache thumbnails and html into file system
+	 * @param SygGallery $gallery
+	 */
+	public function cacheGallery(SygGallery $gallery) {
+		// get the feed
+		$feed = $this->getVideoFeed($gallery);
+		
+		// @todo calculate optimized width for thumbnail
+		$index = 1;
+		// test if gallery thumbnail cache directory exists
+		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+		
+		if (!is_dir($thumbnailsPath)) {
+			// create directory
+			mkdir($thumbnailsPath);
+			chmod($thumbnailsPath, 0777);
+		}
+		
+		// test if gallery html cache directory exists
+		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+		if (!is_dir($htmlPath)) {
+			// create directory
+			mkdir($htmlPath);
+			chmod($htmlPath, 0777);
+		}
+		
+		// test if gallery html cache directory exists
+		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+		if (!is_dir($jsonPath)) {
+			// create directory
+			mkdir($jsonPath);
+			chmod($jsonPath, 0777);
+		}
+		
+		// cache video thumbnails from youtube
+		foreach ($feed as $element) {
+			$videoThumbnails = $element->getVideoThumbnails();
+			$imgUrl = $videoThumbnails[$index]['url'];
+			$localFN = $element->getVideoId().".jpg";
+			if (SygUtil::isCurlInstalled()) {
+				// curl enabled
+				$ch = curl_init($imgUrl);
+				$fp = fopen($thumbnailsPath.$localFN, 'wb');
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			} else if (ini_get('allow_url_fopen')) {
+				// allow url fopen
+				file_put_contents($thumbnailsPath.$localFN, file_get_contents($imgUrl));
+			} else {
+				
+			}
+			
+			chmod ($thumbnailsPath.basename($imgUrl), 0777);
+		}
+		
+		// cache html from youtube
+		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()));
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$element->getVideoId().".html";
+		file_put_contents($htmlPath.$localFN, $galleryHtml);
+		
+		// cache json page
+		$options = $this->getOptions();
+		$per_page = $options['syg_option_pagenumrec']; // Per page records
+		$maxVideoCount = $gallery->getYtMaxVideoCount();
+		$numVid = $this->sygYouTube->countGalleryEntry($gallery);
+		
+		$no_of_paginations = ceil ($numVid / $per_page);
+		for ($i=1;$i<=$no_of_paginations;$i++) {
+			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId();
+			$localFN = $element->getVideoId().'-'.$i.'.json';
+			file_put_contents($jsonPath.$localFN, file_get_contents($url));
+		}
 	}
 
 	/******************************/
