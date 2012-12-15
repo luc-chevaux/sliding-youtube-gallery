@@ -1359,7 +1359,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// cache html from youtube
 		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()));
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$element->getVideoId().".html";
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$gallery->getId().".html";
 		file_put_contents($htmlPath.$localFN, $galleryHtml);
 		
 		// cache json page
@@ -1371,7 +1371,7 @@ class SygPlugin extends SanityPluginFramework {
 		$no_of_paginations = ceil ($numVid / $per_page);
 		for ($i=1;$i<=$no_of_paginations;$i++) {
 			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId();
-			$localFN = $element->getVideoId().'-'.$i.'.json';
+			$localFN = $i.'.json';
 			file_put_contents($jsonPath.$localFN, file_get_contents($url));
 		}
 	}
