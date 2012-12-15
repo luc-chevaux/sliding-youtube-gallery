@@ -29,6 +29,12 @@ class SygConstant {
 	const SYG_PLUGIN_COMPONENT_PAGE = 'page';
 	
 	/**
+	 * Front end methods running mode
+	 */
+	const SYG_PLUGIN_FE_CACHING_MODE = 'caching_mode';
+	const SYG_PLUGIN_FE_NORMAL_MODE = 'normal_mode';	
+	
+	/**
 	 * Plugin running action
 	 */
 	const BE_ACTION_MANAGE_GALLERIES = 'syg-manage-galleries';
