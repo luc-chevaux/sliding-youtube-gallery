@@ -451,7 +451,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.3.0
 	 * @param $jsonQueryIfUrl
 	 */
-	public function setJsonQueryIfUrl($jsonQueryIfUrl) {
+	private function setJsonQueryIfUrl($jsonQueryIfUrl) {
 		$this->jsonQueryIfUrl = $jsonQueryIfUrl;
 	}
 
@@ -1047,7 +1047,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['updated'] = $updated;
 
 				// cache gallery
-				$this->cacheGallery($gallery);
+				$gallery->cacheGallery();
 				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
@@ -1152,19 +1152,19 @@ class SygPlugin extends SanityPluginFramework {
 				$valid = SygValidate::validateGallery($data);
 
 				// create a new gallery
-				$syg = new SygGallery($data);
-
-				// cache gallery
-				$this->cacheGallery($syg);
+				$gallery = new SygGallery($data);
 				
 				// update db
-				$this->sygDao->updateSygGallery($syg);
+				$this->sygDao->updateSygGallery($gallery);
 
 				// updated flag
 				$updated = true;
 
 				// updated flag
 				$this->data['updated'] = $updated;
+				
+				// cache gallery
+				$gallery->cacheGallery();
 				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
@@ -1298,86 +1298,6 @@ class SygPlugin extends SanityPluginFramework {
 
 		// render contact view
 		return $this->render('adminSupport');
-	}
-	
-	/**
-	 * @name cacheGallery
-	 * @category cache thumbnails and html into file system
-	 * @param SygGallery $gallery
-	 */
-	public function cacheGallery(SygGallery $gallery) {
-		// get the feed
-		$feed = $this->getVideoFeed($gallery);
-		
-		// @todo calculate optimized width for thumbnail
-		$index = 1;
-		
-		// test if gallery thumbnail cache directory exists
-		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-		
-		if (!is_dir($thumbnailsPath)) {
-			// create directory
-			mkdir($thumbnailsPath);
-			chmod($thumbnailsPath, 0777);
-		}
-		
-		// test if gallery html cache directory exists
-		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-		if (!is_dir($htmlPath)) {
-			// create directory
-			mkdir($htmlPath);
-			chmod($htmlPath, 0777);
-		}
-		
-		// test if gallery html cache directory exists
-		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-		if (!is_dir($jsonPath)) {
-			// create directory
-			mkdir($jsonPath);
-			chmod($jsonPath, 0777);
-		}
-		
-		// cache video thumbnails from youtube
-		foreach ($feed as $element) {
-			$videoThumbnails = $element->getVideoThumbnails();
-			$imgUrl = $videoThumbnails[$index]['url'];
-			$localFN = $element->getVideoId().".jpg";
-			if (SygUtil::isCurlInstalled()) {
-				// curl enabled
-				$ch = curl_init($imgUrl);
-				$fp = fopen($thumbnailsPath.$localFN, 'wb');
-				curl_setopt($ch, CURLOPT_FILE, $fp);
-				curl_setopt($ch, CURLOPT_HEADER, 0);
-				curl_exec($ch);
-				curl_close($ch);
-				fclose($fp);
-			} else if (ini_get('allow_url_fopen')) {
-				// allow url fopen
-				file_put_contents($thumbnailsPath.$localFN, file_get_contents($imgUrl));
-			} else {
-				
-			}
-			
-			chmod ($thumbnailsPath.basename($imgUrl), 0777);
-		}
-		
-		// cache html from youtube
-		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$gallery->getId().".html";
-		file_put_contents($htmlPath.$localFN, $galleryHtml);
-		
-		// cache json page
-		$options = $this->getOptions();
-		$per_page = $options['syg_option_pagenumrec']; // Per page records
-		$maxVideoCount = $gallery->getYtMaxVideoCount();
-		$numVid = $this->sygYouTube->countGalleryEntry($gallery);
-		
-		$no_of_paginations = ceil ($numVid / $per_page);
-		for ($i=1;$i<=$no_of_paginations;$i++) {
-			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
-			$localFN = $i.'.json';
-			file_put_contents($jsonPath.$localFN, file_get_contents($url));
-		}
 	}
 
 	/******************************/
