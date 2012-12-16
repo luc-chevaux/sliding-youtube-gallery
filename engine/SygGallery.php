@@ -253,20 +253,23 @@ class SygGallery {
 			chmod ($this->getThumbnailsPath().basename($imgUrl), 0777);
 		}
 	
+		// get the plugin singleton
+		$syg = SygPlugin::getInstance();
+		
 		// cache html from youtube
-		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$gallery->getId().".html";
+		$galleryHtml = $syg->getGallery(array("id" => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
 	
 		// cache json page
-		$options = $this->getOptions();
+		$options = $syg->getOptions();
 		$per_page = $options['syg_option_pagenumrec']; // Per page records
-		$maxVideoCount = $gallery->getYtMaxVideoCount();
-		$numVid = $this->sygYouTube->countVideoEntry($gallery);
+		$maxVideoCount = $this->getYtMaxVideoCount();
+		$numVid = $this->sygYouTube->countVideoEntry($this);
 	
 		$no_of_paginations = ceil ($numVid / $per_page);
 		for ($i=1;$i<=$no_of_paginations;$i++) {
-			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
+			$url = $plugin->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
 			$localFN = $i.'.json';
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
 		}
