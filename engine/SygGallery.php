@@ -269,7 +269,7 @@ class SygGallery {
 	
 		$no_of_paginations = ceil ($numVid / $per_page);
 		for ($i=1;$i<=$no_of_paginations;$i++) {
-			$url = $plugin->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
+			$url = $syg->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
 			$localFN = $i.'.json';
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
 		}
