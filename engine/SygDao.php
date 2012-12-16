@@ -556,7 +556,9 @@ class SygDao {
 					
 				// we're updating from version 1.0.1
 				SygPlugin::removeOldOption();
-			}			
+			}
+			
+			$this->alterTableGalleries14X();
 		} else if (strpos($installed_ver, '1.2.') == 0) {			
 			// we're updating from version 1.2.x
 			
@@ -574,6 +576,12 @@ class SygDao {
 			
 			// parse old data
 			$this->updateData($installed_ver, $target_ver);
+			
+			$this->alterTableGalleries14X();
+		} else if (strpos($installed_ver, '1.3.') == 0) {
+			// we're updating from version 1.3.x
+		
+			$this->alterTableGalleries14X();
 		}
 		
 		// set default option
