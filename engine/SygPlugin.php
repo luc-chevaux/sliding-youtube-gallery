@@ -567,7 +567,7 @@ class SygPlugin extends SanityPluginFramework {
 				$gallery = $dao->getSygGalleryById($id);
 
 				// put the feed in the view
-				$this->data['feed'] = $this->getVideoFeed($gallery);
+				$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
 
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
@@ -597,32 +597,6 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->render('exception');
 			}
 		}
-	}
-
-	/**
-	 * @name getVideoFeed
-	 * @category get a youtube video feed
-	 * @since 1.3.0
-	 * @param $gallery
-	 * @param $start
-	 * @param $per_page
-	 * @throws Exception
-	 * @return mixed $feed
-	 */
-	public function getVideoFeed(SygGallery $gallery, $start = null,
-			$per_page = null) {
-		$feed = new Zend_Gdata_YouTube_VideoFeed();
-		if ($gallery->getGalleryType() == 'feed') {
-			$feed = $this->sygYouTube
-					->getUserUploads($gallery, $start, $per_page);
-		} else if ($gallery->getGalleryType() == 'list') {
-			$feed = $this->sygYouTube->getUserList($gallery, $start, $per_page);
-		} else if ($gallery->getGalleryType() == 'playlist') {
-			$feed = $this->sygYouTube
-					->getUserPlaylist($gallery, $start, $per_page);
-		}
-
-		return $feed;
 	}
 
 	/**
