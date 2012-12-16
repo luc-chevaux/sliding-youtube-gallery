@@ -25,7 +25,7 @@ class SygGallery {
 	private $galleryName;
 	private $galleryDetails;
 	private $galleryType;
-	private $galleryCached;
+	private $cacheExists;
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
 	private $ytDisableRelatedVideo;
@@ -36,6 +36,7 @@ class SygGallery {
 	private $descShowTags;
 	private $descShowRatings;
 	private $descShowCategories;
+	private $cacheOn;
 	private $id;
 	
 	// other attributes
@@ -77,6 +78,8 @@ class SygGallery {
 		$this->setYtVideoFormat($result->syg_youtube_videoformat);
 		$this->setYtDisableRelatedVideo($result->syg_youtube_disablerel);
 		$this->setYtSrc($result->syg_youtube_src);
+		// running with caching?
+		$this->setCacheOn($result->syg_youtube_cacheon);
 		
 		// set youtube user profile
 		($result->syg_gallery_type) ? $this->setGalleryType($result->syg_gallery_type) : $this->setGalleryType('feed');
@@ -105,12 +108,11 @@ class SygGallery {
 		$this->setHtmlPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		$this->setJsonPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		
-		// see if gallery has been cached
-		// set the flag
+		// see if exists cache directory
 		if ($this->isGalleryCached()) {
-			$this->setGalleryCached('YES');
+			$this->setCacheExists('YES');
 		} else {
-			$this->setGalleryCached('NO');
+			$this->setCacheExists('NO');
 		}
 	}
 	
@@ -612,8 +614,8 @@ class SygGallery {
 	 * @since 1.4.0
 	 * @return the $galleryCached
 	 */
-	public function getGalleryCached() {
-		return $this->galleryCached;
+	public function getCacheExists() {
+		return $this->cacheExists;
 	}
 
 	/**
@@ -621,8 +623,8 @@ class SygGallery {
 	 * @param field_type $galleryCached
 	 * @since 1.4.0
 	 */
-	public function setGalleryCached($galleryCached) {
-		$this->galleryCached = $galleryCached;
+	public function setCacheExists($cacheExists) {
+		$this->cacheExists = $cacheExists;
 	}
 
 	/**
@@ -783,6 +785,20 @@ class SygGallery {
 	 */
 	private function setHtmlPath($htmlPath) {
 		$this->htmlPath = $htmlPath;
+	}
+	
+	/**
+	 * @return the $cacheOn
+	 */
+	public function getCacheOn() {
+		return $this->cacheOn;
+	}
+
+	/**
+	 * @param field_type $cacheOn
+	 */
+	public function setCacheOn($cacheOn) {
+		$this->cacheOn = $cacheOn;
 	}
 }
 ?>
