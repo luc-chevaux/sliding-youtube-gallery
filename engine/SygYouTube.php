@@ -230,5 +230,28 @@ class SygYouTube {
 		} 
 		return $count;
 	}
+	
+	/**
+	 * @name getVideoFeed
+	 * @category get a youtube video feed
+	 * @since 1.3.0
+	 * @param $gallery
+	 * @param $start
+	 * @param $per_page
+	 * @throws Exception
+	 * @return mixed $feed
+	 */
+	public function getVideoFeed(SygGallery $gallery, $start = null, $per_page = null) {
+		$feed = new Zend_Gdata_YouTube_VideoFeed();
+		if ($gallery->getGalleryType() == 'feed') {
+			$feed = $this->getUserUploads($gallery, $start, $per_page);
+		} else if ($gallery->getGalleryType() == 'list') {
+			$feed = $this->getUserList($gallery, $start, $per_page);
+		} else if ($gallery->getGalleryType() == 'playlist') {
+			$feed = $this->getUserPlaylist($gallery, $start, $per_page);
+		}
+	
+		return $feed;
+	}
 }
 ?>
