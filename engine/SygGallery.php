@@ -219,7 +219,7 @@ class SygGallery {
 		$index = 1;
 	
 		// create directory if not exist
-		if (!SygUtil::isGalleryCached($gallery)) {
+		if (!$this->isGalleryCached()) {
 			// create directory
 			mkdir($this->getJsonPath());
 			chmod($this->getJsonPath(), 0777);
