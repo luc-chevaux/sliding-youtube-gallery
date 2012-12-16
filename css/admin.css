@@ -83,7 +83,7 @@ hr {
 }
 
 label {
-
+	cursor: default;
 }
 
 .icon32.icon-settings, #icon-options-general {
