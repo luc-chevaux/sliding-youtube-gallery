@@ -30,6 +30,7 @@ class SygDao {
 	private $sqlCreateTable12X = SygConstant::SQL_CREATE_TABLE_1_2_X;
 	private $sqlCreateTableStyles13x = SygConstant::SQL_CREATE_TABLE_STYLES_1_3_X;
 	private $sqlCreateTableGalleries13x = SygConstant::SQL_CREATE_TABLE_GALLERIES_1_3_X;
+	private $sqlAlterTableGalleries14X = SygConstant::SQL_ALTER_SYG_CACHE_1_4_X;
 	private $sqlCopyTable = SygConstant::SQL_COPY_TABLE;
 	private $sqlCopyData = SygConstant::SQL_COPY_DATA;
 	private $sqlCheckTableExist = SygConstant::SQL_CHECK_TABLE_EXIST;
@@ -304,6 +305,11 @@ class SygDao {
 		return dbDelta($query);
 	}
 	
+	public function alterTableGalleries14X() {
+		$query = $this->db->prepare(sprintf($this->sqlAlterTableGalleries14X, $this->galleries_table_name));		
+		return $this->db->query($query);
+	}
+	
 	/**
 	 * @name parseOldData
 	 * @category parse old data
@@ -538,7 +544,7 @@ class SygDao {
 	 * @param $installed_ver
 	 * @param $target_ver
 	 */
-	public function updateVersion($installed_ver, $target_ver) {		
+	public function updateVersion($installed_ver, $target_ver) {
 		// we have to update database structure
 		if (!$installed_ver) {
 			// we're updating from version 1.0.1 or null version
@@ -559,7 +565,7 @@ class SygDao {
 			}
 			
 			$this->alterTableGalleries14X();
-		} else if (strpos($installed_ver, '1.2.') == 0) {			
+		} else if (strpos($installed_ver, '1.2.') === 0) {	
 			// we're updating from version 1.2.x
 			
 			// backup_tables
@@ -578,9 +584,9 @@ class SygDao {
 			$this->updateData($installed_ver, $target_ver);
 			
 			$this->alterTableGalleries14X();
-		} else if (strpos($installed_ver, '1.3.') == 0) {
+		} else if (strpos($installed_ver, '1.3.') === 0) {
 			// we're updating from version 1.3.x
-		
+			
 			$this->alterTableGalleries14X();
 		}
 		

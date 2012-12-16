@@ -43,7 +43,7 @@ class SygGallery {
 	private $thumbUrl;
 	
 	// recordset type
-	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d','%d');
+	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d','%d','%d');
 	
 	/**
 	 * @name __construct
@@ -164,6 +164,7 @@ class SygGallery {
 				'syg_youtube_videoformat'			=> $this->getYtVideoFormat(),
 				'syg_youtube_src'					=> $this->getYtSrc(),
 				'syg_style_id'						=> $this->getStyleId(),
+				'syg_youtube_cacheon'				=> $this->getCacheOn(),
 				'syg_youtube_disablerel'			=> $this->getYtDisableRelatedVideo(),
 				'id'								=> $this->getId());
 		
@@ -192,6 +193,7 @@ class SygGallery {
 			
 			$dto = $full_array;
 		}
+
 		return $dto;
 	}
 	
@@ -214,10 +216,10 @@ class SygGallery {
 	public function cacheGallery() {
 		// get the feed
 		$feed = $this->sygYouTube->getVideoFeed($this);
-	
+		
 		// @todo calculate optimized width for thumbnail
 		$index = 1;
-	
+		
 		// create directory if not exist
 		if (!$this->isGalleryCached()) {
 			// create directory
@@ -275,6 +277,21 @@ class SygGallery {
 			$localFN = $i.'.json';
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
 		}
+	}
+	
+	/**
+	 * @name removeFromCache
+	 * @category cache thumbnails and html into file system
+	 * @since 1.4.0
+	 * @param SygGallery $gallery
+	 */
+	public function removeFromCache() {
+		// remove directory
+		SygUtil::removeDirectory($this->getJsonPath());
+		// remove directory
+		SygUtil::removeDirectory($this->getThumbnailsPath());
+		// remove directory
+		SygUtil::removeDirectory($this->getHtmlPath());
 	}
 	
 	/**

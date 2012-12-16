@@ -71,11 +71,11 @@ class SygConstant {
 	/**
 	 * Sql query
 	 */
-	const SQL_GET_ALL_GALLERIES = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s LIMIT %d, %d';
+	const SQL_GET_ALL_GALLERIES = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s LIMIT %d, %d';
 	// transitory query
 	const SQL_GET_ALL_GALLERIES_1_2_X = 'SELECT id, syg_youtube_username, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s LIMIT %d, %d';
 	const SQL_GET_ALL_STYLES = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s LIMIT %d, %d';
-	const SQL_GET_GALLERY_BY_ID = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s WHERE id=%d';
+	const SQL_GET_GALLERY_BY_ID = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s WHERE id=%d';
 	const SQL_GET_STYLE_BY_ID = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s WHERE id=%d';
 	const SQL_DELETE_GALLERY_BY_ID = 'DELETE FROM %s WHERE id = %d';
 	const SQL_DELETE_STYLE_BY_ID = 'DELETE FROM %s WHERE id = %d';
@@ -150,7 +150,7 @@ class SygConstant {
 	PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=%d;';
 	
-	const SQL_ALTER_SYG_CACHE_1_4_X = 'ALTER TABLE %s ADD `syg_youtube_cacheon` BOOLEAN NOT NULL AFTER `syg_youtube_disablerel`';
+	const SQL_ALTER_SYG_CACHE_1_4_X = 'ALTER TABLE %s ADD `syg_youtube_cacheon` BOOLEAN NOT NULL AFTER `syg_youtube_disablerel`;';
 	
 	const SQL_COPY_TABLE = 'CREATE TABLE %s LIKE %s';
 	const SQL_COPY_DATA = 'INSERT INTO %s SELECT * FROM %s';
@@ -212,7 +212,7 @@ class SygConstant {
 	const BE_NO_STYLES_FOUND = 'No styles found in database';
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_STYLE_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
-	const BE_CACHE_GALLERY_WARNING = '* Caching gallery may improve the loading performance especially when you\'re displaying a big gallery as a part of a multiple gallery page. Once a gallery is cached, if its source will be updated externally you have to force re-caching manually, by clicking on the lightning icon.';
+	const BE_CACHE_GALLERY_WARNING = '* Caching gallery content is useful to speed up the loading process, especially when you\'re displaying a gallery which has a great number of videos or as a part of a multiple gallery page. ,<br/>Once a gallery is cached, if its source will be changed externally, you have to force re-caching manually, by clicking on the lightning icon in the galleries list.';
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';

@@ -164,5 +164,20 @@ class SygUtil {
 	public static function getLabel($label) {
 		return constant('SygConstant::'.$label);
 	}
+	
+	/**
+	 * @name removeDirectory
+	 * @category remove a directory
+	 * @since 1.4.0
+	 * @param $dir
+	 */
+	public static function removeDirectory ($dir) {
+		if($objs = @glob($dir."/*")){
+			foreach($objs as $obj) {
+				@is_dir($obj)? rmdirr($obj) : @unlink($obj);
+			}
+		}
+		@rmdir($dir);
+	}
 }
 ?>

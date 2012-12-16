@@ -800,6 +800,8 @@ class SygPlugin extends SanityPluginFramework {
 			return $this->forwardToEditGallery();
 		case 'delete':
 			return $this->forwardToDeleteGallery();
+		case 'cache':
+			return $this->forwardToCacheGallery();
 		case 'redirect':
 			$this->data['redirect_url'] = '?page='
 					. SygConstant::BE_ACTION_MANAGE_GALLERIES;
@@ -1012,16 +1014,21 @@ class SygPlugin extends SanityPluginFramework {
 				$gallery = new SygGallery($data);
 
 				// update db
-				$this->sygDao->addSygGallery($gallery);
+				$id = $this->sygDao->addSygGallery($gallery);
 
+				// reload the gallery
+				$gallery = $this->sygDao->getSygGalleryById($id);
+				
 				// updated flag
 				$updated = true;
 
 				// updated flag
 				$this->data['updated'] = $updated;
 
-				// cache gallery
-				$gallery->cacheGallery();
+				if ($gallery->getCacheOn()) {
+					// cache gallery
+					$gallery->cacheGallery();
+				}
 				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
@@ -1137,8 +1144,12 @@ class SygPlugin extends SanityPluginFramework {
 				// updated flag
 				$this->data['updated'] = $updated;
 				
-				// cache gallery
-				$gallery->cacheGallery();
+				if ($gallery->getCacheOn()) {
+					// cache gallery
+					$gallery->cacheGallery();
+				} else {
+					$gallery->removeFromCache();
+				}
 				
 				// render adminGallery view
 				return $this->forwardToGalleries($updated);
@@ -1238,10 +1249,34 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToDeleteGallery() {
 		// get the gallery id
 		$id = (int) $_GET['id'];
-
+		
+		// get the gallery
+		$gallery = $this->sygDao->getSygGalleryById($id);
+		
+		// remove file from cache
+		$gallery->removeFromCache();
+		
 		// delete gallery
-		$this->sygDao->deleteSygGallery($this->sygDao->getSygGalleryById($id));
-
+		$this->sygDao->deleteSygGallery();
+		
+		die();
+	}
+	
+	/**
+	 * @name forwardToCacheGallery
+	 * @category admin forward
+	 * @since 1.4.0
+	 */
+	public function forwardToCacheGallery() {
+		// get the gallery id
+		$id = (int) $_GET['id'];
+		
+		// get the gallery
+		$gallery = $this->sygDao->getSygGalleryById($id);
+		
+		// cache gallery
+		$gallery->cacheGallery();
+		
 		die();
 	}
 

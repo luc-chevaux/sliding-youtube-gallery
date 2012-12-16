@@ -108,6 +108,25 @@ jQuery.noConflict();
 			return true;
 		},
 		
+		/**
+		 * function that cache a gallery (ajax)
+		 */
+		cacheGallery : function (id) {
+			var sure = confirm('Are you sure to re-cache this gallery?');
+			if (sure) {
+				var request = jQuery.ajax({
+					  url: 'admin.php',
+					  type: 'GET',
+					  data: {page: 'syg-manage-galleries', id : id, action : 'cache'},
+					  dataType: 'html',
+					  complete: function () {
+						  window.location.reload();
+					  }
+				});
+			}
+			return true;
+		},
+		
 		/* 
 		 * function that loads the data in the table
 		 */ 
@@ -163,11 +182,16 @@ jQuery.noConflict();
 						html = html + val.galleryType;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + val.galleryCached;
+						html = html + val.cacheExists;
 						html = html + '</td>';
 						html = html + '<td>';
 						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"><img></a><a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"><img></a><a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"><img></a><a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"><img></a>';
+						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"><img></a>';
+						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"><img></a>';
+						html = html + '<a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"><img></a>';
+						if (val.cacheOn == 1) {
+							html = html + '<a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"><img></a>';
+						}
 						html = html + '</td>';
 						html = html + '</tr>';
 					
