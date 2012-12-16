@@ -163,6 +163,9 @@ jQuery.noConflict();
 						html = html + val.galleryType;
 						html = html + '</td>';
 						html = html + '<td>';
+						html = html + val.galleryCached;
+						html = html + '</td>';
+						html = html + '<td>';
 						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
 						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title=""><img></a><a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title=""><img></a><a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title=""><img></a>';
 						html = html + '</td>';
