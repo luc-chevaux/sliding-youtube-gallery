@@ -42,6 +42,9 @@
 		<th class="type">
 			<span>TYPE</span>
 		</th>
+		<th class="cached">
+			<span>CACHED</span>
+		</th>
 		<th class="action">
 			<span>ACTION</span>
 		</th>
