@@ -197,8 +197,8 @@ class SygYouTube {
 	}
 	
 	/**
-	 * @name countGalleryEntry
-	 * @category return displayed video count
+	 * @name countVideoEntry
+	 * @category return the number of video
 	 * @since 1.3.0
 	 * @param $gallery
 	 * @return int $count
