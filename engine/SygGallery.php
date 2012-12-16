@@ -20,6 +20,7 @@ class SygGallery {
 	private $galleryName;
 	private $galleryDetails;
 	private $galleryType;
+	private $galleryCached;
 	private $ytVideoFormat;
 	private $ytMaxVideoCount;
 	private $ytDisableRelatedVideo;
@@ -79,6 +80,21 @@ class SygGallery {
 			$this->setUserProfile(null);
 		} else {
 			$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc()));
+		}
+		
+		// see if gallery has been cached
+		
+		// test if gallery thumbnail cache directory exists
+		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
+		// test if gallery html cache directory exists
+		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
+		// test if gallery html cache directory exists
+		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
+		// set the flag
+		if ((is_dir($thumbnailsPath)) && (is_dir($htmlPath)) && (is_dir($jsonPath))) {
+			$this->setGalleryCached('YES');
+		} else {
+			$this->setGalleryCached('NO');
 		}
 		
 		// description option values
@@ -503,6 +519,25 @@ class SygGallery {
 	 */
 	public function setGalleryType($galleryType) {
 		$this->galleryType = $galleryType;
+	}
+
+	/**
+	 * @name getGalleryCached
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @return the $galleryCached
+	 */
+	public function getGalleryCached() {
+		return $this->galleryCached;
+	}
+
+	/**
+	 * @name setGalleryCached
+	 * @param field_type $galleryCached
+	 * @since 1.4.0
+	 */
+	public function setGalleryCached($galleryCached) {
+		$this->galleryCached = $galleryCached;
 	}
 
 	/**
