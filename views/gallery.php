@@ -5,6 +5,7 @@
 // gallery data retreival
 $feed = $this->data['feed'];
 $gallery = $this->data['gallery'];
+$mode = $this->data['mode'];
 
 // gallery settings 
 $thumbImage = $gallery->getSygStyle()->getThumbImage();
@@ -23,6 +24,16 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 			<?php 
 				foreach ($feed as $element) {
 					$videoThumbnails = $element->getVideoThumbnails();	
+					
+					// modify the img path to match local files
+					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
+						$videoThumbnails[1]['url'] = WP_PLUGIN_URL . 
+													SygConstant::WP_PLUGIN_PATH .
+													SygConstant::WP_CACHE_THUMB_REL_DIR .
+													$gallery->getId() . 
+													DIRECTORY_SEPARATOR . 
+													$element->getVideoId() . '.jpg';
+					}
 				?> 
 				<!-- gallery code -->
 				<li>

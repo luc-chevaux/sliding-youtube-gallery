@@ -553,7 +553,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getGallery($attributes) {
+	function getGallery($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -575,6 +575,9 @@ class SygPlugin extends SanityPluginFramework {
 				// put component type in the view (javascript optimization)
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
 
+				// put mode option in the view context 
+				$this->data['mode'] = $mode;
+				
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 
@@ -1358,7 +1361,7 @@ class SygPlugin extends SanityPluginFramework {
 		}
 		
 		// cache html from youtube
-		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()));
+		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$gallery->getId().".html";
 		file_put_contents($htmlPath.$localFN, $galleryHtml);
 		
@@ -1370,7 +1373,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		$no_of_paginations = ceil ($numVid / $per_page);
 		for ($i=1;$i<=$no_of_paginations;$i++) {
-			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId();
+			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
 			$localFN = $i.'.json';
 			file_put_contents($jsonPath.$localFN, file_get_contents($url));
 		}

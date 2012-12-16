@@ -71,6 +71,7 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 		switch ($_GET['query']) {
 			case 'videos':
 				if($_GET['page_number']) {
+					$mode = $_GET['mode'];
 					$page_number = $_GET['page_number'];
 					$current_page = $page_number;
 					$page_number -= 1;		
@@ -78,8 +79,8 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$per_page = $options['syg_option_pagenumrec']; // Per page records
 					$start = $page_number * $per_page;
 					$dao = new SygDao();
-					
-					$videos = $plugin->getVideoFeed($dao->getSygGalleryById($_GET['id']), $start, $per_page);
+					$gallery = $dao->getSygGalleryById($_GET['id']);
+					$videos = $plugin->getVideoFeed($gallery, $start, $per_page);
 					
 					$videos_to_json = array();
 					foreach ($videos as $entry) {
@@ -93,6 +94,16 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						$element['video_rating_info'] = $entry->getVideoRatingInfo();
 						$thumbnails = $entry->getVideoThumbnails();
 						$element['video_thumbshot'] = $thumbnails[1]['url'];
+						// modify the img path to match local files
+						if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
+							$element['video_thumbshot'] = WP_PLUGIN_URL .
+														SygConstant::WP_PLUGIN_PATH .
+														SygConstant::WP_CACHE_THUMB_REL_DIR .
+														$gallery->getId() . 
+														DIRECTORY_SEPARATOR . 
+														$entry->getVideoId() . '.jpg';
+						}
+						
 						array_push($videos_to_json, $element);
 					}
 					echo json_encode (array_reverse($videos_to_json));
