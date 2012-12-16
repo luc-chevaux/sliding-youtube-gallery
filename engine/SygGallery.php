@@ -16,6 +16,11 @@ class SygGallery {
 	private $sygStyle;
 	private $userProfile;
 
+	// set path for caching
+	private $jsonPath;
+	private $thumbnailsPath;
+	private $htmlPath;
+	
 	// this object attributes
 	private $galleryName;
 	private $galleryDetails;
@@ -82,21 +87,6 @@ class SygGallery {
 			$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc()));
 		}
 		
-		// see if gallery has been cached
-		
-		// test if gallery thumbnail cache directory exists
-		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
-		// test if gallery html cache directory exists
-		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
-		// test if gallery html cache directory exists
-		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR;
-		// set the flag
-		if ((is_dir($thumbnailsPath)) && (is_dir($htmlPath)) && (is_dir($jsonPath))) {
-			$this->setGalleryCached('YES');
-		} else {
-			$this->setGalleryCached('NO');
-		}
-		
 		// description option values
 		$this->setDescShow($result->syg_description_show);
 		$this->setDescShowCategories($result->syg_description_showcategories);
@@ -109,6 +99,14 @@ class SygGallery {
 		
 		// load style setting
 		$this->sygStyle = $this->sygDao->getSygStyleById($this->getStyleId());
+		
+		// see if gallery has been cached
+		// set the flag
+		if (SygUtil::isGalleryCached($this)) {
+			$this->setGalleryCached('YES');
+		} else {
+			$this->setGalleryCached('NO');
+		}
 	}
 	
 	/**
@@ -118,7 +116,7 @@ class SygGallery {
 	 * @return int $count
 	 */
 	public function countGalleryEntry() {
-		return $this->sygYouTube->countGalleryEntry ($this);
+		return $this->sygYouTube->countVideoEntry ($this);
 	}
 	
 	/**
@@ -188,6 +186,92 @@ class SygGallery {
 			$dto = $full_array;
 		}
 		return $dto;
+	}
+	
+	/**
+	 * @name isGalleryCached
+	 * @category check if a gallery is checked
+	 * @since 1.4.0
+	 * @return bool
+	 */
+	public function isGalleryCached() {
+		// test if gallery thumbnail cache directory exists
+		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+		// test if gallery html cache directory exists
+		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+		// test if gallery html cache directory exists
+		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
+	
+		return ((is_dir($thumbnailsPath)) && (is_dir($htmlPath)) && (is_dir($jsonPath))) ? true : false;
+	}
+	
+	/**
+	 * @name cacheGallery
+	 * @category cache thumbnails and html into file system
+	 * @since 1.4.0
+	 * @param SygGallery $gallery
+	 */
+	public function cacheGallery() {
+		// get the feed
+		$feed = $this->getVideoFeed($gallery);
+	
+		// @todo calculate optimized width for thumbnail
+		$index = 1;
+	
+		// create directory if not exist
+		if (!SygUtil::isGalleryCached($gallery)) {
+			// create directory
+			mkdir($this->getJsonPath());
+			chmod($this->getJsonPath(), 0777);
+			// create directory
+			mkdir($this->getThumbnailsPath());
+			chmod($this->getThumbnailsPath(), 0777);
+			// create directory
+			mkdir($this->getHtmlPath());
+			chmod($this->getHtmlPath(), 0777);
+		}
+	
+		// cache video thumbnails from youtube
+		foreach ($feed as $element) {
+			$videoThumbnails = $element->getVideoThumbnails();
+			$imgUrl = $videoThumbnails[$index]['url'];
+			$localFN = $element->getVideoId().".jpg";
+			if (SygUtil::isCurlInstalled()) {
+				// curl enabled
+				$ch = curl_init($imgUrl);
+				$fp = fopen($this->getThumbnailsPath().$localFN, 'wb');
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			} else if (ini_get('allow_url_fopen')) {
+				// allow url fopen
+				file_put_contents($this->getThumbnailsPath().$localFN, file_get_contents($imgUrl));
+			} else {
+				null;
+			}
+				
+			chmod ($this->getThumbnailsPath().basename($imgUrl), 0777);
+		}
+	
+		// cache html from youtube
+		$galleryHtml = $this->getGallery(array("id" => $gallery->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$gallery->getId().".html";
+		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
+	
+		// cache json page
+		$options = $this->getOptions();
+		$per_page = $options['syg_option_pagenumrec']; // Per page records
+		$maxVideoCount = $gallery->getYtMaxVideoCount();
+		$numVid = $this->sygYouTube->countVideoEntry($gallery);
+	
+		$no_of_paginations = ceil ($numVid / $per_page);
+		for ($i=1;$i<=$no_of_paginations;$i++) {
+			$url = $this->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$gallery->getId().'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
+			$localFN = $i.'.json';
+			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
+		}
 	}
 	
 	/**
@@ -638,6 +722,66 @@ class SygGallery {
 	 */
 	public function setYtDisableRelatedVideo($ytDisableRelatedVideo) {
 		$this->ytDisableRelatedVideo = $ytDisableRelatedVideo;
+	}
+	
+	/**
+	 * @name getJsonPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @return the $jsonPath
+	 */
+	public function getJsonPath() {
+		return $this->jsonPath;
+	}
+	
+	/**
+	 * @name setJsonPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @param field_type $jsonPath
+	 */
+	private function setJsonPath($jsonPath) {
+		$this->jsonPath = $jsonPath;
+	}
+	
+	/**
+	 * @name getThumbnailsPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @return the $thumbnailsPath
+	 */
+	public function getThumbnailsPath() {
+		return $this->thumbnailsPath;
+	}
+	
+	/**
+	 * @name setThumbnailsPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @param field_type $thumbnailsPath
+	 */
+	private function setThumbnailsPath($thumbnailsPath) {
+		$this->thumbnailsPath = $thumbnailsPath;
+	}
+	
+	/**
+	 * @name getHtmlPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @return the $htmlPath
+	 */
+	public function getHtmlPath() {
+		return $this->htmlPath;
+	}
+	
+	/**
+	 * @name setHtmlPath
+	 * @category getters and setters
+	 * @since 1.4.0
+	 * @param field_type $htmlPath
+	 */
+	private function setHtmlPath($htmlPath) {
+		$this->htmlPath = $htmlPath;
 	}
 }
 ?>
