@@ -1311,6 +1311,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// @todo calculate optimized width for thumbnail
 		$index = 1;
+		
 		// test if gallery thumbnail cache directory exists
 		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
 		
