@@ -13,7 +13,7 @@ class SygConstant {
 	/**
 	 * Plugin configuration
 	 */
-	const SYG_VERSION = '1.3.0';
+	const SYG_VERSION = '1.4.0';
 
 	/**
 	 * Plugin running contexts
@@ -150,6 +150,8 @@ class SygConstant {
 	PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=%d;';
 	
+	const SQL_ALTER_SYG_CACHE_1_4_X = 'ALTER TABLE %s ADD `syg_youtube_cacheon` BOOLEAN NOT NULL AFTER `syg_youtube_disablerel`';
+	
 	const SQL_COPY_TABLE = 'CREATE TABLE %s LIKE %s';
 	const SQL_COPY_DATA = 'INSERT INTO %s SELECT * FROM %s';
 	const SQL_CHECK_TABLE_EXIST = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
@@ -210,7 +212,7 @@ class SygConstant {
 	const BE_NO_STYLES_FOUND = 'No styles found in database';
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_STYLE_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
-	
+	const BE_CACHE_GALLERY_WARNING = '* Caching gallery may improve the loading performance especially when you\'re displaying a big gallery as a part of a multiple gallery page. Once a gallery is cached, if its source will be updated externally you have to force re-caching manually, by clicking on the lightning icon.';
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';
