@@ -25,8 +25,8 @@
 
 <!-- Gallery Form -->
 <form name="form1" method="post" action="">
-	<input type="hidden" name="syg_submit_hidden" value="Y">
-	<input type="hidden" name="id" id="id" value="<?php echo $gallery->getId(); ?>">
+	<input type="hidden" name="syg_submit_hidden" value="Y"/>
+	<input type="hidden" name="id" id="id" value="<?php echo $gallery->getId(); ?>"/>
 	
 	<!-- Define your new gallery -->
 	<fieldset>
@@ -53,7 +53,7 @@
 		<!-- user -->
 		<div id="syg_youtube_username_panel">
 			<label for="syg_youtube_src">YouTube User [enter the name of the user you want to dispay gallery (e.g. acdc)]: </label><br/>
-			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'feed') echo $gallery->getYtSrc(); ?>" size="30">
+			<input type="text" id="syg_youtube_username" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'feed') echo $gallery->getYtSrc(); ?>" size="30"/>
 		</div>
 		
 		<!-- video list -->
@@ -65,18 +65,22 @@
 		<!-- user -->
 		<div id="syg_youtube_playlist_panel">
 			<label for="syg_youtube_src">YouTube playlist [enter the standard youtube url for playlist (e.g. http://www.youtube.com/playlist?list=PLB53095C7A4A6F63D)]: </label><br/>
-			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'playlist') echo $gallery->getYtSrc(); ?>" size="30">
+			<input type="text" id="syg_youtube_playlist" name="syg_youtube_src" value="<?php if ($gallery->getGalleryType() == 'playlist') echo $gallery->getYtSrc(); ?>" size="30"/>
 		</div>
 		
 		<br/>
 		
 		<!-- video count -->
 		<label for="syg_youtube_maxvideocount">Maximum Video Count: </label>
-		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10">
+		<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10"/>
 		
 		<!-- related videos -->
 		<label for="syg_youtube_disablerel">Disable related videos</label>
-		<input type="checkbox" name="syg_youtube_disablerel" id="syg_youtube_disablerel" value="1" <?php if ($gallery->getYtDisableRelatedVideo()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_youtube_disablerel" id="syg_youtube_disablerel" value="1" <?php if ($gallery->getYtDisableRelatedVideo()) echo 'checked="checked"';?>/>
+		
+		<!-- cache the content -->
+		<label for="syg_youtube_cacheon">Cache content of this gallery *</label>
+		<input type="checkbox" name="syg_youtube_cacheon" id="syg_youtube_cacheon" value="1" <?php if ($gallery->getCacheOn()) echo 'checked="checked"';?>/>
 	</fieldset>
 	
 	<!-- description appereance -->
@@ -110,26 +114,27 @@
 		<legend><strong>Meta Information</strong></legend>
 		<!-- duration -->
 		<label for="syg_description_showduration">Duration </label>
-		<input type="checkbox" name="syg_description_showduration" id="syg_description_showduration" value="1" <?php if ($gallery->getDescShowDuration()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_description_showduration" id="syg_description_showduration" value="1" <?php if ($gallery->getDescShowDuration()) echo 'checked="checked"';?>/>
 
 		<!-- description -->
 		<label for="syg_description_show">Description </label>
-		<input type="checkbox" name="syg_description_show" id="syg_description_show" value="1" <?php if ($gallery->getDescShow()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_description_show" id="syg_description_show" value="1" <?php if ($gallery->getDescShow()) echo 'checked="checked"';?>/>
 
 		<!-- tags -->
 		<label for="syg_description_showtags">Tags </label>
-		<input type="checkbox" name="syg_description_showtags" id="syg_description_showtags" value="1" <?php if ($gallery->getDescShowTags()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_description_showtags" id="syg_description_showtags" value="1" <?php if ($gallery->getDescShowTags()) echo 'checked="checked"';?>/>
 
 		<!-- ratings -->
 		<label for="syg_description_showratings">Ratings </label>
-		<input type="checkbox" name="syg_description_showratings" id="syg_description_showratings" value="1" <?php if ($gallery->getDescShowRatings()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_description_showratings" id="syg_description_showratings" value="1" <?php if ($gallery->getDescShowRatings()) echo 'checked="checked"';?>/>
 
 		<!-- categories -->
 		<label for="syg_description_showcategories">Categories </label>
-		<input type="checkbox" name="syg_description_showcategories" id="syg_description_showcategories" value="1" <?php if ($gallery->getDescShowCategories()) echo 'checked="checked"';?>>
+		<input type="checkbox" name="syg_description_showcategories" id="syg_description_showcategories" value="1" <?php if ($gallery->getDescShowCategories()) echo 'checked="checked"';?>/>
 	</fieldset>
 	<hr/>
 	<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
 </form>
 <!-- plugin Menu -->
 <?php include 'inc/contextMenu.inc.php'; ?>
+<?php echo SygConstant::BE_CACHE_GALLERY_WARNING; ?>
