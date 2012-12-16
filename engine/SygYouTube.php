@@ -203,7 +203,7 @@ class SygYouTube {
 	 * @param $gallery
 	 * @return int $count
 	 */
-	public function countGalleryEntry(SygGallery $gallery) {
+	public function countVideoEntry(SygGallery $gallery) {
 		$count = 0;
 		if ($gallery->getYtSrc() && $gallery->getGalleryType() && $gallery->getYtMaxVideoCount()) {
 			$feed = new Zend_Gdata_YouTube_VideoFeed();
