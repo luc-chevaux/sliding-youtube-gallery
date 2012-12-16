@@ -22,6 +22,7 @@ if (file_exists($root.'/wp-load.php')) {
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 require_once ('../SygPlugin.php');
+require_once ('../SygYouTube.php');
 require_once ('../SygConstant.php');
 require_once ('../SygDao.php');
 require_once ('../SygGallery.php');
@@ -80,7 +81,8 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$start = $page_number * $per_page;
 					$dao = new SygDao();
 					$gallery = $dao->getSygGalleryById($_GET['id']);
-					$videos = $plugin->getVideoFeed($gallery, $start, $per_page);
+					$youtube = new SygYouTube();
+					$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
 					
 					$videos_to_json = array();
 					foreach ($videos as $entry) {
