@@ -100,9 +100,14 @@ class SygGallery {
 		// load style setting
 		$this->sygStyle = $this->sygDao->getSygStyleById($this->getStyleId());
 		
+		// load the caching path
+		$this->setThumbnailsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setHtmlPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setJsonPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		
 		// see if gallery has been cached
 		// set the flag
-		if (SygUtil::isGalleryCached($this)) {
+		if ($this->isGalleryCached()) {
 			$this->setGalleryCached('YES');
 		} else {
 			$this->setGalleryCached('NO');
@@ -195,14 +200,7 @@ class SygGallery {
 	 * @return bool
 	 */
 	public function isGalleryCached() {
-		// test if gallery thumbnail cache directory exists
-		$thumbnailsPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-		// test if gallery html cache directory exists
-		$htmlPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-		// test if gallery html cache directory exists
-		$jsonPath = realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $gallery->getId() . DIRECTORY_SEPARATOR;
-	
-		return ((is_dir($thumbnailsPath)) && (is_dir($htmlPath)) && (is_dir($jsonPath))) ? true : false;
+		return ((is_dir($this->getThumbnailsPath())) && (is_dir($this->getHtmlPath())) && (is_dir($this->getJsonPath()))) ? true : false;
 	}
 	
 	/**
@@ -213,7 +211,7 @@ class SygGallery {
 	 */
 	public function cacheGallery() {
 		// get the feed
-		$feed = $this->getVideoFeed($gallery);
+		$feed = $this->sygYouTube->getVideoFeed($this);
 	
 		// @todo calculate optimized width for thumbnail
 		$index = 1;
