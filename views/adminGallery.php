@@ -80,7 +80,7 @@
 		
 		<!-- cache the content -->
 		<label for="syg_youtube_cacheon">Cache content for this gallery *</label>
-		<input type="checkbox" name="syg_youtube_cacheon" id="syg_youtube_cacheon" value="1" <?php var_dump($gallery->getCacheOn()); if ($gallery->getCacheOn()) echo 'checked="checked"';?>/>
+		<input type="checkbox" name="syg_youtube_cacheon" id="syg_youtube_cacheon" value="1" <?php if ($gallery->getCacheOn()) echo 'checked="checked"';?>/>
 	</fieldset>
 	
 	<!-- description appereance -->
