@@ -50,7 +50,7 @@
 		</th>
 	</tr>
 	<tr id="syg-loading">
-		<td colspan="5">
+		<td colspan="7">
 			
 		</td>
 	</tr>
