@@ -566,23 +566,40 @@ class SygPlugin extends SanityPluginFramework {
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
 
-				// put the feed in the view
-				$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
-
-				// put the gallery settings in the view
-				$this->data['gallery'] = $gallery;
-
-				// put component type in the view (javascript optimization)
-				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-
-				// put mode option in the view context 
-				$this->data['mode'] = $mode;
-				
-				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-
-				// render gallery snippet code
-				return $this->render('gallery');
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+					// put the gallery settings in the view
+					$this->data['gallery'] = $gallery;
+						
+					// put component type in the view (javascript optimization)
+					$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
+						
+					// put mode option in the view context
+					$this->data['mode'] = $mode;
+					
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					
+					// render cache files
+					return $this->cacheRender($gallery->getId());
+				} else {
+					// put the feed in the view
+					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
+					
+					// put the gallery settings in the view
+					$this->data['gallery'] = $gallery;
+					
+					// put component type in the view (javascript optimization)
+					$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
+					
+					// put mode option in the view context
+					$this->data['mode'] = $mode;
+					
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					
+					// render gallery snippet code
+					return $this->render('gallery');
+				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
@@ -671,103 +688,103 @@ class SygPlugin extends SanityPluginFramework {
 		$view['pluginUrl'] = $this->getPluginRoot();
 
 		switch ($context) {
-		case SygConstant::SYG_CTX_BE:
-		// css to include
-			$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
-			$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
-
-			// define presentation plugin resources
-			$view['fancybox_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
-			$view['easing_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.easing-1.3.pack.js';
-			$view['mousewheel_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-			$view['fancybox_css_url'] = $view['jsPath']
-					. '/fancybox/jquery.fancybox-1.3.4.css';
-
-			wp_register_style('fancybox', $view['fancybox_css_url'], array(),
-					SygConstant::SYG_VERSION, 'screen');
-			wp_enqueue_style('fancybox');
-
-			// javascript dependencies injection
-			wp_enqueue_script('jquery');
-
-			// js to include
-			wp_register_script('sliding-youtube-gallery-admin',
-					$view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('sliding-youtube-gallery-admin');
-
-			wp_register_script('sliding-youtube-gallery-colorpicker',
-					$view['jsPath'] . 'colorpicker.js', array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('sliding-youtube-gallery-colorpicker');
-
-			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('fancybox');
-			wp_register_script('easing', $view['easing_js_url'], array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('easing');
-			wp_register_script('mousewheel', $view['mousewheel_js_url'],
-					array(), SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('mousewheel');
-			break;
-		case SygConstant::SYG_CTX_FE:
-			if (empty($view['gallery'])) {
-				$galleryId = 0;
-			} else {
-				$gallery = $view['gallery'];
-				$galleryId = $gallery->getId();
-			}
-			
-			$view['sygCssUrl_' . $galleryId] = $view['cssPath']
-					. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
-			$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js';
-			$view['fancybox_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.fancybox-1.3.4.pack.js';
-			$view['easing_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.easing-1.3.pack.js';
-			$view['mousewheel_js_url'] = $view['jsPath']
-					. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-			$view['fancybox_css_url'] = $view['jsPath']
-					. '/fancybox/jquery.fancybox-1.3.4.css';
-
-			// css injection
-			wp_register_style('sliding-youtube-gallery-' . $galleryId,
-					$view['sygCssUrl_' . $galleryId], array(),
-					SygConstant::SYG_VERSION, 'screen');
-			wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
-			wp_register_style('fancybox', $view['fancybox_css_url'], array(),
-					SygConstant::SYG_VERSION, 'screen');
-			wp_enqueue_style('fancybox');
-
-			// javascript dependencies injection
-			wp_enqueue_script('jquery');
-
-			// js to include
-			// include sliding youtube gallery js library
-			wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'],
-					array(), SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('sliding-youtube-gallery');
-			// include fancybox js library
-			wp_register_script('fancybox', $view['fancybox_js_url'], array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('fancybox');
-			// include easing js library
-			wp_register_script('easing', $view['easing_js_url'], array(),
-					SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('easing');
-			// include mousewheel js library
-			wp_register_script('mousewheel', $view['mousewheel_js_url'],
-					array(), SygConstant::SYG_VERSION, true);
-			wp_enqueue_script('mousewheel');
-			break;
-		case SygConstant::SYG_CTX_WS:
-			break;
-		default:
-			break;
+			case SygConstant::SYG_CTX_BE:
+			// css to include
+				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
+				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+	
+				// define presentation plugin resources
+				$view['fancybox_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['jsPath']
+						. '/fancybox/jquery.fancybox-1.3.4.css';
+	
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(),
+						SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('fancybox');
+	
+				// javascript dependencies injection
+				wp_enqueue_script('jquery');
+	
+				// js to include
+				wp_register_script('sliding-youtube-gallery-admin',
+						$view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery-admin');
+	
+				wp_register_script('sliding-youtube-gallery-colorpicker',
+						$view['jsPath'] . 'colorpicker.js', array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
+	
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('fancybox');
+				wp_register_script('easing', $view['easing_js_url'], array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('easing');
+				wp_register_script('mousewheel', $view['mousewheel_js_url'],
+						array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('mousewheel');
+				break;
+			case SygConstant::SYG_CTX_FE:
+				if (empty($view['gallery'])) {
+					$galleryId = 0;
+				} else {
+					$gallery = $view['gallery'];
+					$galleryId = $gallery->getId();
+				}
+				
+				$view['sygCssUrl_' . $galleryId] = $view['cssPath']
+						. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
+				$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js';
+				$view['fancybox_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath']
+						. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['jsPath']
+						. '/fancybox/jquery.fancybox-1.3.4.css';
+	
+				// css injection
+				wp_register_style('sliding-youtube-gallery-' . $galleryId,
+						$view['sygCssUrl_' . $galleryId], array(),
+						SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(),
+						SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('fancybox');
+	
+				// javascript dependencies injection
+				wp_enqueue_script('jquery');
+	
+				// js to include
+				// include sliding youtube gallery js library
+				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'],
+						array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('sliding-youtube-gallery');
+				// include fancybox js library
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('fancybox');
+				// include easing js library
+				wp_register_script('easing', $view['easing_js_url'], array(),
+						SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('easing');
+				// include mousewheel js library
+				wp_register_script('mousewheel', $view['mousewheel_js_url'],
+						array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('mousewheel');
+				break;
+			case SygConstant::SYG_CTX_WS:
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -794,39 +811,39 @@ class SygPlugin extends SanityPluginFramework {
 
 		// determine wich action to call
 		switch ($action) {
-		case 'add':
-			return $this->forwardToAddGallery();
-		case 'edit':
-			return $this->forwardToEditGallery();
-		case 'delete':
-			return $this->forwardToDeleteGallery();
-		case 'cache':
-			return $this->forwardToCacheGallery();
-		case 'redirect':
-			$this->data['redirect_url'] = '?page='
-					. SygConstant::BE_ACTION_MANAGE_GALLERIES;
-			return $this->render('redirect');
-		default:
-		// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-			// put galleries in the view
-			$galleries = $this->sygDao->getAllSygGalleries();
-
-			// put galleries in the view
-			$this->data['galleries'] = $galleries;
-
-			// number of pages
-			$options = $this->getOptions();
-			$this->data['pages'] = ceil(
-					$this->sygDao->getGalleriesCount()
-							/ $options['syg_option_numrec']);
-
-			// generate token
-			$_SESSION['request_token'] = $this->getAuthToken();
-
-			// render adminStyles view
-			return $this->render('adminGalleries');
+			case 'add':
+				return $this->forwardToAddGallery();
+			case 'edit':
+				return $this->forwardToEditGallery();
+			case 'delete':
+				return $this->forwardToDeleteGallery();
+			case 'cache':
+				return $this->forwardToCacheGallery();
+			case 'redirect':
+				$this->data['redirect_url'] = '?page='
+						. SygConstant::BE_ACTION_MANAGE_GALLERIES;
+				return $this->render('redirect');
+			default:
+				// prepare header
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	
+				// put galleries in the view
+				$galleries = $this->sygDao->getAllSygGalleries();
+	
+				// put galleries in the view
+				$this->data['galleries'] = $galleries;
+	
+				// number of pages
+				$options = $this->getOptions();
+				$this->data['pages'] = ceil(
+						$this->sygDao->getGalleriesCount()
+								/ $options['syg_option_numrec']);
+	
+				// generate token
+				$_SESSION['request_token'] = $this->getAuthToken();
+	
+				// render adminStyles view
+				return $this->render('adminGalleries');
 		}
 	}
 
@@ -845,37 +862,37 @@ class SygPlugin extends SanityPluginFramework {
 
 		// determine wich action to call
 		switch ($action) {
-		case 'add':
-			return $this->forwardToAddStyle();
-		case 'edit':
-			return $this->forwardToEditStyle();
-		case 'delete':
-			return $this->forwardToDeleteStyle();
-		case 'redirect':
-			$this->data['redirect_url'] = '?page='
-					. SygConstant::BE_ACTION_MANAGE_STYLES;
-			return $this->render('redirect');
-		default:
-			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
-
-			// put galleries in the view
-			$styles = $this->sygDao->getAllSygStyles();
-
-			// put galleries in the view
-			$this->data['styles'] = $styles;
-
-			// number of pages
-			$options = $this->getOptions();
-			$this->data['pages'] = ceil(
-					$this->sygDao->getStylesCount()
-							/ $options['syg_option_numrec']);
-
-			// generate token
-			$_SESSION['request_token'] = $this->getAuthToken();
-
-			// render adminStyles view
-			return $this->render('adminStyles');
+			case 'add':
+				return $this->forwardToAddStyle();
+			case 'edit':
+				return $this->forwardToEditStyle();
+			case 'delete':
+				return $this->forwardToDeleteStyle();
+			case 'redirect':
+				$this->data['redirect_url'] = '?page='
+						. SygConstant::BE_ACTION_MANAGE_STYLES;
+				return $this->render('redirect');
+			default:
+				// prepare header
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+	
+				// put galleries in the view
+				$styles = $this->sygDao->getAllSygStyles();
+	
+				// put galleries in the view
+				$this->data['styles'] = $styles;
+	
+				// number of pages
+				$options = $this->getOptions();
+				$this->data['pages'] = ceil(
+						$this->sygDao->getStylesCount()
+								/ $options['syg_option_numrec']);
+	
+				// generate token
+				$_SESSION['request_token'] = $this->getAuthToken();
+	
+				// render adminStyles view
+				return $this->render('adminStyles');
 		}
 	}
 
