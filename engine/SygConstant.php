@@ -213,6 +213,7 @@ class SygConstant {
 	const BE_WELCOME_MESSAGE = 'Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add video galleries in your blog directly from a youtube user\'s channel!';
 	const BE_MANAGE_STYLE_MESSAGE = 'Height, width, border radius, border size, distance, padding and font size are treated as generic integer. You don\'t need to add px, em or other css suffix.<br/> Button opacity is a float between 0 and 1 (e.g. 0.5).';
 	const BE_CACHE_GALLERY_WARNING = '* Caching gallery content is useful to speed up the loading process, especially when you\'re displaying a gallery which has a great number of videos or as a part of a multiple gallery page. ,<br/>Once a gallery is cached, if its source will be changed externally, you have to force re-caching manually, by clicking on the lightning icon in the galleries list.';
+	
 	// general menu
 	const BE_MENU_HOME = 'Home';
 	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';
