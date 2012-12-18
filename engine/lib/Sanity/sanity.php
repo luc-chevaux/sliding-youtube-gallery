@@ -123,5 +123,22 @@ class SanityPluginFramework {
         return $output;
     }
     
+    function cacheRender($id) {
+    	$template_path = $this->plugin_dir.'/cache/html/'.$id.'/gallery-'.$id.'.html';
+    	ob_start();
+        include ($template_path);
+        $output = ob_get_clean();
+        
+        // js to include
+        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/syg.client.js.php?id='.$id.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
+        wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY, $url, array(), SygConstant::SYG_VERSION, true);
+        wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
+        // js to include
+        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/action.js.php?id='.$id;
+        wp_register_script('syg-action-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        wp_enqueue_script('syg-action-'.$id);
+        
+        return $output;
+    }
 }
 ?>
