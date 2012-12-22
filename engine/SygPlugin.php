@@ -565,35 +565,26 @@ class SygPlugin extends SanityPluginFramework {
 				// get the gallery
 				$dao = new SygDao();
 				$gallery = $dao->getSygGalleryById($id);
-
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
-					// put the gallery settings in the view
-					$this->data['gallery'] = $gallery;
-						
-					// put component type in the view (javascript optimization)
-					$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-						
-					// put mode option in the view context
-					$this->data['mode'] = $mode;
-					
+				
+				// put the gallery settings in the view
+				$this->data['gallery'] = $gallery;
+				
+				// put component type in the view (javascript optimization)
+				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
+				
+				// put mode option in the view context
+				$this->data['mode'] = $mode;
+				
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
 					// render cache files
-					return $this->cacheRender($gallery->getId());
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 				} else {
 					// put the feed in the view
 					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
-					
-					// put the gallery settings in the view
-					$this->data['gallery'] = $gallery;
-					
-					// put component type in the view (javascript optimization)
-					$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-					
-					// put mode option in the view context
-					$this->data['mode'] = $mode;
-					
+		
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
@@ -623,7 +614,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getVideoPage($attributes) {
+	function getVideoPage($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -638,24 +629,29 @@ class SygPlugin extends SanityPluginFramework {
 
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
-
-				// number of pages
+				
+				// get options
 				$options = $this->getOptions();
+				
+				// number of pages
 				$this->data['options'] = $options;
-
+					
 				// calculate pages
 				$this->data['pages'] = ceil(
 						$gallery->countGalleryEntry()
-								/ $options['syg_option_pagenumrec']);
-
+						/ $options['syg_option_pagenumrec']);
+					
 				// put component type in the view (javascript optimization)
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
-
+					
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-
-				// render gallery snippet code
-				return $this->render('page');
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+				} else {					
+					// render gallery snippet code
+					return $this->render('page');
+				}
 			}  catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();

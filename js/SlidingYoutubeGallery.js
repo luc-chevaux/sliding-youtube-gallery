@@ -135,7 +135,12 @@ jQuery.noConflict();
 				
 				// loading data
 				var pageNum = button;
-				$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid, function (data) {$.loadData(data, gid, options);});
+				
+				if (options['cache'] == 'on') {
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
+				} else {
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid, function (data) {$.loadData(data, gid, options);});
+				}				
 			});
 			
 			/* bottom pagination */
@@ -156,7 +161,12 @@ jQuery.noConflict();
 				
 				// loading data
 				var pageNum = button;
-				$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid, function (data) {$.loadData(data, gid, options);});
+				
+				if (options['cache'] == 'on') {
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
+				} else {
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid, function (data) {$.loadData(data, gid, options);});
+				}
 			});
 		},
 		

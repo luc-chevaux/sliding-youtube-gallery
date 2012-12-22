@@ -260,11 +260,17 @@ class SygGallery {
 		// get the plugin singleton
 		$syg = SygPlugin::getInstance();
 		
-		// cache html from youtube
-		$galleryHtml = $syg->getGallery(array("id" => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		// cache the html of the gallery
+		$galleryHtml = $syg->getGallery(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		// $syg->injectJs($galleryHtml, $this->getId());
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
+		chmod ($this->getHtmlPath().$localFN, 0777);
+		
+		// cache the html of the page
+		$galleryPage = $syg->getVideoPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
+		file_put_contents($this->getHtmlPath().$localFN, $galleryPage);
 		chmod ($this->getHtmlPath().$localFN, 0777);
 		
 		// cache json page

@@ -38,7 +38,7 @@ $width += 20;
 $height += 20;
 
 $uiType = $_GET['ui'];
-
+$cache = $_GET['cache'];
 ?>
 
 /************************************************
@@ -64,17 +64,34 @@ jQuery(document).ready(function($){
 	
 	options['width'] = <?php echo $width; ?>; // int
 	options['height'] = <?php echo $height; ?>; // int
+	<?php if ($cache == 'on') { ?>
+		options['cache'] = '<?php echo $cache; ?>';
+		<?php 
+		$jsonUrl = WP_PLUGIN_URL . 
+					SygConstant::WP_PLUGIN_PATH .
+					SygConstant::WP_CACHE_JSON_REL_DIR .
+					$id .
+					DIRECTORY_SEPARATOR; 
+		$firstPageUrl = $jsonUrl . '1.json';
+		?>
+		options['jsonUrl'] = '<?php echo $jsonUrl;?>';
+	<?php } ?>
 		
 	<?php if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_PAGE) { ?>		
 		/* video page */
 		// loading images
 		$.displayLoad(gid['<?php echo $id; ?>']);
-		
-		// get the data
-		$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'], function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
-		
-		// add pagination events
-		$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
+		<?php if ($cache == 'on') { ?>			
+			// get the data
+			$.getJSON('<?php echo $firstPageUrl; ?>', function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
+			// add pagination events
+			$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
+		<?php } else { ?>
+			// get the data
+			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'], function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
+			// add pagination events
+			$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
+		<?php } ?>
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
 		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
