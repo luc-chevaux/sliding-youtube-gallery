@@ -1,7 +1,4 @@
 <?php 
-
-ini_set('display_errors', 0);
-
 header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
 header('Cache-Control: no-cache, must-revalidate' );
 header('Pragma: no-cache' );
@@ -27,6 +24,10 @@ require_once ('../SygConstant.php');
 require_once ('../SygDao.php');
 require_once ('../SygGallery.php');
 require_once ('../SygUtil.php');
+
+// Turn off all error reporting
+error_reporting(0);
+ini_set('display_errors', 0);
 
 $plugin = SygPlugin::getInstance();
 
