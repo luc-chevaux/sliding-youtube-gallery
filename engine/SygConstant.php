@@ -69,95 +69,181 @@ class SygConstant {
 	const BE_ICON_VIDEO_GALLERY = '../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/custom_gallery.png';
 
 	/**
+	 * Table name
+	 */
+	public static function getDatabasePrefix() {
+		global $wpdb;
+		return $wpdb->prefix;
+	}
+	
+	public static function getTblGalleriesName() {
+		return SygConstant::getDatabasePrefix().'syg';
+	}
+	
+	public static function getTblStylesName () {
+		return SygConstant::getDatabasePrefix().'syg_styles';
+	}
+	
+	public static function getTblGalleriesName12X() {
+		return self::getTblGalleriesName().'_OLD_V12X';
+	}
+	
+	/**
 	 * Sql query
 	 */
-	const SQL_GET_ALL_GALLERIES = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s LIMIT %d, %d';
+	public static function sqlGetAllGalleries () { 
+		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' LIMIT %d, %d';
+		return $query;
+	}
+	
 	// transitory query
-	const SQL_GET_ALL_GALLERIES_1_2_X = 'SELECT id, syg_youtube_username, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s LIMIT %d, %d';
-	const SQL_GET_ALL_STYLES = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s LIMIT %d, %d';
-	const SQL_GET_GALLERY_BY_ID = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM %s WHERE id=%d';
-	const SQL_GET_STYLE_BY_ID = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM %s WHERE id=%d';
-	const SQL_DELETE_GALLERY_BY_ID = 'DELETE FROM %s WHERE id = %d';
-	const SQL_DELETE_STYLE_BY_ID = 'DELETE FROM %s WHERE id = %d';
-	const SQL_COUNT_QUERY = 'SELECT COUNT(*) AS CNT FROM %s';
-	const SQL_CREATE_TABLE_1_2_X = 'CREATE TABLE IF NOT EXISTS %s (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`syg_youtube_username` varchar(255) NOT NULL,
-	`syg_youtube_videoformat` varchar(255) NOT NULL,
-	`syg_youtube_maxvideocount` int(11) NOT NULL,
-	`syg_thumbnail_height` int(11) NOT NULL,
-	`syg_thumbnail_width` int(11) NOT NULL,
-	`syg_thumbnail_bordersize` int(11) NOT NULL,
-	`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
-	`syg_thumbnail_borderradius` int(11) NOT NULL,
-	`syg_thumbnail_distance` int(11) NOT NULL,
-	`syg_thumbnail_overlaysize` int(11) NOT NULL,
-	`syg_thumbnail_image` varchar(255) NOT NULL,
-	`syg_thumbnail_buttonopacity` float NOT NULL,
-	`syg_description_width` int(11) NOT NULL,
-	`syg_description_fontsize` int(11) NOT NULL,
-	`syg_description_fontcolor` varchar(255) NOT NULL,
-	`syg_description_show` tinyint(1) NOT NULL,
-	`syg_description_showduration` tinyint(1) NOT NULL,
-	`syg_description_showtags` tinyint(1) NOT NULL,
-	`syg_description_showratings` tinyint(1) NOT NULL,
-	`syg_description_showcategories` tinyint(1) NOT NULL,
-	`syg_box_width` int(11) NOT NULL,
-	`syg_box_background` varchar(255) NOT NULL,
-	`syg_box_radius` int(11) NOT NULL,
-	`syg_box_padding` int(11) NOT NULL,
-	PRIMARY KEY  (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+	public static function sqlGetAllGalleries12X () {
+		$query = 'SELECT id, syg_youtube_username, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM '.self::getTblGalleriesName12X().' LIMIT %d, %d';
+		return $query;
+	}
+	
+	public static function sqlGetAllStyles () {
+		$query = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM '.self::getTblStylesName().' LIMIT %d, %d';
+		return $query;
+	}
+	
+	public static function sqlGetGalleryById () {
+		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' WHERE id=%d';
+		return $query;
+	}
+	
+	public static function sqlGetStyleById () {
+		$query = 'SELECT id, syg_style_name, syg_style_details, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM '.self::getTblStylesName().' WHERE id=%d';
+		return $query;
+	}
+	
+	public static function sqlDeleteGalleryById () {
+		$query = 'DELETE FROM '.self::getTblGalleriesName().' WHERE id = %d';
+		return $query;
+	}
+	
+	public static function sqlDeleteStyleById () {
+		$query = 'DELETE FROM '.self::getTblStylesName().' WHERE id = %d';
+		return $query;
+	}
+	
+	public static function sqlCountQuery ($table) {
+		$query = sprintf('SELECT COUNT(*) AS CNT FROM %s', $table);
+		return $query;
+	}
+	
+	public static function sqlCreateTable12X () {
+		$query = 'CREATE TABLE IF NOT EXISTS '.self::getTblGalleriesName12X().' (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`syg_youtube_username` varchar(255) NOT NULL,
+		`syg_youtube_videoformat` varchar(255) NOT NULL,
+		`syg_youtube_maxvideocount` int(11) NOT NULL,
+		`syg_thumbnail_height` int(11) NOT NULL,
+		`syg_thumbnail_width` int(11) NOT NULL,
+		`syg_thumbnail_bordersize` int(11) NOT NULL,
+		`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+		`syg_thumbnail_borderradius` int(11) NOT NULL,
+		`syg_thumbnail_distance` int(11) NOT NULL,
+		`syg_thumbnail_overlaysize` int(11) NOT NULL,
+		`syg_thumbnail_image` varchar(255) NOT NULL,
+		`syg_thumbnail_buttonopacity` float NOT NULL,
+		`syg_description_width` int(11) NOT NULL,
+		`syg_description_fontsize` int(11) NOT NULL,
+		`syg_description_fontcolor` varchar(255) NOT NULL,
+		`syg_description_show` tinyint(1) NOT NULL,
+		`syg_description_showduration` tinyint(1) NOT NULL,
+		`syg_description_showtags` tinyint(1) NOT NULL,
+		`syg_description_showratings` tinyint(1) NOT NULL,
+		`syg_description_showcategories` tinyint(1) NOT NULL,
+		`syg_box_width` int(11) NOT NULL,
+		`syg_box_background` varchar(255) NOT NULL,
+		`syg_box_radius` int(11) NOT NULL,
+		`syg_box_padding` int(11) NOT NULL,
+		PRIMARY KEY  (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+		return $query;
+	}
 
-	const SQL_CREATE_TABLE_STYLES_1_3_X = 'CREATE TABLE IF NOT EXISTS %s (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`syg_style_name` varchar(255) NOT NULL,
-	`syg_style_details` text NOT NULL,
-	`syg_thumbnail_height` int(11) NOT NULL,
-	`syg_thumbnail_width` int(11) NOT NULL,
-	`syg_thumbnail_bordersize` int(11) NOT NULL,
-	`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
-	`syg_thumbnail_borderradius` int(11) NOT NULL,
-	`syg_thumbnail_distance` int(11) NOT NULL,
-	`syg_thumbnail_overlaysize` int(11) NOT NULL,
-	`syg_thumbnail_image` varchar(255) NOT NULL,
-	`syg_thumbnail_buttonopacity` float NOT NULL,
-	`syg_description_width` int(11) NOT NULL,
-	`syg_description_fontsize` int(11) NOT NULL,
-	`syg_description_fontcolor` varchar(255) NOT NULL,
-	`syg_box_width` int(11) NOT NULL,
-	`syg_box_background` varchar(255) NOT NULL,
-	`syg_box_radius` int(11) NOT NULL,
-	`syg_box_padding` int(11) NOT NULL,
-	PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+	public static function sqlCreateTableStyles13X () {
+		$query = 'CREATE TABLE IF NOT EXISTS '.self::getTblStylesName().' (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`syg_style_name` varchar(255) NOT NULL,
+		`syg_style_details` text NOT NULL,
+		`syg_thumbnail_height` int(11) NOT NULL,
+		`syg_thumbnail_width` int(11) NOT NULL,
+		`syg_thumbnail_bordersize` int(11) NOT NULL,
+		`syg_thumbnail_bordercolor` varchar(255) NOT NULL,
+		`syg_thumbnail_borderradius` int(11) NOT NULL,
+		`syg_thumbnail_distance` int(11) NOT NULL,
+		`syg_thumbnail_overlaysize` int(11) NOT NULL,
+		`syg_thumbnail_image` varchar(255) NOT NULL,
+		`syg_thumbnail_buttonopacity` float NOT NULL,
+		`syg_description_width` int(11) NOT NULL,
+		`syg_description_fontsize` int(11) NOT NULL,
+		`syg_description_fontcolor` varchar(255) NOT NULL,
+		`syg_box_width` int(11) NOT NULL,
+		`syg_box_background` varchar(255) NOT NULL,
+		`syg_box_radius` int(11) NOT NULL,
+		`syg_box_padding` int(11) NOT NULL,
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+	}
 	
-	const SQL_CREATE_TABLE_GALLERIES_1_3_X = 'CREATE TABLE IF NOT EXISTS %s (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`syg_youtube_src` text NOT NULL,
-	`syg_youtube_videoformat` varchar(255) NOT NULL,
-	`syg_youtube_maxvideocount` int(11) NOT NULL,
-	`syg_youtube_disablerel` tinyint(1) NOT NULL,
-	`syg_description_show` tinyint(1) NOT NULL,
-	`syg_description_showduration` tinyint(1) NOT NULL,
-	`syg_description_showtags` tinyint(1) NOT NULL,
-	`syg_description_showratings` tinyint(1) NOT NULL,
-	`syg_description_showcategories` tinyint(1) NOT NULL,
-	`syg_style_id` int(11) NOT NULL,
-	`syg_gallery_type` enum(\'feed\',\'list\',\'playlist\') NOT NULL,
-	`syg_gallery_name` varchar(255) NOT NULL,
-	`syg_gallery_details` text NOT NULL,
-	PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=%d;';
+	public static function sqlCreateTableGalleries13X () { 
+		$query = 'CREATE TABLE IF NOT EXISTS '.self::getTblGalleriesName().' (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`syg_youtube_src` text NOT NULL,
+		`syg_youtube_videoformat` varchar(255) NOT NULL,
+		`syg_youtube_maxvideocount` int(11) NOT NULL,
+		`syg_youtube_disablerel` tinyint(1) NOT NULL,
+		`syg_description_show` tinyint(1) NOT NULL,
+		`syg_description_showduration` tinyint(1) NOT NULL,
+		`syg_description_showtags` tinyint(1) NOT NULL,
+		`syg_description_showratings` tinyint(1) NOT NULL,
+		`syg_description_showcategories` tinyint(1) NOT NULL,
+		`syg_style_id` int(11) NOT NULL,
+		`syg_gallery_type` enum(\'feed\',\'list\',\'playlist\') NOT NULL,
+		`syg_gallery_name` varchar(255) NOT NULL,
+		`syg_gallery_details` text NOT NULL,
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=%d;';
+		return $query;
+	}
 	
-	const SQL_ALTER_SYG_CACHE_1_4_X = 'ALTER TABLE %s ADD `syg_youtube_cacheon` BOOLEAN NOT NULL AFTER `syg_youtube_disablerel`;';
+	public static function sqlAlterSygCache14X () {
+		$query = 'ALTER TABLE '.self::getTblGalleriesName().' ADD `syg_youtube_cacheon` BOOLEAN NOT NULL AFTER `syg_youtube_disablerel`;';
+		return $query;
+	}
 	
-	const SQL_COPY_TABLE = 'CREATE TABLE %s LIKE %s';
-	const SQL_COPY_DATA = 'INSERT INTO %s SELECT * FROM %s';
-	const SQL_CHECK_TABLE_EXIST = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
-	const SQL_CHECK_AUTO_INCREMENT = 'SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_schema = %s AND table_name = %s';
-	const SQL_REMOVE_TABLE = 'DROP TABLE %s';
-	const SQL_SET_AUTOINCREMENT = 'ALTER TABLE %s AUTO_INCREMENT = %d';
+	public static function sqlCopyTable ($tarTable, $srcTable) {
+		$query = sprintf('CREATE TABLE %s LIKE %s', $tarTable, $srcTable);
+		return $query;
+	}
+	
+	public static function sqlCopyData ($tarTable, $srcTable) {
+		$query = sprintf ('INSERT INTO %s SELECT * FROM %s', $tarTable, $srcTable);
+		return $query;
+	}
+	
+	public static function sqlCheckTableExist ($db, $table) {
+		$query = sprintf ('SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = \'%s\' AND table_name = \'%s\'', $db, $table);
+		return $query;
+	}
+	
+	public static function sqlCheckAutoIncrement ($db, $table) {
+		$query = sprintf ('SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_schema = \'%s\' AND table_name = \'%s\'', $db, $table);
+		return $query;
+	}
+	
+	public static function sqlRemoveTable ($table) {
+		$query = 'DROP TABLE '.$table;
+		return $query;
+	}
+	
+	public static function sqlSetAutoIncrement ($table) {
+		$query = 'ALTER TABLE '.$table.' AUTO_INCREMENT = %d';
+		return $query;
+	}
 	
 	/**
 	 * Default values for gallery
