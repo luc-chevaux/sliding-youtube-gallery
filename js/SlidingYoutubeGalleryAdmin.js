@@ -257,7 +257,7 @@ jQuery.noConflict();
 		},
 		
 		initGalleryUi : function () {
-			$('input[name="syg_gallery_type"]').each(function(){
+			$('input[name=syg_gallery_type]').each(function(){
 				$(this).click($.disableInput);
 			});
 			
@@ -273,7 +273,7 @@ jQuery.noConflict();
 		},
 		
 		disableInput: function () {
-		    var value = $("input[@name=syg_gallery_type]:checked").val();
+		    var value = $('input[name=syg_gallery_type]:checked').val();
 		    switch (value) {
 		    	case 'feed':
 		    		// enable and set visible feed

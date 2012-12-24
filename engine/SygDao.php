@@ -13,29 +13,6 @@ require_once (ABSPATH . 'wp-admin/includes/plugin.php');
 
 class SygDao {
 	private $db;
-	private $galleries_table_name ;
-	private $styles_table_name ;
-
-	// Query used in DAO
-	private $sqlGetAllGalleries = SygConstant::SQL_GET_ALL_GALLERIES;
-	// transitory query
-	private $sqlGetAllGalleries12X = SygConstant::SQL_GET_ALL_GALLERIES_1_2_X;
-	private $sqlGetAllStyles = SygConstant::SQL_GET_ALL_STYLES;
-	private $sqlGetGalleryById = SygConstant::SQL_GET_GALLERY_BY_ID;
-	private $sqlGetStyleById = SygConstant::SQL_GET_STYLE_BY_ID;
-	private $sqlDeleteGalleryById = SygConstant::SQL_DELETE_GALLERY_BY_ID;	
-	private $sqlDeleteStyleById = SygConstant::SQL_DELETE_STYLE_BY_ID;
-	private $sqlCountGalleries = SygConstant::SQL_COUNT_QUERY;
-	private $sqlCountStyles = SygConstant::SQL_COUNT_QUERY;
-	private $sqlCreateTable12X = SygConstant::SQL_CREATE_TABLE_1_2_X;
-	private $sqlCreateTableStyles13x = SygConstant::SQL_CREATE_TABLE_STYLES_1_3_X;
-	private $sqlCreateTableGalleries13x = SygConstant::SQL_CREATE_TABLE_GALLERIES_1_3_X;
-	private $sqlAlterTableGalleries14X = SygConstant::SQL_ALTER_SYG_CACHE_1_4_X;
-	private $sqlCopyTable = SygConstant::SQL_COPY_TABLE;
-	private $sqlCopyData = SygConstant::SQL_COPY_DATA;
-	private $sqlCheckTableExist = SygConstant::SQL_CHECK_TABLE_EXIST;
-	private $sqlCheckAutoIncrement = SygConstant::SQL_CHECK_AUTO_INCREMENT;
-	private $sqlRemoveTable = SygConstant::SQL_REMOVE_TABLE;
 	
 	/**
 	 * @name __construct
@@ -46,10 +23,6 @@ class SygDao {
 		// get wordpress dbms linked
 		global $wpdb;
 		$this->db = $wpdb;
-		
-		// set table name
-		$this->galleries_table_name = $this->db->prefix . "syg";
-		$this->styles_table_name = $this->db->prefix . "syg_styles";
 	}
 	
 	/**
@@ -64,7 +37,7 @@ class SygDao {
 		$gallery->sanitizeYouTubeSource();
 		
 		// execute the insert
-		$this->db->insert($this->galleries_table_name, 
+		$this->db->insert(SygConstant::getTblGalleriesName(), 
 					$gallery->toDto(), 
 					$gallery->getRsType()
 					);
@@ -80,7 +53,7 @@ class SygDao {
 	 * @return int $id latest inserted id
 	 */
 	public function addSygStyle(SygStyle $style) {
-		$this->db->insert($this->styles_table_name,
+		$this->db->insert(SygConstant::getTblStylesName(),
 				$style->toDto(),
 				$style->getRsType()
 		);
@@ -100,7 +73,7 @@ class SygDao {
 		
 		// execute the update
 		$this->db->update(
-				$this->galleries_table_name,
+				SygConstant::getTblGalleriesName(),
 				$gallery->toDto(),
 				array('id' => $gallery->getId()),
 				$gallery->getRsType(),
@@ -116,7 +89,7 @@ class SygDao {
 	 */
 	public function updateSygStyle(SygStyle $style) {
 		$this->db->update(
-				$this->styles_table_name,
+				SygConstant::getTblStylesName(),
 				$style->toDto(),
 				array('id' => $style->getId()),
 				$style->getRsType(),
@@ -131,7 +104,7 @@ class SygDao {
 	 * @param SygGallery $gallery to delete
 	 */
 	public function deleteSygGallery(SygGallery $gallery) {
-		$query = $this->db->prepare(sprintf($this->sqlDeleteGalleryById, $this->galleries_table_name, $gallery->getId()));
+		$query = $this->db->prepare(SygConstant::sqlDeleteGalleryById(), $gallery->getId());
 		$this->db->query($query);
 	}
 	
@@ -142,7 +115,7 @@ class SygDao {
 	 * @param SygStyle $style to delete
 	 */
 	public function deleteSygStyle(SygStyle $style) {
-		$query = $this->db->prepare(sprintf($this->sqlDeleteStyleById, $this->styles_table_name, $style->getId()));
+		$query = $this->db->prepare(SygConstant::sqlDeleteStyleById(), $style->getId());
 		$this->db->query($query);
 	}
 
@@ -157,7 +130,7 @@ class SygDao {
 	 */
 	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
-		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries, $this->galleries_table_name, $start, $per_page));
+		$query = $this->db->prepare(SygConstant::sqlGetAllGalleries(), $start, $per_page);
 		$results = $this->db->get_results($query, $output_type);
 		foreach ($results as $gallery) {
 			$galleries[] = new SygGallery($gallery);
@@ -176,7 +149,7 @@ class SygDao {
 	 */
 	public function getAllSygGalleries12X($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$galleries = array();
-		$query = $this->db->prepare(sprintf($this->sqlGetAllGalleries12X, $this->galleries_table_name.'_OLD_V12X', $start, $per_page));
+		$query = $this->db->prepare(SygConstant::sqlGetAllGalleries12X(), $start, $per_page);
 		$results = $this->db->get_results($query, $output_type);
 		return $results;
 	}
@@ -192,7 +165,7 @@ class SygDao {
 	 */
 	public function getAllSygStyles($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
 		$styles = array();
-		$query = $this->db->prepare(sprintf($this->sqlGetAllStyles, $this->styles_table_name, $start, $per_page));
+		$query = $this->db->prepare(SygConstant::sqlGetAllStyles(), $start, $per_page);
 		$results = $this->db->get_results($query, $output_type);
 		foreach ($results as $style) {
 			$styles[] = new SygStyle($style);
@@ -210,7 +183,7 @@ class SygDao {
 	 * @return $gallery
 	 */
 	public function getSygGalleryById($id, $output_type = 'OBJECT') {
-		$query = $this->db->prepare(sprintf($this->sqlGetGalleryById, $this->galleries_table_name, $id));
+		$query = $this->db->prepare(SygConstant::sqlGetGalleryById(), $id);
 		$result = $this->db->get_row($query, $output_type);
 		if ($result) {
 			$gallery = new SygGallery($result);
@@ -229,7 +202,7 @@ class SygDao {
 	 * @return $style
 	 */
 	public function getSygStyleById($id, $output_type = 'OBJECT') {
-		$query = $this->db->prepare(sprintf($this->sqlGetStyleById, $this->styles_table_name, $id));
+		$query = $this->db->prepare(SygConstant::sqlGetStyleById(), $id);
 		$result = $this->db->get_row($query, $output_type);
 		$style = new SygStyle($result);
 		return $style;
@@ -242,7 +215,7 @@ class SygDao {
 	 * @return int $count
 	 */
 	public function getGalleriesCount() {
-		$query = $this->db->prepare(sprintf($this->sqlCountGalleries, $this->galleries_table_name));
+		$query = SygConstant::sqlCountQuery(SygConstant::getTblGalleriesName());
 		$count= $this->db->get_var($query, 0, 0);
 
 		return (int)$count;
@@ -255,7 +228,7 @@ class SygDao {
 	 * @return int $count
 	 */
 	public function getStylesCount() {
-		$query = $this->db->prepare(sprintf($this->sqlCountStyles, $this->styles_table_name));
+		$query = SygConstant::sqlCountQuery(SygConstant::getTblStylesName());
 		$count= $this->db->get_var($query, 0, 0);
 	
 		return (int)$count;
@@ -268,7 +241,7 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTable12x() {
-		$query = $this->db->prepare(sprintf($this->sqlCreateTable12X, $this->galleries_table_name));
+		$query = SygConstant::sqlCreateTable12X();;
 		// run the dbDelta function and return its values
 		return dbDelta($query);
 	}
@@ -280,15 +253,15 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTableGalleries13x() {
-		if ($this->tableExists($this->galleries_table_name.'_OLD_V12X')) {
+		if ($this->tableExists(SygConstant::getTblGalleriesName12X())) {
 			// check autoincrement, version >= 1.2.5
-			$query = $this->db->prepare(sprintf($this->sqlCheckAutoIncrement, DB_NAME, $this->galleries_table_name.'_OLD_V12X'));
+			$query = SygConstant::sqlCheckAutoIncrement(DB_NAME, SygConstant::getTblGalleriesName12X());
 			$autoincrement = (int) $this->db->get_var($query, 0, 0);
 		} else {
 			$autoincrement = 1;
 		}
 		
-		$query = $this->db->prepare(sprintf($this->sqlCreateTableGalleries13x, $this->galleries_table_name, $autoincrement));
+		$query = $this->db->prepare(SygConstant::sqlCreateTableGalleries13X(), $autoincrement);
 		// run the dbDelta function and return its values
 		return dbDelta($query);
 	}
@@ -300,13 +273,13 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function createTableStyles13x() {
-		$query = $this->db->prepare(sprintf($this->sqlCreateTableStyles13x, $this->styles_table_name));
+		$query = SygConstant::sqlCreateTableStyles13X();
 		// run the dbDelta function and return its values
 		return dbDelta($query);
 	}
 	
 	public function alterTableGalleries14X() {
-		$query = $this->db->prepare(sprintf($this->sqlAlterTableGalleries14X, $this->galleries_table_name));		
+		$query = SygConstant::sqlAlterSygCache14X();
 		return $this->db->query($query);
 	}
 	
@@ -487,11 +460,11 @@ class SygDao {
 			$success = false;
 		} else {
 			// copy table structure
-			$query = $this->db->prepare(sprintf($this->sqlCopyTable, $to, $from));
+			$query = SygConstant::sqlCopyTable($to, $from);
 			$success = true | dbDelta($query);
 			
 			// copy table data
-			$query = $this->db->prepare(sprintf($this->sqlCopyData, $to, $from));
+			$query = SygConstant::sqlCopyData($to, $from);
 			$success = $success | dbDelta($query);
 		}
 		 
@@ -506,7 +479,7 @@ class SygDao {
 	 * @return bool $exist
 	 */
 	function tableExists($tablename) {
-		$query = $this->db->prepare(sprintf($this->sqlCheckTableExist, DB_NAME, $tablename));
+		$query = SygConstant::sqlCheckTableExist(DB_NAME, $tablename);
 		$exist= $this->db->get_var($query, 0, 0);
 		$exist = (int) $exist;
 		return $exist == 1;
@@ -521,7 +494,7 @@ class SygDao {
 	 */
 	public function backupTables($installed_ver, $target_ver) {
 		if (strpos($installed_ver, '1.2.') == 0) {
-			$this->copyTable($this->galleries_table_name, $this->galleries_table_name.'_OLD_V12X');
+			$this->copyTable(SygConstant::getTblGalleriesName(), SygConstant::getTblGalleriesName12X());
 		}
 	}
 	
@@ -533,7 +506,7 @@ class SygDao {
 	 * @return dbDelta($query)
 	 */
 	public function removeTable($table) {
-		$query = $this->db->prepare(sprintf($this->sqlRemoveTable, $table));
+		$query = SygConstant::sqlRemoveTable($table);
 		return $this->db->query($query);
 	}
 	
@@ -572,7 +545,7 @@ class SygDao {
 			$this->backupTables($installed_ver, $target_ver);
 			
 			// remove table
-			$this->removeTable($this->galleries_table_name);
+			$this->removeTable(SygConstant::getTblGalleriesName());
 			
 			// create styles table
 			$this->createTableStyles13x();

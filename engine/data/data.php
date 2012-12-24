@@ -1,4 +1,7 @@
-<?php 
+<?php
+// Turn off all error reporting
+ini_set('error_reporting', E_ALL & ~E_NOTICE);
+
 header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
 header('Cache-Control: no-cache, must-revalidate' );
 header('Pragma: no-cache' );
@@ -15,6 +18,9 @@ if (file_exists($root.'/wp-load.php')) {
 	require_once($root.'/wp-config.php');
 }
 
+// Turn off all error reporting
+ini_set('error_reporting', E_ALL & ~E_NOTICE);
+
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
@@ -24,10 +30,6 @@ require_once ('../SygConstant.php');
 require_once ('../SygDao.php');
 require_once ('../SygGallery.php');
 require_once ('../SygUtil.php');
-
-// Turn off all error reporting
-error_reporting(0);
-ini_set('display_errors', 0);
 
 $plugin = SygPlugin::getInstance();
 
