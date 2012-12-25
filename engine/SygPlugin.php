@@ -690,41 +690,29 @@ class SygPlugin extends SanityPluginFramework {
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
 	
 				// define presentation plugin resources
-				$view['fancybox_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath']
-						. '/fancybox/jquery.fancybox-1.3.4.css';
+				$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
 	
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(),
-						SygConstant::SYG_VERSION, 'screen');
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
 	
 				// javascript dependencies injection
 				wp_enqueue_script('jquery');
 	
 				// js to include
-				wp_register_script('sliding-youtube-gallery-admin',
-						$view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'SlidingYoutubeGalleryAdmin.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-admin');
 	
-				wp_register_script('sliding-youtube-gallery-colorpicker',
-						$view['jsPath'] . 'colorpicker.js', array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . 'colorpicker.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 	
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('fancybox');
-				wp_register_script('easing', $view['easing_js_url'], array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('easing');
-				wp_register_script('mousewheel', $view['mousewheel_js_url'],
-						array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
 				break;
 			case SygConstant::SYG_CTX_FE:
@@ -735,25 +723,17 @@ class SygPlugin extends SanityPluginFramework {
 					$galleryId = $gallery->getId();
 				}
 				
-				$view['sygCssUrl_' . $galleryId] = $view['cssPath']
-						. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
+				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
 				$view['sygJsUrl'] = $view['jsPath'] . 'SlidingYoutubeGallery.js';
-				$view['fancybox_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath']
-						. '/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath']
-						. '/fancybox/jquery.fancybox-1.3.4.css';
+				$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
+				$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
+				$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
 	
 				// css injection
-				wp_register_style('sliding-youtube-gallery-' . $galleryId,
-						$view['sygCssUrl_' . $galleryId], array(),
-						SygConstant::SYG_VERSION, 'screen');
+				wp_register_style('sliding-youtube-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(),
-						SygConstant::SYG_VERSION, 'screen');
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
 	
 				// javascript dependencies injection
@@ -761,20 +741,16 @@ class SygPlugin extends SanityPluginFramework {
 	
 				// js to include
 				// include sliding youtube gallery js library
-				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'],
-						array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery');
 				// include fancybox js library
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('fancybox');
 				// include easing js library
-				wp_register_script('easing', $view['easing_js_url'], array(),
-						SygConstant::SYG_VERSION, true);
+				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('easing');
 				// include mousewheel js library
-				wp_register_script('mousewheel', $view['mousewheel_js_url'],
-						array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
 				break;
 			case SygConstant::SYG_CTX_WS:
