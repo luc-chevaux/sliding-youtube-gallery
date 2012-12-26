@@ -1,1 +1,1 @@
-This folder is used to cache gallery html code
+This folder is used to store external library
