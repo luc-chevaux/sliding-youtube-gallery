@@ -1,9 +1,5 @@
 <?php
 
-// set header type
-header('Content-type: text/javascript');
-header("Content-Type: text/plain; charset=utf-8");
-
 // include zend loader
 $root = realpath(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))))))));
 
