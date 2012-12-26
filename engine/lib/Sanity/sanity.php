@@ -144,7 +144,10 @@ class SanityPluginFramework {
         	wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE, $url, array(), SygConstant::SYG_VERSION, true);
         	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
         } elseif (SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL == $component) {
-        	
+        	// js to include
+        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/syg.client.js.php?id='.$id.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
+        	wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
         }
         return $output;
     }
