@@ -589,7 +589,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
 					// render gallery snippet code
-					return $this->render('gallery');
+					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
@@ -646,11 +646,12 @@ class SygPlugin extends SanityPluginFramework {
 					
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				} else {					
 					// render gallery snippet code
-					return $this->render('page');
+					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				}
 			}  catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
@@ -668,6 +669,67 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+	/**
+	 * @name getVideoCarousel
+	 * @category get a video carousel
+	 * @since 1.0.1
+	 * @param $attributes
+	 * @return $output
+	 */
+	function getVideoCarousel($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+		foreach ($attributes as $key => $var) {
+			$attributes[$key] = (int) $var;
+		}
+		
+		extract(shortcode_atts(array('id' => null), $attributes));
+		
+		if (!empty($id)) {
+			try {
+				// get the gallery
+				$dao = new SygDao();
+				$gallery = $dao->getSygGalleryById($id);
+		
+				// put the gallery settings in the view
+				$this->data['gallery'] = $gallery;
+		
+				// put component type in the view (javascript optimization)
+				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
+		
+				// put mode option in the view context
+				$this->data['mode'] = $mode;
+		
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+						
+					// render cache files
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+				} else {
+					// put the feed in the view
+					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
+		
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+						
+					// render gallery snippet code
+					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+				}
+			} catch (SygGalleryNotFoundException $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
+			} catch (Exception $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
+			}
+		}
+	}
+	
 	/**
 	 * @name prepareHeader
 	 * @category prepare header with the right js and css inclusion
@@ -728,6 +790,7 @@ class SygPlugin extends SanityPluginFramework {
 				$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
 				$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
 				$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
+				$view['carousel_js_url'] = $view['jsPath'] . '/3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
 				$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
 	
 				// css injection
@@ -752,6 +815,9 @@ class SygPlugin extends SanityPluginFramework {
 				// include mousewheel js library
 				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
+				// include cloud carousel javascript
+				wp_register_script('carousel', $view['carousel_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('carousel');
 				break;
 			case SygConstant::SYG_CTX_WS:
 				break;
