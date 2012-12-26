@@ -179,5 +179,23 @@ class SygUtil {
 		}
 		@rmdir($dir);
 	}
+	
+	/**
+	 * @name folder2Md5
+	 * @category calculate md5 of a folder
+	 * @since 1.4.0
+	 * @param $folder
+	 */
+	function folder2Md5($folder) {
+		$dircontent = scandir($folder);
+		$ret='';
+		foreach($dircontent as $filename) {
+			if ($filename != '.' && $filename != '..') {
+				if (filemtime($folder.$filename) === false) return false;
+				$ret.=date("YmdHis", filemtime($folder.$filename)).$filename;
+			}
+		}
+		return md5($ret);
+	}
 }
 ?>
