@@ -22,9 +22,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	<div class="sc_menu-<?php echo $gallery->getId();?>">
 		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none;">
 			<?php 
-				foreach ($feed as $element) {
-					$videoThumbnails = $element->getVideoThumbnails();	
-					
+				foreach ($feed as $element) {				
 					// modify the img path to match local files
 					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
 						$videoThumbnails[1]['url'] = WP_PLUGIN_URL . 
@@ -33,6 +31,8 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 													$gallery->getId() . 
 													DIRECTORY_SEPARATOR . 
 													$element->getVideoId() . '.jpg';
+					} else {
+						$videoThumbnails = $element->getVideoThumbnails();
 					}
 				?> 
 				<!-- gallery code -->
