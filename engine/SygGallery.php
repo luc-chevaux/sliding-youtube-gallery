@@ -266,6 +266,12 @@ class SygGallery {
 		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
 		chmod ($this->getHtmlPath().$localFN, 0777);
 		
+		// cache the html of the carousel
+		$carouselHtml = $syg->getVideoCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
+		file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
+		chmod ($this->getHtmlPath().$localFN, 0777);
+		
 		// cache the html of the page
 		$galleryPage = $syg->getVideoPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
@@ -285,12 +291,6 @@ class SygGallery {
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
 			chmod ($this->getJsonPath().$localFN, 0777);
 		}
-		
-		// cache the html of the carousel
-		$carouselHtml = $syg->getCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
-		chmod ($this->getHtmlPath().$localFN, 0777);
 	}
 	
 	/**
