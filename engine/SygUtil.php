@@ -197,5 +197,19 @@ class SygUtil {
 		}
 		return md5($ret);
 	}
+	
+	/**
+	 * @name cleanJsCache
+	 * @category clean js cache if expired
+	 * @since 1.4.0
+	 * @param $folder
+	 */
+	function cleanJsCache($folder) {
+		$olddate=time()-3600;
+		$dircontent = scandir($folder);
+		foreach($dircontent as $filename) {
+			if (strlen($filename)==32 && filemtime($folder.$filename) && filemtime($folder.$filename)<$olddate) unlink($folder.$filename);
+		}
+	}
 }
 ?>
