@@ -50,6 +50,7 @@ if (!is_admin()) {
 	// add shortcodes
 	add_shortcode('syg_gallery', 'getGallery');
 	add_shortcode('syg_page', 'getVideoPage');
+	add_shortcode('syg_carousel', 'getVideoCarousel');
 } else {
 	// plugin update function callback
 	add_action('admin_init', 'sygCheckUpdateProcess');
@@ -81,6 +82,15 @@ function getGallery($atts) {
 function getVideoPage($atts) {
 	$syg = SygPlugin::getInstance();
 	return $syg->getVideoPage($atts);
+}
+
+/**
+ * Get a video carousel
+ * @param unknown_type $atts
+ */
+function getVideoCarousel($atts) {
+	$syg = SygPlugin::getInstance();
+	return $syg->getVideoCarousel($atts);
 }
 
 /* BACK END METHODS */
