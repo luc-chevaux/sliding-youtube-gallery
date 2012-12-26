@@ -261,7 +261,9 @@ class SygPlugin extends SanityPluginFramework {
 			$checkFSPermission = (bool) (is_writable(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR) && 
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR) && 
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR) &&
-										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR));
+										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR) && 
+										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR));
+			
 			// define a warning array
 			$warning = array();
 			

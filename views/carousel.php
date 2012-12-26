@@ -45,7 +45,7 @@ $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.js.ph
 wp_register_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.js.php?id='.$gallery->getId();
+$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$gallery->getId();
 wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-action-'.$gallery->getId());
 ?>

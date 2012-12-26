@@ -63,6 +63,7 @@ class SygConstant {
 	const WP_CACHE_THUMB_REL_DIR = '/cache/thumb/';
 	const WP_CACHE_HTML_REL_DIR = '/cache/html/';
 	const WP_CACHE_JSON_REL_DIR = '/cache/json/';
+	const WP_CACHE_JS_REL_DIR = '/cache/js/';
 	
 	/**
 	 * UI images url
