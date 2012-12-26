@@ -143,6 +143,8 @@ class SanityPluginFramework {
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/syg.client.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
         	wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE, $url, array(), SygConstant::SYG_VERSION, true);
         	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+        } elseif (SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL == $component) {
+        	
         }
         return $output;
     }
