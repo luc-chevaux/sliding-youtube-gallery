@@ -764,7 +764,7 @@ class SygPlugin extends SanityPluginFramework {
 				wp_enqueue_script('jquery');
 	
 				// js to include
-				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'lib/syg.lib.admin.js', array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'core/lib/syg.lib.admin.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-admin');
 	
 				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . 'colorpicker.js', array(), SygConstant::SYG_VERSION, true);
@@ -786,7 +786,7 @@ class SygPlugin extends SanityPluginFramework {
 				}
 				
 				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
-				$view['sygJsUrl'] = $view['jsPath'] . 'lib/syg.lib.client.js';
+				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.js';
 				$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
 				$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';
 				$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';

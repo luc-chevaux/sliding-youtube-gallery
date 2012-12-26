@@ -24,7 +24,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		#loading-wrapper {display: none;}
 	</style>
 	<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/action.js.php?id='.$id; ?>"></script>
+	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/gallery/action.js.php?id='.$id; ?>"></script>
 </head>
 <body>
 	<div id="loading-level"></div>

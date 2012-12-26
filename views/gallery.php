@@ -68,7 +68,7 @@ $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/syg.client.js.php?id='.$galler
 wp_register_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/action.js.php?id='.$gallery->getId();
+$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/gallery/action.js.php?id='.$gallery->getId();
 wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-action-'.$gallery->getId());
 ?>
