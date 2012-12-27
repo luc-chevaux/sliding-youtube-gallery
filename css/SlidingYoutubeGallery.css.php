@@ -188,21 +188,32 @@ h4.video_title-<?php echo $id; ?> a {
 }
 
 .syg_video_carousel-<?php echo $id; ?> {
-	height: 200px;
+	height: 400px;
 }
 
 #left-carousel-button {
-    left: 100px;
+    left: 50px;
     opacity: 0.3;
     position: absolute;
     top: 200px;
+    display: inline;
 }
 
 #right-carousel-button {
     opacity: 0.3;
     position: absolute;
-    right: 100px;
+    right: 50px;
     top: 200px;
+    display: inline;
+}
+
+#carousel-title {
+	position: absolute;
+	bottom: 20px;
+	width: 400px;
+	right: 100px;
+	left: 100px;
+	border: 1px yellow solid;
 }
 
 #syg_video_container-<?php echo $id; ?> {

@@ -37,10 +37,9 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	<div id="right-carousel-button">
 		<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
 	</div>
+	
+	<p id="carousel-title"></p>
 </div>
-
-<!-- <p id="title-text"></p>
-<p id="alt-text"></p> -->
 
 <?php 
 // js to include

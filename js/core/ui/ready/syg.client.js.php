@@ -95,12 +95,12 @@ jQuery(document).ready(function($){
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>				   
 		// This initialises carousels on the container elements specified, in this case, carousel1.
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({			
-			xPos: 250,
+			xPos: 300,
 			yPos: 50,
-			buttonLeft: $("#left-but"),
-			buttonRight: $("#right-but"),
-			altBox: $("#alt-text"),
-			titleBox: $("#title-text")
+			reflHeight: 20,
+			buttonLeft: $("#left-carousel-button"),
+			buttonRight: $("#right-carousel-button"),
+			titleBox: $("#carousel-title")
 		});
 	<?php } ?>
 });  
