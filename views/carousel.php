@@ -32,10 +32,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		</a>
 	<?php } ?>
 	<div id="left-carousel-button">
-	
+		<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/left.png'; ?>">
 	</div>
 	<div id="right-carousel-button">
-	
+		<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
 	</div>
 </div>
 

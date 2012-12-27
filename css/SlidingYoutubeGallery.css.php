@@ -168,7 +168,7 @@ h4.video_title-<?php echo $id; ?> a {
 	
 }
 
-/* video-gallery styles */
+/* video-gallery and carousel styles */
 
 /* style to remove after loading */
 .syg_video_gallery_loading-<?php echo $id; ?>, .syg_video_carousel_loading-<?php echo $id; ?> {
@@ -189,6 +189,20 @@ h4.video_title-<?php echo $id; ?> a {
 
 .syg_video_carousel-<?php echo $id; ?> {
 	height: 200px;
+}
+
+#left-carousel-button {
+    left: 100px;
+    opacity: 0.3;
+    position: absolute;
+    top: 200px;
+}
+
+#right-carousel-button {
+    opacity: 0.3;
+    position: absolute;
+    right: 100px;
+    top: 200px;
 }
 
 #syg_video_container-<?php echo $id; ?> {
