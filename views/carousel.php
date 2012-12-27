@@ -8,7 +8,7 @@ $mode = $this->data['mode'];
 $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
-<div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>" style="width:100%; height:100%;background:red;overflow:scroll;">
+<div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_carousel_loading-<?php echo $gallery->getId();?>">
 	<?php
 		foreach ($feed as $element) {				
 			// modify the img path to match local files
@@ -25,16 +25,19 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		?>
 		<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>&video=<?php echo $element->getVideoId(); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
-				<img class="cloudcarousel" src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+				<img class="cloudcarousel thumbnail-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[1]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
 			<?php } else { ?>
-				<img class="cloudcarousel" src="<?php echo $videoThumbnails[1]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
+				<img class="cloudcarousel thumbnail-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[1]['url']; ?>" alt="play" title="play"/>
 			<?php } ?>		
 		</a>
 	<?php } ?>
+	<div id="left-carousel-button">
+	
+	</div>
+	<div id="right-carousel-button">
+	
+	</div>
 </div>
-
-<input id="left-but"  type="button" value="Left" />
-<input id="right-but" type="button" value="Right" />
 
 <!-- <p id="title-text"></p>
 <p id="alt-text"></p> -->

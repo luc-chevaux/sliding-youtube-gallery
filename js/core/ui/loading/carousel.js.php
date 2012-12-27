@@ -23,8 +23,4 @@ jQuery(window).load(function() {
 	jQuery('#syg_video_carousel-<?php echo $id; ?>')
 		.removeClass('syg_video_carousel_loading-<?php echo $id; ?>')
 		.addClass('syg_video_carousel-<?php echo $id; ?>');
-	
-	
-	/* remove display none */
-	jQuery('.sc_menu-<?php echo $id;?>').removeAttr('style');
 });

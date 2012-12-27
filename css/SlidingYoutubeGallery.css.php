@@ -171,14 +171,14 @@ h4.video_title-<?php echo $id; ?> a {
 /* video-gallery styles */
 
 /* style to remove after loading */
-.syg_video_gallery_loading-<?php echo $id; ?> {
+.syg_video_gallery_loading-<?php echo $id; ?>, .syg_video_carousel_loading-<?php echo $id; ?> {
 	background-image: url('../img/ui/loader.gif');
 	background-repeat: no-repeat;
 	background-position:center;
 	height: 100px !important;
 }
 
-.syg_video_gallery-<?php echo $id; ?> {
+.syg_video_gallery-<?php echo $id; ?>, .syg_video_carousel-<?php echo $id; ?> {
 	background-color: <?php echo $syg_box_background; ?>;
 	border-radius: <?php echo $syg_box_radius; ?>px;
     -webkit-border-radius: <?php echo $syg_box_radius; ?>px;
@@ -187,13 +187,16 @@ h4.video_title-<?php echo $id; ?> a {
     display: inline-block;
 }
 
+.syg_video_carousel-<?php echo $id; ?> {
+	height: 200px;
+}
+
 #syg_video_container-<?php echo $id; ?> {
 	clear: both;
 	display: inline-block;
 	width: 100%;
 	height: 100px;
 	text-align: center;
-	
 	position:relative;
 }
 
