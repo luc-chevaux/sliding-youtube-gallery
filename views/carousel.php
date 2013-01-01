@@ -9,7 +9,8 @@ $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
 <div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_carousel_loading-<?php echo $gallery->getId();?>">
-	<?php
+	<div id="hidden-carousel-layer_<?php echo $gallery->getId();?>" style="display: none">
+		<?php
 		foreach ($feed as $element) {				
 			// modify the img path to match local files
 			if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
@@ -30,15 +31,16 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				<img class="cloudcarousel thumbnail-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[1]['url']; ?>" alt="play" title="play"/>
 			<?php } ?>		
 		</a>
-	<?php } ?>
-	<div id="left-carousel-button">
-		<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/left.png'; ?>">
+		<?php } ?>
+		<div id="left-carousel-button">
+			<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/left.png'; ?>">
+		</div>
+		<div id="right-carousel-button">
+			<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
+		</div>
+		
+		<p id="carousel-title"></p>
 	</div>
-	<div id="right-carousel-button">
-		<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
-	</div>
-	
-	<p id="carousel-title"></p>
 </div>
 
 <?php 

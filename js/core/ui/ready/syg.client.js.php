@@ -96,8 +96,13 @@ jQuery(document).ready(function($){
 		// This initialises carousels on the container elements specified, in this case, carousel1.
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({			
 			xPos: 300,
-			yPos: 50,
-			reflHeight: 20,
+			yPos: 100,
+			minScale: 1,
+			reflHeight: 10,
+			reflGap: 5,
+			reflOpacity: 0.5,
+			xradius: 261,
+			yradius: 67, 
 			buttonLeft: $("#left-carousel-button"),
 			buttonRight: $("#right-carousel-button"),
 			titleBox: $("#carousel-title")
