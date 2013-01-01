@@ -308,18 +308,22 @@ class SygPlugin extends SanityPluginFramework {
 	public static function checkUpdateProcess() {
 		global $wpdb;
 		global $syg_db_version;
-		
 		// set db version
 		$target_syg_db_version = SygConstant::SYG_VERSION;
 		
 		// get the current db version
 		$installed_ver = get_option("syg_db_version");
 		
-		// chmod cache directory to ensure that is writeable
-		chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
-		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
-		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
-		chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
+		// chmod all the cache directories to ensure that is writeable
+		$stat = stat(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR);
+
+		if ((getmygid() == $stat['gid']) || ($stat['gid'] == 0)) {
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
+		}
 		
 		if ($installed_ver != $target_syg_db_version) {
 			try {
