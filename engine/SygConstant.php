@@ -333,10 +333,10 @@ class SygConstant {
 	 * Validation message
 	 */
 	const BE_VALIDATE_USER_NOT_FOUND = 'There was an error in your request. YouTube user does not exist.';
-	const BE_VALIDATE_STRING_NOT_EMPTY = 'must be a not empty string.';
+	const BE_VALIDATE_STRING_NOT_EMPTY = 'Must be a not empty string.';
 	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value.';
 	const BE_VALIDATE_NOT_LESS_VALUE = 'You entered %d. Its value must be less or equal than %d.';
-	const BE_VALIDATE_LESS_VALUE = 'can\'t be less than %d.';
+	const BE_VALIDATE_LESS_VALUE = 'Can\'t be less than %d.';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value.';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s.';
 	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user.';
@@ -345,7 +345,7 @@ class SygConstant {
 	const BE_VALIDATE_NOT_A_VALID_VIDEO_EXT = '%s is not a valid youtube video. Exception %s was raised.';
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s youtube playlist does not exist.';
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
-	
+	const BE_VALIDATE_OVERLAY_BAD_DIMENSION = 'Size %d for overlay button is not proportional to %s value that is %d. Please consider to use a lower value.';
 	/**
 	 * Forms label
 	 */

@@ -130,28 +130,28 @@ class SygValidate {
 		// validation code
 		$problemFound = array();
 
-		// syg_style_name stringa
+		// syg_style_name string
 		if (!(preg_match('/^\s*\S.*$/', $data['syg_style_name']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_style_name'),
 							'msg' => SygConstant::BE_VALIDATE_STRING_NOT_EMPTY));
 		}
 		
-		// syg_thumbnail_height intero
+		// syg_thumbnail_height integer
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_height']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_thumbnail_height'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_height'])));
 		}
 
-		// syg_thumbnail_width intero
+		// syg_thumbnail_width integer
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_width']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_thumbnail_width'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_width'])));
 		}
 
-		// syg_thumbnail_bordersize intero <= 10		
+		// syg_thumbnail_bordersize integer <= 10		
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_bordersize'])
 				&& strval($data['syg_thumbnail_bordersize'] <= 10))) {
 			if (!(preg_match('/^\d+$/', $data['syg_thumbnail_bordersize']))) {
@@ -167,7 +167,7 @@ class SygValidate {
 			}
 		}
 
-		// syg_thumbnail_borderradius intero <=20
+		// syg_thumbnail_borderradius integer <=20
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_borderradius'])
 				&& strval($data['syg_thumbnail_borderradius'] <= 20))) {
 			if (!(preg_match('/^\d+$/', $data['syg_thumbnail_bordersize']))) {
@@ -183,14 +183,14 @@ class SygValidate {
 			}
 		}
 
-		// syg_thumbnail_distance intero
+		// syg_thumbnail_distance integer
 		if (!(preg_match('/^\d+$/', $data['syg_thumbnail_distance']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_thumbnail_distance'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_thumbnail_distance'])));
 		}
 
-		// syg_thumbnail_buttonopacity reale tra 0 e 1
+		// syg_thumbnail_buttonopacity float tra 0 e 1
 		if (!(preg_match('/\d+(\.\d{1,2})?/',
 				$data['syg_thumbnail_buttonopacity'])
 				&& strval($data['syg_thumbnail_buttonopacity']) >= 0
@@ -210,14 +210,14 @@ class SygValidate {
 			}
 		}
 
-		// syg_box_width intero
+		// syg_box_width integer
 		if (!(preg_match('/^\d+$/', $data['syg_box_width']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_box_width'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_box_width'])));
 		}
 
-		// syg_box_radius intero <=20
+		// syg_box_radius integer <=20
 		if (!(preg_match('/^\d+$/', $data['syg_box_radius'])
 				&& (strval($data['syg_box_radius']) <= 20))) {
 			if (!(preg_match('/^\d+$/', $data['syg_box_radius']))) {
@@ -233,18 +233,32 @@ class SygValidate {
 			}
 		}
 
-		// syg_box_padding intero
+		// syg_box_padding integer
 		if (!(preg_match('/^\d+$/', $data['syg_box_padding']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_box_padding'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_box_padding'])));
 		}
 
-		// syg_description_fontsize intero
+		// syg_description_fontsize integer
 		if (!(preg_match('/^\d+$/', $data['syg_description_fontsize']))) {
 			array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_description_fontsize'),
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_description_fontsize'])));
+		}
+		
+		// check overlay button proportion related to height
+		if (!($data['syg_thumbnail_height'] - $data['syg_thumbnail_overlaysize'] >= 10)) {
+			array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_thumbnail_overlaysize'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_OVERLAY_BAD_DIMENSION, $data['syg_thumbnail_overlaysize'], SygUtil::getLabel('syg_thumbnail_height'), $data['syg_thumbnail_height'])));
+		}
+		
+		// check overlay button proportion related to width
+		if (!($data['syg_thumbnail_width'] - $data['syg_thumbnail_overlaysize'] >= 10)) {
+			array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_thumbnail_overlaysize'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_OVERLAY_BAD_DIMENSION, $data['syg_thumbnail_overlaysize'], SygUtil::getLabel('syg_thumbnail_width'), $data['syg_thumbnail_width'])));
 		}
 
 		if (count($problemFound) > 0) {

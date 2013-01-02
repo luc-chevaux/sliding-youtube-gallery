@@ -15,6 +15,9 @@ if (file_exists($root.'/wp-load.php')) {
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
 
+// Turn off all error reporting
+error_reporting(0);
+
 $syg = SygPlugin::getInstance();
 
 $id = $_GET['id'];
@@ -34,8 +37,8 @@ if ($type == 'n') {
 $width += 20;
 $height += 20;
 
-$uiType = $_GET['ui'];
-$cache = $_GET['cache'];
+if (array_key_exists ('ui', $_GET)) $uiType = $_GET['ui'];
+if (array_key_exists ('cache', $_GET)) $cache = $_GET['cache'];
 ?>
 
 /************************************************

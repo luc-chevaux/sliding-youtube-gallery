@@ -214,6 +214,18 @@ class SygGallery {
 	 * @param SygGallery $gallery
 	 */
 	public function cacheGallery() {
+		// local plugin instance
+		$syg = SygPlugin::getInstance();
+		
+		// get the style 
+		$style = $this->getSygStyle();
+		
+		// get the id of the button
+		$thumbImg = $style->getThumbImage();
+		
+		// get overlay button
+		$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/play-the-video_' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/play-the-video_1.png';
+		
 		// get the feed
 		$feed = $this->sygYouTube->getVideoFeed($this);
 		
@@ -232,19 +244,19 @@ class SygGallery {
 			mkdir($this->getHtmlPath());
 			chmod($this->getHtmlPath(), 0777);
 		}
-	
+		
 		// cache video thumbnails from youtube
 		foreach ($feed as $element) {
 			$videoThumbnails = $element->getVideoThumbnails();
 			$imgUrl = $videoThumbnails[$index]['url'];
 			$localFN = $element->getVideoId().".jpg";
 			
-			if (extension_loaded('gd') && function_exists('gd_info')) {
-				$dao = new SygDao();
-				// get the style id
-				$style = $dao->getSygStyleById($this->getStyleId());				
+			if (extension_loaded('gd') && function_exists('gd_info')) {				
 				// write resized image
 				SygUtil::writeResizedImage($imgUrl, $this->getThumbnailsPath().$localFN, null, $style->getThumbWidth().'x'.$style->getThumbHeight());
+				
+				// add play button overlay
+				SygUtil::addOverlayButton($this->getThumbnailsPath().$localFN, $overlaySrc, $style);
 			} else if (SygUtil::isCurlInstalled()) {
 				// curl enabled
 				$ch = curl_init($imgUrl);

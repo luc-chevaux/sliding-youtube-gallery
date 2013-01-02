@@ -88,7 +88,7 @@
 		<legend><strong>Layouts and styles</strong></legend>
 		
 		<!-- style -->
-		<a target="_blank" href="<?php  ?>http://localhost/workspace/wordpress/wp-admin/admin.php?page=syg-manage-styles&action=edit&id=2">Edit current style</a> | 
+		<a target="_blank" href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_STYLES; ?>&action=edit&id=<?php echo $gallery->getStyleId(); ?>">Edit current style</a> | 
 		<label for="syg_style_id">Style </label>
 		<select name="syg_style_id" id="syg_style_id">
 			<?php foreach ($styles as $style) { ?>
