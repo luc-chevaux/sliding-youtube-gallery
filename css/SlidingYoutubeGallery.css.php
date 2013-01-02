@@ -53,13 +53,28 @@ extract ($pluginOpt);
 
 img.thumbnail-image-<?php echo $id; ?> {
 	width: <?php echo $syg_thumbnail_width; ?>px;
-	heigth: <?php echo $syg_thumbnail_height; ?>px;
+	height: <?php echo $syg_thumbnail_height; ?>px;
 	border: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;	
     border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     -webkit-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     -moz-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     max-width: 100%;
     display: block;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+img.carousel-thumb-image-<?php echo $id; ?> {
+	border: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;	
+    border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
+    -webkit-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
+    -moz-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
+    max-width: 100%;
+    display: block;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 img.play-icon-<?php echo $id; ?>{
@@ -71,6 +86,9 @@ img.play-icon-<?php echo $id; ?>{
 	top:<?php echo $syg_thumbnail_top; ?>%;
 	width: <?php echo $syg_thumbnail_overlaysize; ?>px;
 	height: <?php echo $syg_thumbnail_overlaysize; ?>px;
+	background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 a.sygVideo {
@@ -191,29 +209,38 @@ h4.video_title-<?php echo $id; ?> a {
 	height: 400px;
 }
 
+#hidden-carousel-layer_<?php echo $id; ?> {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
 #left-carousel-button {
-    left: 50px;
+    left: 25px;
     opacity: 0.3;
     position: absolute;
-    top: 200px;
+    bottom: 25px;
     display: inline;
 }
 
 #right-carousel-button {
     opacity: 0.3;
     position: absolute;
-    right: 50px;
-    top: 200px;
+    right: 25px;
+    bottom: 25px;
     display: inline;
 }
 
 #carousel-title {
 	position: absolute;
-	bottom: 20px;
-	width: 400px;
-	right: 100px;
-	left: 100px;
+	bottom: 10px;
+	width: <?php echo ceil($syg_box_width*0.80); ?>px;
+	height: <?php echo $syg_description_fontsize; ?>px;
+	right: 10%;
+	left: 10%;
 	border: 1px yellow solid;
+	overflow: hidden;
 }
 
 #syg_video_container-<?php echo $id; ?> {
