@@ -34,6 +34,13 @@
 		<legend><strong>YouTube settings</strong></legend>
 		<label for="developer_key">Developer Key (Experimental not necessary): </label>
 		<input type="text" id="syg_option_apikey" name="syg_option_apikey" value="<?php echo $options['syg_option_apikey']; ?>" size="20">
+	
+		<br/><br/>
+		<label for="syg_option_which_thumb"></label>
+		<input type="radio" name="syg_option_which_thumb" value="0" <?php if ($options['syg_option_which_thumb'] == "0") echo 'checked="checked"'; ?>/> Default thumbnail (120px X 90px) 
+		<input type="radio" name="syg_option_which_thumb" value="1" <?php if ($options['syg_option_which_thumb'] == "1") echo 'checked="checked"'; ?>/> Medium quality thumbnail (320px X 180px)
+		<input type="radio" name="syg_option_which_thumb" value="2" <?php if ($options['syg_option_which_thumb'] == "2") echo 'checked="checked"'; ?>/> High quality thumbnail (480px X 360px) 
+		<input type="radio" name="syg_option_which_thumb" value="3" <?php if ($options['syg_option_which_thumb'] == "3") echo 'checked="checked"'; ?>/> Super definition (640px X 480px) 
 	</fieldset>
 	
 	<!-- plugin admin settings -->

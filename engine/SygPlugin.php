@@ -116,6 +116,9 @@ class SygPlugin extends SanityPluginFramework {
 		if (!get_option('syg_option_apikey'))
 			add_option('syg_option_apikey',
 					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
+		if (!get_option('syg_option_which_thumb'))
+			add_option('syg_option_which_thumb',
+					SygConstant::SYG_OPTION_DEFAULT_WHICH_THUMB);
 		if (!get_option('syg_option_numrec'))
 			add_option('syg_option_numrec',
 					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
@@ -581,6 +584,9 @@ class SygPlugin extends SanityPluginFramework {
 				// put mode option in the view context
 				$this->data['mode'] = $mode;
 				
+				// put the options in the view context
+				$this->data['options'] = $this->getOptions();
+				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
@@ -704,6 +710,9 @@ class SygPlugin extends SanityPluginFramework {
 				// put mode option in the view context
 				$this->data['mode'] = $mode;
 		
+				// put the options in the view context
+				$this->data['options'] = $this->getOptions();
+				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
@@ -959,11 +968,17 @@ class SygPlugin extends SanityPluginFramework {
 				// validate data
 				$valid = SygValidate::validateSettings($data);
 				
-				(get_option('syg_option_apikey')) ? add_option(
+				(get_option('syg_option_apikey') === false) ? add_option(
 								'syg_option_apikey',
 								$_POST['syg_option_apikey'])
 						: update_option('syg_option_apikey',
 								$_POST['syg_option_apikey']);
+				
+				(get_option('syg_option_which_thumb') === false) ? add_option(
+						'syg_option_which_thumb',
+						$_POST['syg_option_which_thumb'])
+						: update_option('syg_option_which_thumb',
+								$_POST['syg_option_which_thumb']);
 				
 				(get_option('syg_option_numrec') === false) ? add_option(
 								'syg_option_numrec',
@@ -1397,6 +1412,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function getOptions() {
 		$options = array();
 		$options['syg_option_apikey'] = get_option('syg_option_apikey');
+		$options['syg_option_which_thumb'] = get_option('syg_option_which_thumb');
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
 		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');

@@ -224,13 +224,13 @@ class SygGallery {
 		$thumbImg = $style->getThumbImage();
 		
 		// get overlay button
-		$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/play-the-video_' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/play-the-video_1.png';
+		$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-1.png';
 		
 		// get the feed
 		$feed = $this->sygYouTube->getVideoFeed($this);
 		
-		// @todo calculate optimized width for thumbnail
-		$index = 1;
+		// get the options
+		$options = $syg->getOptions();
 		
 		// create directory if not exist
 		if (!$this->isGalleryCached()) {
@@ -248,7 +248,7 @@ class SygGallery {
 		// cache video thumbnails from youtube
 		foreach ($feed as $element) {
 			$videoThumbnails = $element->getVideoThumbnails();
-			$imgUrl = $videoThumbnails[$index]['url'];
+			$imgUrl = $videoThumbnails[$options['syg_option_which_thumb']]['url'];
 			$localFN = $element->getVideoId().".jpg";
 			
 			if (extension_loaded('gd') && function_exists('gd_info')) {				

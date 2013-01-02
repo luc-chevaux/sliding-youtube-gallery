@@ -98,7 +98,7 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						$element['video_tags'] = $entry->getVideoTags();
 						$element['video_rating_info'] = $entry->getVideoRatingInfo();
 						$thumbnails = $entry->getVideoThumbnails();
-						$element['video_thumbshot'] = $thumbnails[1]['url'];
+						$element['video_thumbshot'] = $thumbnails[$options['syg_option_which_thumb']]['url'];
 						// modify the img path to match local files
 						if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
 							$element['video_thumbshot'] = WP_PLUGIN_URL .

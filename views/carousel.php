@@ -3,6 +3,7 @@
 $feed = $this->data['feed'];
 $gallery = $this->data['gallery'];
 $mode = $this->data['mode'];
+$options = $this->data['options'];
 
 // gallery settings 
 $thumbImage = $gallery->getSygStyle()->getThumbImage();
@@ -14,7 +15,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		foreach ($feed as $element) {				
 			// modify the img path to match local files
 			if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-				$videoThumbnails[1]['url'] = WP_PLUGIN_URL . 
+				$videoThumbnails[$options['syg_option_which_thumb']]['url'] = WP_PLUGIN_URL . 
 											SygConstant::WP_PLUGIN_PATH .
 											SygConstant::WP_CACHE_THUMB_REL_DIR .
 											$gallery->getId() . 
@@ -26,9 +27,9 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		?>
 		<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>&video=<?php echo $element->getVideoId(); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[1]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
 			<?php } else { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[1]['url']; ?>" alt="play" title="play"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="play"/>
 			<?php } ?>
 			
 			<!-- show overlay button -->			
