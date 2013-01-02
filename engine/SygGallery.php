@@ -238,7 +238,14 @@ class SygGallery {
 			$videoThumbnails = $element->getVideoThumbnails();
 			$imgUrl = $videoThumbnails[$index]['url'];
 			$localFN = $element->getVideoId().".jpg";
-			if (SygUtil::isCurlInstalled()) {
+			
+			if (extension_loaded('gd') && function_exists('gd_info')) {
+				$dao = new SygDao();
+				// get the style id
+				$style = $dao->getSygStyleById($this->getStyleId());				
+				// write resized image
+				SygUtil::writeResizedImage($imgUrl, $this->getThumbnailsPath().$localFN, null, $style->getThumbWidth().'x'.$style->getThumbHeight());
+			} else if (SygUtil::isCurlInstalled()) {
 				// curl enabled
 				$ch = curl_init($imgUrl);
 				$fp = fopen($this->getThumbnailsPath().$localFN, 'wb');
@@ -250,10 +257,9 @@ class SygGallery {
 			} else if (ini_get('allow_url_fopen')) {
 				// allow url fopen
 				file_put_contents($this->getThumbnailsPath().$localFN, file_get_contents($imgUrl));
-			} else {
-				null;
-			}
-				
+			} else { null; }
+			
+			// chmod file
 			chmod ($this->getThumbnailsPath().$localFN, 0777);
 		}
 	
