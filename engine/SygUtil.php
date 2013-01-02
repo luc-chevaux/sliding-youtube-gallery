@@ -288,15 +288,22 @@ class SygUtil {
 		}
 	}
 	
-	public static function addOverlayButton ($target, $src, $filename) {
+	public static function addOverlayButton ($target, $src, SygStyle $style) {
 		// If you know your originals are of type PNG.
 		$image = imagecreatefromjpeg($target);
 		$frame = imagecreatefrompng($src);
 		
-		imagecopymerge($image, $frame, 0, 0, 0, 0, 50, 50, 100);
+		imagealphablending($frame, TRUE);
+		imagesavealpha($frame, TRUE);
+		
+		$x = ceil(($style->getThumbWidth()/2) - ($style->getThumbOverlaySize()/2));
+		$y = ceil(($style->getThumbHeight()/2) - ($style->getThumbOverlaySize()/2));
+		
+		// imagecopymerge ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h , int $pct )
+		imagecopy($image, $frame, $x, $y, 0, 0, $style->getThumbOverlaySize(), $style->getThumbOverlaySize());
 		
 		// Save the image to a file
-		imagejpeg($image, $filename);
+		imagejpeg($image, $target);
 	}
 }
 ?>
