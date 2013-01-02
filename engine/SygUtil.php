@@ -287,5 +287,16 @@ class SygUtil {
 			}
 		}
 	}
+	
+	public static function addOverlayButton ($target, $src, $filename) {
+		// If you know your originals are of type PNG.
+		$image = imagecreatefromjpeg($target);
+		$frame = imagecreatefrompng($src);
+		
+		imagecopymerge($image, $frame, 0, 0, 0, 0, 50, 50, 100);
+		
+		// Save the image to a file
+		imagejpeg($image, $filename);
+	}
 }
 ?>
