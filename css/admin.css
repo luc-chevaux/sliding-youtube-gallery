@@ -22,18 +22,22 @@
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'HandelGothicBTRegular';
+	color: #bc0f11;
 }
 
 h3 {
 	font-size: 22px;
 	font-weight: normal;
-	color: #464646;
-	margin: 20px auto;
+	color: #bc0f11;
+	margin: 10px auto;
 }
 
 .webengTitle {
 	font-family: HandelGothicBTRegular !important;
 	display: inline-block;
+	font-size: 30px !important;
+	color: white !important;
+	padding: 0;
 }
 
 .webengText {
@@ -45,12 +49,30 @@ h3 {
 	color: #bc0f11;
 }
 
+.webengWhite {
+	color: #ffffff;
+}
+
 .noDecoration {
 	text-decoration: none;
 }
 
+#syg-plugin-header {
+	background-color: #333;
+	margin-top: 20px;
+	padding: 10px;
+	border-radius: 10px 10px 0px 0px;
+	
+}
+
+#syg-plugin-area {
+	padding: 15px 15px 15px 15px;
+	box-shadow: inset 0 0 6px 6px #888;
+	background-color: #efefef;
+}
+
 fieldset {
-	border: 1px #efefef solid;
+	border: 1px #333333 solid;
 	margin-bottom: 10px;
 	padding: 10px;
 	box-shadow: 0 8px 10px -10px black;
@@ -126,6 +148,7 @@ label {
 	-moz-box-shadow: 0 0 5px #333;
 	-webkit-box-shadow: 0 0 5px #333;
 	box-shadow: 0 0 5px #333;
+background-color: white;
 }
 
 #galleries_table th:FIRST-CHILD {
@@ -216,12 +239,12 @@ img.user_pic {
 #syg-pagination-galleries li, #syg-pagination-styles li {	
 	list-style: none;
 	float: left;
-	margin-right: 16px; 
-	padding:5px;
+	margin-right: 10px; 
+	padding:2px;
 	box-shadow: 0 0 5px #333333;
 	background-color: #333;
-	color:#ffffff;
-	border-radius: 10px;
+	color: #cacaca;
+	border-radius: 5px;
 	width: 20px;
 	height: 20px;
 }
@@ -232,5 +255,18 @@ img.user_pic {
 }
 
 .current_page {
-	color: red !important;
+	color: white !important;
 }
+
+textarea, 
+input[type="text"], 
+input[type="password"], 
+input[type="file"],
+input[type="radio"],
+input[type="checkbox"],
+input[type="email"], 
+input[type="number"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="url"], 
+select { border-color: #333333 !important;}

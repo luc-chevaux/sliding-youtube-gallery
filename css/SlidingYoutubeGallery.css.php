@@ -26,29 +26,6 @@ $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
 ?>
 
-#syg-pagination-galleries, #syg-pagination-styles {
-	text-align:center;
-	margin-left:15px;
-}
-
-#syg-pagination-galleries li, #syg-pagination-styles li {	
-	list-style: none;
-	float: left;
-	margin-right: 16px; 
-	padding:5px;
-	box-shadow: 0 0 5px #333333;
-	background-color: #333;
-	color:#ffffff;
-	border-radius: 10px;
-	width: 20px;
-	height: 20px;
-}
-
-#syg-pagination-galleries li:hover, #syg-pagination-styles li:hover { 
-	color:#FF0084; 
-	cursor: pointer; 
-}
-
 /* general styles */
 
 img.thumbnail-image-<?php echo $id; ?> {
