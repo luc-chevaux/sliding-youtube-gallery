@@ -127,6 +127,18 @@ jQuery.noConflict();
 			return true;
 		},
 		
+		loadingOn : function () {
+			$('#loader').fadeIn(300);
+		},
+		
+		loadingOff : function () {
+		    $('#loader').fadeOut(300);
+		},
+
+		loadingToggle : function () {
+		    $('#loader').fadeToggle(300);
+		},
+		
 		/* 
 		 * function that loads the data in the table
 		 */ 
@@ -345,6 +357,14 @@ jQuery(document).ready(function($) {
 	var action = $.getQParam('action'); 
 	var page = $.getQParam('page');
 	var id = $.getQParam('id');
+	
+	$('#loader').ajaxStart(function() {
+		  $(this).fadeIn(300);
+	});
+	
+	$('#loader').ajaxStop(function() {
+		  $(this).fadeOut(300);
+	});
 	
 	// if we're doing some action init ui component
 	if (action == 'add' || action =='edit') {
