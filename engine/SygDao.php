@@ -139,6 +139,23 @@ class SygDao {
 	}
 	
 	/**
+	 * @name getSygGalleriesByStyleId
+	 * @category Get syg galleries by style id
+	 * @since 1.2.5
+	 * @param $output_type
+	 * @return array of $galleries
+	 */
+	public function getSygGalleriesByStyleId($id, $output_type = 'OBJECT') {
+		$galleries = array();
+		$query = $this->db->prepare(SygConstant::sqlGetGalleryByStyleId(), $id);
+		$result = $this->db->get_results($query, $output_type);
+		foreach ($results as $gallery) {
+			$galleries[] = new SygGallery($gallery);
+		}
+		return $galleries;
+	}
+	
+	/**
 	 * @name getAllSygGallery12X
 	 * @category Get a syg gallery list from database
 	 * @since 1.2.5
