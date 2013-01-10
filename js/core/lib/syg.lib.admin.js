@@ -284,6 +284,21 @@ jQuery.noConflict();
 			$.initColorPicker('paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
 		},
 		
+		updateCache: function () {
+			var modified = $.getQParam('modified');
+			if (modified) {
+				var request = jQuery.ajax({
+					  url: 'admin.php',
+					  type: 'GET',
+					  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
+					  dataType: 'html',
+					  complete: function () {
+						  alert ('Cache update success');
+					  }
+				});
+			}
+		},
+		
 		disableInput: function () {
 		    var value = $('input[name=syg_gallery_type]:checked').val();
 		    switch (value) {
@@ -380,6 +395,7 @@ jQuery(document).ready(function($) {
 			case 'syg-manage-styles':
 				// init pagination for styles
 				var table = 'styles';
+				$.updateCache();
 				break;
 			case 'syg-manage-galleries':
 				// init pagination for galleries
