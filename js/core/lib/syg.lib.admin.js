@@ -287,15 +287,18 @@ jQuery.noConflict();
 		updateCache: function () {
 			var modified = $.getQParam('modified');
 			if (modified) {
-				var request = jQuery.ajax({
-					  url: 'admin.php',
-					  type: 'GET',
-					  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
-					  dataType: 'html',
-					  complete: function () {
-						  alert ('Cache update success');
-					  }
-				});
+				var answer = confirm('Your style has been changed. Maybe, some cache content need to be updated. Update it now?');
+				if (answer) {
+					var request = jQuery.ajax({
+						  url: 'admin.php',
+						  type: 'GET',
+						  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
+						  dataType: 'html',
+						  complete: function () {
+							  alert ('Your server cache has been successfully updated.');
+						  }
+					});
+				}
 			}
 		},
 		

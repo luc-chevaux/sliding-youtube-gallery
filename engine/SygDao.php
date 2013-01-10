@@ -148,8 +148,8 @@ class SygDao {
 	public function getSygGalleriesByStyleId($id, $output_type = 'OBJECT') {
 		$galleries = array();
 		$query = $this->db->prepare(SygConstant::sqlGetGalleryByStyleId(), $id);
-		$result = $this->db->get_results($query, $output_type);
-		foreach ($results as $gallery) {
+		$results = $this->db->get_results($query, $output_type);
+		foreach ($results as $gallery) {			
 			$galleries[] = new SygGallery($gallery);
 		}
 		return $galleries;

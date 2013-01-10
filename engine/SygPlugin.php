@@ -925,13 +925,12 @@ class SygPlugin extends SanityPluginFramework {
 				// get the style id
 				$id = (int) $_GET['id'];
 				$galleries = $this->sygDao->getSygGalleriesByStyleId($id);
-				var_dump($galleries);
-				ini_set('error_reporting', E_ALL);
-				var_dump (count($galleries));
+				
 				for ($i=0; $i<count($galleries); $i++) {
 					$gallery = $galleries[$i];
-					var_dump ($gallery);
-					$gallery->cacheGallery();
+					if ($gallery->getCacheOn()) {
+						$gallery->cacheGallery();
+					}
 				}
 		
 				break;
