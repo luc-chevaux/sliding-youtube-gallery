@@ -92,7 +92,13 @@
 		
 		<h3>Join the plugin as developer</h3>
 		<p>If you're a WP or PHP developer</strong> and you like the plugin idea, if you have some time you can contribute to this plugin! Sometimes two developer is better than one, right?</p>
-				
+		
+		<h3>Third party library</h3>
+		<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a>
+		<a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a>
+		<a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a>
+				<a href="http://fancybox.net/">Fancybox</a>
+		
 		<h3>Project roadmap</h3>
 		<hr/>
 		<p class="webengText">Thank you for downloading! Enjoy WP and OpenSource!</p>
