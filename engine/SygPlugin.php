@@ -874,7 +874,7 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->forwardToCacheGallery();
 			case 'redirect':
 				$this->data['redirect_url'] = '?page='
-						. SygConstant::BE_ACTION_MANAGE_GALLERIES;
+						. SygConstant::BE_ACTION_MANAGE_GALLERIES . '&modified='.$_GET['id'];
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -921,9 +921,23 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->forwardToEditStyle();
 			case 'delete':
 				return $this->forwardToDeleteStyle();
+			case 'cache':
+				// get the style id
+				$id = (int) $_GET['id'];
+				$galleries = $this->sygDao->getSygGalleriesByStyleId($id);
+				var_dump($galleries);
+				ini_set('error_reporting', E_ALL);
+				var_dump (count($galleries));
+				for ($i=0; $i<count($galleries); $i++) {
+					$gallery = $galleries[$i];
+					var_dump ($gallery);
+					$gallery->cacheGallery();
+				}
+		
+				break;
 			case 'redirect':
 				$this->data['redirect_url'] = '?page='
-						. SygConstant::BE_ACTION_MANAGE_STYLES;
+						. SygConstant::BE_ACTION_MANAGE_STYLES . '&modified='.$_GET['id'];
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -1333,7 +1347,7 @@ class SygPlugin extends SanityPluginFramework {
 		$gallery->removeFromCache();
 		
 		// delete gallery
-		$this->sygDao->deleteSygGallery();
+		$this->sygDao->deleteSygGallery($gallery);
 		
 		die();
 	}
