@@ -98,18 +98,22 @@ jQuery(document).ready(function($){
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>				   
 		// This initialises carousels on the container elements specified, in this case, carousel1.
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
-			minScale: 0.5,
-			reflHeight: 56,
+			minScale: 0.50,
+			reflHeight: 26,
 			reflGap:2, 
 			speed:0.2,
 			mouseWheel:true, 
-			xPos: 285,
-			yPos: 120,
-			yRadius: 20, // da 0 a 100
-			xRadius: 250, // percentuale al container 
+			FPS: 30,
+			xPos: <?php echo ceil($syg_box_width/2); ?>, // half the height of container.
+			yPos: <?php echo ceil((($syg_thumbnail_height*2.5)/2)/2); ?>, // half the width of the container.
+			yRadius: 40, // da 0 a 100 Height of container / 6
+			xRadius: 250, // percentuale al container Width of container / 2.3
 			buttonLeft: $("#left-carousel-button"),
 			buttonRight: $("#right-carousel-button"),
-			titleBox: $("#carousel-title")
+			titleBox: $("#carousel-title"),
+			autoRotate: 'no',
+			autoRotateDelay: 1500
 		});
+		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
 	<?php } ?>
 });  
