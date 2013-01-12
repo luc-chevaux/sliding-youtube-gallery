@@ -183,7 +183,7 @@ h4.video_title-<?php echo $id; ?> a {
 }
 
 .syg_video_carousel-<?php echo $id; ?> {
-	height: 400px;
+	height: <?php echo ceil($syg_thumbnail_height*2.5);?>px;
 }
 
 #hidden-carousel-layer_<?php echo $id; ?> {
