@@ -20,6 +20,7 @@ class SygGallery {
 	private $jsonPath;
 	private $thumbnailsPath;
 	private $htmlPath;
+	private $jsPath;
 	
 	// this object attributes
 	private $galleryName;
@@ -107,6 +108,7 @@ class SygGallery {
 		$this->setThumbnailsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		$this->setHtmlPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		$this->setJsonPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setJsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JS_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		
 		// see if exists cache directory
 		if ($this->isGalleryCached()) {
@@ -309,6 +311,9 @@ class SygGallery {
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
 			chmod ($this->getJsonPath().$localFN, 0777);
 		}
+		
+		// delete javascript cache
+		SygUtil::removeDirectory($this->getJsPath());
 	}
 	
 	/**
@@ -836,6 +841,20 @@ class SygGallery {
 		$this->htmlPath = $htmlPath;
 	}
 	
+	/**
+	 * @return the $jsPath
+	 */
+	public function getJsPath() {
+		return $this->jsPath;
+	}
+
+	/**
+	 * @param field_type $jsPath
+	 */
+	public function setJsPath($jsPath) {
+		$this->jsPath = $jsPath;
+	}
+
 	/**
 	 * @return the $cacheOn
 	 */
