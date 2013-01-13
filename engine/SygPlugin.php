@@ -152,6 +152,31 @@ class SygPlugin extends SanityPluginFramework {
 		if (!get_option('syg_option_paginator_fontsize'))
 			add_option('syg_option_paginator_fontsize',
 					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTSIZE);
+		// 3d carousel default option
+		if (!get_option('syg_option_carousel_autorotate'))
+			add_option('syg_option_carousel_autorotate',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_AUTOROTATE);
+		if (!get_option('syg_option_carousel_delay'))
+			add_option('syg_option_carousel_delay',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_DELAY);
+		if (!get_option('syg_option_carousel_fps'))
+			add_option('syg_option_carousel_fps',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_FPS);
+		if (!get_option('syg_option_carousel_speed'))
+			add_option('syg_option_carousel_speed',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_SPEED);
+		if (!get_option('syg_option_carousel_minscale'))
+			add_option('syg_option_carousel_minscale',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_MINSCALE);
+		if (!get_option('syg_option_carousel_reflheight'))
+			add_option('syg_option_carousel_reflheight',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLHEIGHT);
+		if (!get_option('syg_option_carousel_reflgap'))
+			add_option('syg_option_carousel_reflgap',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLGAP);
+		if (!get_option('syg_option_carousel_reflopacity'))
+			add_option('syg_option_carousel_reflopacity',
+					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY);
 	}
 
 	/**
@@ -1050,7 +1075,48 @@ class SygPlugin extends SanityPluginFramework {
 								$_POST['syg_option_paginator_fontsize'])
 						: update_option('syg_option_paginator_fontsize',
 								$_POST['syg_option_paginator_fontsize']);
-
+				// 3d carousel section
+				(get_option('syg_option_carousel_autorotate') === false) ? add_option(
+								'syg_option_carousel_autorotate',
+								$_POST['syg_option_carousel_autorotate'])
+						: update_option('syg_option_carousel_autorotate',
+								$_POST['syg_option_carousel_autorotate']);
+				(get_option('syg_option_carousel_delay') === false) ? add_option(
+								'syg_option_carousel_delay',
+								$_POST['syg_option_carousel_delay'])
+						: update_option('syg_option_carousel_delay',
+								$_POST['syg_option_carousel_delay']);
+				(get_option('syg_option_carousel_fps') === false) ? add_option(
+								'syg_option_carousel_fps',
+								$_POST['syg_option_carousel_fps'])
+						: update_option('syg_option_carousel_fps',
+								$_POST['syg_option_carousel_fps']);
+				(get_option('syg_option_carousel_speed') === false) ? add_option(
+								'syg_option_carousel_speed',
+								$_POST['syg_option_carousel_speed'])
+						: update_option('syg_option_carousel_speed',
+								$_POST['syg_option_carousel_speed']);
+				(get_option('syg_option_carousel_minscale') === false) ? add_option(
+								'syg_option_carousel_minscale',
+								$_POST['syg_option_carousel_minscale'])
+						: update_option('syg_option_carousel_minscale',
+								$_POST['syg_option_carousel_minscale']);
+				(get_option('syg_option_carousel_reflheight') === false) ? add_option(
+								'syg_option_carousel_reflheight',
+								$_POST['syg_option_carousel_reflheight'])
+						: update_option('syg_option_carousel_reflheight',
+								$_POST['syg_option_carousel_reflheight']);
+				(get_option('syg_option_carousel_reflgap') === false) ? add_option(
+								'syg_option_carousel_reflgap',
+								$_POST['syg_option_carousel_reflgap'])
+						: update_option('syg_option_carousel_reflgap',
+								$_POST['syg_option_carousel_reflgap']);
+				(get_option('syg_option_carousel_reflopacity') === false) ? add_option(
+								'syg_option_carousel_reflopacity',
+								$_POST['syg_option_carousel_reflopacity'])
+						: update_option('syg_option_carousel_reflopacity',
+								$_POST['syg_option_carousel_reflopacity']);
+				
 				$this->data['redirect_url'] = '?page='
 						. SygConstant::BE_ACTION_MANAGE_SETTINGS;
 
@@ -1431,23 +1497,25 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
 
 		/* paginator options */
-		$options['syg_option_paginator_borderradius'] = get_option(
-				'syg_option_paginator_borderradius');
-		$options['syg_option_paginator_bordersize'] = get_option(
-				'syg_option_paginator_bordersize');
-		$options['syg_option_paginator_bordercolor'] = get_option(
-				'syg_option_paginator_bordercolor');
-		$options['syg_option_paginator_bgcolor'] = get_option(
-				'syg_option_paginator_bgcolor');
-		$options['syg_option_paginator_shadowcolor'] = get_option(
-				'syg_option_paginator_shadowcolor');
-		$options['syg_option_paginator_fontcolor'] = get_option(
-				'syg_option_paginator_fontcolor');
-		$options['syg_option_paginator_shadowsize'] = get_option(
-				'syg_option_paginator_shadowsize');
-		$options['syg_option_paginator_fontsize'] = get_option(
-				'syg_option_paginator_fontsize');
+		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
+		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
+		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
+		$options['syg_option_paginator_bgcolor'] = get_option('syg_option_paginator_bgcolor');
+		$options['syg_option_paginator_shadowcolor'] = get_option('syg_option_paginator_shadowcolor');
+		$options['syg_option_paginator_fontcolor'] = get_option('syg_option_paginator_fontcolor');
+		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
+		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
 
+		/* 3d carousel*/
+		$options['syg_option_carousel_autorotate'] = get_option('syg_option_carousel_autorotate');
+		$options['syg_option_carousel_delay'] = get_option('syg_option_carousel_delay');
+		$options['syg_option_carousel_fps'] = get_option('syg_option_carousel_fps');
+		$options['syg_option_carousel_speed'] = get_option('syg_option_carousel_speed');
+		$options['syg_option_carousel_minscale'] = get_option('syg_option_carousel_minscale');
+		$options['syg_option_carousel_reflheight'] = get_option('syg_option_carousel_reflheight');
+		$options['syg_option_carousel_reflgap'] = get_option('syg_option_carousel_reflgap');
+		$options['syg_option_carousel_reflopacity'] = get_option('syg_option_carousel_reflopacity');
+		
 		return $options;
 	}
 
