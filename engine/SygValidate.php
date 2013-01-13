@@ -382,8 +382,6 @@ class SygValidate {
 							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_youtube_maxvideocount'])));
 		}
 		
-		
-
 		// throws exception
 		if (count($problemFound) > 0) {
 			// throws exception
@@ -462,6 +460,78 @@ class SygValidate {
 			array_push($problemFound,
 			array('field' => SygUtil::getLabel('syg_option_paginator_fontsize'),
 			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_fontsize'])));
+		}
+		
+		// syg_option_carousel_speed float tra 0 e 1
+		if (!(preg_match('/\d+(\.\d{1,2})?/',
+				$data['syg_option_carousel_speed'])
+				&& strval($data['syg_option_carousel_speed']) >= 0
+				&& strval($data['syg_option_carousel_speed']) <= 1)) {
+			if (!(preg_match('/\d+(\.\d{1,2})?/',
+					$data['syg_option_carousel_speed']))) {
+				array_push($problemFound,
+				array('field' => SygUtil::getLabel('syg_option_carousel_speed'),
+				'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_FLOAT, $data['syg_option_carousel_speed'])));
+			} else {
+				if (!(strval($data['syg_option_carousel_speed']) >= 0
+						&& strval($data['syg_option_carousel_speed']) <= 1)) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_carousel_speed'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_carousel_speed'], 0, 1)));
+				}
+			}
+		}
+		
+		// syg_option_carousel_reflheight >= 0
+		if (!(preg_match('/^\d+$/', $data['syg_option_carousel_reflheight'])
+				&& strval($data['syg_option_carousel_reflheight'] >= 0))) {
+			if (!(preg_match('/^\d+$/', $data['syg_option_carousel_reflheight']))) {
+				array_push($problemFound,
+				array('field' => SygUtil::getLabel('syg_option_carousel_reflheight'),
+				'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_carousel_reflheight'])));
+			} else {
+				if (!(strval($data['syg_option_carousel_reflheight']) >= 0)) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_carousel_reflheight'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_MAJOR_VALUE, $data['syg_option_carousel_reflheight'], 10)));
+				}
+			}
+		}
+		
+		// syg_option_carousel_reflgap >= 10
+		if (!(preg_match('/^\d+$/', $data['syg_option_carousel_reflgap'])
+				&& strval($data['syg_option_carousel_reflgap'] >= 0))) {
+			if (!(preg_match('/^\d+$/', $data['syg_option_carousel_reflgap']))) {
+				array_push($problemFound,
+				array('field' => SygUtil::getLabel('syg_option_carousel_reflgap'),
+				'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_carousel_reflgap'])));
+			} else {
+				if (!(strval($data['syg_option_carousel_reflgap']) >= 0)) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_carousel_reflgap'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_MAJOR_VALUE, $data['syg_option_carousel_reflgap'], 10)));
+				}
+			}
+		}
+		
+		// syg_option_carousel_reflopacity
+		if (!(preg_match('/\d+(\.\d{1,2})?/',
+				$data['syg_option_carousel_reflopacity'])
+				&& strval($data['syg_option_carousel_reflopacity']) >= 0
+				&& strval($data['syg_option_carousel_reflopacity']) <= 1)) {
+			if (!(preg_match('/\d+(\.\d{1,2})?/',
+					$data['syg_option_carousel_reflopacity']))) {
+				array_push($problemFound,
+				array('field' => SygUtil::getLabel('syg_option_carousel_reflopacity'),
+				'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_FLOAT, $data['syg_option_carousel_reflopacity'])));
+			} else {
+				if (!(strval($data['syg_option_carousel_reflopacity']) >= 0
+						&& strval($data['syg_option_carousel_reflopacity']) <= 1)) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_carousel_reflopacity'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_carousel_reflopacity'], 0, 1)));
+				}
+			}
 		}
 		
 		// throws exception
