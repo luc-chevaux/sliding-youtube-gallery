@@ -354,6 +354,7 @@ class SygConstant {
 	const BE_VALIDATE_STRING_NOT_EMPTY = 'Must be a not empty string.';
 	const BE_VALIDATE_NOT_A_INTEGER = '%s is not an integer value.';
 	const BE_VALIDATE_NOT_LESS_VALUE = 'You entered %d. Its value must be less or equal than %d.';
+	const BE_VALIDATE_NOT_MAJOR_VALUE = 'You entered %d. Its value must be major or equal than %d.';
 	const BE_VALIDATE_LESS_VALUE = 'Can\'t be less than %d.';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value.';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s.';
@@ -393,5 +394,15 @@ class SygConstant {
 	const syg_option_paginator_bordersize = 'Border Size';
 	const syg_option_paginator_shadowsize = 'Shadow Size';
 	const syg_option_paginator_fontsize = 'Font Size';
+	
+	const syg_option_carousel_autorotate = 'Auto rotate';
+	const syg_option_carousel_delay = 'Auto rotate delay';
+	const syg_option_carousel_fps = 'Frame per seconds';
+	const syg_option_carousel_speed = 'Carousel speed';
+	const syg_option_carousel_minscale = 'Min scale';
+	const syg_option_carousel_reflheight = 'Reflection height';
+	const syg_option_carousel_reflgap = 'Reflection gap';
+	const syg_option_carousel_reflopacity = 'Reflection opacity';
+	
 }
 ?>
