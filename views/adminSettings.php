@@ -121,14 +121,14 @@
 				<legend><strong>3d Carousel settings</strong></legend>
 				
 				<!-- carousel autorotate videos -->
-				<label for="syg_option_carousel_autorotate">Autorotate</label>
+				<label for="syg_option_carousel_autorotate">Auto rotate: </label>
 				<select id="syg_option_carousel_autorotate" name="syg_option_carousel_autorotate">
 					<option value="yes" <?php if ($options['syg_option_carousel_autorotate'] == 'yes') echo 'selected="selected"'; ?>>Yes</option>
 					<option value="no" <?php if ($options['syg_option_carousel_autorotate'] == 'no') echo 'selected="selected"'; ?>>No</option>		
 				</select>
 				
 				<!-- carousel autorotate delay videos -->
-				<label for="syg_option_carousel_delay">Autorotate delay</label>
+				<label for="syg_option_carousel_delay">Auto rotate delay: </label>
 				<select id="syg_option_carousel_delay" name="syg_option_carousel_delay">
 					<option value="1000" <?php if ($options['syg_option_carousel_delay'] == 1000) echo 'selected="selected"'; ?>>1000</option>
 					<option value="1250" <?php if ($options['syg_option_carousel_delay'] == 1250) echo 'selected="selected"'; ?>>1250</option>
@@ -140,7 +140,7 @@
 				</select>
 				
 				<!-- carousel frame per seconds -->
-				<label for="syg_option_carousel_fps">Frame per seconds</label>
+				<label for="syg_option_carousel_fps">Frame per seconds: </label>
 				<select id="syg_option_carousel_fps" name="syg_option_carousel_fps">
 					<option value="15" <?php if ($options['syg_option_carousel_fps'] == 15) echo 'selected="selected"'; ?>>15</option>
 					<option value="30" <?php if ($options['syg_option_carousel_fps'] == 30) echo 'selected="selected"'; ?>>30</option>
@@ -149,12 +149,12 @@
 				</select>
 				
 				<!-- carousel rotation speed -->
-				<label for="syg_option_carousel_speed">Speed</label>
+				<label for="syg_option_carousel_speed">Carousel speed: </label>
 				<input type="text" name="syg_option_carousel_speed" id="syg_option_carousel_speed" size="3" value="<?php echo $options['syg_option_carousel_speed']; ?>"/>
 				<br/><br/>
 				
 				<!-- carousel image minScale -->
-				<label for="syg_option_carousel_minscale">Minscale</label>
+				<label for="syg_option_carousel_minscale">Min scale: </label>
 				<select id="syg_option_carousel_minscale" name="syg_option_carousel_minscale">
 					<option value="0.25" <?php if ($options['syg_option_carousel_minscale'] == 0.25) echo 'selected="selected"'; ?>>0.25</option>
 					<option value="0.50" <?php if ($options['syg_option_carousel_minscale'] == 0.50) echo 'selected="selected"'; ?>>0.50</option>
@@ -166,15 +166,15 @@
 				</select>
 				
 				<!-- carousel image reflection height -->
-				<label for="syg_option_carousel_reflheight">Reflection Height</label>
+				<label for="syg_option_carousel_reflheight">Reflection height: </label>
 				<input type="text" name="syg_option_carousel_reflheight" id="syg_option_carousel_reflheight" size="3" value="<?php echo $options['syg_option_carousel_reflheight']; ?>"/>
 				
 				<!-- carousel image reflection height -->
-				<label for="syg_option_carousel_reflgap">Reflection Gap</label>
+				<label for="syg_option_carousel_reflgap">Reflection gap: </label>
 				<input type="text" name="syg_option_carousel_reflgap" id="syg_option_carousel_reflgap" size="3" value="<?php echo $options['syg_option_carousel_reflgap']; ?>"/>
 				
 				<!-- carousel image reflection opacity -->
-				<label for="syg_option_carousel_reflopacity">Reflection Opacity</label>
+				<label for="syg_option_carousel_reflopacity">Reflection opacity: </label>
 				<input type="text" name="syg_option_carousel_reflopacity" id="syg_option_carousel_reflopacity" size="3" value="<?php echo $options['syg_option_carousel_reflopacity']; ?>"/>
 				
 			</fieldset>
