@@ -827,12 +827,16 @@ class SygPlugin extends SanityPluginFramework {
 				
 				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
 				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.js';
+				
+				// fancybox resources url
 				$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
 				$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';
 				$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
 				$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/jquery.fancybox-1.3.4.css';
-	
+				
+				// carousel resources url
+				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
+					
 				// css injection
 				wp_register_style('sliding-youtube-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
