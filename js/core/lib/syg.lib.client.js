@@ -175,16 +175,36 @@ jQuery.noConflict();
 		 */
 		addFancyBoxSupport : function (gid, options) {
 			// add fancybox to each sygVideo css class
-			$(".sygVideo").fancybox({
-				'width' : options['width'],  
+			/*$(".sygVideo").fancybox({
+				'width' : options['width'],
 				'height' : options['height'],
-				'autoScale' : true,  
+				'autoScale' : true,
 				'transitionIn' : 'none',  
-				'transitionOut' : 'none',  
-				'type' : 'iframe',  
+				'transitionOut' : 'none',
+				'type' : 'iframe',
 				'hideOnOverlayClick' : false,
 				'autoDimensions' : false,
 				'padding' : 0
+			});*/
+			
+			$(".sygVideo").click(function() {
+				$.fancybox({
+					'padding' : 0,
+					'autoScale' : false,
+					'transitionIn' : 'none',
+					'transitionOut'	: 'none',
+					'title' : this.title,
+					'width'	: options['width'],
+					'height' : options['height'],
+					'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+					'type' : 'swf',
+					'swf' : {
+						'wmode'	: 'transparent',
+						'allowfullscreen' : 'true'
+					}
+			});
+
+				return false;
 			});
 		},
 		

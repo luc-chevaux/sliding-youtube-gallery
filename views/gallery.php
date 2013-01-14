@@ -38,7 +38,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				?> 
 				<!-- gallery code -->
 				<li>
-					<a class="sygVideo" href="<?php echo $this->data['pluginUrl']; ?>views/player.php?id=<?php echo $gallery->getId();?>&video=<?php echo $element->getVideoId(); ?>">
+					<a class="sygVideo" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>">
 						<!-- append video thumbnail -->
 						<?php if ($gallery->getDescShow()) { ?>
 							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
