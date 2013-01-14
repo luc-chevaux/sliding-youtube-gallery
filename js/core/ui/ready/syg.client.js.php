@@ -24,6 +24,8 @@ $id = $_GET['id'];
 
 $option = $syg->getGallerySettings($id);
 extract ($option);
+$pluginOpt = $syg->getOptions();
+extract ($pluginOpt);
 
 $type = SygUtil::extractType($syg_youtube_videoformat);
 $width = SygUtil::extractWidth($syg_youtube_videoformat);
@@ -98,21 +100,23 @@ jQuery(document).ready(function($){
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>				   
 		// This initialises carousels on the container elements specified, in this case, carousel1.
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
-			minScale: 0.50,
-			reflHeight: 26,
-			reflGap:2, 
-			speed:0.2,
-			mouseWheel:true, 
-			FPS: 30,
+			minScale: <?php echo $syg_option_carousel_minscale; ?>,
+			reflHeight: <?php echo $syg_option_carousel_reflheight; ?>,
+			reflGap: <?php echo $syg_option_carousel_reflgap; ?>, 
+			speed: <?php echo $syg_option_carousel_speed; ?>,
+			mouseWheel: false, 
+			FPS: <?php echo $syg_option_carousel_fps; ?>,
 			xPos: <?php echo ceil($syg_box_width/2); ?>, // half the height of container.
 			yPos: <?php echo ceil((($syg_thumbnail_height*2.5)/2)/2); ?>, // half the width of the container.
-			yRadius: 40, // da 0 a 100 Height of container / 6
-			xRadius: 250, // percentuale al container Width of container / 2.3
-			buttonLeft: $("#left-carousel-button"),
-			buttonRight: $("#right-carousel-button"),
-			titleBox: $("#carousel-title"),
-			autoRotate: 'no',
-			autoRotateDelay: 1500
+			yRadius: <?php echo ceil($syg_thumbnail_height*2.5/6); ?>, // da 0 a 100 Height of container / 6
+			xRadius: <?php echo ceil($syg_box_width/2.3); ?>, // percentuale al container Width of container / 2.3
+			autoRotate: '<?php echo $syg_option_carousel_autorotate; ?>',
+			<?php if ($syg_option_carousel_autorotate == "yes") { ?>
+			autoRotateDelay: <?php echo $syg_option_carousel_delay; ?>,
+			buttonLeft: $("#left-carousel-button-<?php echo $id; ?>"),
+			buttonRight: $("#right-carousel-button-<?php echo $id; ?>"),
+			<?php } ?>
+			titleBox: $("#carousel-title")
 		});
 		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
 	<?php } ?>
