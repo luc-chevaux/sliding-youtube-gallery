@@ -39,6 +39,19 @@ h4 {
 	margin: 10px auto;
 }
 
+.syg_error {
+	background-color: #FFEBE8;
+    border: 1px #CC0000 solid;
+	padding: 0 0.6em;
+	margin: 0px 0px 15px;
+  	border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+	color: #333333;
+    font-size: 12px;
+    line-height: 1.4em;
+}
+
 .webengTitle {
 	font-family: HandelGothicBTRegular !important;
 	display: inline-block;
@@ -278,7 +291,11 @@ input[type="tel"],
 input[type="url"], 
 select { border-color: #333333 !important;}
 
-#syg-plugin-area p {
+#syg-plugin-area p.text {
 	font-family: 'HandelGothicDLight';
 	font-size: 18px;
+}
+
+#syg-plugin-area p, #syg-plugin-area span {
+	font-family: 'HandelGothicDLight';
 }

@@ -5,9 +5,6 @@
 	$styles = $this->data['styles'];
 ?>
 
-<!-- User Message -->
-<?php include 'inc/statusBar.inc.php'; ?>
-
 <!-- Css Inclusion -->
 <style type="text/css">
 @import url('<?php echo $this->data['cssAdminUrl']; ?>');
@@ -18,6 +15,10 @@
 <div class="wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
+	
+		<!-- User Message -->
+		<?php include 'inc/statusBar.inc.php'; ?>
+	
 		<!-- Gallery List -->
 		<h3><?php echo SygConstant::BE_MENU_MANAGE_STYLES; ?></h3>
 		

@@ -6,9 +6,6 @@
 	$styles = $this->data['styles'];
 ?>
 
-<!-- User Message -->
-<?php include 'inc/statusBar.inc.php'; ?>
-
 <!-- Css Inclusion -->
 <style type="text/css">
 @import url('<?php echo $this->data['cssAdminUrl']; ?>');
@@ -18,7 +15,11 @@
 <!-- Title Page -->
 <div class="wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
-	<div id="syg-plugin-area">	
+	<div id="syg-plugin-area">
+		
+		<!-- User Message -->
+		<?php include 'inc/statusBar.inc.php'; ?>
+	
 		<!-- Gallery Form -->
 		<form name="form1" method="post" action="">
 			<input type="hidden" name="syg_submit_hidden" value="Y"/>

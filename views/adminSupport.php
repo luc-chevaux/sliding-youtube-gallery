@@ -2,9 +2,6 @@
 
 <!-- Extra Php Code -->
 
-<!-- User Message -->
-<?php include 'inc/statusBar.inc.php'; ?>
-
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -23,6 +20,10 @@
 <div class="wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
+		
+		<!-- User Message -->
+		<?php include 'inc/statusBar.inc.php'; ?>
+	
 		<table>
 			<tr>
 				<td style="vertical-align: top;">
