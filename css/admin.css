@@ -45,8 +45,17 @@ h4 {
 	padding: 0 0.6em;
 	margin: 0px 0px 15px;
   	border-radius: 3px 3px 3px 3px;
-    border-style: solid;
-    border-width: 1px;
+	color: #333333;
+    font-size: 12px;
+    line-height: 1.4em;
+}
+
+.syg_updated {
+	background-color: #FFFFE0;
+    border: 1px #E6DB55 solid;
+	padding: 0 0.6em;
+	margin: 0px 0px 15px;
+  	border-radius: 3px 3px 3px 3px;
 	color: #333333;
     font-size: 12px;
     line-height: 1.4em;
@@ -296,6 +305,16 @@ select { border-color: #333333 !important;}
 	font-size: 18px;
 }
 
-#syg-plugin-area p, #syg-plugin-area span {
+#syg-plugin-area p, #syg-plugin-area span, #syg-plugin-area ul {
 	font-family: 'HandelGothicDLight';
+	font-size: 14px;
+}
+
+#syg-plugin-area ul {
+	list-style-type: circle;
+	list-style-position: inside;
+}
+
+#syg-plugin-area ul {
+	
 }

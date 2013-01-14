@@ -38,19 +38,15 @@
 						<li>Submit your idea on our blog</li>
 						<li>Write an article on this plugin</li>
 						<li>Submit a support request</li>
+						<li>Request a feature over my blog</li>
+						<li>Join the plugin as developer</li>
+						<li>Rate the plugin with your wordpress account</li>
 					</ul>
-					
-					<h3>Features request</h3>
-					
-					<h3>Join the plugin as developer</h3>
-					<p>If you're a php developer experienced in WordPress and you like the plugin idea, you might want to contribute to this project, you have just only to ask me.</p>
 					
 					<h3>Third party library</h3>
 					<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a> | <a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a> | <a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a> | <a href="http://fancybox.net/">Fancybox</a>
 					<h3>Project roadmap</h3>
 					<hr/>
-					<p class="webengText">Thank you for downloading! Enjoy WP and OpenSource!</p>
-					<p class="webengText">Luca</p>
 				</td>
 				<td style="vertical-align: top;">
 					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">

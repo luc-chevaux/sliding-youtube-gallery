@@ -1,10 +1,10 @@
 <div id="syg_status_bar">
 	<?php if ($this->data['updated']) { ?>
-		<div class="updated"><p><strong>Settings saved.</strong></p></div>
+		<div class="syg_updated"><p><strong>Settings saved.</strong></p></div>
 	<?php } ?>
 	
 	<?php if ($this->data['warning']) {?>
-		<div class="updated">
+		<div class="syg_updated">
 			<p><strong>Information</strong></p>
 			<ul>
 				<?php $detail = $this->data['warning'];  ?>

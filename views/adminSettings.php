@@ -49,7 +49,7 @@
 			
 			<!-- video page settings -->
 			<fieldset>
-				<legend><strong>Video page settings</strong></legend>
+				<legend><strong>Video page component settings</strong></legend>
 				
 				<label for="syg_option_paginationarea">Pagination display area: </label>
 				<select id="syg_option_paginationarea" name="syg_option_paginationarea">
@@ -58,16 +58,11 @@
 					<option value="both" <?php if ($options['syg_option_paginationarea'] == 'both') echo 'selected="selected"'; ?>>Both</option>			
 				</select>
 				
-				<br/><br/>
-				
+				<!-- number of records in page -->
 				<label for="syg_option_pagenumrec">Number of records in page: </label>
 				<input type="text" id="syg_option_pagenumrec" name="syg_option_pagenumrec" value="<?php echo $options['syg_option_pagenumrec']; ?>" size="3">
-			</fieldset>
-			<hr/>
-			
-			<!-- paginator settings -->
-			<fieldset>
-				<legend><strong>Paginator style settings</strong></legend>
+				
+				<br/><br/>
 				
 				<!-- border radius -->
 				<label for="syg_option_paginator_borderradius">Border Radius: </label>
@@ -117,9 +112,9 @@
 			</fieldset>
 			<hr/>
 			
-			<!-- paginator settings -->
+			<!-- 3d carousel component settings -->
 			<fieldset>
-				<legend><strong>3d Carousel settings</strong></legend>
+				<legend><strong>3d Carousel component settings</strong></legend>
 				
 				<!-- carousel autorotate videos -->
 				<label for="syg_option_carousel_autorotate">Auto rotate: </label>
