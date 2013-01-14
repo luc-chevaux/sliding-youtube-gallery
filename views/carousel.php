@@ -38,12 +38,15 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 			<?php } ?>		
 		</a>
 		<?php } ?>
-		<div id="left-carousel-button">
-			<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/left.png'; ?>">
-		</div>
-		<div id="right-carousel-button">
-			<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
-		</div>
+		
+		<?php if ($options['syg_option_carousel_autorotate'] == 'no') { ?>
+			<div id="left-carousel-button-<?php echo $gallery->getId();?>">
+				<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/left.png'; ?>">
+			</div>
+			<div id="right-carousel-button-<?php echo $gallery->getId();?>">
+				<img src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/25/right.png'; ?>">
+			</div>
+		<?php } ?>
 		
 		<p id="carousel-title"></p>
 	</div>
