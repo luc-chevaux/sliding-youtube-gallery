@@ -193,7 +193,7 @@ h4.video_title-<?php echo $id; ?> a {
 	margin: 0;
 }
 
-#left-carousel-button {
+#left-carousel-button-<?php echo $id; ?> {
     left: 25px;
     opacity: 0.3;
     position: absolute;
@@ -201,7 +201,7 @@ h4.video_title-<?php echo $id; ?> a {
     display: inline;
 }
 
-#right-carousel-button {
+#right-carousel-button-<?php echo $id; ?> {
     opacity: 0.3;
     position: absolute;
     right: 25px;
