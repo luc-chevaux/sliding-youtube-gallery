@@ -69,7 +69,7 @@
 					<hr size="1"/>
 				</td>
 				<td style="vertical-align: top;">
-					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin: 15px 0px 15px; border-radius: 10px; width: 350px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px;">
 						<h4>Quick resources</h4>
 						<ul>
 							<li><a href="">Project homepage</a></li>

@@ -8,9 +8,7 @@
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.6
  * 
- * @todo form invio mail segnalazione guasti (milestone v1.4.0)
- * @todo Creare la pagina support con facebook + twitter + mail (milestone v1.4.0)
- * @todo Background image (milesone v1.4.0)
+ * @todo Background image (milestone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
  * @todo chmoddare le cartelle di cache in fase di installazione
  */

@@ -174,8 +174,6 @@
 				<input type="text" name="syg_option_carousel_reflopacity" id="syg_option_carousel_reflopacity" size="3" value="<?php echo $options['syg_option_carousel_reflopacity']; ?>"/>
 				
 			</fieldset>
-			<hr/>
-	
 			<input type="submit" id="Submit" name="Submit" class="button-primary" value="Save Changes"/>
 		</form>
 		<?php require_once 'inc/contextMenu.inc.php'; ?>

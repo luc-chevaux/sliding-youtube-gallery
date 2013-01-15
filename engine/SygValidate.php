@@ -465,7 +465,7 @@ class SygValidate {
 		// syg_option_carousel_speed float tra 0 e 1
 		if (!(preg_match('/\d+(\.\d{1,2})?/',
 				$data['syg_option_carousel_speed'])
-				&& strval($data['syg_option_carousel_speed']) >= 0
+				&& strval($data['syg_option_carousel_speed']) > 0
 				&& strval($data['syg_option_carousel_speed']) <= 1)) {
 			if (!(preg_match('/\d+(\.\d{1,2})?/',
 					$data['syg_option_carousel_speed']))) {
@@ -473,11 +473,11 @@ class SygValidate {
 				array('field' => SygUtil::getLabel('syg_option_carousel_speed'),
 				'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_FLOAT, $data['syg_option_carousel_speed'])));
 			} else {
-				if (!(strval($data['syg_option_carousel_speed']) >= 0
+				if (!(strval($data['syg_option_carousel_speed']) > 0
 						&& strval($data['syg_option_carousel_speed']) <= 1)) {
 					array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_option_carousel_speed'),
-					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_carousel_speed'], 0, 1)));
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_carousel_speed'], 0.1, 1)));
 				}
 			}
 		}

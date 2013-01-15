@@ -54,15 +54,16 @@
 		<?php }
 		?>
 		</table>
-		<ul id="syg-pagination-styles">
-			<?php
-			// show page links
-			for($i=1; $i<=$this->data['pages']; $i++) {
-				echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
-			}
-			?>
-		</ul>	
-		<br/><br/>
+		<div id="paginator-area">
+			<ul id="syg-pagination-styles">
+				<?php
+				// show page links
+				for($i=1; $i<=$this->data['pages']; $i++) {
+					echo ($i == 1) ? '<li id="'.$i.'" class="current_page">'.$i.'</li>' : '<li id="'.$i.'">'.$i.'</li>';
+				}
+				?>
+			</ul>	
+		</div>
 		
 		<?php require_once 'inc/contextMenu.inc.php'; ?>
 	</div>
