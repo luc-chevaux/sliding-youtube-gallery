@@ -299,6 +299,8 @@ jQuery.noConflict();
 						  }
 					});
 				}
+			} else (modified == 'true') {
+				alert('test');
 			}
 		},
 		
@@ -407,6 +409,7 @@ jQuery(document).ready(function($) {
 			case 'syg-manage-settings':
 				// init settings
 				$.initSettingsUi();
+				$.updateCache();
 				return true;
 			default:
 				return false;
