@@ -785,17 +785,17 @@ class SygPlugin extends SanityPluginFramework {
 		// define plugin url
 		$view['pluginUrl'] = $this->getPluginRoot();
 
+		// fancybox resources url
+		$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/source/jquery.fancybox.js?v=2.1.3';
+		/*$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';*/
+		$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js';
+		$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/source/jquery.fancybox.css?v=2.1.2';
+		
 		switch ($context) {
 			case SygConstant::SYG_CTX_BE:
-			// css to include
+				// css to include
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
-	
-				// define presentation plugin resources
-				$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
 	
 				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
@@ -828,12 +828,6 @@ class SygPlugin extends SanityPluginFramework {
 				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
 				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.js';
 				
-				// fancybox resources url
-				$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
-				$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';
-				$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
-				$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/jquery.fancybox-1.3.4.css';
-				
 				// carousel resources url
 				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
 					
@@ -854,8 +848,8 @@ class SygPlugin extends SanityPluginFramework {
 				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('fancybox');
 				// include easing js library
-				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('easing');
+				//wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
+				//wp_enqueue_script('easing');
 				// include mousewheel js library
 				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
