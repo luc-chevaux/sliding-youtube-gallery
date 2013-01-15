@@ -322,8 +322,8 @@ class SygConstant {
 	
 	// general menu
 	const BE_MENU_HOME = 'Home';
-	const BE_MENU_MANAGE_GALLERIES = 'Manage Galleries';
-	const BE_MENU_MANAGE_STYLES = 'Manage Styles';
+	const BE_MENU_MANAGE_GALLERIES = 'Manage your galleries';
+	const BE_MENU_MANAGE_STYLES = 'Manage your styles';
 	const BE_MENU_MANAGE_SETTINGS = 'General Settings';
 	const BE_MENU_CONTACTS_AND_SUPPORT = 'Contact & Support';
 

@@ -19,7 +19,7 @@
 		<?php include 'inc/statusBar.inc.php'; ?>
 		
 		<!-- Title Page -->
-		<h3>Manage your gallery</h3>
+		<h3><?php echo SygConstant::BE_MENU_MANAGE_GALLERIES; ?></h3>
 		
 		<!-- Gallery List -->
 		<table cellspacing="0" id="galleries_table">

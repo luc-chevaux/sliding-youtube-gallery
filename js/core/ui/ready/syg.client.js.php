@@ -104,7 +104,7 @@ jQuery(document).ready(function($){
 			reflHeight: <?php echo $syg_option_carousel_reflheight; ?>,
 			reflGap: <?php echo $syg_option_carousel_reflgap; ?>, 
 			speed: <?php echo $syg_option_carousel_speed; ?>,
-			mouseWheel: false, 
+			mouseWheel: true, 
 			FPS: <?php echo $syg_option_carousel_fps; ?>,
 			xPos: <?php echo ceil($syg_box_width/2); ?>, // half the height of container.
 			yPos: <?php echo ceil((($syg_thumbnail_height*2.5)/2)/2); ?>, // half the width of the container.
@@ -113,10 +113,11 @@ jQuery(document).ready(function($){
 			autoRotate: '<?php echo $syg_option_carousel_autorotate; ?>',
 			<?php if ($syg_option_carousel_autorotate == "yes") { ?>
 			autoRotateDelay: <?php echo $syg_option_carousel_delay; ?>,
+			<?php } else { ?>
 			buttonLeft: $("#left-carousel-button-<?php echo $id; ?>"),
 			buttonRight: $("#right-carousel-button-<?php echo $id; ?>"),
 			<?php } ?>
-			titleBox: $("#carousel-title")
+			titleBox: $("#carousel-title-<?php echo $id; ?>")
 		});
 		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
 	<?php } ?>

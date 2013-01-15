@@ -63,16 +63,13 @@
 						</tr>
 					</table>
 					
-					
-					
-					
 					<h3>Third party library</h3>
 					This plugin were also released thanks to this free and open source library. Thanks to all.<br/>
 					<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a> | <a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a> | <a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a> | <a href="http://fancybox.net/">Fancybox</a>
 					<hr size="1"/>
 				</td>
 				<td style="vertical-align: top;">
-					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin: 15px 0px 15px; border-radius: 10px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin: 15px 0px 15px; border-radius: 10px; width: 350px;">
 						<h4>Quick resources</h4>
 						<ul>
 							<li><a href="">Project homepage</a></li>
@@ -81,7 +78,7 @@
 							<li><a href="">Support forum</a></li>
 						</ul>
 					</div>
-					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px;">
 						<h4>If you like, please donate.</h4>
 						<p>This helps me to mantain and develop the plugin well. I don't become rich and you don't become poor. This plugin is gratis, free and open source.</p>
 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -91,7 +88,7 @@
 						<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
 						</form>
 					</div>
-					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px;">
 						<h4>Social activities</h4>
 						<p>Please socialize this plugin by clicking on your favourite social network. More people means more features.</p>
 						<div class="fb-like" data-href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana" data-colorscheme="dark"></div>

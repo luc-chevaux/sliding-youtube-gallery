@@ -27,13 +27,13 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		?>
 		<a class="sygVideo" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoTitle(); ?>"/>
 			<?php } else { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="play"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="<?php echo $element->getVideoTitle(); ?>"/>
 			<?php } ?>
 			
 			<!-- show overlay button -->
-			<?php if (!$gallery->getCacheOn()) { ?>			
+			<?php if ($gallery->getCacheOn() == 'off') { ?>			
 				<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
 			<?php } ?>		
 		</a>
@@ -48,7 +48,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 			</div>
 		<?php } ?>
 		
-		<p id="carousel-title"></p>
+		<p id="carousel-title-<?php echo $gallery->getId(); ?>"></p>
 	</div>
 </div>
 
