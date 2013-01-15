@@ -1114,7 +1114,7 @@ class SygPlugin extends SanityPluginFramework {
 								$_POST['syg_option_carousel_reflopacity']);
 				
 				$this->data['redirect_url'] = '?page='
-						. SygConstant::BE_ACTION_MANAGE_SETTINGS;
+						. SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
 
 				// render adminStyles view
 				return $this->render('redirect');
