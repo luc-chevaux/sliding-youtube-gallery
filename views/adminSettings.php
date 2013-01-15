@@ -126,6 +126,8 @@
 				<!-- carousel autorotate delay videos -->
 				<label for="syg_option_carousel_delay">Auto rotate delay: </label>
 				<select id="syg_option_carousel_delay" name="syg_option_carousel_delay">
+					<option value="500" <?php if ($options['syg_option_carousel_delay'] == 500) echo 'selected="selected"'; ?>>500</option>
+					<option value="750" <?php if ($options['syg_option_carousel_delay'] == 750) echo 'selected="selected"'; ?>>750</option>
 					<option value="1000" <?php if ($options['syg_option_carousel_delay'] == 1000) echo 'selected="selected"'; ?>>1000</option>
 					<option value="1250" <?php if ($options['syg_option_carousel_delay'] == 1250) echo 'selected="selected"'; ?>>1250</option>
 					<option value="1500" <?php if ($options['syg_option_carousel_delay'] == 1500) echo 'selected="selected"'; ?>>1500</option>		
