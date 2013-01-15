@@ -27,29 +27,52 @@
 		<table>
 			<tr>
 				<td style="vertical-align: top;">
-					<h3>Project philosophy</h3>
-					<p>SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog!</p>
-					<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually. You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component. Users can get the video played as a nice fancybox player.</p>
-					<p>If you have problems during the update, please read UPGRADE NOTICE @ Sliding YouTube Gallery support forum.</p>
-					<h3>What you can do?</h3>
-					<ul class="">
-						<li>Buy me a beer. Please consider to donate with paypal!</li>
-						<li>Submit a problem to our bug database</li>
-						<li>Submit your idea on our blog</li>
-						<li>Write an article on this plugin</li>
-						<li>Submit a support request</li>
-						<li>Request a feature over my blog</li>
-						<li>Join the plugin as developer</li>
-						<li>Rate the plugin with your wordpress account</li>
-					</ul>
+					<img src="http://s-plugins.wordpress.org/sliding-youtube-gallery/assets/banner-772x250.png" class="splashpage"/>
+					<table cellspacing="10">
+						<tr valign="top">
+							<td width="300">
+								<h3>Project philosophy</h3>
+								<p>SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog!</p>
+								<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.</p><p>You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.</p><p>Users can get the video played as a nice fancybox player.</p>
+							</td>
+							<td width="280">
+								<h3>What you can do?</h3>
+								<ul class="">
+									<li>Buy me a beer. Please consider to donate with paypal!</li>
+									<li>Submit a problem to our bug database</li>
+									<li>Submit your idea on our blog</li>
+									<li>Write an article on this plugin</li>
+									<li>Submit a support request</li>
+									<li>Request a feature over my blog</li>
+									<li>Join the plugin as developer</li>
+									<li>Rate the plugin with your wordpress account</li>
+								</ul>
+							</td>
+							<td width="200">
+								<h3>Project roadmap</h3>
+								<ul>
+									<li>Security fixes</li>
+									<li>Wordpress Widget</li>
+									<li>Seo Video Gallery</li>
+									<li>Category Video</li>
+									<li>Mobile compliant</li>
+								</ul>
+								<h3>Help & Support</h3>
+								<p>If you have problems during the update, please read UPGRADE NOTICE @ Sliding YouTube Gallery support forum.</p>
+							</td>
+						</tr>
+					</table>
+					
+					
+					
 					
 					<h3>Third party library</h3>
+					This plugin were also released thanks to this free and open source library. Thanks to all.<br/>
 					<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a> | <a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a> | <a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a> | <a href="http://fancybox.net/">Fancybox</a>
-					<h3>Project roadmap</h3>
-					<hr/>
+					<hr size="1"/>
 				</td>
 				<td style="vertical-align: top;">
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin: 15px 0px 15px; border-radius: 10px;">
 						<h4>Quick resources</h4>
 						<ul>
 							<li><a href="">Project homepage</a></li>
@@ -58,9 +81,9 @@
 							<li><a href="">Support forum</a></li>
 						</ul>
 					</div>
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
-						<h4>Buy me a beer!</h4>
-						<p>Buy me a beer. Please consider to donate with paypal!</p>
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
+						<h4>If you like, please donate.</h4>
+						<p>This helps me to mantain and develop the plugin well. I don't become rich and you don't become poor. This plugin is gratis, free and open source.</p>
 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="FRXA5225YQMUU">
@@ -68,9 +91,9 @@
 						<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
 						</form>
 					</div>
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
+					<div style="background-color: #cccccc; border: 2px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px;">
 						<h4>Social activities</h4>
-						<p>Please recomend this plugin over your social network.</p>
+						<p>Please socialize this plugin by clicking on your favourite social network. More people means more features.</p>
 						<div class="fb-like" data-href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana" data-colorscheme="dark"></div>
 					
 						<br/>	

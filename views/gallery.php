@@ -46,9 +46,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
 						<?php }?>				
 				
-						<!-- show overlay button -->			
-						<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
-				
+						<!-- show overlay button -->
+						<?php if ($gallery->getCacheOn() == 'off') { ?>			
+							<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
+						<?php } ?>
+						
 						<!-- show video duration -->
 						<?php if ($gallery->getDescShowDuration()) { ?>
 							<span class="video_duration-<?php echo $gallery->getId();?>"><?php echo SygUtil::formatDuration($element->getVideoDuration()); ?></span>
