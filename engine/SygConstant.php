@@ -103,6 +103,11 @@ class SygConstant {
 		return $query;
 	}
 	
+	public static function sqlGetAllCachedGallery () {
+		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' WHERE syg_youtube_cacheon = 1';
+		return $query;
+	}
+	
 	// transitory query
 	public static function sqlGetAllGalleries12X () {
 		$query = 'SELECT id, syg_youtube_username, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_thumbnail_height, syg_thumbnail_width, syg_thumbnail_bordersize, syg_thumbnail_bordercolor, syg_thumbnail_borderradius, syg_thumbnail_distance, syg_thumbnail_overlaysize, syg_thumbnail_image, syg_thumbnail_buttonopacity, syg_description_width, syg_description_fontsize, syg_description_fontcolor, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_box_width, syg_box_background, syg_box_radius, syg_box_padding FROM '.self::getTblGalleriesName12X().' LIMIT %d, %d';

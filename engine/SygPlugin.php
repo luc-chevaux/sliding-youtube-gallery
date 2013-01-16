@@ -986,144 +986,161 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $updated
 	 * @return $output
 	 */
-	public function forwardToSettings($updated = false) {	
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-			// database add/edit settings procedure
-			// get posted values
-			$data = serialize($_POST);
-			try {
-				// validate data
-				$valid = SygValidate::validateSettings($data);
+	public function forwardToSettings($updated = false) {
+		// if we've updated a record set action to null
+		$action = ($updated == true) ? 'redirect' : $_GET['action'];
+		// determine wich action to call
+		switch ($action) {
+			case 'cache':
+				// update cached gallery
+				$galleries = $this->sygDao->getAllCachedGallery();
 				
-				(get_option('syg_option_apikey') === false) ? add_option(
+				for ($i=0; $i<count($galleries); $i++) {
+					$gallery = $galleries[$i];
+					if ($gallery->getCacheOn()) {
+						$gallery->cacheGallery();
+					}
+				}
+				break;
+			default:
+				if (isset($_POST['syg_submit_hidden'])
+						&& $_POST['syg_submit_hidden'] == 'Y') {
+					// database add/edit settings procedure
+					// get posted values
+					$data = serialize($_POST);
+					try {
+						// validate data
+						$valid = SygValidate::validateSettings($data);
+				
+						(get_option('syg_option_apikey') === false) ? add_option(
 								'syg_option_apikey',
 								$_POST['syg_option_apikey'])
-						: update_option('syg_option_apikey',
-								$_POST['syg_option_apikey']);
+								: update_option('syg_option_apikey',
+										$_POST['syg_option_apikey']);
 				
-				(get_option('syg_option_which_thumb') === false) ? add_option(
-						'syg_option_which_thumb',
-						$_POST['syg_option_which_thumb'])
-						: update_option('syg_option_which_thumb',
-								$_POST['syg_option_which_thumb']);
+						(get_option('syg_option_which_thumb') === false) ? add_option(
+								'syg_option_which_thumb',
+								$_POST['syg_option_which_thumb'])
+								: update_option('syg_option_which_thumb',
+										$_POST['syg_option_which_thumb']);
 				
-				(get_option('syg_option_numrec') === false) ? add_option(
+						(get_option('syg_option_numrec') === false) ? add_option(
 								'syg_option_numrec',
 								$_POST['syg_option_numrec'])
-						: update_option('syg_option_numrec',
-								$_POST['syg_option_numrec']);
+								: update_option('syg_option_numrec',
+										$_POST['syg_option_numrec']);
 				
-				(get_option('syg_option_pagenumrec') === false) ? add_option(
+						(get_option('syg_option_pagenumrec') === false) ? add_option(
 								'syg_option_pagenumrec',
 								$_POST['syg_option_pagenumrec'])
-						: update_option('syg_option_pagenumrec',
-								$_POST['syg_option_pagenumrec']);
-				(get_option('syg_option_paginationarea') === false) ? add_option(
+								: update_option('syg_option_pagenumrec',
+										$_POST['syg_option_pagenumrec']);
+						(get_option('syg_option_paginationarea') === false) ? add_option(
 								'syg_option_paginationarea',
 								$_POST['syg_option_paginationarea'])
-						: update_option('syg_option_paginationarea',
-								$_POST['syg_option_paginationarea']);
-
-				(get_option('syg_option_paginator_borderradius') === false) ? add_option(
+								: update_option('syg_option_paginationarea',
+										$_POST['syg_option_paginationarea']);
+				
+						(get_option('syg_option_paginator_borderradius') === false) ? add_option(
 								'syg_option_paginator_borderradius',
 								$_POST['syg_option_paginator_borderradius'])
-						: update_option('syg_option_paginator_borderradius',
-								$_POST['syg_option_paginator_borderradius']);
-				(get_option('syg_option_paginator_bordersize') === false) ? add_option(
+								: update_option('syg_option_paginator_borderradius',
+										$_POST['syg_option_paginator_borderradius']);
+						(get_option('syg_option_paginator_bordersize') === false) ? add_option(
 								'syg_option_paginator_bordersize',
 								$_POST['syg_option_paginator_bordersize'])
-						: update_option('syg_option_paginator_bordersize',
-								$_POST['syg_option_paginator_bordersize']);
-				(get_option('syg_option_paginator_bordercolor') === false) ? add_option(
+								: update_option('syg_option_paginator_bordersize',
+										$_POST['syg_option_paginator_bordersize']);
+						(get_option('syg_option_paginator_bordercolor') === false) ? add_option(
 								'syg_option_paginator_bordercolor',
 								$_POST['syg_option_paginator_bordercolor'])
-						: update_option('syg_option_paginator_bordercolor',
-								$_POST['syg_option_paginator_bordercolor']);
-				(get_option('syg_option_paginator_bgcolor') === false) ? add_option(
+								: update_option('syg_option_paginator_bordercolor',
+										$_POST['syg_option_paginator_bordercolor']);
+						(get_option('syg_option_paginator_bgcolor') === false) ? add_option(
 								'syg_option_paginator_bgcolor',
 								$_POST['syg_option_paginator_bgcolor'])
-						: update_option('syg_option_paginator_bgcolor',
-								$_POST['syg_option_paginator_bgcolor']);
-				(get_option('syg_option_paginator_shadowcolor') === false) ? add_option(
+								: update_option('syg_option_paginator_bgcolor',
+										$_POST['syg_option_paginator_bgcolor']);
+						(get_option('syg_option_paginator_shadowcolor') === false) ? add_option(
 								'syg_option_paginator_shadowcolor',
 								$_POST['syg_option_paginator_shadowcolor'])
-						: update_option('syg_option_paginator_shadowcolor',
-								$_POST['syg_option_paginator_shadowcolor']);
-				(get_option('syg_option_paginator_shadowsize') === false) ? add_option(
+								: update_option('syg_option_paginator_shadowcolor',
+										$_POST['syg_option_paginator_shadowcolor']);
+						(get_option('syg_option_paginator_shadowsize') === false) ? add_option(
 								'syg_option_paginator_shadowsize',
 								$_POST['syg_option_paginator_shadowsize'])
-						: update_option('syg_option_paginator_shadowsize',
-								$_POST['syg_option_paginator_shadowsize']);
-				(get_option('syg_option_paginator_fontcolor') === false) ? add_option(
+								: update_option('syg_option_paginator_shadowsize',
+										$_POST['syg_option_paginator_shadowsize']);
+						(get_option('syg_option_paginator_fontcolor') === false) ? add_option(
 								'syg_option_paginator_fontcolor',
 								$_POST['syg_option_paginator_fontcolor'])
-						: update_option('syg_option_paginator_fontcolor',
-								$_POST['syg_option_paginator_fontcolor']);
-				(get_option('syg_option_paginator_fontsize') === false) ? add_option(
+								: update_option('syg_option_paginator_fontcolor',
+										$_POST['syg_option_paginator_fontcolor']);
+						(get_option('syg_option_paginator_fontsize') === false) ? add_option(
 								'syg_option_paginator_fontsize',
 								$_POST['syg_option_paginator_fontsize'])
-						: update_option('syg_option_paginator_fontsize',
-								$_POST['syg_option_paginator_fontsize']);
-				// 3d carousel section
-				(get_option('syg_option_carousel_autorotate') === false) ? add_option(
+								: update_option('syg_option_paginator_fontsize',
+										$_POST['syg_option_paginator_fontsize']);
+						// 3d carousel section
+						(get_option('syg_option_carousel_autorotate') === false) ? add_option(
 								'syg_option_carousel_autorotate',
 								$_POST['syg_option_carousel_autorotate'])
-						: update_option('syg_option_carousel_autorotate',
-								$_POST['syg_option_carousel_autorotate']);
-				(get_option('syg_option_carousel_delay') === false) ? add_option(
+								: update_option('syg_option_carousel_autorotate',
+										$_POST['syg_option_carousel_autorotate']);
+						(get_option('syg_option_carousel_delay') === false) ? add_option(
 								'syg_option_carousel_delay',
 								$_POST['syg_option_carousel_delay'])
-						: update_option('syg_option_carousel_delay',
-								$_POST['syg_option_carousel_delay']);
-				(get_option('syg_option_carousel_fps') === false) ? add_option(
+								: update_option('syg_option_carousel_delay',
+										$_POST['syg_option_carousel_delay']);
+						(get_option('syg_option_carousel_fps') === false) ? add_option(
 								'syg_option_carousel_fps',
 								$_POST['syg_option_carousel_fps'])
-						: update_option('syg_option_carousel_fps',
-								$_POST['syg_option_carousel_fps']);
-				(get_option('syg_option_carousel_speed') === false) ? add_option(
+								: update_option('syg_option_carousel_fps',
+										$_POST['syg_option_carousel_fps']);
+						(get_option('syg_option_carousel_speed') === false) ? add_option(
 								'syg_option_carousel_speed',
 								$_POST['syg_option_carousel_speed'])
-						: update_option('syg_option_carousel_speed',
-								$_POST['syg_option_carousel_speed']);
-				(get_option('syg_option_carousel_minscale') === false) ? add_option(
+								: update_option('syg_option_carousel_speed',
+										$_POST['syg_option_carousel_speed']);
+						(get_option('syg_option_carousel_minscale') === false) ? add_option(
 								'syg_option_carousel_minscale',
 								$_POST['syg_option_carousel_minscale'])
-						: update_option('syg_option_carousel_minscale',
-								$_POST['syg_option_carousel_minscale']);
-				(get_option('syg_option_carousel_reflheight') === false) ? add_option(
+								: update_option('syg_option_carousel_minscale',
+										$_POST['syg_option_carousel_minscale']);
+						(get_option('syg_option_carousel_reflheight') === false) ? add_option(
 								'syg_option_carousel_reflheight',
 								$_POST['syg_option_carousel_reflheight'])
-						: update_option('syg_option_carousel_reflheight',
-								$_POST['syg_option_carousel_reflheight']);
-				(get_option('syg_option_carousel_reflgap') === false) ? add_option(
+								: update_option('syg_option_carousel_reflheight',
+										$_POST['syg_option_carousel_reflheight']);
+						(get_option('syg_option_carousel_reflgap') === false) ? add_option(
 								'syg_option_carousel_reflgap',
 								$_POST['syg_option_carousel_reflgap'])
-						: update_option('syg_option_carousel_reflgap',
-								$_POST['syg_option_carousel_reflgap']);
-				(get_option('syg_option_carousel_reflopacity') === false) ? add_option(
+								: update_option('syg_option_carousel_reflgap',
+										$_POST['syg_option_carousel_reflgap']);
+						(get_option('syg_option_carousel_reflopacity') === false) ? add_option(
 								'syg_option_carousel_reflopacity',
 								$_POST['syg_option_carousel_reflopacity'])
-						: update_option('syg_option_carousel_reflopacity',
-								$_POST['syg_option_carousel_reflopacity']);
-				
-				$this->data['redirect_url'] = '?page='
+								: update_option('syg_option_carousel_reflopacity',
+										$_POST['syg_option_carousel_reflopacity']);
+						$this->data['redirect_url'] = '?page='
 						. SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
-
-				// render adminStyles view
-				return $this->render('redirect');
-			} catch (SygValidateException $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
-			} catch (Exception $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-			}
+						
+						// render adminStyles view
+						return $this->render('redirect');
+					} catch (SygValidateException $ex) {
+						// set the error
+						$this->data['exception'] = true;
+						$this->data['exception_message'] = $ex->getMessage();
+						$this->data['exception_detail'] = $ex->getProblems();
+					} catch (Exception $ex) {
+						// set the error
+						$this->data['exception'] = true;
+						$this->data['exception_message'] = $ex->getMessage();
+					}
+				}
+				break;	
 		}
-
+		
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 

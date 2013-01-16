@@ -156,6 +156,20 @@ class SygDao {
 	}
 	
 	/**
+	 * @name getAllCachedGallery
+	 * @category Get the cached gallery
+	 * @since 1.4.0
+	 * @param $output_type
+	 * @return array of $galleries
+	 */
+	public function getAllCachedGallery($output_type = 'OBJECT') {
+		$galleries = array();
+		$query = SygConstant::sqlGetAllCachedGallery();
+		$results = $this->db->get_results($query, $output_type);
+		return $results;
+	}
+	
+	/**
 	 * @name getAllSygGallery12X
 	 * @category Get a syg gallery list from database
 	 * @since 1.2.5

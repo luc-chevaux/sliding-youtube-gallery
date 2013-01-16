@@ -322,13 +322,15 @@ class SygGallery {
 	 * @since 1.4.0
 	 * @param SygGallery $gallery
 	 */
-	public function removeFromCache() {
+	public function removeFromCache($what = 'all') {
 		// remove directory
-		SygUtil::removeDirectory($this->getJsonPath());
+		if ($what == 'all' || $what == 'json') SygUtil::removeDirectory($this->getJsonPath());
 		// remove directory
-		SygUtil::removeDirectory($this->getThumbnailsPath());
+		if ($what == 'all' || $what == 'thumb') SygUtil::removeDirectory($this->getThumbnailsPath());
 		// remove directory
-		SygUtil::removeDirectory($this->getHtmlPath());
+		if ($what == 'all' || $what == 'html') SygUtil::removeDirectory($this->getHtmlPath());
+		// remove directory
+		if ($what == 'all' || $what == 'js') SygUtil::removeDirectory($this->getJsPath());
 	}
 	
 	/**

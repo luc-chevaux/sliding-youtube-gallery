@@ -286,8 +286,8 @@ jQuery.noConflict();
 		
 		updateCache: function () {
 			var modified = $.getQParam('modified');
-			if (modified) {
-				var answer = confirm('Your style has been changed. Maybe, some cache content need to be updated. Update it now?');
+			if ($.isNumeric(modified)) {
+				var answer = confirm('Your style has been changed. Cached content need to be updated. Update it now?');
 				if (answer) {
 					var request = jQuery.ajax({
 						  url: 'admin.php',
@@ -299,8 +299,19 @@ jQuery.noConflict();
 						  }
 					});
 				}
-			} else (modified == 'true') {
-				alert('test');
+			} else if (modified == 'true') {
+				var answer = confirm('Your settings has been updated. Cached content need to be updated. Update it now?');
+				if (answer) {
+					var request = jQuery.ajax({
+						  url: 'admin.php',
+						  type: 'GET',
+						  data: {page: 'syg-manage-settings', action : 'cache'},
+						  dataType: 'html',
+						  complete: function () {
+							  alert ('Your server cache has been successfully updated.');
+						  }
+					});
+				}
 			}
 		},
 		
