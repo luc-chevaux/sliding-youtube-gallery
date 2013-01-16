@@ -215,7 +215,7 @@ class SygGallery {
 	 * @since 1.4.0
 	 * @param SygGallery $gallery
 	 */
-	public function cacheGallery() {
+	public function cacheGallery() {		
 		// local plugin instance
 		$syg = SygPlugin::getInstance();
 		

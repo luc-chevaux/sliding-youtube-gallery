@@ -47,7 +47,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 						<?php }?>				
 				
 						<!-- show overlay button -->
-						<?php if ($gallery->getCacheOn() == 'off') { ?>			
+						<?php if (!$gallery->getCacheOn()) { ?>			
 							<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
 						<?php } ?>
 						

@@ -166,7 +166,10 @@ class SygDao {
 		$galleries = array();
 		$query = SygConstant::sqlGetAllCachedGallery();
 		$results = $this->db->get_results($query, $output_type);
-		return $results;
+		foreach ($results as $gallery) {
+			$galleries[] = new SygGallery($gallery);
+		}
+		return $galleries;
 	}
 	
 	/**

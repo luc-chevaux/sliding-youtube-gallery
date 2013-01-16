@@ -994,12 +994,9 @@ class SygPlugin extends SanityPluginFramework {
 			case 'cache':
 				// update cached gallery
 				$galleries = $this->sygDao->getAllCachedGallery();
-				
 				for ($i=0; $i<count($galleries); $i++) {
 					$gallery = $galleries[$i];
-					if ($gallery->getCacheOn()) {
-						$gallery->cacheGallery();
-					}
+					$gallery->cacheGallery();
 				}
 				break;
 			default:
