@@ -878,8 +878,6 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToGalleries($updated = false) {
-		$output = '';
-
 		// if we've updated a record set action to null
 		$action = ($updated == true) ? 'redirect' : $_GET['action'];
 
@@ -929,8 +927,6 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function forwardToStyles($updated = false) {
-		$output = '';
-
 		// if we've updated a record set action to null
 		$action = ($updated == true) ? 'redirect' : $_GET['action'];
 
@@ -990,9 +986,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $updated
 	 * @return $output
 	 */
-	public function forwardToSettings($updated = false) {
-		$updated = false;
-	
+	public function forwardToSettings($updated = false) {	
 		if (isset($_POST['syg_submit_hidden'])
 				&& $_POST['syg_submit_hidden'] == 'Y') {
 			// database add/edit settings procedure
