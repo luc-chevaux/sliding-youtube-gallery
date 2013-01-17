@@ -112,22 +112,22 @@ function SlidingYoutubeGalleryAdmin() {
 	$syg = SygPlugin::getInstance();
 
 	// Add first level menu page
-	add_menu_page('Sliding YouTube Gallery', 'SYG gallery', 'manage_options',
+	add_menu_page('Sliding YouTube Gallery', 'SYG gallery', 'edit_posts',
 			'syg-administration-panel', '',
 			WP_PLUGIN_URL . '/sliding-youtube-gallery/img/ui/webeng.png');
 						
 	// Add second level menu page
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_GALLERIES,
-			SygConstant::BE_MENU_MANAGE_GALLERIES, 'manage_options', SygConstant::BE_ACTION_MANAGE_GALLERIES,
+			SygConstant::BE_MENU_MANAGE_GALLERIES, 'edit_posts', SygConstant::BE_ACTION_MANAGE_GALLERIES,
 			'manageGalleries');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_STYLES,
-			SygConstant::BE_MENU_MANAGE_STYLES, 'manage_options', SygConstant::BE_ACTION_MANAGE_STYLES,
+			SygConstant::BE_MENU_MANAGE_STYLES, 'edit_pages', SygConstant::BE_ACTION_MANAGE_STYLES,
 			'manageStyles');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_SETTINGS,
 			SygConstant::BE_MENU_MANAGE_SETTINGS, 'manage_options', SygConstant::BE_ACTION_MANAGE_SETTINGS,
 			'manageSettings');
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_CONTACTS_AND_SUPPORT,
-			SygConstant::BE_MENU_CONTACTS_AND_SUPPORT, 'manage_options', SygConstant::BE_ACTION_CONTACTS,
+			SygConstant::BE_MENU_CONTACTS_AND_SUPPORT, 'edit_posts', SygConstant::BE_ACTION_CONTACTS,
 			'getSupport');
 
 	// remove menu duplicated by wordpress

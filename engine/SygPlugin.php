@@ -1170,50 +1170,51 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToAddGallery() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-			// database add gallery procedure
-			// get posted values
-			$data = serialize($_POST);
-
-			try {
-				// validate data
-				$valid = SygValidate::validateGallery($data);
-
-				// create a new gallery
-				$gallery = new SygGallery($data);
-
-				// update db
-				$id = $this->sygDao->addSygGallery($gallery);
-
-				// reload the gallery
-				$gallery = $this->sygDao->getSygGalleryById($id);
-				
-				// updated flag
-				$updated = true;
-
-				// updated flag
-				$this->data['updated'] = $updated;
-
-				if ($gallery->getCacheOn()) {
-					// cache gallery
-					$gallery->cacheGallery();
+		if (!empty($_POST) && check_admin_referer('gallery','nonce_field')) {
+			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+				// database add gallery procedure
+				// get posted values
+				$data = serialize($_POST);
+	
+				try {
+					// validate data
+					$valid = SygValidate::validateGallery($data);
+	
+					// create a new gallery
+					$gallery = new SygGallery($data);
+	
+					// update db
+					$id = $this->sygDao->addSygGallery($gallery);
+	
+					// reload the gallery
+					$gallery = $this->sygDao->getSygGalleryById($id);
+					
+					// updated flag
+					$updated = true;
+	
+					// updated flag
+					$this->data['updated'] = $updated;
+	
+					if ($gallery->getCacheOn()) {
+						// cache gallery
+						$gallery->cacheGallery();
+					}
+					
+					// render adminGallery view
+					return $this->forwardToGalleries($updated);
+				} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblems();
+				} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
 				}
-				
-				// render adminGallery view
-				return $this->forwardToGalleries($updated);
-			} catch (SygValidateException $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
-			} catch (Exception $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
 			}
 		}
-
+			
 		// gallery administration form section
 		// prepare header
 		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
@@ -1236,40 +1237,40 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToAddStyle() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-
-			// database add style procedure
-			// get posted values
-			$data = serialize($_POST);
-
-			try {
-				// validate data
-				$valid = SygValidate::validateStyle($data);
-
-				// create a new gallery
-				$style = new SygStyle($data);
-
-				// update db
-				$this->sygDao->addSygStyle($style);
-
-				// updated flag
-				$updated = true;
-
-				// updated flag
-				$this->data['updated'] = $updated;
-
-				// render adminGallery view
-				return $this->forwardToStyles($updated);
-			} catch (SygValidateException $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
-			} catch (Exception $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
+		if (!empty($_POST) && check_admin_referer('style','nonce_field')) {
+			if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
+				// database add style procedure
+				// get posted values
+				$data = serialize($_POST);
+	
+				try {
+					// validate data
+					$valid = SygValidate::validateStyle($data);
+	
+					// create a new gallery
+					$style = new SygStyle($data);
+	
+					// update db
+					$this->sygDao->addSygStyle($style);
+	
+					// updated flag
+					$updated = true;
+	
+					// updated flag
+					$this->data['updated'] = $updated;
+	
+					// render adminGallery view
+					return $this->forwardToStyles($updated);
+				} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblems();
+				} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+				}
 			}
 		}
 		// gallery administration form section
@@ -1291,50 +1292,49 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToEditGallery() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-
-			// database update procedure
-			// get posted values
-			$data = serialize($_POST);
-
-			try {
-				// validate data
-				$valid = SygValidate::validateGallery($data);
-
-				// create a new gallery
-				$gallery = new SygGallery($data);
-				
-				// update db
-				$this->sygDao->updateSygGallery($gallery);
-
-				// updated flag
-				$updated = true;
-
-				// updated flag
-				$this->data['updated'] = $updated;
-				
-				if ($gallery->getCacheOn()) {
-					// cache gallery
-					$gallery->cacheGallery();
-				} else {
-					$gallery->removeFromCache();
+		if (!empty($_POST) && check_admin_referer('gallery','nonce_field')) {
+			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+				// database update procedure
+				// get posted values
+				$data = serialize($_POST);
+	
+				try {
+					// validate data
+					$valid = SygValidate::validateGallery($data);
+	
+					// create a new gallery
+					$gallery = new SygGallery($data);
+					
+					// update db
+					$this->sygDao->updateSygGallery($gallery);
+	
+					// updated flag
+					$updated = true;
+	
+					// updated flag
+					$this->data['updated'] = $updated;
+					
+					if ($gallery->getCacheOn()) {
+						// cache gallery
+						$gallery->cacheGallery();
+					} else {
+						$gallery->removeFromCache();
+					}
+					
+					// render adminGallery view
+					return $this->forwardToGalleries($updated);
+				} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblems();
+				} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
 				}
-				
-				// render adminGallery view
-				return $this->forwardToGalleries($updated);
-			} catch (SygValidateException $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
-			} catch (Exception $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
 			}
 		}
-
 		// get the gallery id
 		$id = (int) $_GET['id'];
 
@@ -1359,44 +1359,43 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToEditStyle() {
 		$updated = false;
-		if (isset($_POST['syg_submit_hidden'])
-				&& $_POST['syg_submit_hidden'] == 'Y') {
-
-			// database update procedure
-			// get posted values
-			$data = serialize($_POST);
-
-			try {
-				// validate data
-				$valid = SygValidate::validateStyle($data);
-
-				// create a new gallery
-				$style = new SygStyle($data);
-
-				// update db
-				$this->sygDao->updateSygStyle($style);
-
-				// updated flag
-				$updated = true;
-
-				// updated flag
-				$this->data['updated'] = $updated;
-
-				// render adminStyle view
-				return $this->forwardToStyles($updated);
-
-			} catch (SygValidateException $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
-				$this->data['exception_detail'] = $ex->getProblems();
-			} catch (Exception $ex) {
-				// set the error
-				$this->data['exception'] = true;
-				$this->data['exception_message'] = $ex->getMessage();
+		if (!empty($_POST) && check_admin_referer('style','nonce_field')) {
+			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
+				// database update procedure
+				// get posted values
+				$data = serialize($_POST);
+	
+				try {
+					// validate data
+					$valid = SygValidate::validateStyle($data);
+	
+					// create a new gallery
+					$style = new SygStyle($data);
+	
+					// update db
+					$this->sygDao->updateSygStyle($style);
+	
+					// updated flag
+					$updated = true;
+	
+					// updated flag
+					$this->data['updated'] = $updated;
+	
+					// render adminStyle view
+					return $this->forwardToStyles($updated);
+	
+				} catch (SygValidateException $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+					$this->data['exception_detail'] = $ex->getProblems();
+				} catch (Exception $ex) {
+					// set the error
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = $ex->getMessage();
+				}
 			}
 		}
-
 		// get the style id
 		$id = (int) $_GET['id'];
 

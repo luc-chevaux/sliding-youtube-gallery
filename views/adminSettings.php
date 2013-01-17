@@ -25,6 +25,7 @@
 		<h3><?php echo SygConstant::BE_TITLE_EDIT_SETTINGS; ?></h3>
 		
 		<form name="form1" method="post" action="">
+			<?php wp_nonce_field('settings','nonce_field'); ?>
 			<input type="hidden" name="syg_submit_hidden" value="Y">
 			
 			<!-- youtube settings -->
