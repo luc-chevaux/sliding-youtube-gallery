@@ -21,8 +21,9 @@
 		<!-- User Message -->
 		<?php include 'inc/statusBar.inc.php'; ?>
 
-		<!-- General Setting -->
-		<h3>General Settings</h3>
+		<!-- Title Page -->
+		<h3><?php echo SygConstant::BE_TITLE_EDIT_SETTINGS; ?></h3>
+		
 		<form name="form1" method="post" action="">
 			<input type="hidden" name="syg_submit_hidden" value="Y">
 			

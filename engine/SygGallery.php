@@ -870,5 +870,19 @@ class SygGallery {
 	public function setCacheOn($cacheOn) {
 		$this->cacheOn = $cacheOn;
 	}
+	
+	// magic functions
+	
+	public function __toString () {
+		//@todo
+	}
+	
+	public function __wakeup() {
+		//@todo
+	}
+	
+	public function __sleep() {
+		//@todo
+	}
 }
 ?>

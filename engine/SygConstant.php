@@ -337,6 +337,11 @@ class SygConstant {
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
 
+	// page title
+	const BE_TITLE_EDIT_GALLERY = 'Edit your gallery';
+	const BE_TITLE_EDIT_STYLE = 'Edit your style';
+	const BE_TITLE_EDIT_SETTINGS = 'Edit the plugin settings';
+	
 	/**
 	 * Exceptions
 	 */

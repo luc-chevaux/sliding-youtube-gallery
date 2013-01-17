@@ -20,6 +20,9 @@
 		<!-- User Message -->
 		<?php include 'inc/statusBar.inc.php'; ?>
 	
+		<!-- Title Page -->
+		<h3><?php echo SygConstant::BE_TITLE_EDIT_GALLERY; ?></h3>
+		
 		<!-- Gallery Form -->
 		<form name="form1" method="post" action="">
 			<input type="hidden" name="syg_submit_hidden" value="Y"/>

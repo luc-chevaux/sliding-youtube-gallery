@@ -19,6 +19,9 @@
 		<!-- User Message -->
 		<?php include 'inc/statusBar.inc.php'; ?>
 
+		<!-- Title Page -->
+		<h3><?php echo SygConstant::BE_TITLE_EDIT_GALLERY; ?></h3>
+		
 		<!-- Welcome Message -->
 		<p class="webengText">
 			<?php echo SygConstant::BE_MANAGE_STYLE_MESSAGE; ?>

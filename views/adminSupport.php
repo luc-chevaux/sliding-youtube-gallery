@@ -24,7 +24,7 @@
 		<!-- User Message -->
 		<?php include 'inc/statusBar.inc.php'; ?>
 	
-		<table>
+		<table width="100%">
 			<tr>
 				<td style="vertical-align: top;">
 					<img src="http://s-plugins.wordpress.org/sliding-youtube-gallery/assets/banner-772x250.png" class="splashpage" style="border: 1px #333 solid; box-shadow: 0 0 8px #888;"/>
@@ -70,7 +70,7 @@
 						</tr>
 					</table>
 				</td>
-				<td style="vertical-align: top;">
+				<td style="vertical-align: top; float: right; vertical-align: top;">
 					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px; box-shadow: 0 0 8px #888;">
 						<h4>Quick resources</h4>
 						<ul>

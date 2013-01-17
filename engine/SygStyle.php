@@ -640,6 +640,20 @@ class SygStyle {
 	public static function getRsType() {
 		return SygStyle::$rsType;
 	}
+	
+	// magic functions
+	
+	public function __toString () {
+		//@todo
+	}
+	
+	public function __wakeup() {
+		//@todo
+	}
+	
+	public function __sleep() {
+		//@todo
+	}
 
 }
 ?>
