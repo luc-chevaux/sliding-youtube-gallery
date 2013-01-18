@@ -55,6 +55,9 @@ if (!is_admin()) {
 	// plugin update function callback
 	add_action('admin_init', 'sygCheckUpdateProcess');
 	
+	// add logout function
+	add_action('wp_logout', 'sygLogOut');
+	
 	// back end code block
 	// attach the admin menu to the hook
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
@@ -198,4 +201,15 @@ function deactivate() {
 function uninstall() {
 	SygPlugin::uninstall();
 }
+
+/**
+ * custom logout function
+ * @return null
+ */
+function sygLogOut() {
+	session_start();
+	setcookie ("syg-role", "", time()-60000); 
+	unset ($_SESSION['syg-role']);
+}
+
 ?>

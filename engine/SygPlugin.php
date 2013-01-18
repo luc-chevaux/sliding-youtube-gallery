@@ -60,13 +60,21 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.0.1
 	 */
 	public function __construct() {
-		$me = ABSPATH
-				. 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+		$me = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
 
 		parent::__construct(dirname($me));
 
 		// set environment
 		$this->setEnvironment();
+		
+		// start session
+		session_start();
+		
+		// set status cookie
+		if (empty($_SESSION['syg-role'])) {
+			setcookie('syg-role', $this->getCurrentUserRole(), time() + 4800);
+			$_SESSION['syg-role'] = $this->getCurrentUserRole();
+		}
 
 		// front end code block
 		if (!is_admin()) {
@@ -555,6 +563,19 @@ class SygPlugin extends SanityPluginFramework {
 	public function getJsonQueryIfUrl() {
 		return $this->jsonQueryIfUrl;
 	}
+	
+	/**
+	 * @name getCurrentUserRole
+	 * @category returns the translated role of the current user
+	 * @return string The name of the current role
+	 */
+	private function getCurrentUserRole() {
+		global $wp_roles;
+		$current_user = wp_get_current_user();
+		$roles = $current_user->roles;
+		$role = array_shift($roles);
+		return isset($wp_roles->role_names[$role]) ? $wp_roles->role_names[$role] : false;
+	}
 
 	/***************************/
 	/* END GETTERS AND SETTER  */
@@ -798,6 +819,9 @@ class SygPlugin extends SanityPluginFramework {
 		$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js';
 		$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/source/jquery.fancybox.css?v=2.1.2';
 		
+		// jquery 
+		$view['jquery-cookie-master_js_url'] = $view['jsPath'] . '3rdParty/jquery-cookie-master/jquery.cookie.js';
+		
 		switch ($context) {
 			case SygConstant::SYG_CTX_BE:
 				// css to include
@@ -817,12 +841,22 @@ class SygPlugin extends SanityPluginFramework {
 				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . '3rdParty/colorPicker/colorpicker.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 	
+				// include fancybox
 				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('fancybox');
+				
+				// include jquery easing
 				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('easing');
+				
+				// include jquery mousewheel
 				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('mousewheel');
+				
+				// include jquery cookie master
+				wp_register_script('jquery-cookie-master', $view['jquery-cookie-master_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_enqueue_script('jquery-cookie-master');
+				
 				break;
 			case SygConstant::SYG_CTX_FE:
 				if (empty($view['gallery'])) {
