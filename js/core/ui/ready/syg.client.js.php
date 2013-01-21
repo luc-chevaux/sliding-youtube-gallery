@@ -27,14 +27,10 @@ extract ($option);
 $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
 
-$type = SygUtil::extractType($syg_youtube_videoformat);
-$width = SygUtil::extractWidth($syg_youtube_videoformat);
-
-if ($type == 'n') {
-	$height = SygUtil::getNormalHeight($width);
-} else {
-	$height = SygUtil::getWideHeight($width);
-}
+// video format
+$wideOrNormal = SygUtil::extractType($syg_youtube_videoformat);
+$video_width = SygUtil::extractWidth($syg_youtube_videoformat);
+$video_height = ($wideOrNormal == 'n') ? SygUtil::getNormalHeight($video_width) : $height = SygUtil::getWideHeight($video_width);
 
 /*$width += 20;
 $height += 20;*/
@@ -64,8 +60,9 @@ jQuery(document).ready(function($){
 	
 	options['json_query_if_url'] = '<?php echo $syg->getJsonQueryIfUrl(); ?>'; // string
 	
-	options['width'] = <?php echo $width; ?>; // int
-	options['height'] = <?php echo $height; ?>; // int
+	options['video_width'] = <?php echo $video_width; ?>; // int
+	options['video_height'] = <?php echo $video_height; ?>; // int
+	
 	<?php if ($cache == 'on') { ?>
 		options['cache'] = '<?php echo $cache; ?>';
 		<?php 

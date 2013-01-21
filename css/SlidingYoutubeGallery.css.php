@@ -136,7 +136,7 @@ h4.video_title-<?php echo $id; ?> a {
     -moz-border-radius: <?php echo $syg_box_radius; ?>px;
     display: inline-block;
     padding: <?php echo $syg_box_padding; ?>px;
-    width: 100%;
+    width: auto;
 }
 
 .video_entry_table-<?php echo $id; ?> td p {
@@ -231,6 +231,7 @@ h4.video_title-<?php echo $id; ?> a {
 	display: inline-block;
 	width: 100%;
 	height: 100px;
+	margin-top: <?php echo ceil($syg_box_padding*0.25); ?>px;
 	text-align: center;
 	position:relative;
 }
@@ -324,7 +325,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	float: left;
 	line-height: 1;
 	margin-left: <?php echo $syg_box_padding; ?>px;
-	padding: <?php echo intval($syg_box_padding*0.4); ?>px;
+	padding: <?php echo intval($syg_box_padding*0.2); ?>px;
 	
 	box-shadow: 0 0 <?php echo $syg_option_paginator_shadowsize; ?>px <?php echo $syg_option_paginator_shadowcolor; ?>;
 	background-color: <?php echo $syg_option_paginator_bgcolor; ?>;
