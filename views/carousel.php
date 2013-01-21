@@ -25,7 +25,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				$videoThumbnails = $element->getVideoThumbnails();
 			}
 		?>
-		<a class="sygVideo" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>">
+		<a class="sygVideo" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>&autoplay=1" title="<?php echo $element->getVideoTitle(); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
 				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoTitle(); ?>"/>
 			<?php } else { ?>

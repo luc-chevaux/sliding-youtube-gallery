@@ -36,8 +36,8 @@ if ($type == 'n') {
 	$height = SygUtil::getWideHeight($width);
 }
 
-$width += 20;
-$height += 20;
+/*$width += 20;
+$height += 20;*/
 
 if (array_key_exists ('ui', $_GET)) $uiType = $_GET['ui'];
 if (array_key_exists ('cache', $_GET)) $cache = $_GET['cache'];

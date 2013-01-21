@@ -44,7 +44,7 @@ jQuery.noConflict();
 				html = html + '<tr>';
 				
 				html = html + '<td class="syg_video_page_thumb-' + gid + '">';
-				html = html + '<a class="sygVideo" href="' + options['plugin_root'] + 'views/player.php?id=' + gid + '&video=' + val.video_id + '">';
+				html = html + '<a class="sygVideo" href="http://www.youtube.com/watch?v=' + val.video_id + '&autoplay=1">';
 				if (options['description_show']) {
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + val.video_description + '" title="' + val.video_description + '"/>';
 				} else {
@@ -197,6 +197,7 @@ jQuery.noConflict();
 					'width'	: options['width'],
 					'height' : options['height'],
 					'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+					'fitToView' : true,
 					'type' : 'swf',
 					'swf' : {
 						'wmode'	: 'transparent',

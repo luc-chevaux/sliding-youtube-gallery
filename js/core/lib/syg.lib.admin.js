@@ -166,7 +166,12 @@ jQuery.noConflict();
 						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a><a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
+						
+						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
+							html = html + '<a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
+						}
+						
 						html = html + '</td>';
 						html = html + '</tr>';
 						$('#galleries_table tr:last-child').after(html);
@@ -200,7 +205,7 @@ jQuery.noConflict();
 						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
 						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
 						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
-						alert ($.cookie('syg-role'));
+
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
 							html = html + '<a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
 						}
@@ -208,6 +213,7 @@ jQuery.noConflict();
 						if (val.cacheOn == 1) {
 							html = html + '<a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
 						}
+						
 						html = html + '</td>';
 						html = html + '</tr>';
 					

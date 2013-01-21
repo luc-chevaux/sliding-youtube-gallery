@@ -67,13 +67,9 @@ class SygPlugin extends SanityPluginFramework {
 		// set environment
 		$this->setEnvironment();
 		
-		// start session
-		session_start();
-		
 		// set status cookie
-		if (empty($_SESSION['syg-role'])) {
-			setcookie('syg-role', $this->getCurrentUserRole(), time() + 4800);
-			$_SESSION['syg-role'] = $this->getCurrentUserRole();
+		if ($_COOKIE['syg-role'] != $this->getCurrentUserRole()) {
+			setcookie('syg-role', $this->getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
 		}
 
 		// front end code block
