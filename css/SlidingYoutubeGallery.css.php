@@ -37,7 +37,6 @@ img.thumbnail-image-<?php echo $id; ?> {
     -moz-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     max-width: 100%;
     display: block;
-    background-color: transparent !important;
     padding: 0 !important;
     margin: 0 !important;
 }
