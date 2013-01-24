@@ -33,39 +33,38 @@
 							<td width="278">
 								<h3>Project philosophy</h3>
 								<p>SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog!</p>
-								<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.</p><p>You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.</p><p>Users can get the video played as a nice fancybox player.</p>
+								<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.</p><p>You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.</p><p>From version 1.4.0 you can display your gallery with a nice 3d cloud carousel. Users can get the video played as a nice fancybox player.</p>
+								<table>
+									<tr style="vertical-align: top;">
+										<td><img style="width: 100px; float: left;" src="<?php echo WP_PLUGIN_URL . SygConstant::WP_IMG_PATH . 'ui/admin/opensource-logo.png'; ?>"></img></td>
+										<td><i>If programmers deserve to be rewarded for creating innovative programs, by the same token they deserve to be punished if they restrict the use of these programs.</i><br/> (Richard Stallman)</td>
+									</tr>
+								</table>
 							</td>
 							<td width="250">
 								<h3>What you can do?</h3>
 								<ul class="">
-									<li>Buy me a beer. Please consider to donate with paypal!</li>
-									<li>Submit a problem to our bug database</li>
-									<li>Submit your idea on our blog</li>
-									<li>Write an article on this plugin</li>
-									<li>Submit a support request</li>
-									<li>Request a feature over my blog</li>
-									<li>Join the plugin as developer</li>
-									<li>Rate the plugin with your wordpress account</li>
+									<li>If you like the plugin, please consider donating with paypal. Your help is much appreciated especially in these hard times.</li>
+									<li>Do you report a problem with this plugin? Please, submit your issue to my <a href="http://mantis.webeng.it">bug database</a>.</li>
+									<li>If you want to propose me something, please consider to post your idea on <a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">my blog</a>.</li>
+									<li>If you have a blog, please write an article on this plugin.</li>
+									<li>If you miss something, please feel free to request features over <a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">my blog</a>. Each good idea will be considered.</li>
+									<li>Are you a developer? Join the plugin development process. Contact me over my networks.</li>
+									<li>A good rating is the best motivation to continue develop and mantain this project, I ask you to leave your rating in the <a href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/">wordpress plugin page</a>.</li>
 								</ul>
 							</td>
 							<td width="200">
 								<h3>Project roadmap</h3>
 								<ul>
-									<li>Security fixes</li>
-									<li>Wordpress Widget</li>
-									<li>Seo Video Gallery</li>
-									<li>Category Video</li>
-									<li>Mobile compliant</li>
+									<li>Widget support (ver 1.5.0)</li>
+									<li>Seo Video Gallery (ver 2.0.0)</li>
+									<li>Category Video (ver 2.0.0)</li>
 								</ul>
 								<h3>Help & Support</h3>
 								<p>If you have problems during the update, please read UPGRADE NOTICE @ Sliding YouTube Gallery support forum.</p>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<h3>Third party library</h3>
-								This plugin were also released thanks to this free and open source library. Thanks to all.<br/>
-								<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a> | <a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a> | <a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a> | <a href="http://fancybox.net/">Fancybox</a>
+								<h3>Special thanks</h3>
+								<p>This plugin were also released thanks to this free and open source library. Thanks to all the authors.<br/>
+								<a href="https://github.com/Emerson/Sanity-Wordpress-Plugin-Framework">Sanity framework</a> | <a href="http://www.eyecon.ro/colorpicker/">Eyecon colorpicker</a> | <a href="http://www.professorcloud.com/mainsite/carousel.htm">3d Cloud Carousel</a> | <a href="http://fancybox.net/">Fancybox</a></p>
 							</td>
 						</tr>
 					</table>
@@ -111,6 +110,11 @@
 						</script>
 						<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://wordpress.org/extend/plugins/sliding-youtube-gallery/" data-text="Sliding YouTube Gallery">Tweet</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						<a href="http://it.linkedin.com/in/lucamartini1980">
+						<img src="http://www.linkedin.com/img/webpromo/btn_viewmy_160x33_it_IT.png?locale=" width="160" height="33" border="0" alt="Visualizza il profilo di Luca Martini su LinkedIn">
+						</a>
+						<br/>
+						<!-- Facebook Badge START --><a href="http://www.facebook.com/webeng.it" target="_TOP" style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; font-variant: normal; font-style: normal; font-weight: normal; color: #3B5998; text-decoration: none;" title="WebEng WebEng">WebEng WebEng</a><span style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 16px; font-variant: normal; font-style: normal; font-weight: normal; color: #555555; text-decoration: none;">&nbsp;|&nbsp;</span><a href="http://www.facebook.com/badges/" target="_TOP" style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; font-variant: normal; font-style: normal; font-weight: normal; color: #3B5998; text-decoration: none;" title="Crea il tuo badge!">Crea il tuo badge</a><br/><a href="http://www.facebook.com/webeng.it" target="_TOP" title="WebEng WebEng"><img src="http://badge.facebook.com/badge/100001946264903.494.976246179.png" style="border: 0px;" /></a><!-- Facebook Badge END -->
 					</div>
 				</td>
 			</tr>
