@@ -357,6 +357,8 @@ class SygConstant {
 	const MSG_EX_GALLERY_NOT_FOUND = 'Opss... Gallery not found, please check your ID!';
 	const COD_EX_GALLERY_NOT_FOUND = '1004';
 	
+	const MSG_EX_GALLERY_NOT_CACHED = 'To enable 3d cloud carousel for this gallery, you must cache the content of this gallery. Please login in the admin area and check the cache content option.';
+	const COD_EX_GALLERY_NOT_CACHED = '1005';
 	/**
 	 * Validation message
 	 */
