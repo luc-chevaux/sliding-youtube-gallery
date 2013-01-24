@@ -611,7 +611,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getGallery($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+	function getGallery($attributes) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -636,7 +636,7 @@ class SygPlugin extends SanityPluginFramework {
 				// put the options in the view context
 				$this->data['options'] = $this->getOptions();
 				
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
+				if ($gallery->isGalleryCached()) {					
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
@@ -675,7 +675,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getVideoPage($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+	function getVideoPage($attributes) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -708,7 +708,7 @@ class SygPlugin extends SanityPluginFramework {
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+				if ($gallery->isGalleryCached()) {
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				} else {					
 					// render gallery snippet code
@@ -737,7 +737,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getVideoCarousel($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+	function getVideoCarousel($attributes) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -762,21 +762,18 @@ class SygPlugin extends SanityPluginFramework {
 				// put the options in the view context
 				$this->data['options'] = $this->getOptions();
 				
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+				if ($gallery->isGalleryCached()) {
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 						
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 				} else {
-					// put the feed in the view
-					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
-		
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = SygConstant::MSG_EX_GALLERY_NOT_CACHED;
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-						
-					// render gallery snippet code
-					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+					return $this->render('exception');
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
