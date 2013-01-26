@@ -32,9 +32,6 @@ $wideOrNormal = SygUtil::extractType($syg_youtube_videoformat);
 $video_width = SygUtil::extractWidth($syg_youtube_videoformat);
 $video_height = ($wideOrNormal == 'n') ? SygUtil::getNormalHeight($video_width) : $height = SygUtil::getWideHeight($video_width);
 
-/*$width += 20;
-$height += 20;*/
-
 if (array_key_exists ('ui', $_GET)) $uiType = $_GET['ui'];
 if (array_key_exists ('cache', $_GET)) $cache = $_GET['cache'];
 ?>
