@@ -71,13 +71,6 @@ class SygPlugin extends SanityPluginFramework {
 		if ($_COOKIE['syg-role'] != $this->getCurrentUserRole()) {
 			setcookie('syg-role', $this->getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
 		}
-
-		// front end code block
-		if (!is_admin()) {
-			// add shortcodes
-			add_shortcode('syg_gallery', array($this, 'getGallery'));
-			add_shortcode('syg_page', array($this, 'getVideoPage'));
-		}
 	}
 
 	/**
@@ -611,11 +604,11 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getGallery($attributes) {
+	public function getGallery($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
-
+		
 		extract(shortcode_atts(array('id' => null), $attributes));
 
 		if (!empty($id)) {
@@ -636,7 +629,7 @@ class SygPlugin extends SanityPluginFramework {
 				// put the options in the view context
 				$this->data['options'] = $this->getOptions();
 				
-				if ($gallery->isGalleryCached()) {					
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
@@ -675,7 +668,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getVideoPage($attributes) {
+	public function getVideoPage($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -708,7 +701,7 @@ class SygPlugin extends SanityPluginFramework {
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
-				if ($gallery->isGalleryCached()) {
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				} else {					
 					// render gallery snippet code
@@ -737,7 +730,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	function getVideoCarousel($attributes) {
+	public function getVideoCarousel($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -762,7 +755,7 @@ class SygPlugin extends SanityPluginFramework {
 				// put the options in the view context
 				$this->data['options'] = $this->getOptions();
 				
-				if ($gallery->isGalleryCached()) {
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 						
@@ -828,7 +821,7 @@ class SygPlugin extends SanityPluginFramework {
 				wp_enqueue_script('jquery');
 	
 				// js to include
-				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'core/lib/syg.lib.admin.js', array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'core/lib/syg.lib.admin.min.js.php', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-admin');
 	
 				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . '3rdParty/colorPicker/colorpicker.js', array(), SygConstant::SYG_VERSION, true);
@@ -860,7 +853,7 @@ class SygPlugin extends SanityPluginFramework {
 				}
 				
 				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
-				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.js';
+				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.min.js.php';
 				
 				// carousel resources url
 				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
