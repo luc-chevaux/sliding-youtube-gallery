@@ -80,14 +80,12 @@ jQuery(document).ready(function($){
 		<?php if ($cache == 'on') { ?>			
 			// get the data
 			$.getJSON('<?php echo $firstPageUrl; ?>', function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
-			// add pagination events
-			$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
 		<?php } else { ?>
 			// get the data
 			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'], function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
-			// add pagination events
-			$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
 		<?php } ?>
+		// add pagination events
+		$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
 		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
