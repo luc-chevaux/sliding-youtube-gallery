@@ -71,7 +71,7 @@ img.play-icon-<?php echo $id; ?>{
     margin: 0 !important;
 }
 
-a.sygVideo {
+a.sygVideo-<?php echo $id; ?> {
 	display: block;
 	position:relative;
 	text-decoration: none;
