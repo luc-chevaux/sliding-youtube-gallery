@@ -44,7 +44,7 @@ jQuery.noConflict();
 				html = html + '<tr>';
 				
 				html = html + '<td class="syg_video_page_thumb-' + gid + '">';
-				html = html + '<a class="sygVideo" href="http://www.youtube.com/watch?v=' + val.video_id + '&autoplay=1" title="'+ val.video_title +'">';
+				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '&autoplay=1" title="'+ val.video_title +'">';
 				if (options['description_show']) {
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + val.video_description + '" title="' + val.video_description + '"/>';
 				} else {
@@ -175,7 +175,7 @@ jQuery.noConflict();
 		 */
 		addFancyBoxSupport : function (gid, options) {
 			// add fancybox to each sygVideo css class
-			$(".sygVideo").click(function() {
+			$(".sygVideo-" + gid).click(function() {
 				$.fancybox({
 					'padding' : 0,
 					'autoScale' : false,
