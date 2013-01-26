@@ -208,7 +208,9 @@ class SygUtil {
 		$olddate=time()-3600;
 		$dircontent = scandir($folder);
 		foreach($dircontent as $filename) {
-			if (strlen($filename)==32 && filemtime($folder.$filename) && filemtime($folder.$filename)<$olddate) unlink($folder.$filename);
+			if (strlen($filename)>12 && filemtime($folder.$filename) && filemtime($folder.$filename)<$olddate) {
+				unlink($folder.$filename);
+			}
 		}
 	}
 	
