@@ -295,17 +295,28 @@ class SygUtil {
 		$image = imagecreatefromjpeg($target);
 		$frame = imagecreatefrompng($src);
 		
-		imagealphablending($frame, TRUE);
-		imagesavealpha($frame, TRUE);
-		
 		$x = ceil(($style->getThumbWidth()/2) - ($style->getThumbOverlaySize()/2));
 		$y = ceil(($style->getThumbHeight()/2) - ($style->getThumbOverlaySize()/2));
 		
 		// imagecopymerge ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h , int $pct )
-		imagecopy($image, $frame, $x, $y, 0, 0, $style->getThumbOverlaySize(), $style->getThumbOverlaySize());
+		self::imagecopymerge_alpha($image, $frame, $x, $y, 0, 0, $style->getThumbOverlaySize(), $style->getThumbOverlaySize(), $style->getThumbButtonOpacity()*100);
 		
 		// Save the image to a file
 		imagejpeg($image, $target);
+	}
+	
+	public static function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
+		// creating a cut resource
+		$cut = imagecreatetruecolor($src_w, $src_h);
+	
+		// copying relevant section from background to the cut resource
+		imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
+			
+		// copying relevant section from watermark to the cut resource
+		imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
+			
+		// insert cut resource to destination image
+		imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
 	}
 }
 ?>
