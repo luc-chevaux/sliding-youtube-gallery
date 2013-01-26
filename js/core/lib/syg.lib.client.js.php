@@ -178,7 +178,6 @@ jQuery.noConflict();
 			$(".sygVideo-" + gid).click(function() {
 				$.fancybox({
 					'padding' : 0,
-					'autoScale' : false,
 					'transitionIn' : 'none',
 					'transitionOut'	: 'none',
 					'title' : this.title,
@@ -189,9 +188,10 @@ jQuery.noConflict();
 					'type' : 'swf',
 					'swf' : {
 						'wmode'	: 'transparent',
-						'allowfullscreen' : 'true'
+						'allowfullscreen' : 'true',
+						'allowscriptaccess' : 'always'
 					}
-			});
+				});
 
 				return false;
 			});
