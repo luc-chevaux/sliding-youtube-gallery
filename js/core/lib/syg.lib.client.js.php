@@ -71,7 +71,7 @@ jQuery.noConflict();
 				
 				if (val.video_cached == false) {
 					thumbImage = options['thumbnail_image'];
-					if (!thumbImage) {
+					if ($.isNumeric(thumbImage)) {
 						overlayButtonSrc = options['img_root'] + '/button/play-the-video_' + thumbImage + '.png';
 					} else {
 						overlayButtonSrc = options['img_root'] + '/button/play-the-video_1.png';
@@ -198,6 +198,9 @@ jQuery.noConflict();
 			$(".sygVideo-" + gid).click(function() {
 				$.fancybox({
 					'padding' : 0,
+					'beforeShow' : function(){
+  						$(".fancybox-skin").css("backgroundColor","black");
+ 					},
 					'transitionIn' : 'none',
 					'transitionOut'	: 'none',
 					'title' : this.title,

@@ -72,6 +72,8 @@ img.play-icon-<?php echo $id; ?>{
 	background-color: transparent !important;
     padding: 0 !important;
     margin: 0 !important;
+    opacity: <?php echo $syg_thumbnail_buttonopacity; ?>;
+	filter:alpha(opacity=<?php echo $syg_thumbnail_buttonopacity*100;?>);
 }
 
 a.sygVideo-<?php echo $id; ?> {
@@ -219,6 +221,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 #left-carousel-button-<?php echo $id; ?> {
     left: 25px;
     opacity: 0.3;
+    filter:alpha(opacity=30);	
     position: absolute;
     bottom: 25px;
     display: inline;
@@ -226,6 +229,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 
 #right-carousel-button-<?php echo $id; ?> {
     opacity: 0.3;
+    filter:alpha(opacity=30);	
     position: absolute;
     right: 25px;
     bottom: 25px;
