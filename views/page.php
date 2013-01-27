@@ -19,7 +19,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 
 <!-- Gallery -->
 
-<div id="syg_video_page-<?php echo $gallery->getId();?>">
+<div id="syg_video_page-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>">
 	<div class="syg_video_page_container-<?php echo $gallery->getId();?>" id="syg_video_page_container-<?php echo $gallery->getId();?>">
 		
 		<?php 
@@ -43,9 +43,13 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 </div>
 
 <!-- registra script -->
-<?php 
+<?php
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
 wp_register_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+// js to include
+$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$gallery->getId();
+wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
+wp_enqueue_script('syg-action-'.$gallery->getId());
 ?>
