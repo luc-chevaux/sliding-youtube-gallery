@@ -106,8 +106,13 @@ class SygPlugin extends SanityPluginFramework {
 	 * @name setDefaultOption
 	 * @category configuration
 	 * @since 1.3.0
+	 * @todo gestire le opzioni in opportuna mappa per ciclarla
 	 */
 	public static function setDefaultOption() {
+		
+		if (!get_option('syg_option_description_length'))
+			add_option('syg_option_description_length',
+					SygConstant::SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH);
 		if (!get_option('syg_option_apikey'))
 			add_option('syg_option_apikey',
 					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
