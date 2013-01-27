@@ -28,6 +28,24 @@ jQuery.noConflict();
 			$('#syg_video_container-' + gid ).css('height', 'auto');
 		},
 		
+		/**
+		 * word truncation function
+		 */
+		wordTruncate : function truncate(str, limit) { 
+			var bits, i; 
+			if ("string" !== typeof str) { 
+				return ''; 
+			} 
+			bits = str.split(''); 
+			if (bits.length > limit) { 
+				for (i = bits.length - 1; i > -1; --i) { 
+					if (i > limit) { bits.length = i; } else if (' ' === bits[i]) { bits.length = i; break; } 
+				} 
+				bits.push('...'); 
+			} 
+			return bits.join(''); 
+		},
+		
 		/* 
 		 * function that loads the data in the table
 		 */ 
@@ -35,7 +53,7 @@ jQuery.noConflict();
 			data = $.parseJSON(JSON.stringify(data));
 			var html;
 			
-			$('table[class^=video_entry_table-]').remove();
+			$('table[class^=video_entry_table-' + gid + ']').remove();
 			
 			$.hideLoad(gid);
 			$.each(data, function(key, val) {
@@ -51,15 +69,15 @@ jQuery.noConflict();
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="play" title="play"/>';
 				}
 				
-				 
-				thumbImage = options['thumbnail_image'];
-				if (!thumbImage) {
-					overlayButtonSrc = options['img_root'] + '/button/play-the-video_' + thumbImage + '.png';
-				} else {
-					overlayButtonSrc = options['img_root'] + '/button/play-the-video_1.png';
-				}				
-				
-				html = html + '<img class="play-icon-' + gid + '" src="' + overlayButtonSrc + '" alt="play">';
+				if (val.video_cached == false) {
+					thumbImage = options['thumbnail_image'];
+					if (!thumbImage) {
+						overlayButtonSrc = options['img_root'] + '/button/play-the-video_' + thumbImage + '.png';
+					} else {
+						overlayButtonSrc = options['img_root'] + '/button/play-the-video_1.png';
+					}
+					html = html + '<img class="play-icon-' + gid + '" src="' + overlayButtonSrc + '" alt="play">';
+				}
 				
 				if (options['description_showduration']) {
 					html = html + '<span class="video_duration-' + gid + '">' + val.video_duration + '</span>';
@@ -69,22 +87,6 @@ jQuery.noConflict();
 				
 				html = html + '<td class="syg_video_page_description">';
 				html = html + '<h4 class="video_title-' + gid + '"><a href="' + val.video_watch_page_url + '" target="_blank">' + val.video_title + '</a></h4>';
-				if (options['description_show']) {
-					html = html + '<p>' + val.video_description + '</p>';
-				}
-					
-				if (options['description_showcategories']) {
-					html = html + '<span class="video_categories"><i>Category:</i>&nbsp;&nbsp; ' + val.video_category + '</span>';
-				}
-				
-				if (options['description_showtags']) {
-					html = html + '<span class="video_tags"><i>Tags:</i>&nbsp;&nbsp;';
-					tags = val.video_tags;
-					for(var i in tags) {
-    					html = html + tags[i] + ' | '; 
-					}
-					html = html + '</span>';
-				}
 				
 				if (options['description_showratings']) {
 						rating = val.video_ratings;
@@ -100,6 +102,24 @@ jQuery.noConflict();
 							html = html + '</span>';
 						}
 				}
+				
+				if (options['description_showtags']) {
+					html = html + '<span class="video_tags"><i>Tags:</i>&nbsp;';
+					tags = val.video_tags;
+					for(var i in tags) {
+    					html = html + tags[i] + ' | '; 
+					}
+					html = html + '</span>';
+				}
+				
+				if (options['description_showcategories']) {
+					html = html + '<span class="video_categories"><i>Category:</i>&nbsp;' + val.video_category + '</span>';
+				}
+				
+				if (options['description_show']) {
+					html = html + '<p class="textual_video_description">' + $.wordTruncate(val.video_description, options['description_length']) + '</p>';
+				}
+				
 				html = html + '</td>';
 				html = html + '</tr>';
 				html = html + '</table>';
@@ -151,7 +171,7 @@ jQuery.noConflict();
 				$('#pagination-bottom-' + gid + ' li')
 					.attr({'class' : 'other_page'});
 				$('#pagination-top-' + gid + ' li')
-				.attr({'class' : 'other_page'});
+					.attr({'class' : 'other_page'});
 				
 				var buttonPressed = $(this).attr('id');
 				var button =  buttonPressed.replace('bottom-','');

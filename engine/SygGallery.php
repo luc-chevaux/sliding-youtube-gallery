@@ -201,7 +201,7 @@ class SygGallery {
 	
 	/**
 	 * @name isGalleryCached
-	 * @category check if a gallery is checked
+	 * @category check if a gallery is cached
 	 * @since 1.4.0
 	 * @return bool
 	 */

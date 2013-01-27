@@ -84,12 +84,14 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 					$start = $page_number * $per_page;
 					$dao = new SygDao();
 					$gallery = $dao->getSygGalleryById($_GET['id']);
+					$cached = $gallery->isGalleryCached();
 					$youtube = new SygYouTube();
 					$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
 					
 					$videos_to_json = array();
 					foreach ($videos as $entry) {
 						$element['video_id'] = $entry->getVideoId();
+						$element['video_cached'] = $cached;
 						$element['video_description'] = $entry->getVideoDescription();
 						$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
 						$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();

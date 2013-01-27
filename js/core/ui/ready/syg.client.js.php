@@ -54,7 +54,7 @@ jQuery(document).ready(function($){
 	options['description_showcategories'] = <?php echo $syg_description_showcategories; ?>; // boolean
 	options['description_showtags'] = <?php echo $syg_description_showtags; ?>; // boolean
 	options['description_showratings'] = <?php echo $syg_description_showratings; ?>; // boolean
-	
+	options['description_length'] = <?php echo $syg_option_description_length; ?>;
 	options['json_query_if_url'] = '<?php echo $syg->getJsonQueryIfUrl(); ?>'; // string
 	
 	options['video_width'] = <?php echo $video_width; ?>; // int

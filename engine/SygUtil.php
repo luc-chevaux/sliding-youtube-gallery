@@ -290,6 +290,14 @@ class SygUtil {
 		}
 	}
 	
+	/**
+	 * @name addOverlayButton
+	 * @category add overlay button to thumbnail image
+	 * @since 1.4.0
+	 * @param $target
+	 * @param $src
+	 * @param SygStyle $style
+	 */
 	public static function addOverlayButton ($target, $src, SygStyle $style) {
 		// If you know your originals are of type PNG.
 		$image = imagecreatefromjpeg($target);
@@ -305,6 +313,21 @@ class SygUtil {
 		imagejpeg($image, $target);
 	}
 	
+	/**
+	 * @name imagecopymerge_alpha
+	 * @category merge image with transparency
+	 * @since 1.4.0
+	 * @param $dst_im
+	 * @param $src_im
+	 * @param $dst_x
+	 * @param $dst_y
+	 * @param $src_x
+	 * @param $src_y, 
+	 * @param $src_w
+	 * @param $src_h
+	 * @param $pct
+	 * @return $value
+	 */
 	public static function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
 		// creating a cut resource
 		$cut = imagecreatetruecolor($src_w, $src_h);
@@ -317,6 +340,62 @@ class SygUtil {
 			
 		// insert cut resource to destination image
 		imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
+	}
+	
+	/**
+	 * @name getHEXValueFromRGB
+	 * @category get rgb value from hex color
+	 * @since 1.4.0
+	 * @param $color
+	 * @return mixed
+	 */
+	private function getRGBValueFromHex($color) {
+		// assume $color is in the form #xxxxxx
+		return array(
+				hexdec(substr($color, 1, 2)),
+				hexdec(substr($color, 3, 2)),
+				hexdec(substr($color, 5, 2)),
+		);
+	}
+	
+	/**
+	 * @name getHEXValueFromRGB
+	 * @category get a hex value from rgb color
+	 * @since 1.4.0
+	 * @param $value
+	 * @return mixed
+	 */
+	private function getHEXValueFromRGB($value) {
+		return sprintf('#%02x%02x%02x', $value[0], $value[1], $value[2]);
+	}
+	
+	/**
+	 * @name getJollyColor
+	 * @category get a midval between two hex colors
+	 * @since 1.4.0
+	 * @param $hexOne
+	 * @param $hexTwo
+	 * @return $jolly
+	 */
+	public static function getJollyColor($hexOne, $hexTwo) {
+		// calculate jolly color
+		$index = 0.2;
+		$rgbOne = self::getRGBValueFromHex($hexOne);
+		$rgbTwo = self::getRGBValueFromHex($hexTwo);
+		
+		$merged = array();
+		for ($i=0;$i<3;$i++) {
+			$merged[$i] = ceil(($rgbOne[$i] + $rgbTwo[$i])/2);
+		}
+				
+		$jolly = self::getHEXValueFromRGB($merged);
+
+		return $jolly;
+	}
+	
+	public static function wordsLimit($string, $word_limit) {
+		$words = explode(" ",$string);
+		return implode(" ",array_splice($words,0,$word_limit));
 	}
 }
 ?>

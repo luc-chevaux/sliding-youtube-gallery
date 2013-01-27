@@ -28,6 +28,29 @@
 			<?php wp_nonce_field('settings','nonce_field'); ?>
 			<input type="hidden" name="syg_submit_hidden" value="Y">
 			
+			<!-- general settings -->
+			<fieldset>
+				<legend><strong>General settings</strong></legend>
+				<!-- limit word count -->
+				<label for="syg_option_description_length">Limit description length up to: </label>
+				<select id="syg_option_description_length" name="syg_option_description_length">
+					<option value="100" <?php if ($options['syg_option_description_length'] == 100) echo 'selected="selected"'; ?>>100</option>
+					<option value="150" <?php if ($options['syg_option_description_length'] == 150) echo 'selected="selected"'; ?>>150</option>
+					<option value="200" <?php if ($options['syg_option_description_length'] == 200) echo 'selected="selected"'; ?>>200</option>
+					<option value="250" <?php if ($options['syg_option_description_length'] == 250) echo 'selected="selected"'; ?>>250</option>
+					<option value="300" <?php if ($options['syg_option_description_length'] == 300) echo 'selected="selected"'; ?>>300</option>
+					<option value="350" <?php if ($options['syg_option_description_length'] == 350) echo 'selected="selected"'; ?>>350</option>
+					<option value="400" <?php if ($options['syg_option_description_length'] == 400) echo 'selected="selected"'; ?>>400</option>
+				</select>
+			</fieldset>
+			
+			<!-- plugin admin settings -->
+			<fieldset>
+				<legend><strong>Plugin admin settings</strong></legend>
+				<label for="syg_option_numrec">Number of records displayed: </label>
+				<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="3">
+			</fieldset>
+			
 			<!-- youtube settings -->
 			<fieldset>
 				<legend><strong>YouTube settings</strong></legend>
@@ -40,13 +63,6 @@
 				<input type="radio" name="syg_option_which_thumb" value="1" <?php if ($options['syg_option_which_thumb'] == "1") echo 'checked="checked"'; ?>/> Medium quality thumbnail (320px X 180px)
 				<input type="radio" name="syg_option_which_thumb" value="2" <?php if ($options['syg_option_which_thumb'] == "2") echo 'checked="checked"'; ?>/> High quality thumbnail (480px X 360px) 
 				<input type="radio" name="syg_option_which_thumb" value="3" <?php if ($options['syg_option_which_thumb'] == "3") echo 'checked="checked"'; ?>/> Super definition (640px X 480px) 
-			</fieldset>
-			
-			<!-- plugin admin settings -->
-			<fieldset>
-				<legend><strong>Plugin admin settings</strong></legend>
-				<label for="syg_option_numrec">Number of records displayed: </label>
-				<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="3">
 			</fieldset>
 			
 			<!-- video page settings -->

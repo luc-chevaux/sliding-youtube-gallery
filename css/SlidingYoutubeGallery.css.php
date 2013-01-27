@@ -17,13 +17,16 @@ if (file_exists($root.'/wp-load.php')) {
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
-
+require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUtil.php');
 $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);
 extract ($option);
 $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
+
+$jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_description_fontcolor);
+
 ?>
 
 /* general styles */
@@ -100,6 +103,7 @@ h4.video_title-<?php echo $id; ?> {
 	font-weight: bold;
 	width: 100%;
 	border-bottom: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;
+	margin: 0 auto !important;
 }
 
 h4.video_title-<?php echo $id; ?> a {
@@ -112,7 +116,7 @@ h4.video_title-<?php echo $id; ?> a {
 	border-width: 0px 0px 0px 0px;
 	margin: 0;
 	padding: 0;
-	
+	background-color: transparent !important;
 }
 
 .syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> td {
@@ -138,6 +142,11 @@ h4.video_title-<?php echo $id; ?> a {
     width: auto;
 }
 
+.video_entry_table-<?php echo $id; ?> td {
+	padding: <?php echo ceil ($syg_box_padding/2); ?>px <?php echo ceil ($syg_box_padding/2); ?>px 0 0;
+    text-align: left;
+}
+
 .video_entry_table-<?php echo $id; ?> td p {
 	margin: 0px 0px 3%;
 	font-size: 95%;
@@ -145,25 +154,36 @@ h4.video_title-<?php echo $id; ?> a {
 
 .video_entry_table-<?php echo $id; ?> td span.video_tags {
 	font-size: 80%;
-	display: block;
+	float: right;
+	color: <?php echo $jollyColor; ?>;
+	margin: <?php echo ceil ($syg_box_padding/6); ?>px <?php echo ceil ($syg_box_padding/6); ?>px 0px 0px;
 }
 
 .video_entry_table-<?php echo $id; ?> td span.video_ratings {
 	font-size: 80%;
-	display: block;
+	float: right;
+	color: <?php echo $jollyColor; ?>;
+	margin: <?php echo ceil ($syg_box_padding/6); ?>px <?php echo ceil ($syg_box_padding/6); ?>px 0px 0px;
 }
 
 .video_entry_table-<?php echo $id; ?> td span.video_categories {
 	font-size: 80%;
-	display: block;
+	float: right;
+	color: <?php echo $jollyColor; ?>;
+	margin: <?php echo ceil ($syg_box_padding/6); ?>px <?php echo ceil ($syg_box_padding/6); ?>px 0px 0px;
+}
+
+.textual_video_description {
+	display: inline-block;
 }
 
 .syg_video_page_thumb-<?php echo $id; ?> {
 	width: <?php echo $syg_thumbnail_width; ?>px;
+	text-align: left !important;
 }
 
 .syg_video_page_description {
-	
+	padding: <?php echo ceil ($syg_box_padding/2); ?>px 0px 0px 0px !important;
 }
 
 /* video-gallery and carousel styles */
@@ -215,14 +235,16 @@ h4.video_title-<?php echo $id; ?> a {
 #carousel-title-<?php echo $id; ?> {
 	position: absolute;
 	top: <?php echo $syg_box_padding; ?>px;
-	width: <?php echo ceil($syg_box_width*0.80); ?>px;
-	height: <?php echo $syg_description_fontsize; ?>px;
-	right: 10%;
-	left: 10%;
+	width: <?php echo ceil($syg_box_width*0.90); ?>px;
+	right: 5%;
+	left: 5%;
 	overflow: hidden;
-	font-size: <?php echo $syg_description_fontsize; ?>;
 	line-height: 1;
 	text-align: center;
+	color: <?php echo $syg_thumbnail_bordercolor; ?>;
+	font-size: 120%;
+	font-weight: bold;
+	margin: 0 auto !important;
 }
 
 #syg_video_container-<?php echo $id; ?> {
@@ -230,7 +252,7 @@ h4.video_title-<?php echo $id; ?> a {
 	display: inline-block;
 	width: 100%;
 	height: 100px;
-	margin-top: <?php echo ceil($syg_box_padding*0.25); ?>px;
+	/*margin-top: <?php echo ceil($syg_box_padding*0.25); ?>px;*/
 	text-align: center;
 	position:relative;
 }
@@ -309,8 +331,15 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	display: inline-block;
 	float: right;
 	clear: both;
-	magin: 0;
 	padding: 0;
+}
+
+#paginator-top-<?php echo $id; ?> {
+	margin: -<?php echo ceil($syg_box_padding/2); ?>px -<?php echo ceil($syg_box_padding/2); ?>px 0px 0px;
+}
+
+#paginator-bottom-<?php echo $id; ?> {
+	margin: 0px -<?php echo ceil($syg_box_padding/2); ?>px -<?php echo ceil($syg_box_padding/2); ?>px 0px;
 }
 
 #pagination-top-<?php echo $id; ?>, #pagination-bottom-<?php echo $id; ?> {
@@ -323,7 +352,7 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	list-style: none;
 	float: left;
 	line-height: 1;
-	margin-left: <?php echo $syg_box_padding; ?>px;
+	margin-left: <?php echo ceil($syg_box_padding/2); ?>px;
 	padding: <?php echo intval($syg_box_padding*0.2); ?>px;
 	
 	box-shadow: 0 0 <?php echo $syg_option_paginator_shadowsize; ?>px <?php echo $syg_option_paginator_shadowcolor; ?>;
