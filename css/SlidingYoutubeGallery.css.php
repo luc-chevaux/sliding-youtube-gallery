@@ -219,11 +219,11 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 }
 
 #left-carousel-button-<?php echo $id; ?> {
-    left: 25px;
     opacity: 0.3;
     filter:alpha(opacity=30);	
     position: absolute;
-    bottom: 25px;
+    left: <?php echo $syg_box_padding; ?>px;
+    bottom: <?php echo $syg_box_padding; ?>px;
     display: inline;
 }
 
@@ -231,17 +231,23 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
     opacity: 0.3;
     filter:alpha(opacity=30);	
     position: absolute;
-    right: 25px;
-    bottom: 25px;
+    right: <?php echo $syg_box_padding; ?>px;
+    bottom: <?php echo $syg_box_padding; ?>px;
     display: inline;
+}
+
+#left-carousel-button-<?php echo $id; ?> img, #right-carousel-button-<?php echo $id; ?> img {
+	border: 0 !important;
+	background: transparent !important;
+	margin: 0;
+	padding: 0;
 }
 
 #carousel-title-<?php echo $id; ?> {
 	position: absolute;
 	top: <?php echo $syg_box_padding; ?>px;
-	width: <?php echo ceil($syg_box_width*0.90); ?>px;
-	right: 5%;
-	left: 5%;
+	right: <?php echo $syg_box_padding; ?>px;
+	left: <?php echo $syg_box_padding; ?>px;
 	overflow: hidden;
 	line-height: 1;
 	text-align: center;
