@@ -102,13 +102,13 @@ h4.video_title-<?php echo $id; ?> {
 	font-size: 130%;
 	font-weight: bold;
 	width: 100%;
-	border-bottom: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;
+	border-bottom: <?php echo ceil ($syg_thumbnail_bordersize/2); ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;
 	margin: 0 auto !important;
 }
 
-h4.video_title-<?php echo $id; ?> a {
-	color: <?php echo $syg_thumbnail_bordercolor; ?>;
-	text-decoration: none;
+h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:visited, h4.video_title-<?php echo $id; ?> a:hover {
+	color: <?php echo $syg_thumbnail_bordercolor; ?> !important;
+	text-decoration: none !important;
 }
 
 .syg_video_page_container-<?php echo $id; ?> .video_entry_table-<?php echo $id; ?> {
@@ -139,7 +139,7 @@ h4.video_title-<?php echo $id; ?> a {
     -moz-border-radius: <?php echo $syg_box_radius; ?>px;
     display: inline-block;
     padding: <?php echo $syg_box_padding; ?>px;
-    width: auto;
+    width: <?php echo ($syg_box_width-(2*$syg_box_padding)); ?>px;
 }
 
 .video_entry_table-<?php echo $id; ?> td {
