@@ -1,4 +1,4 @@
-<div id="paginator-<?php echo $paginator_area.'-'.$gallery->getId(); ?>">			
+<div id="paginator-<?php echo $paginator_area.'-'.$gallery->getId(); ?>" style="display: none;">			
 	<ul id="pagination-<?php echo $paginator_area.'-'.$gallery->getId(); ?>">
 		<?php
 		// show page links
