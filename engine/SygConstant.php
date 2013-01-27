@@ -290,7 +290,8 @@ class SygConstant {
 	const SYG_OPTION_DEFAULT_WHICH_THUMB = '2';
 	const SYG_OPTION_DEFAULT_NUM_REC = '5';
 	const SYG_OPTION_DEFAULT_PAGENUM_REC = '5';
-	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';		
+	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';	
+	const SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH = 200;
 	
 	/**
 	 * YouTube default options
