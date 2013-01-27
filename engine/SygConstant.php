@@ -328,20 +328,20 @@ class SygConstant {
 	
 	// general menu
 	const BE_MENU_HOME = 'Home';
-	const BE_MENU_MANAGE_GALLERIES = 'Manage galleries';
-	const BE_MENU_MANAGE_STYLES = 'Manage styles';
-	const BE_MENU_MANAGE_SETTINGS = 'General Settings';
-	const BE_MENU_CONTACTS_AND_SUPPORT = 'Contact & Support';
+	const BE_MENU_MANAGE_GALLERIES = 'Galleries';
+	const BE_MENU_MANAGE_STYLES = 'Themes';
+	const BE_MENU_MANAGE_SETTINGS = 'Options';
+	const BE_MENU_CONTACTS_AND_SUPPORT = 'Support';
 
 	// context menu
-	const BE_MENU_ADD_NEW_STYLE = 'Add new Style';
+	const BE_MENU_ADD_NEW_STYLE = 'Add new Theme';
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
 
 	// page title
-	const BE_TITLE_EDIT_GALLERY = 'Edit your gallery';
-	const BE_TITLE_EDIT_STYLE = 'Edit your style';
-	const BE_TITLE_EDIT_SETTINGS = 'Edit the plugin settings';
+	const BE_TITLE_EDIT_GALLERY = 'Gallery editor';
+	const BE_TITLE_EDIT_STYLE = 'Theme editor';
+	const BE_TITLE_EDIT_SETTINGS = 'Options';
 	
 	/**
 	 * Exceptions

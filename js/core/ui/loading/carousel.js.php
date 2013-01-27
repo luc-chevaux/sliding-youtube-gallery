@@ -25,5 +25,21 @@ jQuery(window).load(function() {
 		.addClass('syg_video_carousel-<?php echo $id; ?>');
 		
 	/* remove display none */
-	jQuery('#hidden-carousel-layer_<?php echo $id;?>').removeAttr('style');
+	jQuery('#hidden-carousel-layer_<?php echo $id;?>').removeAttr('style');	
+	
+	jQuery("#left-carousel-button-<?php echo $id; ?>").on('mouseenter', function () {
+	    jQuery(this).find('.left-carousel-button-<?php echo $id; ?>').fadeTo('fast', 1);
+	});
+	
+	jQuery("#left-carousel-button-<?php echo $id; ?>").on('mouseleave', function () {
+	    jQuery(this).find('.left-carousel-button-<?php echo $id; ?>').fadeTo('slow', 0.3);
+	});
+	
+	jQuery("#right-carousel-button-<?php echo $id; ?>").on('mouseenter', function () {
+	   jQuery(this).find('.right-carousel-button-<?php echo $id; ?>').fadeTo('fast', 1);
+	});
+	
+	jQuery("#right-carousel-button-<?php echo $id; ?>").on('mouseleave', function () {
+	   jQuery(this).find('.right-carousel-button-<?php echo $id; ?>').fadeTo('slow', 0.3);
+	});
 });

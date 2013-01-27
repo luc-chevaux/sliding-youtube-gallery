@@ -208,7 +208,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 }
 
 .syg_video_carousel-<?php echo $id; ?> {
-	height: <?php echo ceil($syg_thumbnail_height*2.5);?>px;
+	height: <?php echo ceil($syg_thumbnail_height*2.3);?>px;
 }
 
 #hidden-carousel-layer_<?php echo $id; ?> {
@@ -219,21 +219,21 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 }
 
 #left-carousel-button-<?php echo $id; ?> {
-    opacity: 0.3;
     filter:alpha(opacity=30);	
     position: absolute;
     left: <?php echo $syg_box_padding; ?>px;
-    bottom: <?php echo $syg_box_padding; ?>px;
+    bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
     display: inline;
+    z-index: 1000000;
 }
 
 #right-carousel-button-<?php echo $id; ?> {
-    opacity: 0.3;
     filter:alpha(opacity=30);	
     position: absolute;
     right: <?php echo $syg_box_padding; ?>px;
-    bottom: <?php echo $syg_box_padding; ?>px;
+    bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
     display: inline;
+    z-index: 1000000;
 }
 
 #left-carousel-button-<?php echo $id; ?> img, #right-carousel-button-<?php echo $id; ?> img {
@@ -241,6 +241,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 	background: transparent !important;
 	margin: 0;
 	padding: 0;
+	opacity: 0.3;
 }
 
 #carousel-title-<?php echo $id; ?> {
@@ -252,7 +253,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 	line-height: 1;
 	text-align: center;
 	color: <?php echo $syg_thumbnail_bordercolor; ?>;
-	font-size: 120%;
+	font-size: <?php echo ceil ($syg_description_fontsize*1.30); ?>px;
 	font-weight: bold;
 	margin: 0 auto !important;
 }

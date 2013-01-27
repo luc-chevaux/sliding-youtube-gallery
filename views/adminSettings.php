@@ -42,11 +42,8 @@
 					<option value="350" <?php if ($options['syg_option_description_length'] == 350) echo 'selected="selected"'; ?>>350</option>
 					<option value="400" <?php if ($options['syg_option_description_length'] == 400) echo 'selected="selected"'; ?>>400</option>
 				</select>
-			</fieldset>
-			
-			<!-- plugin admin settings -->
-			<fieldset>
-				<legend><strong>Plugin admin settings</strong></legend>
+				
+				<!-- number of records displayed -->
 				<label for="syg_option_numrec">Number of records displayed: </label>
 				<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="3">
 			</fieldset>

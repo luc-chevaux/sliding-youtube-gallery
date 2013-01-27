@@ -20,7 +20,7 @@
 		<?php include 'inc/statusBar.inc.php'; ?>
 
 		<!-- Title Page -->
-		<h3><?php echo SygConstant::BE_TITLE_EDIT_GALLERY; ?></h3>
+		<h3><?php echo SygConstant::BE_TITLE_EDIT_STYLE; ?></h3>
 		
 		<!-- Welcome Message -->
 		<p class="webengText">
