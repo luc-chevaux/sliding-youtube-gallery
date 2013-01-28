@@ -79,12 +79,13 @@ To customize your galleries you can use the plugin administration page. If you n
 == Changelog ==
 
 = 1.4.0.RC =
-* Performance improvement with content caching and minified javascript, also for more than one component per page
+* New 3d Cloud Carousel Component
+* Performance improvement with content caching and minified javascript
+* Multiple galleries in one page better support
 * User and roles compliant
-* Added new carousel 3d component
 * General interface improvements
 * YouTube thumbnail quality selector
-* Security fixes
+* Security update
 
 = 1.3.6 =
 * Gallery and video validation
@@ -122,7 +123,9 @@ To customize your galleries you can use the plugin administration page. If you n
 == Upgrade Notice ==
 
 = 1.4.0.RC =
-- Performance improvement with content caching and minified javascript, also for more than one component per page
+- New 3d Cloud Carousel Component
+- Performance improvement with content caching and minified javascript
+- Multiple galleries in one page better support
 - User and roles compliant
 - Added new carousel 3d component
 - General interface improvements
