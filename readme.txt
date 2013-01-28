@@ -14,7 +14,7 @@ Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add mult
 You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.
 Users can get the video played as a nice fancybox player. If you have problems during the update, please read UPGRADE NOTICE @ [Sliding YouTube Gallery support forum](http://wordpress.org/support/plugin/sliding-youtube-gallery "Sliding YouTube Gallery support forum").  
 
-== Demo Gallery ==
+*** Sliding YouTube Gallery demo ***
 [Sliding Gallery Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-video-gallery-demo/ "Sliding Gallery Demo")
 [Video Page Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-video-page-demo/ "Video Page Demo")
 [3d Cloud Carousel Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-3d-cloud-carousel-demo/ "3d Cloud Carousel Demo")
