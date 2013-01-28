@@ -105,7 +105,8 @@ jQuery.noConflict();
 				
 				if (options['description_showtags']) {
 					html = html + '<span class="video_tags"><i>Tags:</i>&nbsp;';
-					tags = val.video_tags;
+					var taglist = val.video_tags;
+					tags = String(taglist).split('|');
 					for(var i in tags) {
     					html = html + tags[i] + ' | '; 
 					}

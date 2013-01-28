@@ -97,7 +97,19 @@ if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
 						$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
 						$element['video_title'] = $entry->getVideoTitle();
 						$element['video_category'] =$entry->getVideoCategory();
-						$element['video_tags'] = $entry->getVideoTags();
+						
+						$tags = array();
+						foreach ($entry->getCategory() as $category) {
+							if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/keywords.cat') {
+								$tags[] = $category->getTerm();
+							}
+						}
+						
+						$element['video_tags'] = implode('|', $tags);
+						
+						// @todo auth user for real tags
+						$element['video_tags'] = "none";
+						
 						$element['video_rating_info'] = $entry->getVideoRatingInfo();
 						$thumbnails = $entry->getVideoThumbnails();
 						$element['video_thumbshot'] = $thumbnails[$options['syg_option_which_thumb']]['url'];
