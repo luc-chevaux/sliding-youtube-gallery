@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
 Tested up to: 3.4
-Stable tag: 1.3.6
+Stable tag: 1.4.0.RC
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -56,6 +56,14 @@ To display a video page in a page or post, you must use the short code [syg_page
 
 To display a video page within a template you must use the getVideoPage function, for example `<?php echo getVideoPage(array('id' => 1)); ?>`.
 
+= How do I display a 3d carousel in a page or post? =
+
+To display a 3d carousel in a page or post, you must use the short code [syg_carousel id=your_gallery_id] .
+
+= How do I display a 3d carousel in a Template? =
+
+To display a 3d carousel within a template you must use the getVideoCarousel function, for example `<?php echo getVideoCarousel(array('id' => 1)); ?>`.
+
 = How can I override css settings? =
 
 To customize your galleries you can use the plugin administration page. If you need to customize something specific, you can override standard css by adding your css manually and make the single directive !important .
@@ -70,27 +78,19 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Changelog ==
 
+= 1.4.0.RC =
+* Performance improvement with content caching and minified javascript, also for more than one component per page
+* User and roles compliant
+* Added new carousel 3d component
+* General interface improvements
+* YouTube thumbnail quality selector
+* Security fixes
+
 = 1.3.6 =
-* Fixed playlist wrong video count
-
-= 1.3.5 =
-* Fixed minor bugs
-
-= 1.3.4 =
-* Bug fix, breaking plugin admin interface if options aren't valid
-
-= 1.3.3 =
 * Gallery and video validation
 * Style validation
 * Admin alerts and notices
 * User alerts 
-
-= 1.3.2 = 
-* For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
-* In gallery administration was added some extra details concerning youtube source syntax.
-
-= 1.3.1 =
-* Fixed some minor bugs
 
 = 1.3.0 =
 * Support for multiple gallery in one page
@@ -121,29 +121,19 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Upgrade Notice ==
 
+= 1.4.0.RC =
+- Performance improvement with content caching and minified javascript, also for more than one component per page
+- User and roles compliant
+- Added new carousel 3d component
+- General interface improvements
+- YouTube thumbnail quality selector
+- Security fixes
+
 = 1.3.6 =
-- Fixed playlist wrong video count
-
-= 1.3.5 =
-- Fixed minor bugs
-
-= 1.3.4 =
-- Bug fix, breaking plugin admin interface if options aren't valid
-
-= 1.3.3 =
 - Gallery and video validation
 - Style validation
 - Admin alerts and notices
 - User alerts 
-- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
-
-= 1.3.2 = 
-- For those that haven't updated from 1.0.1 or 1.2.5 yet, this fix resolve issue that doesn't permit the plugin to setup the default settings. This caused the wrong visualization of the gallery table "no gallery in database" even if the gallery was in the database.  
-- In gallery administration was added some extra details concerning youtube source syntax.
-- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
-
-= 1.3.1 =
-- Fixed some minor bugs
 - For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
 
 = 1.3.0 =
