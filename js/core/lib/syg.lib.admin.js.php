@@ -263,7 +263,7 @@ jQuery.noConflict();
 	
 				// loading data
 				var pageNum = this.id;
-				$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table=' + table + '&page_number=' + pageNum, function (data) {$.loadData(data);});
+				$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/admin.php?action=query&table=' + table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
 			});
 		},
 		
@@ -442,7 +442,7 @@ jQuery(document).ready(function($) {
 		// load if page contains a list
 		if (!id){
 			// get the data
-			$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/data.php?action=query&table='+ table + '&page_number=1', function (data) {$.loadData(data);});
+			$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=1&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
 		}
 		
 		// add pagination events

@@ -39,6 +39,9 @@ class SygStyle {
 	// recordset type
 	public static $rsType = array('%s','%s','%s','%d','%d','%d','%s','%d','%d','%s','%d','%d','%f','%d','%d','%d','%d','%d','%d');
 	
+	// attribute to exclude in serialization
+	public $exclude = array('rsType', 'exclude');
+	
 	/**
 	 * @name __construct
 	 * @category construct SygDao object
@@ -101,13 +104,20 @@ class SygStyle {
 	 * @since 1.2.5
 	 * @return string $json
 	 */
-	function getJsonData(){
+	function getJsonData() {
+		// get object attributes
 		$var = get_object_vars($this);
-		foreach($var as &$value){
-			if(is_object($value) && method_exists($value,'getJsonData')){
-				$value = $value->getJsonData();
+		
+		// get excluded data from serialization
+		$exclude = $this->getExclude();
+		
+		// walk over array and unset keys located in the exclude array
+		array_walk($var, function($val,$key) use(&$var, $exclude) {
+			if(in_array($key, $exclude)) {
+				unset($var[$key]);
 			}
-		}
+		});
+		
 		$json = $var;
 		return $json;
 	}
@@ -641,6 +651,13 @@ class SygStyle {
 		return SygStyle::$rsType;
 	}
 	
+	/**
+	 * @return the $exclude
+	 */
+	public function getExclude() {
+		return $this->exclude;
+	}
+
 	// magic functions
 	
 	public function __toString () {

@@ -46,6 +46,9 @@ class SygGallery {
 	// recordset type
 	public static $rsType = array('%s','%s','%s','%d','%d','%d','%d','%d','%d','%s','%s','%d','%d','%d','%d');
 	
+	// attribute to exclude in serialization
+	public $exclude = array('sygYouTube', 'sygDao', 'userProfile', 'jsonPath', 'thumbnailsPath', 'htmlPath', 'jsPath', 'rsType', 'exclude');
+	
 	/**
 	 * @name __construct
 	 * @category construct SygGallery object
@@ -135,12 +138,21 @@ class SygGallery {
 	 * @return string $json
 	 */
 	function getJsonData(){
+		// get object attributes
 		$var = get_object_vars($this);
-		foreach($var as &$value){
-			if(is_object($value) && method_exists($value,'getJsonData')){
-				$value = $value->getJsonData();
+		
+		// get excluded data from serialization
+		$exclude = $this->getExclude();
+		
+		// walk over array and unset keys located in the exclude array
+		array_walk($var, function($val,$key) use(&$var, $exclude) {
+			if(in_array($key, $exclude)) {
+				unset($var[$key]);
+			} else if ($val instanceof SygStyle) {
+				$val = $val->getJsonData();
 			}
-		}
+		});
+		
 		$json = $var;
 		return $json;
 	}
@@ -871,6 +883,13 @@ class SygGallery {
 		$this->cacheOn = $cacheOn;
 	}
 	
+	/**
+	 * @return the $exclude
+	 */
+	public function getExclude() {
+		return $this->exclude;
+	}
+
 	// magic functions
 	
 	public function __toString () {

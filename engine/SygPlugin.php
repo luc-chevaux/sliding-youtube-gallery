@@ -45,6 +45,7 @@ class SygPlugin extends SanityPluginFramework {
 	
 	// this attribute set the json query interface script url (data.php)
 	private $jsonQueryIfUrl;
+	private $jsonQueryIfAdminUrl;
 
 	private $syg = array();
 
@@ -96,6 +97,9 @@ class SygPlugin extends SanityPluginFramework {
 
 		// set json query interface url
 		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_URL);
+		
+		// set json query interface admin url
+		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_ADMIN_URL);
 
 		// set local object
 		$this->sygYouTube = new SygYouTube();
@@ -499,6 +503,13 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
+	 * @param field_type $jsonQueryIfAdminUrl
+	 */
+	public function setJsonQueryIfAdminUrl($jsonQueryIfAdminUrl) {
+		$this->jsonQueryIfAdminUrl = $jsonQueryIfAdminUrl;
+	}
+
+	/**
 	 * @name getHomeRoot
 	 * @category getters and setters
 	 * @since 1.0.1
@@ -556,6 +567,13 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function getJsonQueryIfUrl() {
 		return $this->jsonQueryIfUrl;
+	}
+	
+	/**
+	 * @return the $jsonQueryIfAdminUrl
+	 */
+	public function getJsonQueryIfAdminUrl() {
+		return $this->jsonQueryIfAdminUrl;
 	}
 	
 	/**
@@ -1590,6 +1608,12 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_carousel_reflopacity'] = get_option('syg_option_carousel_reflopacity');
 		
 		return $options;
+	}
+	
+	public function getJsOptions() {
+		$this->data['syg_options'] = json_encode($this->getOptions());
+		// render jsOption view
+		return $this->render('jsOption');
 	}
 
 	/**

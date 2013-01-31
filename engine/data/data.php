@@ -33,105 +33,103 @@ require_once ('../SygUtil.php');
 
 $plugin = SygPlugin::getInstance();
 
-if ($plugin->verifyAuthToken($_SESSION['request_token'])) {
-	if ($_GET['table']) {
-		switch ($_GET['table']) {
-			case 'galleries': 
-				if($_GET['page_number']) {
-					$page_number = $_GET['page_number'];
-					$current_page = $page_number;
-					$page_number -= 1;
-					$options = $plugin->getOptions();
-					$per_page = $options['syg_option_numrec']; // Per page records
-					$start = $page_number * $per_page;
-					$dao = new SygDao();
-					$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
-					$gallery_to_json = array();
-					foreach ($galleries as $gallery) {
-						array_push($gallery_to_json, $gallery->getJsonData());
-					}
-					echo json_encode ($gallery_to_json);
+if ($_GET['table']) {
+	switch ($_GET['table']) {
+		case 'galleries': 
+			if($_GET['page_number']) {
+				$page_number = $_GET['page_number'];
+				$current_page = $page_number;
+				$page_number -= 1;
+				$options = $plugin->getOptions();
+				$per_page = $options['syg_option_numrec']; // Per page records
+				$start = $page_number * $per_page;
+				$dao = new SygDao();
+				$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
+				$gallery_to_json = array();
+				foreach ($galleries as $gallery) {
+					array_push($gallery_to_json, $gallery->getJsonData());
 				}
-				break;
-			case 'styles':
-				if($_GET['page_number']) {
-					$page_number = $_GET['page_number'];
-					$current_page = $page_number;
-					$page_number -= 1;
-					$options = $plugin->getOptions();
-					$per_page = $options['syg_option_numrec']; // Per page records
-					$start = $page_number * $per_page;
-					$dao = new SygDao();
-					$styles = $dao->getAllSygStyles('OBJECT', $start, $per_page);
-					$style_to_json = array();
-					foreach ($styles as $style) {
-						array_push($style_to_json, $style->getJsonData());
-					}
-					echo json_encode ($style_to_json);
+				echo json_encode ($gallery_to_json);
+			}
+			break;
+		case 'styles':
+			if($_GET['page_number']) {
+				$page_number = $_GET['page_number'];
+				$current_page = $page_number;
+				$page_number -= 1;
+				$options = $plugin->getOptions();
+				$per_page = $options['syg_option_numrec']; // Per page records
+				$start = $page_number * $per_page;
+				$dao = new SygDao();
+				$styles = $dao->getAllSygStyles('OBJECT', $start, $per_page);
+				$style_to_json = array();
+				foreach ($styles as $style) {
+					array_push($style_to_json, $style->getJsonData());
 				}
-				break;
-		}
-	} elseif ($_GET['query']) {
-		switch ($_GET['query']) {
-			case 'videos':
-				if($_GET['page_number']) {
-					$mode = $_GET['mode'];
-					$page_number = $_GET['page_number'];
-					$current_page = $page_number;
-					$page_number -= 1;		
-					$options = $plugin->getOptions();
-					$per_page = $options['syg_option_pagenumrec']; // Per page records
-					$start = $page_number * $per_page;
-					$dao = new SygDao();
-					$gallery = $dao->getSygGalleryById($_GET['id']);
-					$cached = $gallery->isGalleryCached();
-					$youtube = new SygYouTube();
-					$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
+				echo json_encode ($style_to_json);
+			}
+			break;
+	}
+} elseif ($_GET['query']) {
+	switch ($_GET['query']) {
+		case 'videos':
+			if($_GET['page_number']) {
+				$mode = $_GET['mode'];
+				$page_number = $_GET['page_number'];
+				$current_page = $page_number;
+				$page_number -= 1;		
+				$options = $plugin->getOptions();
+				$per_page = $options['syg_option_pagenumrec']; // Per page records
+				$start = $page_number * $per_page;
+				$dao = new SygDao();
+				$gallery = $dao->getSygGalleryById($_GET['id']);
+				$cached = $gallery->isGalleryCached();
+				$youtube = new SygYouTube();
+				$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
+				
+				$videos_to_json = array();
+				foreach ($videos as $entry) {
+					$element['video_id'] = $entry->getVideoId();
+					$element['video_cached'] = $cached;
+					$element['video_description'] = $entry->getVideoDescription();
+					$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
+					$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
+					$element['video_title'] = $entry->getVideoTitle();
+					$element['video_category'] =$entry->getVideoCategory();
 					
-					$videos_to_json = array();
-					foreach ($videos as $entry) {
-						$element['video_id'] = $entry->getVideoId();
-						$element['video_cached'] = $cached;
-						$element['video_description'] = $entry->getVideoDescription();
-						$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
-						$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
-						$element['video_title'] = $entry->getVideoTitle();
-						$element['video_category'] =$entry->getVideoCategory();
-						
-						$tags = array();
-						foreach ($entry->getCategory() as $category) {
-							if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/keywords.cat') {
-								$tags[] = $category->getTerm();
-							}
+					$tags = array();
+					foreach ($entry->getCategory() as $category) {
+						if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/keywords.cat') {
+							$tags[] = $category->getTerm();
 						}
-						
-						$element['video_tags'] = implode('|', $tags);
-						
-						// @todo auth user for real tags
-						$element['video_tags'] = "none";
-						
-						$element['video_rating_info'] = $entry->getVideoRatingInfo();
-						$thumbnails = $entry->getVideoThumbnails();
-						$element['video_thumbshot'] = $thumbnails[$options['syg_option_which_thumb']]['url'];
-						// modify the img path to match local files
-						if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-							$element['video_thumbshot'] = WP_PLUGIN_URL .
-														SygConstant::WP_PLUGIN_PATH .
-														SygConstant::WP_CACHE_THUMB_REL_DIR .
-														$gallery->getId() . 
-														DIRECTORY_SEPARATOR . 
-														$entry->getVideoId() . '.jpg';
-						}
-						
-						array_push($videos_to_json, $element);
 					}
-					echo json_encode (array_reverse($videos_to_json));
+					
+					$element['video_tags'] = implode('|', $tags);
+					
+					// @todo auth user for real tags
+					$element['video_tags'] = "none";
+					
+					$element['video_rating_info'] = $entry->getVideoRatingInfo();
+					$thumbnails = $entry->getVideoThumbnails();
+					$element['video_thumbshot'] = $thumbnails[$options['syg_option_which_thumb']]['url'];
+					// modify the img path to match local files
+					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
+						$element['video_thumbshot'] = WP_PLUGIN_URL .
+													SygConstant::WP_PLUGIN_PATH .
+													SygConstant::WP_CACHE_THUMB_REL_DIR .
+													$gallery->getId() . 
+													DIRECTORY_SEPARATOR . 
+													$entry->getVideoId() . '.jpg';
+					}
+					
+					array_push($videos_to_json, $element);
 				}
-				break;
-			default: 
-				NULL; 
-				break;
-		}
+				echo json_encode (array_reverse($videos_to_json));
+			}
+			break;
+		default: 
+			NULL; 
+			break;
 	}
 }
 ?>

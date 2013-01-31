@@ -63,7 +63,18 @@ if (!is_admin()) {
 	add_action('admin_notices', 'sygNotice');
 }
 
+add_action('wp_print_scripts','getPluginOptions');
+
 /* FRONT END METHODS */
+
+/**
+ * Get a js option file
+ * @return js
+ */
+function getPluginOptions() {
+	$syg = SygPlugin::getInstance();
+	echo $syg->getJsOptions();
+}
 
 /**
  * Get a video gallery
