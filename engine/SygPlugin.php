@@ -99,7 +99,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_URL);
 		
 		// set json query interface admin url
-		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_ADMIN_URL);
+		$this->setJsonQueryIfAdminUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_ADMIN_URL);
 
 		// set local object
 		$this->sygYouTube = new SygYouTube();
