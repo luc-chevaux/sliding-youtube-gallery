@@ -75,7 +75,6 @@ switch ($_GET['query']) {
 				} else {
 					// get thumbnails
 					$thumbnails = $entry->getVideoThumbnails();
-					
 					$element['video_thumbshot'] = $thumbnails[$_GET['syg_option_which_thumb']]['url'];
 				}
 				array_push($videos_to_json, $element);
