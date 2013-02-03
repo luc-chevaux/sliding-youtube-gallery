@@ -1,7 +1,6 @@
 <?php
 // Turn off all error reporting
-// ini_set('error_reporting', E_ALL & ~E_NOTICE);
-error_reporting(E_ALL);
+error_reporting(0);
 
 $seconds_to_cache = 3600;
 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
@@ -24,6 +23,7 @@ if (file_exists($root.'/wp-load.php')) {
 	require($root.'/wp-config.php');
 }
 
+// include plugin files
 require_once ('../SygDao.php');
 
 if ($_GET['table']) {
