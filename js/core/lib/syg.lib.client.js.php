@@ -160,7 +160,7 @@ jQuery.noConflict();
 				if (options['cache'] == 'on') {
 					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
 				} else {
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb, function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid, options);});
 				}				
 			});
 			
@@ -186,7 +186,7 @@ jQuery.noConflict();
 				if (options['cache'] == 'on') {
 					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
 				} else {
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb, function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid, options);});
 				}
 			});
 		},
