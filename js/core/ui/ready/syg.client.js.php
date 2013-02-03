@@ -82,7 +82,7 @@ jQuery(document).ready(function($){
 			$.getJSON('<?php echo $firstPageUrl; ?>', function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
 		<?php } else { ?>
 			// get the data
-			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'] + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb, function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
+			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'] + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
 		<?php } ?>
 		// add pagination events
 		$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
