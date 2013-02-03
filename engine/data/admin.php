@@ -6,10 +6,9 @@ $seconds_to_cache = 3600;
 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
 
 // set http headers
-header("Expires: $ts");
 header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
-header("Pragma: cache");
-header("Cache-Control: max-age=$seconds_to_cache");
+header('Cache-Control: no-cache, must-revalidate' );
+header('Pragma: no-cache' );
 header('Content-type: application/json; charset=utf-8');
 
 // include wp loader
