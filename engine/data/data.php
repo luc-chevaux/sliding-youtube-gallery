@@ -78,7 +78,6 @@ switch ($_GET['query']) {
 					
 					$element['video_thumbshot'] = $thumbnails[$_GET['syg_option_which_thumb']]['url'];
 				}
-				
 				array_push($videos_to_json, $element);
 			}
 			echo json_encode (array_reverse($videos_to_json));
