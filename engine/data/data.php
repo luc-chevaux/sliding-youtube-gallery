@@ -1,6 +1,6 @@
 <?php
 // Turn off all error reporting
-ini_set('error_reporting', E_ALL & ~E_NOTICE);
+error_reporting(0);
 
 header('Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
 header('Cache-Control: no-cache, must-revalidate' );
@@ -18,118 +18,74 @@ if (file_exists($root.'/wp-load.php')) {
 	require_once($root.'/wp-config.php');
 }
 
-// Turn off all error reporting
-ini_set('error_reporting', E_ALL & ~E_NOTICE);
-
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-require_once ('../SygPlugin.php');
+// include plugin files
 require_once ('../SygYouTube.php');
-require_once ('../SygConstant.php');
 require_once ('../SygDao.php');
-require_once ('../SygGallery.php');
 require_once ('../SygUtil.php');
 
-$plugin = SygPlugin::getInstance();
+// construct objects
+$dao = new SygDao();
+$youtube = new SygYouTube();
 
-if ($_GET['table']) {
-	switch ($_GET['table']) {
-		case 'galleries': 
-			if($_GET['page_number']) {
-				$page_number = $_GET['page_number'];
-				$current_page = $page_number;
-				$page_number -= 1;
-				$options = $plugin->getOptions();
-				$per_page = $options['syg_option_numrec']; // Per page records
-				$start = $page_number * $per_page;
-				$dao = new SygDao();
-				$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
-				$gallery_to_json = array();
-				foreach ($galleries as $gallery) {
-					array_push($gallery_to_json, $gallery->getJsonData());
-				}
-				echo json_encode ($gallery_to_json);
-			}
-			break;
-		case 'styles':
-			if($_GET['page_number']) {
-				$page_number = $_GET['page_number'];
-				$current_page = $page_number;
-				$page_number -= 1;
-				$options = $plugin->getOptions();
-				$per_page = $options['syg_option_numrec']; // Per page records
-				$start = $page_number * $per_page;
-				$dao = new SygDao();
-				$styles = $dao->getAllSygStyles('OBJECT', $start, $per_page);
-				$style_to_json = array();
-				foreach ($styles as $style) {
-					array_push($style_to_json, $style->getJsonData());
-				}
-				echo json_encode ($style_to_json);
-			}
-			break;
-	}
-} elseif ($_GET['query']) {
-	switch ($_GET['query']) {
-		case 'videos':
-			if($_GET['page_number']) {
-				$mode = $_GET['mode'];
-				$page_number = $_GET['page_number'];
-				$current_page = $page_number;
-				$page_number -= 1;		
-				$options = $plugin->getOptions();
-				$per_page = $options['syg_option_pagenumrec']; // Per page records
-				$start = $page_number * $per_page;
-				$dao = new SygDao();
-				$gallery = $dao->getSygGalleryById($_GET['id']);
-				$cached = $gallery->isGalleryCached();
-				$youtube = new SygYouTube();
-				$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
+switch ($_GET['query']) {
+	case 'videos':
+		if($_GET['page_number']) {
+			$page_number = $_GET['page_number'];
+			$current_page = $page_number;
+			$page_number -= 1;
+			$per_page = $_GET['syg_option_pagenumrec']; // Per page records
+			$start = $page_number * $per_page;
+			
+			$gallery = $dao->getSygGalleryById($_GET['id']);
+			$cached = $gallery->isGalleryCached();
+			$videos = $youtube->getVideoFeed($gallery, $start, $per_page);
+			
+			$videos_to_json = array();
+			foreach ($videos as $entry) {
+				$element['video_id'] = $entry->getVideoId();
+				$element['video_cached'] = $cached;
+				$element['video_description'] = $entry->getVideoDescription();
+				$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
+				$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
+				$element['video_title'] = $entry->getVideoTitle();
+				$element['video_category'] = $entry->getVideoCategory();
+				// video tags (to be implemented after auth
+				//$tags = array();
+				//foreach ($entry->getCategory() as $category) {
+				//	if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/keywords.cat') {
+				//		$tags[] = $category->getTerm();
+				//	}
+				//}
+				//$element['video_tags'] = implode('|', $tags);
+				// @todo auth user for real tags
+				$element['video_tags'] = "none";
+				$element['video_rating_info'] = $entry->getVideoRatingInfo();
 				
-				$videos_to_json = array();
-				foreach ($videos as $entry) {
-					$element['video_id'] = $entry->getVideoId();
-					$element['video_cached'] = $cached;
-					$element['video_description'] = $entry->getVideoDescription();
-					$element['video_duration'] = SygUtil::formatDuration($entry->getVideoDuration());
-					$element['video_watch_page_url'] = $entry->getVideoWatchPageUrl();
-					$element['video_title'] = $entry->getVideoTitle();
-					$element['video_category'] =$entry->getVideoCategory();
-					
-					$tags = array();
-					foreach ($entry->getCategory() as $category) {
-						if ($category->getScheme() == 'http://gdata.youtube.com/schemas/2007/keywords.cat') {
-							$tags[] = $category->getTerm();
-						}
-					}
-					
-					$element['video_tags'] = implode('|', $tags);
-					
-					// @todo auth user for real tags
-					$element['video_tags'] = "none";
-					
-					$element['video_rating_info'] = $entry->getVideoRatingInfo();
+				// modify the img path to match local files
+				if ($_GET['mode'] == 'caching_mode') {
+					$element['video_thumbshot'] = WP_PLUGIN_URL .
+												'/sliding-youtube-gallery/' .
+												'/cache/thumb/' .
+												$gallery->getId() . 
+												DIRECTORY_SEPARATOR . 
+												$entry->getVideoId() . '.jpg';
+				} else {
+					// get thumbnails
 					$thumbnails = $entry->getVideoThumbnails();
-					$element['video_thumbshot'] = $thumbnails[$options['syg_option_which_thumb']]['url'];
-					// modify the img path to match local files
-					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-						$element['video_thumbshot'] = WP_PLUGIN_URL .
-													SygConstant::WP_PLUGIN_PATH .
-													SygConstant::WP_CACHE_THUMB_REL_DIR .
-													$gallery->getId() . 
-													DIRECTORY_SEPARATOR . 
-													$entry->getVideoId() . '.jpg';
-					}
 					
-					array_push($videos_to_json, $element);
+					$element['video_thumbshot'] = $thumbnails[$_GET['syg_option_which_thumb']]['url'];
 				}
-				echo json_encode (array_reverse($videos_to_json));
+				
+				array_push($videos_to_json, $element);
 			}
-			break;
-		default: 
-			NULL; 
-			break;
-	}
+			echo json_encode (array_reverse($videos_to_json));
+		}
+		break;
+	default: 
+		NULL; 
+		break;
 }
 ?>
