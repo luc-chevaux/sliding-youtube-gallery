@@ -14,7 +14,8 @@ class SygConstant {
 	 * Plugin configuration
 	 */
 	const SYG_VERSION = '1.4.0';
-
+	const SYG_DEV_KEY = 'AI39si6mNwVCtzfMFh7__lYnzq6H180Fpd3fQwXdyykuPKCKDfxnmVG09D3L-xxv8X8XoyHEzXmMI0c9qACLik_6ocXRKcmQ7A';
+	
 	/**
 	 * Plugin running contexts
 	 */
