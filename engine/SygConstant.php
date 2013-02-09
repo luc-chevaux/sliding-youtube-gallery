@@ -69,7 +69,7 @@ class SygConstant {
 	/**
 	 * UI images url
 	 */
-	const BE_ICON_VIDEO_GALLERY = '../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/custom_gallery.png';
+	const BE_ICON_VIDEO_GALLERY = '/plugins/sliding-youtube-gallery/img/ui/admin/custom_gallery.png';
 
 	/**
 	 * Table name
@@ -104,8 +104,13 @@ class SygConstant {
 		return $query;
 	}
 	
+	public static function sqlGetCachedGalleryByStyleId () {
+		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' WHERE syg_style_id=%d AND syg_youtube_cacheon=%d';
+		return $query;
+	}
+	
 	public static function sqlGetAllCachedGallery () {
-		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' WHERE syg_youtube_cacheon = 1';
+		$query = 'SELECT id, syg_youtube_src, syg_youtube_videoformat, syg_youtube_maxvideocount, syg_youtube_disablerel, syg_youtube_cacheon, syg_description_show, syg_description_showduration, syg_description_showtags, syg_description_showratings, syg_description_showcategories, syg_style_id, syg_gallery_type, syg_gallery_name, syg_gallery_details FROM '.self::getTblGalleriesName().' WHERE syg_youtube_cacheon = 1 AND id >= %d AND id <= %d';
 		return $query;
 	}
 	
@@ -294,6 +299,7 @@ class SygConstant {
 	const SYG_OPTION_DEFAULT_PAGENUM_REC = '5';
 	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';	
 	const SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH = 200;
+	const SYG_OPTION_DEFAULT_ASKCACHE = 1;
 	
 	/**
 	 * YouTube default options

@@ -111,19 +111,32 @@ class SygPlugin extends SanityPluginFramework {
 	 * @todo gestire le opzioni in opportuna mappa per ciclarla
 	 */
 	public static function setDefaultOption() {
-		
+		/********************
+		 * General settings *
+		 ********************/
+		if (!get_option('syg_option_askcache'))
+			add_option('syg_option_askcache',
+					SygConstant::SYG_OPTION_DEFAULT_ASKCACHE);
 		if (!get_option('syg_option_description_length'))
 			add_option('syg_option_description_length',
 					SygConstant::SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH);
+		if (!get_option('syg_option_numrec'))
+			add_option('syg_option_numrec',
+					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
+		
+		/********************
+		 * YouTube settings *
+		*********************/
 		if (!get_option('syg_option_apikey'))
 			add_option('syg_option_apikey',
 					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
 		if (!get_option('syg_option_which_thumb'))
 			add_option('syg_option_which_thumb',
 					SygConstant::SYG_OPTION_DEFAULT_WHICH_THUMB);
-		if (!get_option('syg_option_numrec'))
-			add_option('syg_option_numrec',
-					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
+		
+		/*********************************
+		 * Video page component settings *
+		**********************************/
 		if (!get_option('syg_option_pagenumrec'))
 			add_option('syg_option_pagenumrec',
 					SygConstant::SYG_OPTION_DEFAULT_PAGENUM_REC);
@@ -154,7 +167,10 @@ class SygPlugin extends SanityPluginFramework {
 		if (!get_option('syg_option_paginator_fontsize'))
 			add_option('syg_option_paginator_fontsize',
 					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTSIZE);
-		// 3d carousel default option
+		
+		/******************************
+		 * 3d cloud carousel settings *
+		*******************************/
 		if (!get_option('syg_option_carousel_autorotate'))
 			add_option('syg_option_carousel_autorotate',
 					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_AUTOROTATE);
@@ -245,6 +261,13 @@ class SygPlugin extends SanityPluginFramework {
 	/* WORDPRESS PLUGIN ACTION HOOK */
 	/********************************/
 
+	public function rebuildCache($start = 0, $end = PHP_INT_MAX) {
+		$galleries = $this->sygDao->getAllCachedGallery('OBJECT', $start, $end);
+		foreach ($galleries as $gallery) {
+			$gallery->cacheGallery();
+		}
+	}
+	
 	/**
 	 * @name sygNotice
 	 * @category display admin notices in wordpress dashboard
@@ -253,6 +276,7 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function sygNotice() {
 		global $pagenow;
+		//$this->printTasks();
 		if (($pagenow == 'admin.php')
 				&& (($_GET['page'] == SygConstant::BE_ACTION_MANAGE_STYLES)
 					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_GALLERIES)
@@ -304,6 +328,10 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+	public function printTasks() {
+		print_r(_get_cron_array());
+	}
+	
 	/**
 	 * @name checkUpdateProcess
 	 * @category check update process
@@ -322,11 +350,11 @@ class SygPlugin extends SanityPluginFramework {
 		$stat = stat(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR);
 
 		if ((getmygid() == $stat['gid']) || ($stat['gid'] == 0)) {
-			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
-			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
-			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
-			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
-			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
 		}
 		
 		if ($installed_ver != $target_syg_db_version) {
@@ -917,8 +945,7 @@ class SygPlugin extends SanityPluginFramework {
 			case 'cache':
 				return $this->forwardToCacheGallery();
 			case 'redirect':
-				$this->data['redirect_url'] = '?page='
-						. SygConstant::BE_ACTION_MANAGE_GALLERIES . '&modified='.$_GET['id'];
+				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_GALLERIES . '&modified='.$_GET['id'];
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -969,7 +996,7 @@ class SygPlugin extends SanityPluginFramework {
 			case 'cache':
 				// get the style id
 				$id = (int) $_GET['id'];
-				$galleries = $this->sygDao->getSygGalleriesByStyleId($id);
+				$galleries = $this->sygDao->getSygCachedGalleriesByStyleId($id);
 				
 				for ($i=0; $i<count($galleries); $i++) {
 					$gallery = $galleries[$i];
@@ -1046,6 +1073,12 @@ class SygPlugin extends SanityPluginFramework {
 									$_POST['syg_option_which_thumb'])
 									: update_option('syg_option_which_thumb',
 											$_POST['syg_option_which_thumb']);
+							
+							(get_option('syg_option_askcache') === false) ? add_option(
+									'syg_option_askcache',
+									$_POST['syg_option_askcache'])
+									: update_option('syg_option_askcache',
+											$_POST['syg_option_askcache']);
 					
 							(get_option('syg_option_numrec') === false) ? add_option(
 									'syg_option_numrec',
@@ -1541,14 +1574,25 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function getOptions() {
 		$options = array();
+		
+		/********************
+		 * General settings *
+		********************/
+		$options['syg_option_askcache'] = get_option('syg_option_askcache');
+		$options['syg_option_description_length'] = get_option('syg_option_description_length');
+		$options['syg_option_numrec'] = get_option('syg_option_numrec');
+		
+		/********************
+		 * YouTube settings *
+		********************/
 		$options['syg_option_apikey'] = get_option('syg_option_apikey');
 		$options['syg_option_which_thumb'] = get_option('syg_option_which_thumb');
-		$options['syg_option_numrec'] = get_option('syg_option_numrec');
-		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 
-		/* paginator options */
+		/*********************************
+		 * Video page component settings *
+		**********************************/
+		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
 		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
-		$options['syg_option_description_length'] = get_option('syg_option_description_length');
 		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
 		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
 		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
@@ -1558,7 +1602,9 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
 		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
 
-		/* 3d carousel*/
+		/******************************
+		 * 3d cloud carousel settings *
+		*******************************/
 		$options['syg_option_carousel_autorotate'] = get_option('syg_option_carousel_autorotate');
 		$options['syg_option_carousel_delay'] = get_option('syg_option_carousel_delay');
 		$options['syg_option_carousel_fps'] = get_option('syg_option_carousel_fps');
@@ -1568,6 +1614,11 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_carousel_reflgap'] = get_option('syg_option_carousel_reflgap');
 		$options['syg_option_carousel_reflopacity'] = get_option('syg_option_carousel_reflopacity');
 		
+		/*********************************
+		 * additional javascript options *
+		**********************************/
+		$options['syg_option_plugin_url'] = WP_PLUGIN_URL;
+		
 		return $options;
 	}
 	
@@ -1575,16 +1626,6 @@ class SygPlugin extends SanityPluginFramework {
 		$this->data['syg_options'] = json_encode($this->getOptions());
 		// render jsOption view
 		return $this->render('jsOption');
-	}
-
-	/**
-	 * @name verifyAuthToken
-	 * @category admin forward
-	 * @since 1.0.1
-	 * @return $authorized
-	 */
-	public function verifyAuthToken($str) {
-		return true;
 	}
 
 	/************************/

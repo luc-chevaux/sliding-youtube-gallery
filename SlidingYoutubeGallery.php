@@ -62,6 +62,7 @@ if (!is_admin()) {
 }
 
 add_action('wp_print_scripts','getPluginOptions');
+add_action('syg_rebuild_cache','rebuildCache');
 
 /* FRONT END METHODS */
 
@@ -151,6 +152,11 @@ function SlidingYoutubeGalleryAdmin() {
  */
 function manageGalleries() {
 	$syg = SygPlugin::getInstance();
+	
+	if (isset($_GET['action']) && $_GET['action'] == 'cache_rebuild') {
+		wp_schedule_single_event(time() + 5, 'syg_rebuild_cache');
+	}
+	
 	echo $syg->forwardToGalleries();
 }
 
@@ -182,6 +188,15 @@ function getSupport() {
 }
 
 /**
+ * Plugin rebuild cache
+ * @return null
+ */
+function rebuildCache() {
+	$syg = SygPlugin::getInstance();
+	$syg->rebuildCache();
+}
+
+/**
  * Wordpress activation callback function
  * @return null
  */
@@ -204,5 +219,4 @@ function deactivate() {
 function uninstall() {
 	SygPlugin::uninstall();
 }
-
 ?>

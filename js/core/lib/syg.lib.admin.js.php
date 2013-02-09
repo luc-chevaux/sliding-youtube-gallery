@@ -16,7 +16,7 @@ jQuery.noConflict();
 		 */
 		displayLoad : function () {
 			$('#syg-loading td').fadeIn(900,0);
-			$('#syg-loading td').html('<img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
+			$('#syg-loading td').html('<img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
 		},
 	
 		/**
@@ -166,10 +166,10 @@ jQuery.noConflict();
 						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
 						
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -202,16 +202,16 @@ jQuery.noConflict();
 						html = html + val.cacheExists;
 						html = html + '</td>';
 						html = html + '<td>';
-						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
-						html = html + '<a href="../wp-content/plugins/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
-						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
+						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
+						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
+						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
 
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
 						}
 						
 						if (val.cacheOn == 1) {
-							html = html + '<a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="../wp-content/plugins/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -263,7 +263,7 @@ jQuery.noConflict();
 	
 				// loading data
 				var pageNum = this.id;
-				$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/admin.php?action=query&table=' + table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table=' + table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
 			});
 		},
 		
@@ -296,7 +296,7 @@ jQuery.noConflict();
 		
 		updateCache: function () {
 			var modified = $.getQParam('modified');
-			if ($.isNumeric(modified)) {
+			if ($.isNumeric(modified) && syg_option.syg_option_askcache == '1') {
 				var answer = confirm('Your style has been changed. Cached content need to be updated. Update it now?');
 				if (answer) {
 					var request = jQuery.ajax({
@@ -309,7 +309,7 @@ jQuery.noConflict();
 						  }
 					});
 				}
-			} else if (modified == 'true') {
+			} else if (modified == 'true' && syg_option.syg_option_askcache == '1') {
 				var answer = confirm('Your settings has been updated. Cached content need to be updated. Update it now?');
 				if (answer) {
 					var request = jQuery.ajax({
@@ -442,7 +442,7 @@ jQuery(document).ready(function($) {
 		// load if page contains a list
 		if (!id){
 			// get the data
-			$.getJSON('../wp-content/plugins/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=1&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
+			$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=1&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
 		}
 		
 		// add pagination events

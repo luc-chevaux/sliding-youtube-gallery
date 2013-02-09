@@ -44,6 +44,10 @@
 				</select>
 				
 				<!-- number of records displayed -->
+				<label for="syg_option_askcache">Ask for cache content after saving</label>
+				<input type="checkbox" name="syg_option_askcache" id="syg_option_askcache" value="1" <?php if ($options['syg_option_askcache'] == "1") echo 'checked="checked"';?>/>
+				
+				<!-- number of records displayed -->
 				<label for="syg_option_numrec">Number of records displayed: </label>
 				<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="3">
 			</fieldset>

@@ -472,7 +472,7 @@ class SygGallery {
 		if ($this->userProfile) { 
 			$this->thumbUrl = $userProfile->getThumbnail()->getUrl();
 		} else {
-			$this->thumbUrl = SygConstant::BE_ICON_VIDEO_GALLERY;
+			$this->thumbUrl = content_url() . SygConstant::BE_ICON_VIDEO_GALLERY;
 		}
 	}
 

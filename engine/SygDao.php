@@ -156,15 +156,32 @@ class SygDao {
 	}
 	
 	/**
+	 * @name getSygCachedGalleriesByStyleId
+	 * @category Get syg galleries by style id
+	 * @since 1.4.0
+	 * @param $output_type
+	 * @return array of $galleries
+	 */
+	public function getSygCachedGalleriesByStyleId($id, $output_type = 'OBJECT') {
+		$galleries = array();
+		$query = $this->db->prepare(SygConstant::sqlGetCachedGalleryByStyleId(), $id ,1);
+		$results = $this->db->get_results($query, $output_type);
+		foreach ($results as $gallery) {
+			$galleries[] = new SygGallery($gallery);
+		}
+		return $galleries;
+	}
+	
+	/**
 	 * @name getAllCachedGallery
 	 * @category Get the cached gallery
 	 * @since 1.4.0
 	 * @param $output_type
 	 * @return array of $galleries
 	 */
-	public function getAllCachedGallery($output_type = 'OBJECT') {
+	public function getAllCachedGallery($output_type = 'OBJECT', $start = 0, $end = PHP_INT_MAX) {
 		$galleries = array();
-		$query = SygConstant::sqlGetAllCachedGallery();
+		$query = $this->db->prepare(SygConstant::sqlGetAllCachedGallery(), $start, $end);
 		$results = $this->db->get_results($query, $output_type);
 		foreach ($results as $gallery) {
 			$galleries[] = new SygGallery($gallery);

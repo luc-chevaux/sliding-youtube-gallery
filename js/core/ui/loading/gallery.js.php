@@ -13,7 +13,7 @@ if (file_exists($root.'/wp-load.php')) {
 
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
+require_once( WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygPlugin.php');
 
 $syg = SygPlugin::getInstance();
 $option = $syg->getGallerySettings($_GET['id']);
