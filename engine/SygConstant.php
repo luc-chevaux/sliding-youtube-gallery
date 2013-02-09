@@ -50,7 +50,6 @@ class SygConstant {
 	const BE_ACTION_UNINSTALL = 'uninstall';
 	const BE_ACTION_ACTIVATION = 'activation';
 	const BE_ACTION_DEACTIVATION = 'deactivation';
-	const BE_EMAIL_NOTIFIED = 'subscription@webeng.it';
 
 	/**
 	 * Static and general URI
@@ -340,6 +339,7 @@ class SygConstant {
 	const BE_MENU_ADD_NEW_STYLE = 'Add new Theme';
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
+	const BE_MENU_REBUILD_CACHE = 'Rebuild cache';
 
 	// page title
 	const BE_TITLE_EDIT_GALLERY = 'Gallery editor';

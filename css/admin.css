@@ -101,11 +101,6 @@ h4 {
 	background-color: #efefef;
 }
 
-.splashpage {
-	border-radius: 10px;
-	border: 2px #333333 solid;
-}
-
 fieldset {
 	border: 1px #333333 solid;
 	margin-bottom: 10px;
@@ -328,4 +323,45 @@ select { border-color: #333333 !important;}
 
 #syg-plugin-area ul {
 	
+}
+
+/***************************
+ * Page support custom css *
+ ***************************/
+
+#support_table {
+	width: 100%;
+}
+
+.support_table_sx {
+	vertical-align: top;
+	width: 70%;
+}
+
+.support_table_dx {
+	vertical-align: top; 
+	width: 30%;
+}
+
+.splashpage {
+	border-radius: 10px;
+	border: 1px #333 solid; 
+	box-shadow: 0 0 8px #888;
+	width: 97%;
+}
+
+.support_internal {
+	box-shadow: 0 0 8px #888; 
+	margin-top: 15px;
+	width: 97%;
+	padding: 1%;
+}
+
+.side_box {
+	background-color: #cccccc; 
+	border: 1px #333 solid; 
+	padding: 10px; 
+	margin-bottom: 15px; 
+	border-radius: 10px; 
+	box-shadow: 0 0 8px #888;
 }

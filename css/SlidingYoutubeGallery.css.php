@@ -16,8 +16,8 @@ if (file_exists($root.'/wp-load.php')) {
 
 // include required wordpress object
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygPlugin.php');
-require_once( ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SygUtil.php');
+require_once( SYG_PATH . 'engine/SygPlugin.php');
+require_once( SYG_PATH . 'engine/SygUtil.php');
 $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);

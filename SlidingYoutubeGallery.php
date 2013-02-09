@@ -9,40 +9,38 @@
  * Description: Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user’s channel. User can choose to display the videos in a fully customizable sliding gallery or in a video page.
  */
 
-// library path
-$lib_path = WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/lib';
-
-// set include path
-set_include_path(get_include_path() . PATH_SEPARATOR . $lib_path);
-
 // include required wordpress object
 require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
+define('SYG_PATH', plugin_dir_path(__FILE__));
+
+// library path
+$lib_path = SYG_PATH . 'engine/lib';
+
+// set include path
+set_include_path(get_include_path() . PATH_SEPARATOR . $lib_path);
+
 // include engine
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygPlugin.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygConstant.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygDao.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygGallery.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygUtil.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygYouTube.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygStyle.php');
-require_once(WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygValidate.php');
+require_once(SYG_PATH . 'engine/SygPlugin.php');
+require_once(SYG_PATH . 'engine/SygConstant.php');
+require_once(SYG_PATH . 'engine/SygDao.php');
+require_once(SYG_PATH . 'engine/SygGallery.php');
+require_once(SYG_PATH . 'engine/SygUtil.php');
+require_once(SYG_PATH . 'engine/SygYouTube.php');
+require_once(SYG_PATH . 'engine/SygStyle.php');
+require_once(SYG_PATH . 'engine/SygValidate.php');
+
+define('SYG_URL', WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
 
 // register activation hook
-register_activation_hook(
-		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
-		'activate');
+register_activation_hook(SYG_PATH . '/SlidingYoutubeGallery.php', 'activate');
 		
 // register deactivation hook
-register_deactivation_hook(
-		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
-		'deactivate');
+register_deactivation_hook(SYG_PATH . '/SlidingYoutubeGallery.php',	'deactivate');
 		
 // register uninstall hook
-register_uninstall_hook(
-		WP_PLUGIN_DIR . '/sliding-youtube-gallery/SlidingYoutubeGallery.php',
-		'uninstall');
+register_uninstall_hook(SYG_PATH . 'SlidingYoutubeGallery.php', 'uninstall');
 
 // backend and frontend code
 if (!is_admin()) {
@@ -123,9 +121,7 @@ function SlidingYoutubeGalleryAdmin() {
 	$syg = SygPlugin::getInstance();
 
 	// Add first level menu page
-	add_menu_page('Sliding YouTube Gallery', 'SYG gallery', 'edit_posts',
-			'syg-administration-panel', '',
-			WP_PLUGIN_URL . '/sliding-youtube-gallery/img/ui/webeng.png');
+	add_menu_page('Sliding YouTube Gallery', 'SYG gallery', 'edit_posts', 'syg-administration-panel', '', SYG_URL . 'img/ui/webeng.png');
 						
 	// Add second level menu page
 	add_submenu_page('syg-administration-panel', SygConstant::BE_MENU_MANAGE_GALLERIES,

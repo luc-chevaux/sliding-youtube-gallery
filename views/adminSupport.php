@@ -24,13 +24,13 @@
 		<!-- User Message -->
 		<?php include 'inc/statusBar.inc.php'; ?>
 	
-		<table width="100%">
+		<table id="support_table">
 			<tr>
-				<td style="vertical-align: top;">
-					<img src="http://s-plugins.wordpress.org/sliding-youtube-gallery/assets/banner-772x250.png" class="splashpage" style="border: 1px #333 solid; box-shadow: 0 0 8px #888;"/>
-					<table cellspacing="10" style="box-shadow: 0 0 8px #888; margin-top: 15px;">
+				<td class="support_table_sx">
+					<img src="http://s-plugins.wordpress.org/sliding-youtube-gallery/assets/banner-772x250.png" class="splashpage" style=""/>
+					<table class="support_internal">
 						<tr valign="top">
-							<td width="278">
+							<td width="40%">
 								<h3>Project philosophy</h3>
 								<p>SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog!</p>
 								<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.</p><p>You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.</p><p>From version 1.4.0 you can display your gallery with a nice 3d cloud carousel. Users can get the video played as a nice fancybox player.</p>
@@ -41,7 +41,7 @@
 									</tr>
 								</table>
 							</td>
-							<td width="250">
+							<td width="35%">
 								<h3>What you can do?</h3>
 								<ul class="">
 									<li>If you like the plugin, please consider donating with paypal. Your help is much appreciated especially in these hard times.</li>
@@ -53,7 +53,7 @@
 									<li>A good rating is the best motivation to continue develop and mantain this project, I ask you to leave your rating in the <a href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/">wordpress plugin page</a>.</li>
 								</ul>
 							</td>
-							<td width="200">
+							<td width="25%">
 								<h3>Project roadmap</h3>
 								<ul>
 									<li>Widget support (ver 1.5.0)</li>
@@ -69,8 +69,8 @@
 						</tr>
 					</table>
 				</td>
-				<td style="vertical-align: top; float: right; vertical-align: top;">
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px; box-shadow: 0 0 8px #888;">
+				<td class="support_table_dx">
+					<div class="side_box">
 						<h4>Quick resources</h4>
 						<ul>
 							<li><a href="">Project homepage</a></li>
@@ -79,7 +79,7 @@
 							<li><a href="">Support forum</a></li>
 						</ul>
 					</div>
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px; box-shadow: 0 0 8px #888;">
+					<div class="side_box">
 						<h4>If you like, please donate.</h4>
 						<p>This helps me to mantain and develop the plugin well. I don't become rich and you don't become poor. This plugin is gratis, free and open source.</p>
 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -89,7 +89,7 @@
 						<img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
 						</form>
 					</div>
-					<div style="background-color: #cccccc; border: 1px #333 solid; padding: 10px; margin-bottom: 15px; border-radius: 10px; width: 350px; box-shadow: 0 0 8px #888;">
+					<div class="side_box">
 						<h4>Social activities</h4>
 						<p>Please socialize this plugin by clicking on your favourite social network. More people means more features.</p>
 						<div class="fb-like" data-href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana" data-colorscheme="dark"></div>

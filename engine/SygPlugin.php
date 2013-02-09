@@ -15,9 +15,7 @@
 
 include_once 'Zend/Loader.php';
 
-if (!class_exists('SanityPluginFramework'))
-	require_once(WP_PLUGIN_DIR
-			. '/sliding-youtube-gallery/engine/lib/Sanity/sanity.php');
+if (!class_exists('SanityPluginFramework')) require_once(SYG_PATH . 'engine/lib/Sanity/sanity.php');
 
 class SygPlugin extends SanityPluginFramework {
 
@@ -61,7 +59,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @since 1.0.1
 	 */
 	public function __construct() {
-		$me = ABSPATH . 'wp-content/plugins/sliding-youtube-gallery/engine/SlidingYouTubeGalleryPlugin.php';
+		$me = SYG_PATH . '/engine/SlidingYouTubeGalleryPlugin.php';
 
 		parent::__construct(dirname($me));
 
@@ -223,32 +221,6 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @name notify
-	 * @category send statistics and data to plugin developer 
-	 * @since 1.2.5
-	 * @param $action
-	 */
-	private static function notify($action = null) {
-		$domain_name = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']
-				: $_SERVER['SERVER_NAME'];
-
-		if (SygUtil::isCurlInstalled()) {
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,
-					'http://www.webeng.it/stats.php?module_name=syg&action='
-							. $action . '&domain=' . $domain_name);
-			curl_setopt($ch, CURLOPT_HEADER, 1);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$data = curl_exec();
-			curl_close($ch);
-		} else {
-			wp_mail(SygConstant::BE_EMAIL_NOTIFIED,
-					$domain_name . " has just " . $action,
-					$domain_name . " has just " . $action);
-		}
-	}
-
-	/**
 	 * @name getViewCtx
 	 * @category admin forward
 	 * @since 1.0.1
@@ -350,11 +322,11 @@ class SygPlugin extends SanityPluginFramework {
 		$stat = stat(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR);
 
 		if ((getmygid() == $stat['gid']) || ($stat['gid'] == 0)) {
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
+			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
+			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
+			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
+			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
+			//chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
 		}
 		
 		if ($installed_ver != $target_syg_db_version) {
@@ -370,9 +342,6 @@ class SygPlugin extends SanityPluginFramework {
 						$target_syg_db_version)
 						: update_option("syg_db_version",
 								$target_syg_db_version);
-		
-				// send stat
-				self::notify(SygConstant::BE_ACTION_ACTIVATION);
 			} catch (Exception $ex) {
 				// set the error
 				$this->data['exception'] = true;
@@ -404,9 +373,6 @@ class SygPlugin extends SanityPluginFramework {
 	
 			// remove options
 			delete_option("syg_db_version");
-	
-			// send stat
-			self::notify(SygConstant::BE_ACTION_UNINSTALL);
 		}
 	}
 
@@ -418,8 +384,7 @@ class SygPlugin extends SanityPluginFramework {
 	public static function deactivation() {
 		// check if admin
 		if (is_admin()) {
-			// send stat
-			self::notify(SygConstant::BE_ACTION_DEACTIVATION);
+			null;
 		}
 	}
 
@@ -857,8 +822,8 @@ class SygPlugin extends SanityPluginFramework {
 				wp_enqueue_script('fancybox');
 				
 				// include jquery easing
-				wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('easing');
+				// wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
+				// wp_enqueue_script('easing');
 				
 				// include jquery mousewheel
 				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
@@ -933,7 +898,13 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToGalleries($updated = false) {
 		// if we've updated a record set action to null
-		$action = ($updated == true) ? 'redirect' : $_GET['action'];
+		if ($updated == true) { 
+			$action = 'redirect';
+		} elseif (isset($_GET['action'])) { 
+			$action = $_GET['action'];
+		} else {
+			$action = 'default';
+		}
 
 		// determine wich action to call
 		switch ($action) {
@@ -965,9 +936,6 @@ class SygPlugin extends SanityPluginFramework {
 						$this->sygDao->getGalleriesCount()
 								/ $options['syg_option_numrec']);
 	
-				// generate token
-				$_SESSION['request_token'] = $this->getAuthToken();
-	
 				// render adminStyles view
 				return $this->render('adminGalleries');
 		}
@@ -982,7 +950,13 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function forwardToStyles($updated = false) {
 		// if we've updated a record set action to null
-		$action = ($updated == true) ? 'redirect' : $_GET['action'];
+		if ($updated == true) { 
+			$action = 'redirect';
+		} elseif (isset($_GET['action'])) { 
+			$action = $_GET['action'];
+		} else {
+			$action = 'default';
+		}
 
 		// determine wich action to call
 		switch ($action) {
@@ -1024,9 +998,6 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['pages'] = ceil(
 						$this->sygDao->getStylesCount()
 								/ $options['syg_option_numrec']);
-	
-				// generate token
-				$_SESSION['request_token'] = $this->getAuthToken();
 	
 				// render adminStyles view
 				return $this->render('adminStyles');
@@ -1561,16 +1532,6 @@ class SygPlugin extends SanityPluginFramework {
 	/********************/
 	/* SECURITY METHODS */
 	/********************/
-
-	/**
-	 * @name getAuthToken
-	 * @category admin forward
-	 * @since 1.0.1
-	 * @return $token
-	 */
-	private function getAuthToken() {
-		return $token;
-	}
 
 	/**
 	 * @name getOptions

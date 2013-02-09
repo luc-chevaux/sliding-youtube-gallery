@@ -30,7 +30,7 @@ class SanityPluginFramework {
         $this->add_ajax_actions();
         $this->wpdb = $wpdb;
         if(empty($this->plugin_dir)) {
-            $this->plugin_dir = WP_PLUGIN_DIR.'/'.basename(dirname($here));
+            $this->plugin_dir = SYG_PATH;
         }
         $this->plugin_dir_name = basename(dirname($here));
         $this->css_path = WP_PLUGIN_URL.'/'.$this->plugin_dir_name.'/css/';

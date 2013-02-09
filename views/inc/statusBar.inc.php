@@ -1,9 +1,9 @@
 <div id="syg_status_bar">
-	<?php if ($this->data['updated']) { ?>
+	<?php if (isset($this->data['updated']) && $this->data['updated']) { ?>
 		<div class="syg_updated"><p><strong>Settings saved.</strong></p></div>
 	<?php } ?>
 	
-	<?php if ($this->data['warning']) {?>
+	<?php if (isset($this->data['warning']) && $this->data['warning']) {?>
 		<div class="syg_updated">
 			<p><strong>Information</strong></p>
 			<ul>
@@ -15,7 +15,7 @@
 		</div>
 	<?php } ?>
 	
-	<?php if ($this->data['exception']) {?>
+	<?php if (isset($this->data['exception']) && $this->data['exception']) {?>
 		<div class="syg_error">
 			<p><strong><?php echo $this->data['exception_message']; ?></strong></p>
 			<ul>

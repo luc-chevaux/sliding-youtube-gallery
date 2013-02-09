@@ -44,7 +44,6 @@
 				</td>
 			</tr>
 		<?php
-		$galleries = $this->data['galleries']; 
 		if (count($styles) == 0) { ?>
 			<tr>
 				<td colspan="5">
