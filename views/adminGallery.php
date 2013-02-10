@@ -124,7 +124,7 @@
 		
 				<!-- tags -->
 				<label for="syg_description_showtags">Tags </label>
-				<input type="checkbox" name="syg_description_showtags" id="syg_description_showtags" value="1" <?php if ($gallery->getDescShowTags()) echo 'checked="checked"';?>/>
+				<input type="checkbox" name="syg_description_showtags" id="syg_description_showtags" value="1" disabled="disabled"/>
 		
 				<!-- ratings -->
 				<label for="syg_description_showratings">Ratings </label>
