@@ -127,9 +127,6 @@ class SygPlugin extends SanityPluginFramework {
 		/********************
 		 * YouTube settings *
 		*********************/
-		if (!get_option('syg_option_apikey'))
-			add_option('syg_option_apikey',
-					SygConstant::SYG_OPTION_DEFAULT_API_KEY);
 		if (!get_option('syg_option_which_thumb'))
 			add_option('syg_option_which_thumb',
 					SygConstant::SYG_OPTION_DEFAULT_WHICH_THUMB);
@@ -1062,12 +1059,6 @@ class SygPlugin extends SanityPluginFramework {
 							// validate data
 							$valid = SygValidate::validateSettings($data);
 					
-							(get_option('syg_option_apikey') === false) ? add_option(
-									'syg_option_apikey',
-									$_POST['syg_option_apikey'])
-									: update_option('syg_option_apikey',
-											$_POST['syg_option_apikey']);
-					
 							(get_option('syg_option_which_thumb') === false) ? add_option(
 									'syg_option_which_thumb',
 									$_POST['syg_option_which_thumb'])
@@ -1585,7 +1576,7 @@ class SygPlugin extends SanityPluginFramework {
 		/********************
 		 * YouTube settings *
 		********************/
-		$options['syg_option_apikey'] = get_option('syg_option_apikey');
+		$options['syg_option_apikey'] = SygConstant::SYG_DEV_KEY;
 		$options['syg_option_which_thumb'] = get_option('syg_option_which_thumb');
 
 		/*********************************
