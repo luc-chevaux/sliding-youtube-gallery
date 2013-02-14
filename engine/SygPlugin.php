@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.0
+ * @version: 1.4.1
  * 
  * @todo Background image (milestone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
@@ -65,11 +65,6 @@ class SygPlugin extends SanityPluginFramework {
 
 		// set environment
 		$this->setEnvironment();
-		
-		// set status cookie
-		if ($_COOKIE['syg-role'] != $this->getCurrentUserRole()) {
-			setcookie('syg-role', $this->getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
-		}
 	}
 
 	/**
@@ -571,7 +566,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category returns the translated role of the current user
 	 * @return string The name of the current role
 	 */
-	private function getCurrentUserRole() {
+	public static function getCurrentUserRole() {
 		global $wp_roles;
 		$current_user = wp_get_current_user();
 		$roles = $current_user->roles;

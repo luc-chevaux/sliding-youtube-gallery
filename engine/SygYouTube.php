@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.0
+ * @version: 1.4.1
  */
 
 class SygYouTube {
@@ -31,6 +31,7 @@ class SygYouTube {
 	 * @return mixed $userProfile
 	 */
 	public function getUserProfile($username) {
+		$userProfile = null;
 		try {
 			$this->yt->setMajorProtocolVersion(2); 
 			$userProfile = $this->yt->getUserProfile($username);

@@ -6,7 +6,7 @@
  * @since 1.3.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.0
+ * @version: 1.4.1
  */
 
 class SygStyle {
@@ -108,17 +108,24 @@ class SygStyle {
 		// get object attributes
 		$var = get_object_vars($this);
 		
+		// json data to return
+		$jsonData = array();
+		
 		// get excluded data from serialization
 		$exclude = $this->getExclude();
 		
 		// walk over array and unset keys located in the exclude array
-		array_walk($var, function($val,$key) use(&$var, $exclude) {
-			if(in_array($key, $exclude)) {
-				unset($var[$key]);
-			}
-		});
+		foreach ($var as $key => $value) {
+			if (!in_array($key, $exclude)) {
+				if ($value instanceof SygStyle) {
+					$jsonData[$key] = $value->getJsonData();
+				} else {
+					$jsonData[$key] = $value;
+				}
+			} 
+		}	
 		
-		$json = $var;
+		$json = $jsonData;
 		return $json;
 	}
 	
