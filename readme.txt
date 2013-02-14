@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
 Tested up to: 3.4
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -14,9 +14,11 @@ Sliding YouTube Gallery is a nice plugin, that gives you a fast way, to add mult
 You may choose to display the videos in a fully customizable horizontal sliding gallery or if you prefer, you can get displayed as a paginated table-based component.
 Users can get the video played as a nice fancybox player. If you have problems during the update, please read UPGRADE NOTICE @ [Sliding YouTube Gallery support forum](http://wordpress.org/support/plugin/sliding-youtube-gallery "Sliding YouTube Gallery support forum").  
 
-*** Sliding YouTube Gallery demo ***
+= Sliding YouTube Gallery demo =
 [Sliding Gallery Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-video-gallery-demo/ "Sliding Gallery Demo")
+
 [Video Page Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-video-page-demo/ "Video Page Demo")
+
 [3d Cloud Carousel Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-3d-cloud-carousel-demo/ "3d Cloud Carousel Demo")
 
 == Installation ==
@@ -83,6 +85,10 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Changelog ==
 
+= 1.4.1 =
+* Fixed unexpected T_FUNCTION bug on php < 5.3
+* Fixed headers already sent when embedding
+
 = 1.4.0 =
 * Scheduled cache rebuild
 * Wordpress best pratices fixes
@@ -132,6 +138,10 @@ To customize your galleries you can use the plugin administration page. If you n
 * Video count setting bug, was fixed.
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+- Fixed unexpected T_FUNCTION bug on php < 5.3
+- Fixed headers already sent when embedding
 
 = 1.4.0 =
 - Scheduled cache rebuild
