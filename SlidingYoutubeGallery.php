@@ -5,7 +5,7 @@
  * Plugin URI: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/
  * Author: webeng
  * Author URI: http://blog.webeng.it/
- * Version: 1.4.0
+ * Version: 1.4.1
  * Description: Sliding YouTube Gallery is a WordPress plugin, that gives you a fast way for adding video from a youtube user’s channel. User can choose to display the videos in a fully customizable sliding gallery or in a video page.
  */
 
@@ -50,6 +50,9 @@ if (!is_admin()) {
 	add_shortcode('syg_page', 'getVideoPage');
 	add_shortcode('syg_carousel', 'getVideoCarousel');
 } else {
+	// add cookie
+	add_action('init', 'checkRole');
+	
 	// plugin update function callback
 	add_action('admin_init', 'sygCheckUpdateProcess');
 	
@@ -194,6 +197,13 @@ function getSupport() {
 function rebuildCache() {
 	$syg = SygPlugin::getInstance();
 	$syg->rebuildCache();
+}
+
+function checkRole () {
+	// set status cookie
+	if ($_COOKIE['syg-role'] != SygPlugin::getCurrentUserRole()) {
+		setcookie('syg-role', SygPlugin::getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
+	}
 }
 
 /**
