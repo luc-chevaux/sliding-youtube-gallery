@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.1
+ * @version: 1.4.2
  * 
  * @todo Background image (milestone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
@@ -810,7 +810,7 @@ class SygPlugin extends SanityPluginFramework {
 		$view['pluginUrl'] = $this->getPluginRoot();
 
 		// fancybox resources url
-		$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/source/jquery.fancybox.js?v=2.1.3';
+		$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/source/jquery.fancybox.pack.js?v=2.1.3';
 		/*$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';*/
 		$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js';
 		$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/source/jquery.fancybox.css?v=2.1.2';
@@ -824,7 +824,7 @@ class SygPlugin extends SanityPluginFramework {
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
 	
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
+				wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
 				wp_enqueue_style('fancybox');
 	
 				// javascript dependencies injection
@@ -838,7 +838,7 @@ class SygPlugin extends SanityPluginFramework {
 				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 	
 				// include fancybox
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('fancybox', $view['fancybox_js_url'], array(), '2.1.3', true);
 				wp_enqueue_script('fancybox');
 				
 				// include jquery easing
@@ -846,7 +846,7 @@ class SygPlugin extends SanityPluginFramework {
 				// wp_enqueue_script('easing');
 				
 				// include jquery mousewheel
-				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), '3.0.6', true);
 				wp_enqueue_script('mousewheel');
 				
 				// include jquery cookie master
