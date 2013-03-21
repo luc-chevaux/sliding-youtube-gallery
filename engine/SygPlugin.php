@@ -806,6 +806,11 @@ class SygPlugin extends SanityPluginFramework {
 		$view['cssPath'] = $this->getCssRoot();
 		$view['imgPath'] = $this->getImgRoot();
 		$view['jsPath'] = $this->getJsRoot();
+		
+		// detect if client is a mobile browser
+		$detect = new Mobile_Detect();
+		$mobile = (bool)$detect->isMobile();
+		
 		// define plugin url
 		$view['pluginUrl'] = $this->getPluginRoot();
 
@@ -876,7 +881,10 @@ class SygPlugin extends SanityPluginFramework {
 	
 				// javascript dependencies injection
 				wp_enqueue_script('jquery');
-	
+				if ($mobile) {
+					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.3.0.min.js', array(), '1.3.0', true);
+					wp_enqueue_script('jquery.mobile');
+				}
 				// js to include
 				// include sliding youtube gallery js library
 				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
