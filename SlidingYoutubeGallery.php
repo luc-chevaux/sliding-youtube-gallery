@@ -31,6 +31,8 @@ require_once(SYG_PATH . 'engine/SygYouTube.php');
 require_once(SYG_PATH . 'engine/SygStyle.php');
 require_once(SYG_PATH . 'engine/SygValidate.php');
 
+require_once(SYG_PATH . 'engine/lib/MobileDetect/MobileDetect.php');
+
 define('SYG_URL', WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
 
 // register activation hook
