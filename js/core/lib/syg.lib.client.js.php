@@ -221,6 +221,30 @@ jQuery.noConflict();
 			});
 		},
 		
+		isAndroid: function() {
+			return navigator.userAgent.match(/Android/i);
+		},
+		
+		isBlackBerry: function() {
+		        return navigator.userAgent.match(/BlackBerry/i);
+		},
+		
+		isIOS: function() {
+		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		},
+		
+		isOpera: function() {
+		   		return navigator.userAgent.match(/Opera Mini/i);
+		},
+		
+		isWindows: function() {
+			return navigator.userAgent.match(/IEMobile/i);
+		},
+		
+		isMobileBrowser: function() {
+			return ($.isAndroid() || $.isBlackBerry() || $.isIOS() || $.isOpera() || $.isWindows());
+		},
+			
 		getQParam : function (name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 			var regexS = "[\\?&]" + name + "=([^&#]*)";
