@@ -30,7 +30,7 @@ jQuery(window).load(function() {
 	jQuery('.sc_menu-<?php echo $id;?>').removeAttr('style');
 
 	jQuery(function($){
-		//Get our elements for faster access and set overlay width
+		// Get our elements for faster access and set overlay width
 		var div = $('div.sc_menu-<?php echo $id; ?>'),
 			ul = $('ul.sc_menu-<?php echo $id; ?>'),
 			ulPadding = 15;
@@ -44,13 +44,26 @@ jQuery(window).load(function() {
 		//Find last image container
 		var lastLi = ul.find('li:last-child');
 		
-		//When user move mouse over menu
-		div.mousemove(function(e){
-			//As images are loaded ul width increases,
-			//so we recalculate it each time
-			var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;	
-			var left = (e.pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
-			div.scrollLeft(left);
-		});
+		if ($.fn.sygclient('isMobileBrowser')) {
+			div.bind('touchmove', function(jQueryEvent) {
+				jQueryEvent.preventDefault();
+			   	//As images are loaded ul width increases,
+				//so we recalculate it each time
+				var event = window.event;
+				var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;	
+				var left = (event.touches[0].pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
+				div.scrollLeft(left);
+			});
+		} else {
+			//When user move mouse over menu
+			div.mousemove(function(e){
+				//As images are loaded ul width increases,
+				//so we recalculate it each time
+				
+				var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;	
+				var left = (e.pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
+				div.scrollLeft(left);
+			});
+		}
 	});
 });
