@@ -118,6 +118,9 @@ class SygPlugin extends SanityPluginFramework {
 		if (!get_option('syg_option_numrec'))
 			add_option('syg_option_numrec',
 					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
+		if (!get_option('syg_option_use_fb2')) 
+			add_option('syg_option_use_fb2',
+				SygConstant::SYG_OPTION_DEFAULT_USE_FB2);
 		
 		/********************
 		 * YouTube settings *
@@ -809,7 +812,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// detect if client is a mobile browser
 		$detect = new Mobile_Detect();
-		$mobile = (bool)$detect->isMobile();
+		$mobile = $detect->isMobile();
 		
 		// define plugin url
 		$view['pluginUrl'] = $this->getPluginRoot();
@@ -879,12 +882,19 @@ class SygPlugin extends SanityPluginFramework {
 				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('fancybox');
 	
-				// javascript dependencies injection
-				wp_enqueue_script('jquery');
 				if ($mobile) {
-					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.3.0.min.js', array(), '1.3.0', true);
+					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.js', array('jquery'), '1.3.0', true);
 					wp_enqueue_script('jquery.mobile');
 				}
+				
+				// javascript dependencies injection
+				wp_enqueue_script('jquery');
+				
+				if ($mobile) {
+					wp_register_style('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.css', array(), SygConstant::SYG_VERSION, 'screen');
+					wp_enqueue_style('jquery.mobile');
+				}
+				
 				// js to include
 				// include sliding youtube gallery js library
 				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
@@ -1079,6 +1089,18 @@ class SygPlugin extends SanityPluginFramework {
 									$_POST['syg_option_numrec'])
 									: update_option('syg_option_numrec',
 											$_POST['syg_option_numrec']);
+														
+							(get_option('syg_option_use_fb2') === false) ? add_option(
+									'syg_option_use_fb2',
+									$_POST['syg_option_use_fb2'])
+									: update_option('syg_option_use_fb2',
+											$_POST['syg_option_use_fb2']);
+							
+							(get_option('syg_option_use_fb2_url') === false) ? add_option(
+									'syg_option_use_fb2_url',
+									$_POST['syg_option_use_fb2_url'])
+									: update_option('syg_option_use_fb2_url',
+											$_POST['syg_option_use_fb2_url']);
 					
 							(get_option('syg_option_pagenumrec') === false) ? add_option(
 									'syg_option_pagenumrec',
@@ -1575,6 +1597,8 @@ class SygPlugin extends SanityPluginFramework {
 		$options['syg_option_askcache'] = get_option('syg_option_askcache');
 		$options['syg_option_description_length'] = get_option('syg_option_description_length');
 		$options['syg_option_numrec'] = get_option('syg_option_numrec');
+		$options['syg_option_use_fb2'] = get_option('syg_option_use_fb2');
+		$options['syg_option_use_fb2_url'] = get_option('syg_option_use_fb2_url');
 		
 		/********************
 		 * YouTube settings *
