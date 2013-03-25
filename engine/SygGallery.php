@@ -255,13 +255,13 @@ class SygGallery {
 		if (!$this->isGalleryCached()) {
 			// create directory
 			mkdir($this->getJsonPath());
-			chmod($this->getJsonPath(), 0777);
+			chmod($this->getJsonPath(), 0755);
 			// create directory
 			mkdir($this->getThumbnailsPath());
-			chmod($this->getThumbnailsPath(), 0777);
+			chmod($this->getThumbnailsPath(), 0755);
 			// create directory
 			mkdir($this->getHtmlPath());
-			chmod($this->getHtmlPath(), 0777);
+			chmod($this->getHtmlPath(), 0755);
 		}
 		
 		// cache video thumbnails from youtube
@@ -291,7 +291,7 @@ class SygGallery {
 			} else { null; }
 			
 			// chmod file
-			chmod ($this->getThumbnailsPath().$localFN, 0777);
+			chmod ($this->getThumbnailsPath().$localFN, 0755);
 		}
 	
 		// get the plugin singleton
@@ -301,19 +301,19 @@ class SygGallery {
 		$galleryHtml = $syg->getGallery(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
-		chmod ($this->getHtmlPath().$localFN, 0777);
+		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache the html of the carousel
 		$carouselHtml = $syg->getVideoCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
-		chmod ($this->getHtmlPath().$localFN, 0777);
+		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache the html of the page
 		$galleryPage = $syg->getVideoPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $galleryPage);
-		chmod ($this->getHtmlPath().$localFN, 0777);
+		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache json page
 		$options = $syg->getOptions();
@@ -326,7 +326,7 @@ class SygGallery {
 			$url = $syg->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&syg_option_which_thumb='.$options['syg_option_which_thumb'].'&syg_option_pagenumrec='.$per_page.'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
 			$localFN = $i.'.json';
 			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
-			chmod ($this->getJsonPath().$localFN, 0777);
+			chmod ($this->getJsonPath().$localFN, 0755);
 		}
 		
 		// delete javascript cache

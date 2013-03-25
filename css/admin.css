@@ -343,3 +343,7 @@ select { border-color: #333333 !important;}
 	border-radius: 10px; 
 	box-shadow: 0 0 8px #888;
 }
+
+#syg_option_use_fb2_desc {
+	display: inline;
+}

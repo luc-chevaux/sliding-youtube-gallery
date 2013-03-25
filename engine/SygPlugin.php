@@ -345,11 +345,11 @@ class SygPlugin extends SanityPluginFramework {
 		$stat = stat(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR);
 
 		if ((getmygid() == $stat['gid']) || ($stat['gid'] == 0)) {
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0777 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0777);
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0755 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0755 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0755 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0755 );
+			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0755);
 		}
 		
 		if ($installed_ver != $target_syg_db_version) {
@@ -809,108 +809,177 @@ class SygPlugin extends SanityPluginFramework {
 		$view['cssPath'] = $this->getCssRoot();
 		$view['imgPath'] = $this->getImgRoot();
 		$view['jsPath'] = $this->getJsRoot();
+		$view['pluginUrl'] = $this->getPluginRoot();
+		
+		// get options
+		$options = $this->getOptions();
 		
 		// detect if client is a mobile browser
 		$detect = new Mobile_Detect();
 		$mobile = $detect->isMobile();
 		
-		// define plugin url
-		$view['pluginUrl'] = $this->getPluginRoot();
-
+		// fancybox 2 resources url
+		$view['fancybox_js_url'] = $options['syg_option_use_fb2_url'] . 'jquery.fancybox.pack.js';
+		$view['mousewheel_js_url'] = $options['syg_option_use_fb2_url'] . 'jquery.mousewheel-3.0.6.pack.js';
+		$view['fancybox_css_url'] = $options['syg_option_use_fb2_url'] . 'jquery.fancybox.css';
+		
 		// fancybox resources url
-		$view['fancybox_js_url'] = $view['jsPath'] . '3rdParty/fancybox/source/jquery.fancybox.pack.js?v=2.1.3';
-		/*$view['easing_js_url'] = $view['jsPath'] . '3rdParty/fancybox/jquery.easing-1.3.pack.js';*/
-		$view['mousewheel_js_url'] = $view['jsPath'] . '3rdParty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js';
-		$view['fancybox_css_url'] = $view['jsPath']	. '3rdParty/fancybox/source/jquery.fancybox.css?v=2.1.2';
+		$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
+		$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
+		$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
+		$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
 		
 		// jquery 
 		$view['jquery-cookie-master_js_url'] = $view['jsPath'] . '3rdParty/jquery-cookie-master/jquery.cookie.js';
 		
 		switch ($context) {
 			case SygConstant::SYG_CTX_BE:
-				// css to include
+				/********************************
+				 * include css in the view file *
+				 ********************************/
+				// css to include admin
 				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
+				// css to include colorpicker
 				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
 	
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
-				wp_enqueue_style('fancybox');
-	
-				// javascript dependencies injection
+				/***********************
+				 * wp jquery injection *
+				 ***********************/
 				wp_enqueue_script('jquery');
 	
-				// js to include
+				/*******************************
+				 * syg admin library inclusion *
+				 *******************************/
 				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'core/lib/syg.lib.admin.min.js.php', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-admin');
 	
+				/*****************************
+				 * color picker js inclusion *
+				 *****************************/
 				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . '3rdParty/colorPicker/colorpicker.js', array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
 	
-				// include fancybox
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(), '2.1.3', true);
-				wp_enqueue_script('fancybox');
+				/**********************
+				 * fancybox inclusion *
+				 **********************/
+				if ($option['syg_option_use_fb2'] == '1') { // use fancybox 2
+					// include css
+					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
+					wp_enqueue_style('fancybox');
+					
+					// include fancybox
+					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '2.1.3', true);
+					wp_enqueue_script('fancybox');
+						
+					// include jquery mousewheel
+					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.6', true);
+					wp_enqueue_script('mousewheel');
+				} else { // use fancybox 1
+					// include css
+					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '1.3.4', 'screen');
+					wp_enqueue_style('fancybox');
+					
+					// include fancybox
+					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '1.3.4', true);
+					wp_enqueue_script('fancybox');
+					
+					// include jquery easing
+					wp_register_script('easing', $view['easing_js_url'], array('jquery'), '1.3.0', true);
+					wp_enqueue_script('easing');
+					
+					// include jquery mousewheel
+					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.4', true);
+					wp_enqueue_script('mousewheel');
+				}
 				
-				// include jquery easing
-				// wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				// wp_enqueue_script('easing');
-				
-				// include jquery mousewheel
-				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), '3.0.6', true);
-				wp_enqueue_script('mousewheel');
-				
-				// include jquery cookie master
+				/********************************
+				 * include jquery cookie master *
+				 ********************************/
 				wp_register_script('jquery-cookie-master', $view['jquery-cookie-master_js_url'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('jquery-cookie-master');
 				
 				break;
 			case SygConstant::SYG_CTX_FE:
+				// fix index
 				if (empty($view['gallery'])) {
 					$galleryId = 0;
 				} else {
 					$gallery = $view['gallery'];
 					$galleryId = $gallery->getId();
 				}
-				
-				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
-				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.min.js.php';
-				
-				// carousel resources url
-				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
 					
-				// css injection
+				/***************************
+				 * gallery style injection *
+				 ***************************/
+				// indexed css
+				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
 				wp_register_style('sliding-youtube-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
-				wp_register_style('fancybox', $view['fancybox_css_url'], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('fancybox');
-	
-				if ($mobile) {
-					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.js', array('jquery'), '1.3.0', true);
-					wp_enqueue_script('jquery.mobile');
-				}
 				
-				// javascript dependencies injection
+				/***********************
+				 * wp jquery injection *
+				 ***********************/
 				wp_enqueue_script('jquery');
 				
+				/***************************
+				 * jquery mobile inclusion *
+				 ***************************/
 				if ($mobile) {
+					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.js', array('jquery'), '1.2.0', true);
+					wp_enqueue_script('jquery.mobile');
 					wp_register_style('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.css', array(), SygConstant::SYG_VERSION, 'screen');
 					wp_enqueue_style('jquery.mobile');
 				}
 				
-				// js to include
-				// include sliding youtube gallery js library
+				/********************************
+				 * syg client library inclusion *
+				 ********************************/
+				// syg client library
+				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.min.js.php';
 				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
 				wp_enqueue_script('sliding-youtube-gallery');
-				// include fancybox js library
-				wp_register_script('fancybox', $view['fancybox_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('fancybox');
-				// include easing js library
-				//wp_register_script('easing', $view['easing_js_url'], array(), SygConstant::SYG_VERSION, true);
-				//wp_enqueue_script('easing');
-				// include mousewheel js library
-				wp_register_script('mousewheel', $view['mousewheel_js_url'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('mousewheel');
-				// include cloud carousel javascript
-				wp_register_script('carousel', $view['carousel_js_url'], array(), SygConstant::SYG_VERSION, true);
+				
+				/**********************
+				 * fancybox inclusion *
+				**********************/
+				if ($option['syg_option_use_fb2'] == '1') { // use fancybox 2
+					// include css
+					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
+					wp_enqueue_style('fancybox');
+						
+					// include fancybox
+					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '2.1.3', true);
+					wp_enqueue_script('fancybox');
+				
+					// include jquery mousewheel
+					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.6', true);
+					wp_enqueue_script('mousewheel');
+				} else { // use fancybox 1
+					// include css
+					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '1.3.4', 'screen');
+					wp_enqueue_style('fancybox');
+						
+					// include fancybox
+					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '1.3.4', true);
+					wp_enqueue_script('fancybox');
+						
+					// include jquery easing
+					wp_register_script('easing', $view['easing_js_url'], array('jquery'), '1.3.0', true);
+					wp_enqueue_script('easing');
+						
+					// include jquery mousewheel
+					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.4', true);
+					wp_enqueue_script('mousewheel');
+				}
+				
+				/****************************
+				 * cloud carousel inclusion *
+				 ****************************/
+				// carousel resources url
+				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
+				wp_register_script('carousel', $view['carousel_js_url'], array(), '1.0.5', true);
 				wp_enqueue_script('carousel');
+				
 				break;
 			case SygConstant::SYG_CTX_WS:
 				break;
