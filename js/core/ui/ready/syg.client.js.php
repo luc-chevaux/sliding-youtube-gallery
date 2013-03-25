@@ -63,12 +63,12 @@ jQuery(document).ready(function($){
 	<?php if ($cache == 'on') { ?>
 		options['cache'] = '<?php echo $cache; ?>';
 		<?php 
-		$jsonUrl = WP_PLUGIN_URL . 
-					SygConstant::WP_PLUGIN_PATH .
-					SygConstant::WP_CACHE_JSON_REL_DIR .
-					$id .
-					DIRECTORY_SEPARATOR; 
-		$firstPageUrl = $jsonUrl . '1.json';
+			$jsonUrl = WP_PLUGIN_URL . 
+						SygConstant::WP_PLUGIN_PATH .
+						SygConstant::WP_CACHE_JSON_REL_DIR .
+						$id .
+						DIRECTORY_SEPARATOR; 
+			$firstPageUrl = $jsonUrl . '1.json';
 		?>
 		options['jsonUrl'] = '<?php echo $jsonUrl;?>';
 	<?php } ?>
@@ -76,19 +76,25 @@ jQuery(document).ready(function($){
 	<?php if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_PAGE) { ?>		
 		/* video page */
 		// loading images
-		$.displayLoad(gid['<?php echo $id; ?>']);
+		$.fn.sygclient('displayLoad', gid['<?php echo $id; ?>']);
 		<?php if ($cache == 'on') { ?>			
 			// get the data
-			$.getJSON('<?php echo $firstPageUrl; ?>', function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
+			$.getJSON('<?php echo $firstPageUrl; ?>', 
+					   function (data) {
+							$.fn.sygclient('loadData', data, gid['<?php echo $id; ?>'], options);
+						});
 		<?php } else { ?>
 			// get the data
-			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'] + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid['<?php echo $id; ?>'], options);});
+			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'] + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, 
+					   function (data) {
+					   		$.fn.sygclient('loadData', data, gid['<?php echo $id; ?>'], options);
+					   	});
 		<?php } ?>
 		// add pagination events
-		$.addPaginationClickEvent(gid['<?php echo $id; ?>'], options);
+		$.fn.sygclient('addPaginationClickEvent', gid['<?php echo $id; ?>'], options);
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
-		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
+		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>				   
 		// This initialises carousels on the container elements specified, in this case, carousel1.
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
@@ -111,6 +117,6 @@ jQuery(document).ready(function($){
 			<?php } ?>
 			titleBox: $("#carousel-title-<?php echo $id; ?>")
 		});
-		$.addFancyBoxSupport(gid['<?php echo $id; ?>'], options);
+		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } ?>
 });  
