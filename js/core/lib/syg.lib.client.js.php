@@ -38,7 +38,7 @@ jQuery.noConflict();
 			
 			$('table[class^=video_entry_table-' + gid + ']').remove();
 			
-			$.hideLoad(gid);
+			methods.hideLoad.call(this, gid);
 			$.each(data, function(key, val) {
 				
 				html = '<table class="video_entry_table-' + gid + '">';
@@ -101,7 +101,7 @@ jQuery.noConflict();
 				}
 				
 				if (options['description_show']) {
-					html = html + '<p class="textual_video_description">' + $.wordTruncate(val.video_description, options['description_length']) + '</p>';
+					html = html + '<p class="textual_video_description">' + methods.wordTruncate.call(this, val.video_description, options['description_length']) + '</p>';
 				}
 				
 				html = html + '</td>';
@@ -112,7 +112,7 @@ jQuery.noConflict();
 			});
 			
 			// add fancybox
-			$.addFancyBoxSupport(gid, options);
+			methods.addFancyBoxSupport.call(this, gid, options);
 		},
 		
 		/* function that add pagination event per table */
@@ -121,13 +121,13 @@ jQuery.noConflict();
 			
 			/* top pagination */
 			$('#pagination-top-' + gid + ' li').click(function(){
+				methods.displayLoad.call(this, gid);
 				
-				$.displayLoad(gid);
 				// css styles
 				$('#pagination-top-' + gid + ' li')
 					.attr({'class' : 'other_page'});
 				$('#pagination-bottom-' + gid + ' li')
-				.attr({'class' : 'other_page'});
+					.attr({'class' : 'other_page'});
 				
 				var buttonPressed = $(this).attr('id');
 				var button =  buttonPressed.replace('top-','');
@@ -139,16 +139,16 @@ jQuery.noConflict();
 				var pageNum = button;
 				
 				if (options['cache'] == 'on') {
-					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options);});
 				} else {
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData.call(this, data, gid, options);});
 				}				
 			});
 			
 			/* bottom pagination */
 			$('#pagination-bottom-' + gid + ' li').click(function(){
+				methods.displayLoad.call(this, gid);
 				
-				$.displayLoad(gid);
 				// css styles
 				$('#pagination-bottom-' + gid + ' li')
 					.attr({'class' : 'other_page'});
@@ -165,16 +165,16 @@ jQuery.noConflict();
 				var pageNum = button;
 				
 				if (options['cache'] == 'on') {
-					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options);});
 				} else {
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {$.loadData(data, gid, options);});
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData(this, data, gid, options);});
 				}
 			});
 		},
 		
 		/* function that add pagination event per table */
 		addFancyBoxSupport : function (gid, options) {
-			if (options['syg_option_use_fb2'] == '1') {
+			if (syg_option.syg_option_use_fb2 == '1') {
 				// add fancybox to each sygVideo css class
 				$(".sygVideo-" + gid).click(function() {
 					$.fancybox({
@@ -199,7 +199,7 @@ jQuery.noConflict();
 					return false;
 				});
 			} else {
-				$(".sygVideo").click(function() {
+				$(".sygVideo-" + gid).click(function() {
 					$.fancybox({
 						'padding' : 0,
 						'autoScale' : false,
@@ -215,6 +215,8 @@ jQuery.noConflict();
 							'wmode'	: 'transparent',
 							'allowfullscreen' : 'true'
 						}
+					});
+					return false;
 				});
 			}
 		},

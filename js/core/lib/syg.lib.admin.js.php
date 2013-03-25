@@ -142,7 +142,7 @@ jQuery.noConflict();
 						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
 						
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.deleteStyle(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -179,11 +179,11 @@ jQuery.noConflict();
 						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
 
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.deleteGallery(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
 						}
 						
 						if (val.cacheOn == 1) {
-							html = html + '<a href="#" onclick="javascript: jQuery.cacheGallery(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'cacheGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -252,10 +252,10 @@ jQuery.noConflict();
 		/* function that init gallery ui */
 		initGalleryUi : function () {
 			$('input[name=syg_gallery_type]').each(function(){
-				$(this).click(methods.disableInput.call(this));
+				$(this).click(function () { methods.disableInput.call() });
 			});
 			
-			methods.disableInput.call(this);
+			methods.disableInput.call();
 		},
 		
 		/* function that init settings ui */
