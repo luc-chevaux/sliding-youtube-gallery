@@ -296,6 +296,7 @@ class SygConstant {
 	const SYG_OPTION_DEFAULT_API_KEY = 'not present';
 	const SYG_OPTION_DEFAULT_WHICH_THUMB = '2';
 	const SYG_OPTION_DEFAULT_NUM_REC = '5';
+	const SYG_OPTION_DEFAULT_USE_FB2 = '0';
 	const SYG_OPTION_DEFAULT_PAGENUM_REC = '5';
 	const SYG_OPTION_DEFAULT_PAGINATION_AREA = 'both';	
 	const SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH = 200;
@@ -378,6 +379,8 @@ class SygConstant {
 	const BE_VALIDATE_NOT_LESS_VALUE = 'You entered %d. Its value must be less or equal than %d.';
 	const BE_VALIDATE_NOT_MAJOR_VALUE = 'You entered %d. Its value must be major or equal than %d.';
 	const BE_VALIDATE_LESS_VALUE = 'Can\'t be less than %d.';
+	const BE_VALIDATE_NOT_A_VALID_URL = 'Url that you\'ve entered is not correct.';
+	const BE_VALIDATE_FANCYBOX2_NOT_FOUND = 'Fancybox2 not found in path %s. Please check if the url provided has fancybox2 inside.';
 	const BE_VALIDATE_NOT_A_FLOAT = '%s is not a float value.';
 	const BE_VALIDATE_NOT_IN_RANGE = '%s is not between %s and %s.';
 	const BE_VALIDATE_NOT_A_VALID_YT_USER = '%s is not a valid youtube user.';
@@ -412,6 +415,7 @@ class SygConstant {
 	
 	const syg_option_numrec = 'Number of records displayed';
 	const syg_option_pagenumrec = 'Number of records in page';
+	const syg_option_use_fb2_url = 'Fancybox2 inclusion url';
 	const syg_option_paginator_borderradius = 'Border Radius';
 	const syg_option_paginator_bordersize = 'Border Size';
 	const syg_option_paginator_shadowsize = 'Shadow Size';
