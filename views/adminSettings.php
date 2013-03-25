@@ -50,6 +50,13 @@
 				<!-- number of records displayed -->
 				<label for="syg_option_numrec">Number of records displayed: </label>
 				<input type="text" id="syg_option_numrec" name="syg_option_numrec" value="<?php echo $options['syg_option_numrec']; ?>" size="3">
+				
+				<br/><br/>
+				<!-- use fancybox2 according to new licences -->
+				<label for="syg_option_use_fb2">Display gallery with Fancybox2</label>
+				<input type="checkbox" name="syg_option_use_fb2" id="syg_option_use_fb2" value="1" <?php if ($options['syg_option_use_fb2'] == "1") echo 'checked="checked"';?>/> <small>(You must agree with owner's <a href="http://fancyapps.com/fancybox/#license" target="_new">license</a>)</small>
+				
+				<span id="syg_option_use_fb2_desc" <?php if ($options['syg_option_use_fb2'] == NULL) echo 'style="display:none;"'; ?>> Fancybox2 inclusion url: <small>(use http://)</small> : </span><input type="text" id="syg_option_use_fb2_url" name="syg_option_use_fb2_url" value="<?php echo $options['syg_option_use_fb2_url']; ?>" value="<?php echo $options['syg_option_use_fb2_url']; ?>" size="40" <?php if ($options['syg_option_use_fb2'] == NULL) echo 'style="display:none;"'; ?>>
 			</fieldset>
 			
 			<!-- youtube settings -->
