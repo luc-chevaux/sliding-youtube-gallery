@@ -1,34 +1,19 @@
 jQuery.noConflict();
 
 (function($){
-	/**
-	 * function applied to selector
-	 *
-	 * $.fn.calculateNewWidth = function() {
-	 * return true;
-	 * };
-	 */
-	
-	$.extend({
-		
-		/**
-		 * function to display splash image
-		 */
+	var methods = {
+		/* function to display splash image */
 		displayLoad : function () {
 			$('#syg-loading td').fadeIn(900,0);
 			$('#syg-loading td').html('<img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
 		},
-	
-		/**
-		 * function to hide splash image
-		 */
+		
+		/* function to hide splash image */
 		hideLoad : function () {
 			$('#syg-loading td').fadeOut('slow');
 		},
 		
-		/**
-		 * function to init colorpicker 
-		 */
+		/* function to init colorpicker */
 		initColorPicker : function (id, val, defaultColor) {
 			jQuery('#' + id + ' div').css('backgroundColor', jQuery(val).val());
 			
@@ -49,10 +34,8 @@ jQuery.noConflict();
 			});
 			return true;
 		},
-	
-		/**
-		 * function that apply aspect ratio
-		 */
+		
+		/* function that apply aspect ratio */
 		calculateNewWidth : function () {
 			var height = $('#syg_thumbnail_height').val();
 			var new_width = Math.round(height * 480 / 360);
@@ -60,9 +43,7 @@ jQuery.noConflict();
 			return true;
 		},
 		
-		/**
-		 * function that apply aspect ratio
-		 */
+		/* function that apply aspect ratio */
 		calculateNewHeight : function () {
 			var width = $('#syg_thumbnail_width').val();
 			var new_height = Math.round(width * 360 / 480);
@@ -70,9 +51,7 @@ jQuery.noConflict();
 			return true;
 		},
 		
-		/**
-		 * function that delete a gallery (ajax)
-		 */
+		/* function that delete a gallery (ajax) */
 		deleteStyle : function (id) {
 			var sure = confirm('Are you sure to delete this style?');
 			if (sure) {
@@ -89,9 +68,7 @@ jQuery.noConflict();
 			return true;
 		},
 		
-		/**
-		 * function that delete a gallery (ajax)
-		 */
+		/* function that delete a gallery (ajax) */
 		deleteGallery : function (id) {
 			var sure = confirm('Are you sure to delete this gallery?');
 			if (sure) {
@@ -108,9 +85,7 @@ jQuery.noConflict();
 			return true;
 		},
 		
-		/**
-		 * function that cache a gallery (ajax)
-		 */
+		/* function that cache a gallery (ajax) */
 		cacheGallery : function (id) {
 			var sure = confirm('Are you sure to re-cache this gallery?');
 			if (sure) {
@@ -139,12 +114,10 @@ jQuery.noConflict();
 		    $('#loader').fadeToggle(300);
 		},
 		
-		/* 
-		 * function that loads the data in the table
-		 */ 
+		/* function that loads the data in the table */ 
 		loadData : function (data) {
 			data = $.parseJSON(JSON.stringify(data));
-			var page = $.getQParam('page');
+			var page = methods.getQParam.call(this, 'page');
 			
 			var html;
 			$('tr[id^=syg_row_]').remove();
@@ -152,7 +125,7 @@ jQuery.noConflict();
 			switch (page) {
 				case 'syg-manage-styles':
 					var table = 'styles';
-					$.hideLoad();
+					methods.hideLoad.call(this);
 					$.each(data, function(key, val) {
 						
 						html = '<tr id="syg_row_' + key + '">';
@@ -180,7 +153,7 @@ jQuery.noConflict();
 					break;
 				case 'syg-manage-galleries':
 					var table = 'galleries';
-					$.hideLoad();
+					methods.hideLoad.call(this);
 					$.each(data, function(key, val) {
 						html = '<tr id="syg_row_' + key + '">';
 						html = html + '<td>';
@@ -202,7 +175,6 @@ jQuery.noConflict();
 						html = html + val.cacheExists;
 						html = html + '</td>';
 						html = html + '<td>';
-						/* html = html + '<a href="#" onclick="javascript: jQuery.showDetails(\''+ val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/details.png" title=""><img></a>'; */
 						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
 						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
 
@@ -219,8 +191,8 @@ jQuery.noConflict();
 					
 						$('#galleries_table tr:last-child').after(html);
 						  
-						var dHeight     =  parseInt(val.sygStyle.thumbHeight) + (parseInt(val.sygStyle.boxPadding)*2) ;
-						var dWidth     =  parseInt(val.sygStyle.boxWidth) + (parseInt(val.sygStyle.boxPadding)*2) ;
+						var dHeight = parseInt(val.sygStyle.thumbHeight) + (parseInt(val.sygStyle.boxPadding)*2) ;
+						var dWidth = parseInt(val.sygStyle.boxWidth) + (parseInt(val.sygStyle.boxPadding)*2) ;
 						
 						// set preview action
 						$('.iframe_' + val.id).fancybox({ 
@@ -246,14 +218,12 @@ jQuery.noConflict();
 					return null;
 			}
 		},
-		  
-		/**
-		 * function that add pagination event per table
-		 */
+		
+		/* function that add pagination event per table */
 		addPaginationClickEvent : function (table) {
 			// add galleries pagination click event
 			$('#syg-pagination-' + table + ' li').click(function(){
-				$.displayLoad();
+				methods.displayLoad.call(this);
 				// css styles
 				$('#syg-pagination-' + table + ' li')
 					.attr({'class' : 'other_page'});
@@ -267,35 +237,53 @@ jQuery.noConflict();
 			});
 		},
 		
+		/* function that init style ui */
 		initStyleUi : function () {
 			// add the aspect ratio function
 			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
 			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
 			
 			// init the color pickers
-			$.initColorPicker('thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
-			$.initColorPicker('box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
-			$.initColorPicker('desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
+			methods.initColorPicker.call(this, 'thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
+			methods.initColorPicker.call(this, 'box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
+			methods.initColorPicker.call(this, 'desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
 		},
 		
+		/* function that init gallery ui */
 		initGalleryUi : function () {
 			$('input[name=syg_gallery_type]').each(function(){
-				$(this).click($.disableInput);
+				$(this).click(methods.disableInput.call(this));
 			});
 			
-			$.disableInput();
+			methods.disableInput.call(this);
 		},
 		
+		/* function that init settings ui */
 		initSettingsUi: function () {
+			// add event to fancybox2 inclusion button
+			
+			$('#syg_option_use_fb2').click(function () {				
+				if ($('#syg_option_use_fb2_url').is(":visible")) {
+		            // disabilita
+		         	$('#syg_option_use_fb2_url').hide();
+		         	$('#syg_option_use_fb2_desc').hide();
+		        } else {
+		        	// abilita
+		        	$('#syg_option_use_fb2_url').show();
+		        	$('#syg_option_use_fb2_desc').show();
+		        }
+			});
+		
 			// init the color pickers
-			$.initColorPicker('paginator_bordercolor_selector', $('#syg_option_paginator_bordercolor'));
-			$.initColorPicker('paginator_bgcolor_selector', $('#syg_option_paginator_bgcolor'), '#efefef');
-			$.initColorPicker('paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
-			$.initColorPicker('paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
+			methods.initColorPicker.call(this, 'paginator_bordercolor_selector', $('#syg_option_paginator_bordercolor'));
+			methods.initColorPicker.call(this, 'paginator_bgcolor_selector', $('#syg_option_paginator_bgcolor'), '#efefef');
+			methods.initColorPicker.call(this, 'paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
+			methods.initColorPicker.call(this, 'paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
 		},
 		
+		/* function that update cache */
 		updateCache: function () {
-			var modified = $.getQParam('modified');
+			var modified = methods.getQParam.call(this, 'modified');
 			if ($.isNumeric(modified) && syg_option.syg_option_askcache == '1') {
 				var answer = confirm('Your style has been changed. Cached content need to be updated. Update it now?');
 				if (answer) {
@@ -325,6 +313,7 @@ jQuery.noConflict();
 			}
 		},
 		
+		/* function that disable input */
 		disableInput: function () {
 		    var value = $('input[name=syg_gallery_type]:checked').val();
 		    switch (value) {
@@ -375,17 +364,28 @@ jQuery.noConflict();
 		    }
 		},
 		
+		/* function that get parameter value */
 		getQParam : function (name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 			var regexS = "[\\?&]" + name + "=([^&#]*)";
 			var regex = new RegExp(regexS);
 			var results = regex.exec(window.location.search);
-			if(results == null)
+			if(results == null) {
 				return "";
-			else
+			} else {
 				return decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
-		});
+		}
+	};
+	
+	$.fn.sygadmin = function( method ) {
+    	// Method calling logic
+    	if (methods[method]) {
+			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    	} else {
+    		$.error( 'Method ' +  method + ' does not exist on jQuery.sygadmin' );
+		}
+    };
 })(jQuery);
 
 /************************************************
@@ -395,9 +395,9 @@ jQuery.noConflict();
 
 jQuery(document).ready(function($) {
 	// determine current url
-	var action = $.getQParam('action'); 
-	var page = $.getQParam('page');
-	var id = $.getQParam('id');
+	var action = $.fn.sygadmin('getQParam', 'action'); 
+	var page = $.fn.sygadmin('getQParam', 'page');
+	var id = $.fn.sygadmin('getQParam', 'id');
 	
 	$('#loader').ajaxStart(function() {
 		  $(this).fadeIn(300);
@@ -411,17 +411,17 @@ jQuery(document).ready(function($) {
 	if (action == 'add' || action =='edit') {
 		if (page == 'syg-manage-galleries') {
 			// init the user interface
-			$.initGalleryUi();
+			$.fn.sygadmin('initGalleryUi');
 		} else if (page == 'syg-manage-styles') {
 			// init the user interface
-			$.initStyleUi();
+			$.fn.sygadmin('initStyleUi');
 		}
 	} else{
 		switch (page) {
 			case 'syg-manage-styles':
 				// init pagination for styles
 				var table = 'styles';
-				$.updateCache();
+				$.fn.sygadmin('updateCache');
 				break;
 			case 'syg-manage-galleries':
 				// init pagination for galleries
@@ -429,23 +429,23 @@ jQuery(document).ready(function($) {
 				break;
 			case 'syg-manage-settings':
 				// init settings
-				$.initSettingsUi();
-				$.updateCache();
+				$.fn.sygadmin('initSettingsUi');
+				$.fn.sygadmin('updateCache');
 				return true;
 			default:
 				return false;
 		}
 	
 		// loading images
-		$.displayLoad();
+		$.fn.sygadmin('displayLoad');
 	
 		// load if page contains a list
 		if (!id){
 			// get the data
-			$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=1&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
+			$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=1&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.fn.sygadmin('loadData', data);});
 		}
 		
 		// add pagination events
-		$.addPaginationClickEvent(table);
+		$.fn.sygadmin('addPaginationClickEvent', table);
 	}
 });

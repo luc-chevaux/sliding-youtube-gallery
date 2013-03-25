@@ -1,36 +1,21 @@
 jQuery.noConflict();
 
 (function($){
-	/**
-	 * function applied to selector
-	 *
-	 * $.fn.calculateNewWidth = function() {
-	 * return true;
-	 * };
-	 */
-	
-	$.extend({
-		
-		/**
-		 * function to display splash image
-		 */
+	var methods = {
+		/* function to display splash image */
 		displayLoad : function (gid) {
 			$('table[class^=video_entry_table-' + gid +']').remove();
 			$('#syg_video_container-' + gid).css('height', '100px');
 			$('#syg_video_container-' + gid + ' #hook').fadeIn(900,0);			
 		},
-	
-		/**
-		 * function to hide splash image
-		 */
+		
+		/* function to hide splash image */
 		hideLoad : function (gid) {
 			$('#syg_video_container-' + gid + ' #hook').fadeOut('fast');
 			$('#syg_video_container-' + gid ).css('height', 'auto');
 		},
 		
-		/**
-		 * word truncation function
-		 */
+		/* word truncation function */
 		wordTruncate : function truncate(str, limit) { 
 			var bits, i; 
 			if ("string" !== typeof str) { 
@@ -46,9 +31,7 @@ jQuery.noConflict();
 			return bits.join(''); 
 		},
 		
-		/* 
-		 * function that loads the data in the table
-		 */ 
+		/* function that loads the data in the table */ 
 		loadData : function (data, gid, options) {
 			data = $.parseJSON(JSON.stringify(data));
 			var html;
@@ -131,10 +114,8 @@ jQuery.noConflict();
 			// add fancybox
 			$.addFancyBoxSupport(gid, options);
 		},
-		  
-		/**
-		 * function that add pagination event per table
-		 */
+		
+		/* function that add pagination event per table */
 		addPaginationClickEvent : function (gid, options) {
 			// add galleries pagination click event
 			
@@ -191,34 +172,51 @@ jQuery.noConflict();
 			});
 		},
 		
-		/**
-		 * function that add pagination event per table
-		 */
+		/* function that add pagination event per table */
 		addFancyBoxSupport : function (gid, options) {
-			// add fancybox to each sygVideo css class
-			$(".sygVideo-" + gid).click(function() {
-				$.fancybox({
-					'padding' : 0,
-					'beforeShow' : function(){
-  						$(".fancybox-skin").css("backgroundColor","black");
- 					},
-					'transitionIn' : 'none',
-					'transitionOut'	: 'none',
-					'title' : this.title,
-					'width'	: options['video_width'],
-					'height' : options['video_height'],
-					'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
-					'fitToView' : true,
-					'type' : 'swf',
-					'swf' : {
-						'wmode'	: 'transparent',
-						'allowfullscreen' : 'true',
-						'allowscriptaccess' : 'always'
-					}
+			if (options['syg_option_use_fb2'] == '1') {
+				// add fancybox to each sygVideo css class
+				$(".sygVideo-" + gid).click(function() {
+					$.fancybox({
+						'padding' : 0,
+						'beforeShow' : function(){
+	  						$(".fancybox-skin").css("backgroundColor","black");
+	 					},
+						'transitionIn' : 'none',
+						'transitionOut'	: 'none',
+						'title' : this.title,
+						'width'	: options['video_width'],
+						'height' : options['video_height'],
+						'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+						'fitToView' : true,
+						'type' : 'swf',
+						'swf' : {
+							'wmode'	: 'transparent',
+							'allowfullscreen' : 'true',
+							'allowscriptaccess' : 'always'
+						}
+					});
+					return false;
 				});
-
-				return false;
-			});
+			} else {
+				$(".sygVideo").click(function() {
+					$.fancybox({
+						'padding' : 0,
+						'autoScale' : false,
+						'transitionIn' : 'none',
+						'transitionOut'	: 'none',
+						'title' : this.title,
+						'width'	: options['width'],
+						'height' : options['height'],
+						'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+						'fitToView' : true,
+						'type' : 'swf',
+						'swf' : {
+							'wmode'	: 'transparent',
+							'allowfullscreen' : 'true'
+						}
+				});
+			}
 		},
 		
 		isAndroid: function() {
@@ -226,15 +224,15 @@ jQuery.noConflict();
 		},
 		
 		isBlackBerry: function() {
-		        return navigator.userAgent.match(/BlackBerry/i);
+			return navigator.userAgent.match(/BlackBerry/i);
 		},
 		
 		isIOS: function() {
-		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+			return navigator.userAgent.match(/iPhone|iPad|iPod/i);
 		},
 		
 		isOpera: function() {
-		   		return navigator.userAgent.match(/Opera Mini/i);
+			return navigator.userAgent.match(/Opera Mini/i);
 		},
 		
 		isWindows: function() {
@@ -242,18 +240,28 @@ jQuery.noConflict();
 		},
 		
 		isMobileBrowser: function() {
-			return ($.isAndroid() || $.isBlackBerry() || $.isIOS() || $.isOpera() || $.isWindows());
+			return (methods.isAndroid.call(this) || methods.isBlackBerry.call(this) || methods.isIOS.call(this) || methods.isOpera.call(this) || methods.isWindows.call(this));
 		},
-			
+		
 		getQParam : function (name) {
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 			var regexS = "[\\?&]" + name + "=([^&#]*)";
 			var regex = new RegExp(regexS);
 			var results = regex.exec(window.location.search);
-			if(results == null)
+			if(results == null) {
 				return "";
-			else
+			} else {
 				return decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
-		});
+		}
+	};
+	
+	$.fn.sygclient = function( method ) {
+    	// Method calling logic
+    	if (methods[method]) {
+			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    	} else {
+    		$.error( 'Method ' +  method + ' does not exist on jQuery.sygclient' );
+		}
+    };
 })(jQuery);
