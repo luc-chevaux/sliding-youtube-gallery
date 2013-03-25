@@ -434,11 +434,39 @@ class SygValidate {
 			}
 		}
 		
+		// validation fancybox2
+		if ($data['syg_option_use_fb2']) {
+			// validate url
+			if (!filter_var($data['syg_option_use_fb2_url'], FILTER_VALIDATE_URL)) {
+				array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_use_fb2_url'),
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_VALID_URL, $data['syg_option_use_fb2_url'])));
+			} else {
+				
+				// create a baseurl stripping filename from url and adding the trail slashes
+				$last_slash = strrpos($data['syg_option_use_fb2_url'], '/');
+				if (($last_slash + 1) == strlen($data['syg_option_use_fb2_url'])) {
+					$url_path = $data['syg_option_use_fb2_url'];
+				} else {
+					$url_path = substr($data['syg_option_use_fb2_url'], 0, $last_slash+1);
+				}
+				
+				// check if fancbox2 files are present
+				if (!(file_get_contents($url_path.'jquery.fancybox.pack.js') ||
+						file_get_contents($url_path.'jquery.fancybox.js') ||
+						file_get_contents($url_path.'jquery.fancybox.css'))) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_option_use_fb2_url'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_FANCYBOX2_NOT_FOUND, $url_path)));
+				}
+			}
+		}
+		
 		// syg_option_paginator_borderradius int
 		if (!(preg_match('/^\d+$/', $data['syg_option_paginator_borderradius']))) {
 			array_push($problemFound,
-			array('field' => SygUtil::getLabel('syg_option_paginator_borderradius'),
-			'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_borderradius'])));
+				array('field' => SygUtil::getLabel('syg_option_paginator_borderradius'),
+					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_paginator_borderradius'])));
 		}
 		
 		// syg_option_paginator_bordersize int
