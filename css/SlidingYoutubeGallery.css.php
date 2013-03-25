@@ -224,7 +224,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
     left: <?php echo $syg_box_padding; ?>px;
     bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
     display: inline;
-    z-index: 1000000;
+    z-index: 1000;
 }
 
 #right-carousel-button-<?php echo $id; ?> {
@@ -233,7 +233,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
     right: <?php echo $syg_box_padding; ?>px;
     bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
     display: inline;
-    z-index: 1000000;
+    z-index: 1000;
 }
 
 #left-carousel-button-<?php echo $id; ?> img, #right-carousel-button-<?php echo $id; ?> img {
