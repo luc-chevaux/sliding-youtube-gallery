@@ -128,7 +128,8 @@ class SanityPluginFramework {
     	ob_start();
         include ($template_path);
         $output = ob_get_clean();
-        
+        // @todo gestire sovrapposizione tra script registrati quando i componenti
+        // sono uguali o tra galleria e pagina
         if (SygConstant::SYG_PLUGIN_COMPONENT_GALLERY == $component) {
 	        // js to include
 	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
