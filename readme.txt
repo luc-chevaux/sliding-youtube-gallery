@@ -4,7 +4,7 @@ Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
 Tested up to: 3.4
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -85,6 +85,12 @@ To customize your galleries you can use the plugin administration page. If you n
 
 == Changelog ==
 
+= 1.4.3 =
+* Mobile browser supported (tested with android)
+* A fews modification to enforce the plugin structure and license policies
+* Resolves minor bugfix
+* Enforce themes compatibility
+
 = 1.4.2 =
 * Fixed fancybox version when registering the script (in some themes that redistribute fancybox this may be an issue)
 
@@ -141,6 +147,12 @@ To customize your galleries you can use the plugin administration page. If you n
 * Video count setting bug, was fixed.
 
 == Upgrade Notice ==
+
+= 1.4.3 =
+- Mobile browser supported (tested with android)
+- A fews modification to enforce the plugin structure and license policies
+- Resolves minor bugfix
+- Enforce themes compatibility
 
 = 1.4.2 =
 - Fixed fancybox version when registering the script (in some themes that redistribute fancybox this may be an issue)

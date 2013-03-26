@@ -20,7 +20,8 @@ $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
 jQuery(window).load(function() {
-
+	console.log('page loading function >> start');
+	
 	jQuery('#syg_video_page-<?php echo $id; ?>')
 		.removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
 		
@@ -29,4 +30,6 @@ jQuery(window).load(function() {
 		
 	jQuery('#paginator-bottom-<?php echo $id; ?>')
 		.removeAttr("style");
+		
+	console.log('page loading function >> end');
 });

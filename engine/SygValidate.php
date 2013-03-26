@@ -6,7 +6,7 @@
  * @since 1.3.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.2
+ * @version: 1.4.3
  */
 
 class SygValidateException extends Exception {

@@ -191,6 +191,11 @@ label {
 	padding: 10px;
 }
 
+#galleries_table td.NO {
+	color: #bc0f11;
+	font-weight: bold;
+}
+
 #galleries_table th.id {
 	width: 50px;
 }

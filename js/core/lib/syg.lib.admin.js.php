@@ -171,8 +171,11 @@ jQuery.noConflict();
 						html = html + '<td>';
 						html = html + val.galleryType;
 						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.cacheExists;
+						
+						html = html + '<td class="' + val.cacheExists + '">';
+						if (val.cacheOn == 1) {
+							html = html + val.cacheExists;
+						}
 						html = html + '</td>';
 						html = html + '<td>';
 						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
