@@ -862,7 +862,7 @@ class SygPlugin extends SanityPluginFramework {
 				/**********************
 				 * fancybox inclusion *
 				 **********************/
-				if ($option['syg_option_use_fb2'] == '1') { // use fancybox 2
+				if ($options['syg_option_use_fb2'] == '1') { // use fancybox 2
 					// include css
 					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
 					wp_enqueue_style('fancybox');
@@ -1120,7 +1120,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToSettings($updated = false) {
 		if (is_admin()) {
 			// if we've updated a record set action to null
-			$action = ($updated == true) ? 'redirect' : $_GET['action'];
+			$action = ($updated == true) ? 'redirect' : (isset( $_GET['action']) ? $_GET['action'] : 'default';
 			// determine wich action to call
 			switch ($action) {
 				case 'cache':
