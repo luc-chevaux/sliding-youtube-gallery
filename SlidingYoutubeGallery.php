@@ -203,7 +203,7 @@ function rebuildCache() {
 
 function checkRole () {
 	// set status cookie
-	if (is_set($_COOKIE['syg-role']) && $_COOKIE['syg-role'] != SygPlugin::getCurrentUserRole()) {
+	if (!isset($_COOKIE['syg-role']) || $_COOKIE['syg-role'] != SygPlugin::getCurrentUserRole()) {
 		setcookie('syg-role', SygPlugin::getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
 	}
 }
