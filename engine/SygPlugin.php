@@ -1120,7 +1120,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToSettings($updated = false) {
 		if (is_admin()) {
 			// if we've updated a record set action to null
-			$action = ($updated == true) ? 'redirect' : (isset( $_GET['action']) ? $_GET['action'] : 'default';
+			$action = ($updated == true) ? 'redirect' : (isset( $_GET['action']) ? $_GET['action'] : 'default');
 			// determine wich action to call
 			switch ($action) {
 				case 'cache':
