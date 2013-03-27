@@ -325,7 +325,7 @@ class SygConstant {
 	// user message
 	const BE_NO_GALLERY_FOUND_ADM_WRN = 'Hey! There\'s no youtube gallery in your blog. Why don\'t you create one <a href="?page=syg-manage-galleries">here?</a><br/>';
 	const BE_NO_STYLES_FOUND_ADM_WRN = 'Before you create a new gallery, you must create your first theme. Create <a href="?page=syg-manage-styles&action=add">here!</a><br/>';
-	const BE_FS_NOT_WRITEABLE = 'Your caching directory is not writeable. Deactivating then activating the plugin should fix the problem.<br/>If the problem persists, try to manually chmod 777 /cache directory and the other folders inside.';
+	const BE_FS_NOT_WRITEABLE = 'Your caching directory is not writeable. Deactivating then activating the plugin should fix the problem.<br/>If the problem persists, try to manually chmod 755 /cache directory and the other folders inside.';
 	const BE_WRONG_SETTINGS_ADM_WRN = 'Something is going wrong with your current settings. <a href="?page=syg-manage-settings">Go to settings.</a><br/>';
 	const BE_SUPPORT_PAGE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Support page</a>';
 	const BE_DONATION_CODE = '<a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Donation</a>';
