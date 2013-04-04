@@ -925,9 +925,9 @@ class SygPlugin extends SanityPluginFramework {
 				 * jquery mobile inclusion *
 				 ***************************/
 				if ($mobile) {
-					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.js', array('jquery'), '1.2.0', true);
+					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.3.0.min.js', array('jquery'), '1.3.0', true);
 					wp_enqueue_script('jquery.mobile');
-					wp_register_style('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.0.min.css', array(), SygConstant::SYG_VERSION, 'screen');
+					wp_register_style('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.3.0.min.css', array(), '1.3.0', 'screen');
 					wp_enqueue_style('jquery.mobile');
 				}
 				
@@ -942,7 +942,7 @@ class SygPlugin extends SanityPluginFramework {
 				/**********************
 				 * fancybox inclusion *
 				**********************/
-				if ($option['syg_option_use_fb2'] == '1') { // use fancybox 2
+				if ($options['syg_option_use_fb2'] == '1') { // use fancybox 2
 					// include css
 					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
 					wp_enqueue_style('fancybox');

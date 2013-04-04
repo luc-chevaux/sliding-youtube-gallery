@@ -30,6 +30,7 @@ require_once(SYG_PATH . 'engine/SygUtil.php');
 require_once(SYG_PATH . 'engine/SygYouTube.php');
 require_once(SYG_PATH . 'engine/SygStyle.php');
 require_once(SYG_PATH . 'engine/SygValidate.php');
+require_once(SYG_PATH . 'engine/SygWidget.php');
 
 require_once(SYG_PATH . 'engine/lib/MobileDetect/MobileDetect.php');
 
@@ -58,7 +59,6 @@ if (!is_admin()) {
 	// plugin update function callback
 	add_action('admin_init', 'sygCheckUpdateProcess');
 	
-	// back end code block
 	// attach the admin menu to the hook
 	add_action('admin_menu', 'SlidingYoutubeGalleryAdmin');
 	
@@ -66,8 +66,14 @@ if (!is_admin()) {
 	add_action('admin_notices', 'sygNotice');
 }
 
+// put javascript options in js context
 add_action('wp_print_scripts','getPluginOptions');
+
+// register action for cache rebuild
 add_action('syg_rebuild_cache','rebuildCache');
+
+// register syg widget
+add_action( 'widgets_init', 'registerSygWidget' );
 
 /* FRONT END METHODS */
 
@@ -201,11 +207,22 @@ function rebuildCache() {
 	$syg->rebuildCache();
 }
 
+/**
+ * Plugin check role
+ * @return null
+ */
 function checkRole () {
 	// set status cookie
 	if (!isset($_COOKIE['syg-role']) || $_COOKIE['syg-role'] != SygPlugin::getCurrentUserRole()) {
 		setcookie('syg-role', SygPlugin::getCurrentUserRole(), time() + 86400, get_admin_url().'admin.php');
 	}
+}
+
+/**
+ * Wordpress widget registration function
+ */
+function registerSygWidget() {
+	register_widget('SygWidget');
 }
 
 /**
