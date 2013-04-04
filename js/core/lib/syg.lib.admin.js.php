@@ -141,8 +141,6 @@ jQuery.noConflict();
 						html = html + '<td>';
 						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
 						
-						alert ($.cookie('syg-role'));
-						
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
 							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
 						}

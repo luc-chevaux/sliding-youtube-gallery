@@ -19,7 +19,7 @@ $syg = SygPlugin::getInstance();
 $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
-jQuery(window).load(function() {
+jQuery(window).load(function($) {
 	console.log('carousel loading function >> start');
 	
 	jQuery('#syg_video_carousel-<?php echo $id; ?>')
@@ -44,6 +44,10 @@ jQuery(window).load(function() {
 	jQuery("#right-carousel-button-<?php echo $id; ?>").on('mouseleave', function () {
 	   jQuery(this).find('.right-carousel-button-<?php echo $id; ?>').fadeTo('slow', 0.3);
 	});
+	
+	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
+		jQuery.mobile.hidePageLoadingMsg();
+	}
 	
 	console.log('carousel loading function >> end');
 });

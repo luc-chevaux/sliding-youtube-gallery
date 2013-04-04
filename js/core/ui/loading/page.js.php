@@ -19,7 +19,7 @@ $syg = SygPlugin::getInstance();
 $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
-jQuery(window).load(function() {
+jQuery(window).load(function($) {
 	console.log('page loading function >> start');
 	
 	jQuery('#syg_video_page-<?php echo $id; ?>')
@@ -30,6 +30,10 @@ jQuery(window).load(function() {
 		
 	jQuery('#paginator-bottom-<?php echo $id; ?>')
 		.removeAttr("style");
-		
+	
+	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
+		jQuery.mobile.hidePageLoadingMsg();
+	}
+	
 	console.log('page loading function >> end');
 });
