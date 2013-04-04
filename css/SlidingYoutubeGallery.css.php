@@ -34,7 +34,7 @@ $jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_descriptio
 img.thumbnail-image-<?php echo $id; ?> {
 	width: <?php echo $syg_thumbnail_width; ?>px;
 	height: <?php echo $syg_thumbnail_height; ?>px;
-	border: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid;	
+	border: <?php echo $syg_thumbnail_bordersize; ?>px <?php echo $syg_thumbnail_bordercolor; ?> solid !important;	
     border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     -webkit-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
     -moz-border-radius: <?php echo $syg_thumbnail_borderradius; ?>px;
