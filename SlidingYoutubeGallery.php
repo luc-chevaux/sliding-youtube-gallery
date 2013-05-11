@@ -50,8 +50,9 @@ if (!is_admin()) {
 	// front end code block
 	// add shortcodes
 	add_shortcode('syg_gallery', 'getGallery');
-	add_shortcode('syg_page', 'getVideoPage');
-	add_shortcode('syg_carousel', 'getVideoCarousel');
+	add_shortcode('syg_page', 'getPage');
+	add_shortcode('syg_carousel', 'getCarousel');
+	add_shortcode('syg_elastislide', 'getElastislide')
 } else {
 	// add cookie
 	add_action('init', 'checkRole');
@@ -100,7 +101,7 @@ function getGallery($atts) {
  * Get a video page
  * @param $atts
  */
-function getVideoPage($atts) {
+function getPage($atts) {
 	$syg = SygPlugin::getInstance();
 	return $syg->getVideoPage($atts);
 }
@@ -109,9 +110,18 @@ function getVideoPage($atts) {
  * Get a video carousel
  * @param unknown_type $atts
  */
-function getVideoCarousel($atts) {
+function getCarousel($atts) {
 	$syg = SygPlugin::getInstance();
 	return $syg->getVideoCarousel($atts);
+}
+
+/**
+ * Get a video elastislide
+ * @param unknown_type $atts
+ */
+function getElastislide($atts) {
+	$syg = SygPlugin::getInstance();
+	return $syg->getElastislide($atts);
 }
 
 /* BACK END METHODS */
