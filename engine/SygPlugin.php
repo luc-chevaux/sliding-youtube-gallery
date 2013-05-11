@@ -322,6 +322,12 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 
+
+	/**
+	 * @name printTasks
+	 * @category debug function
+	 * @since 1.4.0
+	 */
 	public function printTasks() {
 		print_r(_get_cron_array());
 	}
