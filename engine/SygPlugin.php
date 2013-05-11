@@ -1098,8 +1098,8 @@ class SygPlugin extends SanityPluginFramework {
 						$this->sygDao->getGalleriesCount()
 								/ $options['syg_option_numrec']);
 	
-				// render adminStyles view
-				return $this->render('adminGalleries');
+				// render admin/Galleries view
+				return $this->render('admin/Galleries');
 		}
 	}
 
@@ -1161,8 +1161,8 @@ class SygPlugin extends SanityPluginFramework {
 						$this->sygDao->getStylesCount()
 								/ $options['syg_option_numrec']);
 	
-				// render adminStyles view
-				return $this->render('adminStyles');
+				// render admin/Styles view
+				return $this->render('admin/Styles');
 		}
 	}
 
@@ -1370,8 +1370,8 @@ class SygPlugin extends SanityPluginFramework {
 			// put settings in the view
 			$this->data['options'] = $options;
 	
-			// render adminSettings view
-			return $this->render('adminSettings');
+			// render admin/Settings view
+			return $this->render('admin/Settings');
 		}
 	}
 
@@ -1494,7 +1494,7 @@ class SygPlugin extends SanityPluginFramework {
 		$this->data['style'] = new SygStyle();
 
 		// render adminGallery view
-		return $this->render('adminStyle');
+		return $this->render('admin/Style');
 	}
 
 	/**
@@ -1560,8 +1560,8 @@ class SygPlugin extends SanityPluginFramework {
 		// put styles to populate combo
 		$this->data['styles'] = $this->sygDao->getAllSygStyles();
 
-		// render adminGallery view
-		return $this->render('adminGallery');
+		// render admin/Gallery view
+		return $this->render('admin/Gallery');
 	}
 
 	/**
@@ -1694,8 +1694,8 @@ class SygPlugin extends SanityPluginFramework {
 			// prepare header
 			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 	
-			// render contact view
-			return $this->render('adminSupport');
+			// render admin/Support view
+			return $this->render('admin/Support');
 		}
 	}
 
