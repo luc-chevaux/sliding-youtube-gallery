@@ -29,6 +29,7 @@ class SygConstant {
 	const SYG_PLUGIN_COMPONENT_GALLERY = 'gallery';
 	const SYG_PLUGIN_COMPONENT_PAGE = 'page';
 	const SYG_PLUGIN_COMPONENT_CAROUSEL = 'carousel';
+	const SYG_PLUGIN_COMPONENT_ELASTISLIDE = "elastislide";
 	
 	/**
 	 * Front end methods running mode
