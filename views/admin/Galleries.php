@@ -12,7 +12,7 @@
 
 <!-- Title Page -->
 <div class="wrap">
-	<?php var_dump(realpath('inc/header.inc.php')); ?>
+	<?php include 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 		
 		<!-- User Message -->
