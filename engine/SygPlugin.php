@@ -1774,7 +1774,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function getJsOptions() {
 		$this->data['syg_options'] = json_encode($this->getOptions());
 		// render jsOption view
-		return $this->render('jsOption');
+		return $this->render('client/jsOption');
 	}
 
 	/************************/
