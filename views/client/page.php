@@ -25,7 +25,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		<?php 
 		if (($options['syg_option_paginationarea'] == 'top') || ($options['syg_option_paginationarea'] == 'both')) {
 			$paginator_area = 'top';
-			include 'inc/paginator.inc.php';
+			include '../inc/paginator.inc.php';
 		} 
 		?>
 		
@@ -36,7 +36,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		<?php 
 		if (($options['syg_option_paginationarea'] == 'bottom') || ($options['syg_option_paginationarea'] == 'both')) {
 			$paginator_area = 'bottom';
-			include 'inc/paginator.inc.php'; 
+			include '../inc/paginator.inc.php'; 
 		}
 		?>
 	</div>
