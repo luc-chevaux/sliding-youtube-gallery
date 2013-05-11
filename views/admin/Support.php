@@ -18,11 +18,11 @@
 
 <!-- Title Page -->
 <div class="wrap">
-	<?php require_once './inc/header.inc.php'; ?>
+	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 		
 		<!-- User Message -->
-		<?php include './inc/statusBar.inc.php'; ?>
+		<?php include 'inc/statusBar.inc.php'; ?>
 	
 		<table id="support_table">
 			<tr>
@@ -119,6 +119,6 @@
 				</td>
 			</tr>
 		</table>
-		<?php require_once './inc/contextMenu.inc.php'; ?>
+		<?php require_once 'inc/contextMenu.inc.php'; ?>
 	</div>
 </div>
