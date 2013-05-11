@@ -301,7 +301,8 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 	font-size: <?php echo $syg_description_fontsize; ?>px;	
 	color: <?php echo $syg_description_fontcolor; ?>;
 	width: <?php echo $syg_description_width; ?>px;
-	margin-bottom: <?php echo $syg_box_padding; ?>px; 
+	margin-bottom: <?php echo $syg_box_padding; ?>px;
+	line-height: 1.5;
 }
 
 .sc_menu-<?php echo $id; ?> a:hover img {
