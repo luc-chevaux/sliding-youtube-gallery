@@ -644,7 +644,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
 					// render cache files
-					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
+					return $this->cacheRender($gallery->getId(), 'client/'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 				} else {
 					// put the feed in the view
 					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
@@ -653,7 +653,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
 					// render gallery snippet code
-					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
+					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
@@ -712,10 +712,10 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
-					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+					return $this->cacheRender($gallery->getId(), 'client/'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				} else {					
 					// render gallery snippet code
-					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				}
 			}  catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
@@ -770,9 +770,9 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 						
 					// render cache files
-					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+					return $this->cacheRender('client/'.$gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 				} else if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 				} else {
 					$this->data['exception'] = true;
 					$this->data['exception_message'] = SygConstant::MSG_EX_GALLERY_NOT_CACHED;
