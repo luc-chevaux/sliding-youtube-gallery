@@ -48,11 +48,14 @@ register_uninstall_hook(SYG_PATH . 'SlidingYoutubeGallery.php', 'uninstall');
 // backend and frontend code
 if (!is_admin()) {
 	// front end code block
-	// add shortcodes
+	// add shortcode for sliding youtube gallery
 	add_shortcode('syg_gallery', 'getGallery');
+	// add shortcode for sliding youtube page
 	add_shortcode('syg_page', 'getPage');
+	// add shortcode for sliding youtube carousel
 	add_shortcode('syg_carousel', 'getCarousel');
-	add_shortcode('syg_elastislide', 'getElastislide')
+	// add shortcode for sliding youtube elastislide
+	add_shortcode('syg_elastislide', 'getElastislide');
 } else {
 	// add cookie
 	add_action('init', 'checkRole');
@@ -103,7 +106,7 @@ function getGallery($atts) {
  */
 function getPage($atts) {
 	$syg = SygPlugin::getInstance();
-	return $syg->getVideoPage($atts);
+	return $syg->getPage($atts);
 }
 
 /**
@@ -112,7 +115,7 @@ function getPage($atts) {
  */
 function getCarousel($atts) {
 	$syg = SygPlugin::getInstance();
-	return $syg->getVideoCarousel($atts);
+	return $syg->getCarousel($atts);
 }
 
 /**
