@@ -678,7 +678,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	public function getVideoPage($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+	public function getPage($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -740,7 +740,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param $attributes
 	 * @return $output
 	 */
-	public function getVideoCarousel($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+	public function getCarousel($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 		foreach ($attributes as $key => $var) {
 			$attributes[$key] = (int) $var;
 		}
@@ -779,6 +779,63 @@ class SygPlugin extends SanityPluginFramework {
 					// set front end option
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					return $this->render('exception');
+				}
+			} catch (SygGalleryNotFoundException $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
+			} catch (Exception $ex) {
+				$this->data['exception'] = true;
+				$this->data['exception_message'] = $ex->getMessage();
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				return $this->render('exception');
+			}
+		}
+	}
+	
+	/**
+	 * @name getElastislide
+	 * @category get a video elastislide
+	 * @since 1.5.0
+	 * @param $attributes
+	 * @return $output
+	 */
+	public function getElastislide($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+		foreach ($attributes as $key => $var) {
+			$attributes[$key] = (int) $var;
+		}
+	
+		extract(shortcode_atts(array('id' => null), $attributes));
+	
+		if (!empty($id)) {
+			try {
+				// get the gallery
+				$dao = new SygDao();
+				$gallery = $dao->getSygGalleryById($id);
+	
+				// put the gallery settings in the view
+				$this->data['gallery'] = $gallery;
+	
+				// put component type in the view (javascript optimization)
+				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
+	
+				// put mode option in the view context
+				$this->data['mode'] = $mode;
+	
+				// put the options in the view context
+				$this->data['options'] = $this->getOptions();
+	
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+	
+					// render cache files
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
+				} else {
+					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
