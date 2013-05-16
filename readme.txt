@@ -87,27 +87,17 @@ To customize your galleries you can use the plugin administration page. If you n
 
 = 1.4.4 =
 * Fixed minor bugs with mobile browser
-
-= 1.4.3 =
 * Mobile browser supported (tested with android)
 * A fews modification to enforce the plugin structure and license policies
 * Resolves minor bugfix
 * Enforce themes compatibility
-
-= 1.4.2 =
 * Fixed fancybox version when registering the script (in some themes that redistribute fancybox this may be an issue)
-
-= 1.4.1 =
-* Fixed unexpected T_FUNCTION bug on php < 5.3
 * Fixed headers already sent when embedding
-
-= 1.4.0 =
+* Fixed unexpected T_FUNCTION bug on php < 5.3
 * Scheduled cache rebuild
 * Wordpress best pratices fixes
 * Enable/Disable cache alerts option
 * Performance improvements
-
-= 1.4.0.RC =
 * New 3d Cloud Carousel Component
 * Performance improvement with content caching and minified javascript
 * Multiple galleries in one page better support
@@ -120,16 +110,14 @@ To customize your galleries you can use the plugin administration page. If you n
 * Gallery and video validation
 * Style validation
 * Admin alerts and notices
-* User alerts 
-
-= 1.3.0 =
+* User alerts
 * Support for multiple gallery in one page
 * Multiple gallery styles
 * Creation of gallery from a YouTube playlist
 * Creation of gallery from a explicit YouTube video url list
 * Disable related videos option
 * Pagination in video page
-* New and dedicated plugin menu 
+* New and dedicated plugin menu
 
 = 1.2.5 =
 * Multiple youtube user
@@ -153,27 +141,17 @@ To customize your galleries you can use the plugin administration page. If you n
 
 = 1.4.4 =
 - Fixed minor bugs with mobile browser
-
-= 1.4.3 =
 - Mobile browser supported (tested with android)
 - A fews modification to enforce the plugin structure and license policies
 - Resolves minor bugfix
 - Enforce themes compatibility
-
-= 1.4.2 =
 - Fixed fancybox version when registering the script (in some themes that redistribute fancybox this may be an issue)
-
-= 1.4.1 =
 - Fixed unexpected T_FUNCTION bug on php < 5.3
 - Fixed headers already sent when embedding
-
-= 1.4.0 =
 - Scheduled cache rebuild
 - Wordpress best pratices fixes
 - Enable/Disable cache alerts option
 - Performance improvements
-
-= 1.4.0.RC =
 - New 3d Cloud Carousel Component
 - Performance improvement with content caching and minified javascript
 - Multiple galleries in one page better support
@@ -188,9 +166,7 @@ To customize your galleries you can use the plugin administration page. If you n
 - Style validation
 - Admin alerts and notices
 - User alerts 
-- For problems during update please see 1.3.0 UPGRADE TROUBLESHOOTING
-
-= 1.3.0 =
+- For problems during update please see UPGRADE TROUBLESHOOTING
 - UPGRADE TROUBLESHOOTING
 If you experience some problem in the update please let me know. You can however restore the old version (1.2.5) as the following :
 - Deactivate the plugin if active
