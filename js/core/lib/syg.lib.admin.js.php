@@ -236,7 +236,7 @@ jQuery.noConflict();
 	
 				// loading data
 				var pageNum = this.id;
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table=' + table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.loadData(data);});
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table=' + table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {methods.loadData.call(this, data);});
 			});
 		},
 		

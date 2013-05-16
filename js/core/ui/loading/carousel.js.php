@@ -20,7 +20,7 @@ $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
 jQuery(window).load(function($) {
-	console.log('carousel loading function >> start');
+	if (window.console) console.log('carousel loading function >> start');
 	
 	jQuery('#syg_video_carousel-<?php echo $id; ?>')
 		.removeClass('syg_video_carousel_loading-<?php echo $id; ?>')
@@ -49,5 +49,5 @@ jQuery(window).load(function($) {
 		jQuery.mobile.hidePageLoadingMsg();
 	}
 	
-	console.log('carousel loading function >> end');
+	if (window.console) console.log('carousel loading function >> end');
 });

@@ -20,7 +20,8 @@ $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
 jQuery(window).load(function($) {
-	console.log('gallery loading function >> start');
+	if (window.console) console.log('gallery loading function >> start');
+	
 	jQuery('#syg_video_gallery-<?php echo $id; ?>')
 		.removeClass('syg_video_gallery_loading-<?php echo $id; ?>')
 		.addClass('syg_video_gallery-<?php echo $id; ?>');
@@ -71,5 +72,5 @@ jQuery(window).load(function($) {
 		jQuery.mobile.hidePageLoadingMsg();
 	}
 	
-	console.log('gallery loading function >> end');
+	if (window.console) console.log('gallery loading function >> end');
 });
