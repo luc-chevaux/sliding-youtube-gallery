@@ -80,7 +80,7 @@
 				<input type="checkbox" name="syg_youtube_disablerel" id="syg_youtube_disablerel" value="1" <?php if ($gallery->getYtDisableRelatedVideo()) echo 'checked="checked"';?>/>
 				
 				<!-- cache the content -->
-				<label for="syg_youtube_cacheon">Cache content for this gallery *</label>
+				<label for="syg_youtube_cacheon">Cache content for this gallery</label> <div class="syg_youtube_cacheon_help syg_help" title="<?php echo SygConstant::BE_CACHE_HELP; ?>"></div>
 				<input type="checkbox" name="syg_youtube_cacheon" id="syg_youtube_cacheon" value="1" <?php if ($gallery->getCacheOn()) echo 'checked="checked"';?>/>
 			</fieldset>
 			
@@ -139,6 +139,5 @@
 		</form>
 		<!-- plugin Menu -->
 		<?php include 'inc/contextMenu.inc.php'; ?>
-		<?php echo SygConstant::BE_CACHE_GALLERY_WARNING; ?>
 	</div>
 </div>

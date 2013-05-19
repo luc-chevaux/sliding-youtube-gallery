@@ -178,7 +178,7 @@ jQuery.noConflict();
 						}
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
+						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
 						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
 
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
@@ -259,6 +259,20 @@ jQuery.noConflict();
 			});
 			
 			methods.disableInput.call();
+			
+			$('.syg_youtube_cacheon_help').balloon({ tipSize: 20, css: {
+				minWidth       : "20px",
+				maxWidth	   : "350px",
+				padding        : "10px",
+				borderRadius   : "6px",
+				border         : "solid 1px #777",
+				boxShadow      : "0 8px 10px -10px black",
+				color          : "#666",
+				backgroundColor: "white",
+				opacity        : 1,
+				zIndex         : "32767",
+				textAlign      : "left"
+			}});
 		},
 		
 		/* function that init settings ui */
@@ -392,7 +406,7 @@ jQuery.noConflict();
 })(jQuery);
 
 /************************************************
- # jQuery on ready function:					#
+ # jQuery onready and onload function:			#
  # load colorpickers and update selected colors # 
  ************************************************/ 
 

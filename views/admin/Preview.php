@@ -1,6 +1,7 @@
-<?php 
-	require_once './inc/getWpEnvironment.inc.php';
-	require_once './inc/getExtractedGallery.inc.php';
+<?php
+	error_reporting(1);
+	require_once 'inc/getWpEnvironment.inc.php';
+	require_once 'inc/getExtractedGallery.inc.php';
 ?>
 <?php 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -11,7 +12,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css">
 		#loading-level {
-		   background: url(../img/ui/loader.gif) no-repeat center center;
+		   background: url(../../img/ui/loader.gif) no-repeat center center;
 		   height: 100px;
 		   width: 100px;
 		   position: fixed;
@@ -23,7 +24,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		
 		#loading-wrapper {display: none;}
 	</style>
-	<script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../../../../../wp-includes/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id; ?>"></script>
 </head>
 <body>

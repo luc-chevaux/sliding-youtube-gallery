@@ -648,7 +648,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 					
 					// render cache files
-					return $this->cacheRender($gallery->getId(), 'client/'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 				} else {
 					// put the feed in the view
 					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
@@ -676,7 +676,7 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @name getVideoPage
+	 * @name getPage
 	 * @category get a video page
 	 * @since 1.0.1
 	 * @param $attributes
@@ -716,7 +716,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
-					return $this->cacheRender($gallery->getId(), 'client/'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 				} else {					
 					// render gallery snippet code
 					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
@@ -738,7 +738,7 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 	/**
-	 * @name getVideoCarousel
+	 * @name getCarousel
 	 * @category get a video carousel
 	 * @since 1.0.1
 	 * @param $attributes
@@ -774,7 +774,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
 						
 					// render cache files
-					return $this->cacheRender('client/'.$gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 				} else if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
 					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 				} else {
@@ -891,6 +891,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// jquery 
 		$view['jquery-cookie-master_js_url'] = $view['jsPath'] . '3rdParty/jquery-cookie-master/jquery.cookie.js';
+		$view['jquery-balloon_js_url'] = $view['jsPath'] . '3rdParty/jquery-balloon/jquery.balloon.min.js';
 		
 		switch ($context) {
 			case SygConstant::SYG_CTX_BE:
@@ -955,8 +956,14 @@ class SygPlugin extends SanityPluginFramework {
 				/********************************
 				 * include jquery cookie master *
 				 ********************************/
-				wp_register_script('jquery-cookie-master', $view['jquery-cookie-master_js_url'], array(), SygConstant::SYG_VERSION, true);
+				wp_register_script('jquery-cookie-master', $view['jquery-cookie-master_js_url'], array(), '1.3', true);
 				wp_enqueue_script('jquery-cookie-master');
+				
+				/*****************************
+				 * color picker js inclusion *
+				*****************************/
+				wp_register_script('jquery-balloon', $view['jquery-balloon_js_url'], array(), '0.3.0', true);
+				wp_enqueue_script('jquery-balloon');
 				
 				break;
 			case SygConstant::SYG_CTX_FE:
@@ -1349,7 +1356,7 @@ class SygPlugin extends SanityPluginFramework {
 							$this->data['redirect_url'] = '?page='
 							. SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
 							
-							// render adminStyles view
+							// render redirect view
 							return $this->render('redirect');
 						} catch (SygValidateException $ex) {
 							// set the error
@@ -1538,7 +1545,7 @@ class SygPlugin extends SanityPluginFramework {
 						$gallery->removeFromCache();
 					}
 					
-					// render adminGallery view
+					// render updated view
 					return $this->forwardToGalleries($updated);
 				} catch (SygValidateException $ex) {
 					// set the error
@@ -1598,7 +1605,7 @@ class SygPlugin extends SanityPluginFramework {
 					// updated flag
 					$this->data['updated'] = $updated;
 	
-					// render adminStyle view
+					// render updated view
 					return $this->forwardToStyles($updated);
 	
 				} catch (SygValidateException $ex) {
@@ -1622,8 +1629,8 @@ class SygPlugin extends SanityPluginFramework {
 		// put style in the view
 		$this->data['style'] = $this->sygDao->getSygStyleById($id);
 
-		// render adminStyle view
-		return $this->render('adminStyle');
+		// render Style view
+		return $this->render('admin/Style');
 
 	}
 
