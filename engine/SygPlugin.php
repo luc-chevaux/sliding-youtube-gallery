@@ -255,11 +255,9 @@ class SygPlugin extends SanityPluginFramework {
 	/* WORDPRESS PLUGIN ACTION HOOK */
 	/********************************/
 
-	public function rebuildCache($start = 0, $end = PHP_INT_MAX) {
-		$galleries = $this->sygDao->getAllCachedGallery('OBJECT', $start, $end);
-		foreach ($galleries as $gallery) {
-			$gallery->cacheGallery();
-		}
+	public function rebuildCache($id) {
+		$gallery = $this->sygDao->getSygGalleryById($id, 'OBJECT');
+		$gallery->cacheGallery();
 	}
 	
 	/**
