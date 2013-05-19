@@ -200,6 +200,7 @@ jQuery.noConflict();
 				});
 			} else {
 				$(".sygVideo-" + gid).click(function() {
+					var rez = this.href.match(/(youtube\.com|youtu\.be)\/(watch\?v=|v\/|u\/|embed\/?)?(videoseries\?list=(.*)|[\w-]{11}|\?listType=(.*)&list=(.*)).*/i);
 					$.fancybox({
 						'padding' : 0,
 						'autoScale' : false,
@@ -208,13 +209,9 @@ jQuery.noConflict();
 						'title' : this.title,
 						'width'	: options['width'],
 						'height' : options['height'],
-						'href' : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+						'href'   : '//youtube.com/embed/' + rez[3] + '?rel=0&autoplay=1',
 						'fitToView' : true,
-						'type' : 'swf',
-						'swf' : {
-							'wmode'	: 'transparent',
-							'allowfullscreen' : 'true'
-						}
+						'type' : 'iframe'
 					});
 					return false;
 				});
