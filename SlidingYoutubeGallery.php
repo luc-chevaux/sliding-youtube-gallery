@@ -74,7 +74,7 @@ if (!is_admin()) {
 add_action('wp_print_scripts','getPluginOptions');
 
 // register action for cache rebuild
-add_action('syg_rebuild_cache','rebuildCache');
+add_action('syg_rebuild_cache','rebuildCache', 10, 1);
 
 // register syg widget
 add_action( 'widgets_init', 'registerSygWidget' );
@@ -178,7 +178,13 @@ function manageGalleries() {
 	$syg = SygPlugin::getInstance();
 	
 	if (isset($_GET['action']) && $_GET['action'] == 'cache_rebuild') {
-		wp_schedule_single_event(time() + 5, 'syg_rebuild_cache');
+		$dao = new SygDao();
+		$galleries = $dao->getAllCachedGallery('OBJECT', 0, PHP_INT_MAX);
+		$gap = 10; // 10 seconds
+		foreach ($galleries as $gallery) {
+			wp_schedule_single_event(time() + $gap, 'syg_rebuild_cache', array($gallery->getId()));
+			$gap += 180;
+		}
 	}
 	
 	echo $syg->forwardToGalleries();
@@ -215,9 +221,9 @@ function getSupport() {
  * Plugin rebuild cache
  * @return null
  */
-function rebuildCache() {
+function rebuildCache($id) {
 	$syg = SygPlugin::getInstance();
-	$syg->rebuildCache();
+	$syg->rebuildCache($id);
 }
 
 /**
