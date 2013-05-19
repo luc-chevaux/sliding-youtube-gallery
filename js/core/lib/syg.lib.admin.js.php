@@ -139,10 +139,10 @@ jQuery.noConflict();
 						html = html + val.styleDetails;
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit"/></a>';
+						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit style" class="syg_table_button" /></a>';
 						
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" class="syg_table_button" title="Delete style"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -178,15 +178,15 @@ jQuery.noConflict();
 						}
 						html = html + '</td>';
 						html = html + '<td>';
-						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="preview gallery"/></a>';
-						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="edit gallery"/></a>';
+						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
+						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit gallery" class="syg_table_button"/></a>';
 
 						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="delete gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="Delete gallery" class="syg_table_button"/></a>';
 						}
 						
 						if (val.cacheOn == 1) {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'cacheGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="cache gallery"/></a>';
+							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'cacheGallery\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="Cache gallery" class="syg_table_button"/></a>';
 						}
 						
 						html = html + '</td>';
@@ -220,6 +220,38 @@ jQuery.noConflict();
 					break;
 					return null;
 			}
+			
+			$('.syg_table_button').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
+				
+			$('.syg_page_submit').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
 		},
 		
 		/* function that add pagination event per table */
@@ -250,6 +282,22 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
 			methods.initColorPicker.call(this, 'box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
 			methods.initColorPicker.call(this, 'desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
+			
+			$('.syg_page_submit').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
 		},
 		
 		/* function that init gallery ui */
@@ -260,19 +308,37 @@ jQuery.noConflict();
 			
 			methods.disableInput.call();
 			
-			$('.syg_youtube_cacheon_help').balloon({ tipSize: 20, css: {
-				minWidth       : "20px",
-				maxWidth	   : "350px",
-				padding        : "10px",
-				borderRadius   : "6px",
-				border         : "solid 1px #777",
-				boxShadow      : "0 8px 10px -10px black",
-				color          : "#666",
-				backgroundColor: "white",
-				opacity        : 1,
-				zIndex         : "32767",
-				textAlign      : "left"
-			}});
+			$('.syg_youtube_cacheon_help').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
+			
+			$('.syg_page_submit').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
 		},
 		
 		/* function that init settings ui */
@@ -296,6 +362,22 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'paginator_bgcolor_selector', $('#syg_option_paginator_bgcolor'), '#efefef');
 			methods.initColorPicker.call(this, 'paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
 			methods.initColorPicker.call(this, 'paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
+			
+			$('.syg_page_submit').balloon({ 
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
 		},
 		
 		/* function that update cache */

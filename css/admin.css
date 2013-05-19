@@ -360,15 +360,8 @@ select { border-color: #333333 !important;}
 	background-image: url('../img/Help.png');
 }
 
-.syg_help_balloon {
-	min-width: 20px;
-  	padding: 5px;
-  	border-radius: 6px;
-  	border: solid 1px #777;
-  	box-shadow: 4px 4px 4px #555;
-  	color: #666;
-  	background-color: #efefef;
-  	opacity: 0;
-  	z-index: 32767;
-  	text-align: left;
+.syg_table_button {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
 }
