@@ -1,6 +1,6 @@
 <?php 
 // include wp loader
-$root = realpath(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))));
+$root = realpath(dirname(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"])))))));
 
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6

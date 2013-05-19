@@ -45,7 +45,7 @@ jQuery(window).load(function($) {
 		//Find last image container
 		var lastLi = ul.find('li:last-child');
 		
-		if ($.fn.sygclient('isMobileBrowser')) {
+		if (jQuery.fn.sygclient('isMobileBrowser', this)) {
 			div.bind('touchmove', function(jQueryEvent) {
 				jQueryEvent.preventDefault();
 			   	//As images are loaded ul width increases,

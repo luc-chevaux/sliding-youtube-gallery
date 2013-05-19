@@ -25,6 +25,7 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		#loading-wrapper {display: none;}
 	</style>
 	<script type="text/javascript" src="../../../../../wp-includes/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/lib/syg.lib.client.min.js.php'; ?>"></script>
 	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id; ?>"></script>
 </head>
 <body>
@@ -54,7 +55,6 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		<script type="text/javascript" src="<?php echo $view['fancybox_js_url']; ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['easing_js_url']; ?>"></script>
 		<script type="text/javascript" src="<?php echo $view['mousewheel_js_url']; ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['sygJsUrl_'.$id]; ?>"></script>
 	</div>
 </body>
 </html>
