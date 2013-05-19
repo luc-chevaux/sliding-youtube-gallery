@@ -304,13 +304,13 @@ class SygGallery {
 		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache the html of the carousel
-		$carouselHtml = $syg->getVideoCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$carouselHtml = $syg->getCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
 		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache the html of the page
-		$galleryPage = $syg->getVideoPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$galleryPage = $syg->getPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
 		file_put_contents($this->getHtmlPath().$localFN, $galleryPage);
 		chmod ($this->getHtmlPath().$localFN, 0755);
