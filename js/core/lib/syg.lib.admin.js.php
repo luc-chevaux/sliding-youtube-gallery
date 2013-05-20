@@ -310,7 +310,7 @@ jQuery.noConflict();
 			
 			methods.disableInput.call();
 			
-			$('.syg_youtube_cacheon_help').balloon({ 
+			$('.syg_help').balloon({ 
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
@@ -368,6 +368,22 @@ jQuery.noConflict();
 			
 			$('.syg_page_submit').balloon({ 
 				position: "top",
+				tipSize: 20, 
+				css: {
+					minWidth       : "20px",
+					maxWidth	   : "350px",
+					padding        : "10px",
+					borderRadius   : "6px",
+					border         : "solid 1px #777",
+					boxShadow      : "0 8px 10px -10px black",
+					color          : "#666",
+					backgroundColor: "white",
+					opacity        : 1,
+					zIndex         : "32767",
+					textAlign      : "left"
+				}});
+				
+				$('.syg_help').balloon({ 
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
