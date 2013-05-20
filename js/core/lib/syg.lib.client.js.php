@@ -209,7 +209,7 @@ jQuery.noConflict();
 						'title' : this.title,
 						'width'	: options['width'],
 						'height' : options['height'],
-						'href'   : '//youtube.com/embed/' + rez[3] + '?rel=0&autoplay=1',
+						'href'   : 'http://www.youtube.com/embed/' + rez[3] + '?rel=0&autoplay=1',
 						'fitToView' : true,
 						'type' : 'iframe'
 					});
