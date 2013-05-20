@@ -65,7 +65,7 @@ switch ($_GET['query']) {
 				$element['video_rating_info'] = $entry->getVideoRatingInfo();
 				
 				// modify the img path to match local files
-				if ($_GET['mode'] == 'caching_mode') {
+				if (!empty($_GET['mode']) && $_GET['mode'] == 'caching_mode') {
 					$element['video_thumbshot'] = WP_PLUGIN_URL .
 												'/sliding-youtube-gallery/' .
 												'/cache/thumb/' .
