@@ -61,12 +61,70 @@
 			
 			<!-- youtube settings -->
 			<fieldset>
-				<legend><strong>YouTube settings</strong></legend>
+				<legend><strong>YouTube embed settings</strong></legend>
 				<label for="syg_option_which_thumb"></label>
 				<input type="radio" name="syg_option_which_thumb" value="0" <?php if ($options['syg_option_which_thumb'] == "0") echo 'checked="checked"'; ?>/> Default thumbnail (120px X 90px) 
 				<input type="radio" name="syg_option_which_thumb" value="1" <?php if ($options['syg_option_which_thumb'] == "1") echo 'checked="checked"'; ?>/> Medium quality thumbnail (320px X 180px)
 				<input type="radio" name="syg_option_which_thumb" value="2" <?php if ($options['syg_option_which_thumb'] == "2") echo 'checked="checked"'; ?>/> High quality thumbnail (480px X 360px) 
 				<input type="radio" name="syg_option_which_thumb" value="3" <?php if ($options['syg_option_which_thumb'] == "3") echo 'checked="checked"'; ?>/> Super definition (640px X 480px) 
+				
+				<br/><br/>
+				
+				<!-- autohide -->
+				<label for="syg_option_youtube_autohide">Autohide</label> <div class="syg_help" title="<?php echo SygConstant::BE_AUTOHIDE_HELP; ?>"></div>
+				<select id="syg_option_youtube_autohide" name="syg_option_youtube_autohide">
+					<option value="0" <?php if ($options['syg_option_youtube_autohide'] == 0) echo 'selected="selected"'; ?>>0</option>
+					<option value="1" <?php if ($options['syg_option_youtube_autohide'] == 1) echo 'selected="selected"'; ?>>1</option>
+					<option value="2" <?php if ($options['syg_option_youtube_autohide'] == 2) echo 'selected="selected"'; ?>>2</option>			
+				</select>
+				
+				<!-- autoplay -->
+				<label for="syg_option_youtube_autoplay">Autoplay</label> <div class="syg_help" title="<?php echo SygConstant::BE_AUTOPLAY_HELP; ?>"></div>
+				<input type="checkbox" name="syg_option_youtube_autoplay" id="syg_option_youtube_autoplay" value="1" <?php if ($options['syg_option_youtube_autoplay'] == 1) echo 'checked="checked"';?>/>
+				
+				<!-- cc_load_policy -->
+				<label for="syg_option_youtube_ccloadpolicy">Closed caption load policy</label> <div class="syg_help" title="<?php echo SygConstant::BE_CCPOLICY_HELP;?>"></div>
+				<input type="checkbox" name="syg_option_youtube_ccloadpolicy" id="syg_option_youtube_ccloadpolicy" value="1" <?php if ($options['syg_option_youtube_ccloadpolicy'] == 1) echo 'checked="checked"';?>/>
+				
+				<!-- controls -->
+				<label for="syg_option_youtube_controls">Controls</label> <div class="syg_help" title="<?php echo SygConstant::BE_CONTROLS_HELP;?>"></div>
+				<select id="syg_option_youtube_controls" name="syg_option_youtube_controls">
+					<option value="0" <?php if ($options['syg_option_youtube_controls'] == 0) echo 'selected="selected"'; ?>>0</option>
+					<option value="1" <?php if ($options['syg_option_youtube_controls'] == 1) echo 'selected="selected"'; ?>>1</option>
+					<option value="2" <?php if ($options['syg_option_youtube_controls'] == 2) echo 'selected="selected"'; ?>>2</option>			
+				</select>
+				
+				<!-- disablekb -->
+				<label for="syg_option_youtube_disablekb">Disable keyboard</label> <div class="syg_help" title="<?php echo SygConstant::BE_DISABLEKB_HELP;?>"></div>
+				<input type="checkbox" name="syg_option_youtube_disablekb" id="syg_option_youtube_disablekb" value="1" <?php if ($options['syg_option_youtube_disablekb'] == 1) echo 'checked="checked"';?>/>
+				
+				<br/><br/>
+				
+				<!-- iv_load_policy -->
+				<label for="syg_option_youtube_ivloadpolicy">Video annotation</label> <div class="syg_help" title="<?php echo SygConstant::BE_IVLOADPOLICY_HELP;?>"></div>
+				<select id="syg_option_youtube_ivloadpolicy" name="syg_option_youtube_ivloadpolicy">
+					<option value="1" <?php if ($options['syg_option_youtube_ivloadpolicy'] == 1) echo 'selected="selected"'; ?>>1</option>
+					<option value="3" <?php if ($options['syg_option_youtube_ivloadpolicy'] == 3) echo 'selected="selected"'; ?>>3</option>			
+				</select>
+				
+				<!-- modestbranding -->
+				<label for="syg_option_youtube_modestbranding">Video annotation</label> <div class="syg_help" title="<?php echo SygConstant::BE_MODESTBRANDING_HELP;?>"></div>
+				<input type="checkbox" name="syg_option_youtube_modestbranding" id="syg_option_youtube_modestbranding" value="1" <?php if ($options['syg_option_youtube_modestbranding'] == 1) echo 'checked="checked"';?>/>
+				
+				<!-- rel -->
+				<label for="syg_option_youtube_rel">Display related video</label> <div class="syg_help" title="<?php echo SygConstant::BE_REL_HELP;?>"></div>
+				<input type="checkbox" name="syg_option_youtube_rel" id="syg_option_youtube_rel" value="1" <?php if ($options['syg_option_youtube_rel'] == 1) echo 'checked="checked"';?>/>
+				
+				<!-- showinfo -->
+				<label for="syg_option_youtube_showinfo">Show info</label> <div class="syg_help" title="<?php echo SygConstant::BE_SHOWINFO_HELP;?>"></div>
+				<input type="checkbox" name="syg_option_youtube_showinfo" id="syg_option_youtube_showinfo" value="1" <?php if ($options['syg_option_youtube_showinfo'] == 1) echo 'checked="checked"';?>/>
+			
+				<!-- theme -->
+				<label for="syg_option_youtube_theme">Player theme</label> <div class="syg_help" title="<?php echo SygConstant::BE_THEME_HELP;?>"></div>
+				<select id="syg_option_youtube_theme" name="syg_option_youtube_theme">
+					<option value="dark" <?php if ($options['syg_option_youtube_theme'] == 'dark') echo 'selected="selected"'; ?>>dark</option>
+					<option value="light" <?php if ($options['syg_option_youtube_theme'] == 'light') echo 'selected="selected"'; ?>>light</option>			
+				</select>
 			</fieldset>
 			
 			<!-- video page settings -->
