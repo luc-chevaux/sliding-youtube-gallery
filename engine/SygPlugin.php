@@ -1230,7 +1230,7 @@ class SygPlugin extends SanityPluginFramework {
 									'syg_option_use_fb2',
 									$_POST['syg_option_use_fb2'])
 									: update_option('syg_option_use_fb2',
-											$_POST['syg_option_use_fb2']);
+											empty($_POST['syg_option_use_fb2']) ? 0 : $_POST['syg_option_use_fb2']);
 							
 							(get_option('syg_option_use_fb2_url') === false) ? add_option(
 									'syg_option_use_fb2_url',
@@ -1353,8 +1353,7 @@ class SygPlugin extends SanityPluginFramework {
 									: update_option('syg_option_carousel_reflopacity',
 											$_POST['syg_option_carousel_reflopacity']);
 							
-							$this->data['redirect_url'] = '?page='
-							. SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
+							$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
 							
 							// render redirect view
 							return $this->render('redirect');
