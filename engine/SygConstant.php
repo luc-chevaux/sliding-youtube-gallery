@@ -17,11 +17,50 @@ class SygConstant {
 	const SYG_DEV_KEY = 'AI39si6mNwVCtzfMFh7__lYnzq6H180Fpd3fQwXdyykuPKCKDfxnmVG09D3L-xxv8X8XoyHEzXmMI0c9qACLik_6ocXRKcmQ7A';
 	
 	/**
+	 * Plugin option inventory
+	 */
+	public static $SYG_PLUGIN_OPTIONS = array ('syg_option_description_length' 		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH, 'TYPE' => 'TEXT'), 
+												  'syg_option_askcache' 				=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_ASKCACHE, 'TYPE' => 'CHECKBOX'), 
+												  'syg_option_numrec' 					=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_NUM_REC, 'TYPE' => 'TEXT'), 
+												  'syg_option_use_fb2' 					=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_USE_FB2, 'TYPE' => 'CHECKBOX'), 
+												  'syg_option_use_fb2_url' 				=> array('DEFAULT' => '', 'TYPE' => 'TEXT'),
+												  'syg_option_which_thumb' 				=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_WHICH_THUMB, 'TYPE' => 'RADIO'),
+												  'syg_option_youtube_autohide'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_AUTOHIDE, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_autoplay'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_AUTOPLAY, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_ccloadpolicy'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_CCLOADPOLICY, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_controls'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_CONTROLS, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_disablekb'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_DISABLEKB, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_ivloadpolicy'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_IVLOADPOLICY, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_modestbranding'	=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_MODESTBRANDING, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_rel'				=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_REL, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_showinfo'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_SHOWINFO, 'TYPE' => 'SELECT'),
+												  'syg_option_youtube_theme'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_YOUTUBE_THEME, 'TYPE' => 'SELECT'),
+												  'syg_option_paginationarea'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATION_AREA, 'TYPE' => 'SELECT'),
+												  'syg_option_pagenumrec'				=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGENUM_REC, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_borderradius'	=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_BORDERRADIUS, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_bordersize'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_BORDERSIZE, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_shadowsize'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWSIZE, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_fontsize'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_FONTSIZE, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_bordercolor'	=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_BORDERCOLOR, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_bgcolor'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_BGCOLOR, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_shadowcolor'	=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWCOLOR, 'TYPE' => 'TEXT'),
+												  'syg_option_paginator_fontcolor'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_PAGINATOR_FONTCOLOR, 'TYPE' => 'TEXT'),
+												  'syg_option_carousel_autorotate'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_AUTOROTATE, 'TYPE' => 'SELECT'),
+												  'syg_option_carousel_delay'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_DELAY, 'TYPE' => 'SELECT'),
+												  'syg_option_carousel_fps'				=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_FPS, 'TYPE' => 'SELECT'),
+												  'syg_option_carousel_speed'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_SPEED, 'TYPE' => 'TEXT'),
+												  'syg_option_carousel_minscale'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_MINSCALE, 'TYPE' => 'SELECT'),
+												  'syg_option_carousel_reflheight'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLHEIGHT, 'TYPE' => 'TEXT'),
+												  'syg_option_carousel_reflgap'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLGAP, 'TYPE' => 'TEXT'),
+												  'syg_option_carousel_reflopacity'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY, 'TYPE' => 'TEXT')
+												);
+	
+	/**
 	 * Plugin running contexts
 	 */
-	const SYG_CTX_FE = "SYG_CTX_FE";
-	const SYG_CTX_BE = "SYG_CTX_BE";
-	const SYG_CTX_WS = "SYG_CTX_WS";
+	const SYG_CTX_FE = 'SYG_CTX_FE';
+	const SYG_CTX_BE = 'SYG_CTX_BE';
+	const SYG_CTX_WS = 'SYG_CTX_WS';
 
 	/**
 	 * Plugin component type 
@@ -294,7 +333,6 @@ class SygConstant {
 	/**
 	 * Plugin Default options
 	 */
-	const SYG_OPTION_DEFAULT_API_KEY = 'not present';
 	const SYG_OPTION_DEFAULT_WHICH_THUMB = '2';
 	const SYG_OPTION_DEFAULT_NUM_REC = '5';
 	const SYG_OPTION_DEFAULT_USE_FB2 = '0';
@@ -321,6 +359,20 @@ class SygConstant {
 	const SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY = 0.5;
 	
 	/**
+	 * YouTube Settings
+	 */
+	const SYG_OPTION_DEFAULT_YOUTUBE_AUTOHIDE = 2;
+	const SYG_OPTION_DEFAULT_YOUTUBE_AUTOPLAY = 0;
+	const SYG_OPTION_DEFAULT_YOUTUBE_CCLOADPOLICY = 0;
+	const SYG_OPTION_DEFAULT_YOUTUBE_CONTROLS = 1;
+	const SYG_OPTION_DEFAULT_YOUTUBE_DISABLEKB = 0;
+	const SYG_OPTION_DEFAULT_YOUTUBE_IVLOADPOLICY = 1;
+	const SYG_OPTION_DEFAULT_YOUTUBE_MODESTBRANDING = 0;
+	const SYG_OPTION_DEFAULT_YOUTUBE_REL = 1;
+	const SYG_OPTION_DEFAULT_YOUTUBE_SHOWINFO = 1;
+	const SYG_OPTION_DEFAULT_YOUTUBE_THEME = 'dark';
+	
+	/**
 	 * GUI constants
 	 */
 	// user message
@@ -338,6 +390,16 @@ class SygConstant {
 	// helpers
 	const BE_CACHE_HELP = '<h3>Using cache</h3><p>Caching gallery content is useful to speed up the loading process, especially when you\'re displaying a gallery which has a great number of videos or as a part of a multiple gallery page.</p><p>Once a gallery is cached, if its source will be changed externally, you have to force re-caching manually, by clicking on the lightening icon in the galleries list.</p><p><strong>Clicking this option will start the cache process immediately after saving.</strong></p>';
 	const BE_REBUILD_CACHE_HELP = '<h3>Rebuild Cache</h3><p>If you have updated your youtube sources externally or you have just updated the plugin, this feature let you rebuild all the cached gallery content locally. All the downloaded content could be finded in your cache folder under the plugin directory root.</p><p><strong>For a successful use of this feature, your wp-cron has to work correctly.</strong></p><p>The scheduled tasks will have a timing gap (180 seconds between each task) to avoid youtube blocking your request with the response {too_much_request}, then it\'s better to execute this when you start a work session to ensure that the tasks will be completed.</p><p>In order to avoid a big loading of your server, use this only when you have to regenerate a considerable number of galleries, else it\'s preferable to run caching in single gallery mode by clicking on the lightening icon.';
+	const BE_AUTOHIDE_HELP = 'This parameter indicates whether the video controls will automatically hide after a video begins playing. The default behavior (<code>autohide=2</code>) is for the video progress bar to fade out while the player controls (play button, volume control, etc.) remain visible.<ul><li>If this parameter is set to <code>1</code>, then the video progress bar and the player controls will slide out of view a couple of seconds after the video starts playing. They will only reappear if the user moves her mouse over the video player or presses a key on her keyboard.</li> <li>If this parameter is set to <code>0</code>, the video progress bar and the video player controls will be visible throughout the video and in fullscreen.</li></ul>';
+	const BE_AUTOPLAY_HELP = 'Sets whether or not the initial video will autoplay when the player loads.';
+	const BE_CCPOLICY_HELP = 'Default is based on user preference. Setting to <code>1</code> will cause closed captions to be shown by default, even if the user has turned captions off.';
+	const BE_CONTROLS_HELP = 'This parameter indicates whether the video player controls will display. For AS3 players, it also defines when the Flash player will load:</p><ul><li><code>controls=0</code> – Player controls do not display in the player. For AS3 players, the Flash player loads immediately.</li><li><code>controls=1</code> – Player controls display in the player. For AS3 players, the Flash player loads immediately.</li><li><code>controls=2</code> – Player controls display in the player. For AS3 players, the Flash player loads afer the user initiates the video playback.</li></ul><p><strong>Note:</strong> The parameter values <code>1</code> and <code>2</code> are intended to provide an identical user experience, but <code>controls=2</code> provides a performance improvement over <code>controls=1</code>.</p>';
+	const BE_DISABLEKB_HELP = 'Setting to <code>1</code> will disable the player keyboard controls. Keyboard controls are as follows:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spacebar: Play / Pause<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow Left: Jump back 10% in the current video<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow Right: Jump ahead 10% in the current video<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow Up: Volume up<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow Down: Volume Down';
+	const BE_IVLOADPOLICY_HELP = 'Values: <code>1</code> or <code>3</code>. Default is <code>1</code>. Setting to <code>1</code> will cause video annotations to be shown by default, whereas setting to <code>3</code> will cause video annotation to not be shown by default.';
+	const BE_MODESTBRANDING_HELP = 'This parameter lets you use a YouTube player that does not show a YouTube logo. Set the parameter value to <code>1</code> to prevent the YouTube logo from displaying in the control bar. Note that a small <code>YouTube</code> text label will still display in the upper-right corner of a paused video when the user\'s mouse pointer hovers over the player.<br><br>';
+	const BE_REL_HELP = 'This parameter indicates whether the player should show related videos when playback of the initial video ends.';
+	const BE_SHOWINFO_HELP = 'The parameter\'s default value is <code>1</code>. If you set the parameter value to <code>0</code>, then the player will not display information like the video title and uploader before the video starts playing.<br><br>If the player is loading a playlist, and you explicitly set the parameter value to <code>1</code>, then, upon loading, the player will also display thumbnail images for the videos in the playlist. Note that this functionality is only supported for the AS3 player since that is the only player that can load a playlist.';
+	const BE_THEME_HELP = 'This parameter indicates whether the embedded player will display player controls (like a \'play\' button or volume control) within a dark or light control bar. Valid parameter values are <code>dark</code> and <code>light</code>, and, by default, the player will display player controls using the <code>dark</code> theme.';
 	
 	// general menu
 	const BE_MENU_HOME = 'Home';
