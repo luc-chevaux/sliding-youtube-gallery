@@ -337,6 +337,7 @@ class SygConstant {
 	
 	// helpers
 	const BE_CACHE_HELP = '<h3>Using cache</h3><p>Caching gallery content is useful to speed up the loading process, especially when you\'re displaying a gallery which has a great number of videos or as a part of a multiple gallery page.</p><p>Once a gallery is cached, if its source will be changed externally, you have to force re-caching manually, by clicking on the lightening icon in the galleries list.</p><p><strong>Clicking this option will start the cache process immediately after saving.</strong></p>';
+	const BE_REBUILD_CACHE_HELP = '<h3>Rebuild Cache</h3><p>If you have updated your youtube sources externally or you have just updated the plugin, this feature let you rebuild all the cached gallery content locally. All the downloaded content could be finded in your cache folder under the plugin directory root.</p><p><strong>For a successful use of this feature, your wp-cron has to work correctly.</strong></p><p>The scheduled tasks will have a timing gap (180 seconds between each task) to avoid youtube blocking your request with the response {too_much_request}, then it\'s better to execute this when you start a work session to ensure that the tasks will be completed.</p><p>In order to avoid a big loading of your server, use this only when you have to regenerate a considerable number of galleries, else it\'s preferable to run caching in single gallery mode by clicking on the lightening icon.';
 	
 	// general menu
 	const BE_MENU_HOME = 'Home';
@@ -393,6 +394,7 @@ class SygConstant {
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s youtube playlist does not exist.';
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
 	const BE_VALIDATE_OVERLAY_BAD_DIMENSION = 'Size %d for overlay button is not proportional to %s value that is %d. Please consider to use a lower value.';
+	
 	/**
 	 * Forms label
 	 */

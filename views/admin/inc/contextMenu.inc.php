@@ -12,7 +12,7 @@
 		<?php echo SygConstant::BE_MENU_ADD_NEW_GALLERY; ?>
 	</a>
 	&nbsp;
-	<a href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_GALLERIES; ?>&action=cache_rebuild" title="<?php echo SygConstant::BE_MENU_REBUILD_CACHE; ?>" class="button-secondary syg_page_submit">
+	<a href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_GALLERIES; ?>&action=cache_rebuild" title="<?php echo SygConstant::BE_REBUILD_CACHE_HELP; ?>" class="button-secondary syg_page_submit">
 		<?php echo SygConstant::BE_MENU_REBUILD_CACHE; ?>
 	</a>
 	&nbsp;

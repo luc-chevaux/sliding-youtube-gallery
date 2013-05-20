@@ -237,7 +237,8 @@ jQuery.noConflict();
 					textAlign      : "left"
 				}});
 				
-			$('.syg_page_submit').balloon({ 
+			$('.syg_page_submit').balloon({
+				position: "top", 
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
@@ -284,6 +285,7 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
 			
 			$('.syg_page_submit').balloon({ 
+				position: "top",
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
@@ -325,6 +327,7 @@ jQuery.noConflict();
 				}});
 			
 			$('.syg_page_submit').balloon({ 
+				position: "top",
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
@@ -364,6 +367,7 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
 			
 			$('.syg_page_submit').balloon({ 
+				position: "top",
 				tipSize: 20, 
 				css: {
 					minWidth       : "20px",
