@@ -3,7 +3,6 @@
 <!-- Extra Php Code -->
 <?php 
 // gallery data retreival
-$feed = $this->data['feed'];
 $gallery = $this->data['gallery'];
 $options = $this->data['options'];
 
