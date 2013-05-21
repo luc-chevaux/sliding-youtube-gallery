@@ -59,7 +59,9 @@ class SygGallery {
 		if (is_string($key)) $key = unserialize ($key);
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();		
-		$this->mapThis($key);
+		if ($key != NULL) {
+			$this->mapThis($key);
+		}
 	}
 
 	/**
