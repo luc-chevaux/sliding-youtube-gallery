@@ -290,6 +290,11 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
 			methods.initColorPicker.call(this, 'desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
 			
+			$('#syg_style_form').on('submit', function(event) {
+				event.preventDefault();
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + $(this).serialize());
+			});
+			
 			$('.syg_page_submit').balloon({ 
 				position: "top",
 				tipSize: 20, 
@@ -311,10 +316,15 @@ jQuery.noConflict();
 		/* function that init gallery ui */
 		initGalleryUi : function () {
 			$('input[name=syg_gallery_type]').each(function(){
-				$(this).click(function () { methods.disableInput.call() });
+				$(this).click(function () { methods.disableInput.call(); });
 			});
 			
 			methods.disableInput.call();
+			
+			$('#syg_gallery_form').on('submit', function(event) {
+				event.preventDefault();
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize());
+			});
 			
 			$('.syg_help').balloon({ 
 				tipSize: 20, 
@@ -371,6 +381,11 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'paginator_bgcolor_selector', $('#syg_option_paginator_bgcolor'), '#efefef');
 			methods.initColorPicker.call(this, 'paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
 			methods.initColorPicker.call(this, 'paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
+			
+			$('#syg_settings_form').on('submit', function( event ) {
+				event.preventDefault();
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=settings&' + $(this).serialize());
+			});
 			
 			$('.syg_page_submit').balloon({ 
 				position: "top",
@@ -500,6 +515,21 @@ jQuery.noConflict();
 			} else {
 				return decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
+		},
+		
+		/* validate Style form */
+		validateStyle : function () {
+			alert (this.serialize());
+		},
+		
+		/* validate Gallery form */
+		validateGallery : function () {
+			alert ('validateGallery');
+		},
+		
+		/* validate Settings form */
+		validateSettings : function () {
+			alert ('validateSettings');
 		}
 	};
 	
