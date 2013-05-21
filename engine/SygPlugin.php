@@ -1423,7 +1423,7 @@ class SygPlugin extends SanityPluginFramework {
 						$gallery->cacheGallery();
 					}
 					
-					// render adminGallery view
+					// render updated view
 					return $this->forwardToGalleries($updated);
 				} catch (SygValidateException $ex) {
 					// set the error
@@ -1448,8 +1448,8 @@ class SygPlugin extends SanityPluginFramework {
 		// put styles to populate combo
 		$this->data['styles'] = $this->sygDao->getAllSygStyles();
 
-		// render adminGallery view
-		return $this->render('adminGallery');
+		// render Gallery view
+		return $this->render('admin/Gallery');
 	}
 
 	/**
@@ -1482,7 +1482,7 @@ class SygPlugin extends SanityPluginFramework {
 					// updated flag
 					$this->data['updated'] = $updated;
 	
-					// render adminGallery view
+					// render updated view
 					return $this->forwardToStyles($updated);
 				} catch (SygValidateException $ex) {
 					// set the error
@@ -1503,7 +1503,7 @@ class SygPlugin extends SanityPluginFramework {
 		// put an empty gallery in the view
 		$this->data['style'] = new SygStyle();
 
-		// render adminGallery view
+		// render Style view
 		return $this->render('admin/Style');
 	}
 
