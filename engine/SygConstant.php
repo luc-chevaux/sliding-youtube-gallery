@@ -466,6 +466,7 @@ class SygConstant {
 	const syg_thumbnail_borderradius = 'Border radius';
 	const syg_thumbnail_distance = 'Distance';
 	const syg_thumbnail_buttonopacity = 'Button opacity';
+	const syg_thumbnail_overlaysize = 'Button size';
 	
 	const syg_box_width = 'Box width';
 	const syg_box_radius = 'Box radius';
