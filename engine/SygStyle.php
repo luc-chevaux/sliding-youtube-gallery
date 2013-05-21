@@ -50,7 +50,9 @@ class SygStyle {
 	 */
 	public function __construct($key = null) {
 		if (is_string($key)) $key = unserialize ($key);
-		$this->mapThis($key);
+		if ($key != NULL) {
+			$this->mapThis($key);
+		}
 	}
 
 	/**
