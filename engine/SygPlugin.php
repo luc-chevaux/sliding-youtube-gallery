@@ -268,7 +268,7 @@ class SygPlugin extends SanityPluginFramework {
 	 */
 	public function sygNotice() {
 		global $pagenow;
-		//$this->printTasks();
+		// $this->printTasks();
 		if (($pagenow == 'admin.php')
 				&& (($_GET['page'] == SygConstant::BE_ACTION_MANAGE_STYLES)
 					|| ($_GET['page'] == SygConstant::BE_ACTION_MANAGE_GALLERIES)
