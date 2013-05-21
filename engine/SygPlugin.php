@@ -1465,7 +1465,7 @@ class SygPlugin extends SanityPluginFramework {
 				// database add style procedure
 				// get posted values
 				$data = serialize($_POST);
-	
+
 				try {
 					// validate data
 					$valid = SygValidate::validateStyle($data);
