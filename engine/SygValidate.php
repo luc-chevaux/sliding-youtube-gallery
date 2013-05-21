@@ -120,7 +120,7 @@ class SygValidate {
 	 * @name validateStyle
 	 * @category style validation function
 	 * @since 1.3.0
-	 * @param $data array of style params to validate
+	 * @param $data serialized style params to validate
 	 * @throws SygValidateException
 	 */
 	public static function validateStyle($data) {
@@ -276,7 +276,7 @@ class SygValidate {
 	 * @name validateGallery
 	 * @category style validation function
 	 * @since 1.3.0
-	 * @param $data array of galleries to validate
+	 * @param $data serialized galleries to validate
 	 * @throws SygValidateException
 	 */
 	public static function validateGallery($data) {
@@ -398,7 +398,7 @@ class SygValidate {
 	 * @name validateSettings
 	 * @category settings validation function
 	 * @since 1.3.0
-	 * @param $data array of settings to validate
+	 * @param $data serialized of settings to validate
 	 * @throws SygValidateException
 	 */
 	public static function validateSettings($data) {
