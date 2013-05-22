@@ -1098,10 +1098,10 @@ class SygPlugin extends SanityPluginFramework {
 				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
 	
 				// put galleries in the view
-				$galleries = $this->sygDao->getAllSygGalleries();
+				// $galleries = $this->sygDao->getAllSygGalleries();
 	
 				// put galleries in the view
-				$this->data['galleries'] = $galleries;
+				// $this->data['galleries'] = $galleries;
 	
 				// number of pages
 				$options = $this->getOptions();
