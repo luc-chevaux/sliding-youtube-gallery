@@ -43,15 +43,6 @@
 					
 				</td>
 			</tr>
-		<?php
-		if (count($styles) == 0) { ?>
-			<tr>
-				<td colspan="5">
-				<?php echo SygConstant::BE_NO_STYLES_FOUND; ?>
-				</td>
-			</tr>
-		<?php }
-		?>
 		</table>
 		<div id="paginator-area">
 			<ul id="syg-pagination-styles">

@@ -73,10 +73,10 @@
 					<div class="side_box">
 						<h4>Quick resources</h4>
 						<ul>
-							<li><a href="">Project homepage</a></li>
+							<li><a href="http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/">Project homepage</a></li>
 							<li><a href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/">Plugin homepage</a></li>
-							<li><a href="">Bug database</a></li>
-							<li><a href="">Support forum</a></li>
+							<li><a href="http://mantis.webeng.it/login_page.php">Bug database</a></li>
+							<li><a href="http://wordpress.org/support/plugin/sliding-youtube-gallery">Support forum</a></li>
 						</ul>
 					</div>
 					<div class="side_box">
