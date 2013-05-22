@@ -62,14 +62,16 @@ jQuery.noConflict();
 					  dataType: 'html',
 					  complete: function () {
 						  var target_url = window.location.toString();
-					  	  target_url = target_url.replace('#', '') + '&pageNum=' + pageNum;
+					  	  target_url = target_url.replace('#', '');
+					  	  if (!pageNum) pageNum = 1;
+					  	  var new_url = methods.replaceQueryString.call (this, target_url ,'pageNum', pageNum);
 						  window.location.replace(target_url);
 					  }
 				});
 			}
 			return true;
 		},
-		
+
 		/* function that delete a gallery (ajax) */
 		deleteGallery : function (id, pageNum) {
 			var sure = confirm('Are you sure to delete this gallery?');
@@ -81,8 +83,10 @@ jQuery.noConflict();
 					  dataType: 'html',
 					  complete: function () {
 						  var target_url = window.location.toString();
-					  	  target_url = target_url.replace('#', '') + '&pageNum=' + pageNum;
-						  window.location.replace(target_url);
+						  target_url = target_url.replace('#', '');
+					  	  if (!pageNum) pageNum = 1;
+					  	  var new_url = methods.replaceQueryString.call (this, target_url ,'pageNum', pageNum);
+						  window.location.replace(new_url);
 					  }
 				});
 			}
@@ -100,7 +104,9 @@ jQuery.noConflict();
 					  dataType: 'html',
 					  complete: function () {
 					  	  var target_url = window.location.toString();
-					  	  target_url = target_url.replace('#', '') + '&pageNum=' + pageNum;
+					  	  target_url = target_url.replace('#', '');
+					  	  if (!pageNum) pageNum = 1;
+						  var new_url = methods.replaceQueryString.call (this, target_url ,'pageNum', pageNum);
 						  window.location.replace(target_url);
 					  }
 				});
@@ -132,95 +138,121 @@ jQuery.noConflict();
 				case 'syg-manage-styles':
 					var table = 'styles';
 					methods.hideLoad.call(this);
-					$.each(data, function(key, val) {
-						
-						html = '<tr id="syg_row_' + key + '">';
-						html = html + '<td>';
-						html = html + val.id;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.styleName;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.styleDetails;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '&pageNum=' + pageNum + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit style" class="syg_table_button" /></a>';
-						
-						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" class="syg_table_button" title="Delete style"/></a>';
+					if (!jQuery.isEmptyObject(data)) {
+						$.each(data, function(key, val) {
+							
+							html = '<tr id="syg_row_' + key + '">';
+							html = html + '<td>';
+							html = html + val.id;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + val.styleName;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + val.styleDetails;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + '<a href="?page=syg-manage-styles&action=edit&id=' + val.id + '&pageNum=' + pageNum + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit style" class="syg_table_button" /></a>';
+							
+							if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
+								html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteStyle\', \'' + val.id + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" class="syg_table_button" title="Delete style"/></a>';
+							}
+							
+							html = html + '</td>';
+							html = html + '</tr>';
+							$('#galleries_table tr:last-child').after(html);
+						});
+					} else {
+						html = html + '<tr>';
+						html = html + '<td colspan="4">';
+						if (methods.getQParam.call(this, 'pageNum')>0) {
+							html = html + 'No styles found in this page';
+						} else {
+							html = html + 'No styles found in database';
 						}
-						
 						html = html + '</td>';
 						html = html + '</tr>';
 						$('#galleries_table tr:last-child').after(html);
-					});
-					
+					}
 					break;
 				case 'syg-manage-galleries':
 					var table = 'galleries';
 					methods.hideLoad.call(this);
-					$.each(data, function(key, val) {
-						html = '<tr id="syg_row_' + key + '">';
-						html = html + '<td>';
-						html = html + val.id;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.galleryName;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.galleryDetails;
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + val.galleryType;
-						html = html + '</td>';
+					if (!jQuery.isEmptyObject(data)) {
+						$.each(data, function(key, val) {
+							html = '<tr id="syg_row_' + key + '">';
+							html = html + '<td>';
+							html = html + val.id;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + '<img src="' + val.thumbUrl + '" class="user_pic"></img>';
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + val.galleryName;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + val.galleryDetails;
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + val.galleryType;
+							html = html + '</td>';
+							
+							html = html + '<td class="' + val.cacheExists + '">';
+							if (val.cacheOn == 1) {
+								html = html + val.cacheExists;
+							}
+							html = html + '</td>';
+							html = html + '<td>';
+							html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
+							html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '&pageNum=' + pageNum + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit gallery" class="syg_table_button"/></a>';
+	
+							if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
+								html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteGallery\', \'' + val.id + '\', \'' + pageNum + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="Delete gallery" class="syg_table_button"/></a>';
+							}
+							
+							if (val.cacheOn == 1) {
+								html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'cacheGallery\', \'' + val.id + '\', \'' + pageNum + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="Cache gallery" class="syg_table_button"/></a>';
+							}
+							
+							html = html + '</td>';
+							html = html + '</tr>';
 						
-						html = html + '<td class="' + val.cacheExists + '">';
-						if (val.cacheOn == 1) {
-							html = html + val.cacheExists;
+							$('#galleries_table tr:last-child').after(html);
+							  
+							var dHeight = parseInt(val.sygStyle.thumbHeight) + (parseInt(val.sygStyle.boxPadding)*2) ;
+							var dWidth = parseInt(val.sygStyle.boxWidth) + (parseInt(val.sygStyle.boxPadding)*2) ;
+							
+							// set preview action
+							$('.iframe_' + val.id).fancybox({ 
+								'padding' : 30,
+								'width' : dWidth,
+								'height' : dHeight,
+								'titlePosition' : 'inside',
+								'titleFormat' : function() {
+									return '<div id="gallery-title"><h3>' + val.galleryName + '</h3></div>';
+								},
+								'centerOnScroll' : true,
+								'onComplete': function() {
+									$('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
+										$('#fancybox-content').height($(this).contents().find('body').height()+30);
+									});
+								},
+								'type' : 'iframe'
+							});
+						});
+					} else {
+						html = html + '<tr>';
+						html = html + '<td colspan="7">';
+						if (methods.getQParam.call(this, 'pageNum')>0) {
+							html = html + 'No galleries found in this page';
+						} else {
+							html = html + 'No galleries found in database';
 						}
-						html = html + '</td>';
-						html = html + '<td>';
-						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
-						html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '&pageNum=' + pageNum + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit gallery" class="syg_table_button"/></a>';
-
-						if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'deleteGallery\', \'' + val.id + '\', \'' + pageNum + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/delete.png" title="Delete gallery" class="syg_table_button"/></a>';
-						}
-						
-						if (val.cacheOn == 1) {
-							html = html + '<a href="#" onclick="javascript: jQuery.fn.sygadmin(\'cacheGallery\', \'' + val.id + '\', \'' + pageNum + '\');"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/cache.png" title="Cache gallery" class="syg_table_button"/></a>';
-						}
-						
 						html = html + '</td>';
 						html = html + '</tr>';
-					
 						$('#galleries_table tr:last-child').after(html);
-						  
-						var dHeight = parseInt(val.sygStyle.thumbHeight) + (parseInt(val.sygStyle.boxPadding)*2) ;
-						var dWidth = parseInt(val.sygStyle.boxWidth) + (parseInt(val.sygStyle.boxPadding)*2) ;
-						
-						// set preview action
-						$('.iframe_' + val.id).fancybox({ 
-							'padding' : 30,
-							'width' : dWidth,
-							'height' : dHeight,
-							'titlePosition' : 'inside',
-							'titleFormat' : function() {
-								return '<div id="gallery-title"><h3>' + val.galleryName + '</h3></div>';
-							},
-							'centerOnScroll' : true,
-							'onComplete': function() {
-								$('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
-									$('#fancybox-content').height($(this).contents().find('body').height()+30);
-								});
-							},
-							'type' : 'iframe'
-						});
-					});
+					}
+					
 					break;
 				default:
 					break;
@@ -514,6 +546,19 @@ jQuery.noConflict();
 				return "";
 			} else {
 				return decodeURIComponent(results[1].replace(/\+/g, " "));
+			}
+		},
+		
+		replaceQueryString : function (uri, key, value) {
+			alert ('uri inside:' + uri);
+			alert ('key inside:' + key);
+			alert ('value inside:' + value);
+			var re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i");
+			separator = uri.indexOf('?') !== -1 ? "&" : "?";
+			if (uri.match(re)) {
+				return uri.replace(re, '$1' + key + "=" + value + '$2');
+			} else {
+				return uri + separator + key + "=" + value;
 			}
 		},
 		
