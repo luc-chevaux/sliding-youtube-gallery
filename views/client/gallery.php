@@ -21,7 +21,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 <!-- Gallery -->
 <div id="syg_video_gallery-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>">
 	<div class="sc_menu-<?php echo $gallery->getId();?>">
-		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none;">
+		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none !important;">
 			<?php 
 				foreach ($feed as $element) {				
 					// modify the img path to match local files

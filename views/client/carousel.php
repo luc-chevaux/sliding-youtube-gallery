@@ -10,7 +10,7 @@ $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
 <div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_carousel_loading-<?php echo $gallery->getId();?>">
-	<div id="hidden-carousel-layer_<?php echo $gallery->getId();?>" style="display: none">
+	<div id="hidden-carousel-layer_<?php echo $gallery->getId();?>" style="display: none !important;">
 		<?php
 		foreach ($feed as $element) {				
 			// modify the img path to match local files
