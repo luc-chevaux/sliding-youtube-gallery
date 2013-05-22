@@ -51,16 +51,6 @@
 					
 				</td>
 			</tr>
-		<?php
-		$galleries = $this->data['galleries']; 
-		if (count($galleries) == 0) { ?>
-			<tr>
-				<td colspan="5">
-				<?php echo SygConstant::BE_NO_GALLERY_FOUND; ?>
-				</td>
-			</tr>
-		<?php }
-		?>
 		</table>
 		<div id="paginator-area">
 			<ul id="syg-pagination-galleries">
