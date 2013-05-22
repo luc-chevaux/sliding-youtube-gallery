@@ -126,6 +126,19 @@ jQuery.noConflict();
 		    $('#loader').fadeToggle(300);
 		},
 		
+		/* function that loads exception in the page */
+		loadException : function (data) {
+			$('.syg_error').remove();
+			data = $.parseJSON(JSON.stringify(data));
+			var problemFound = data.exception_detail;
+			html = '<div class="syg_error"><p><strong>An error was found while updating your style.</strong></p><ul>';
+			$.each(problemFound, function(key, val) {
+				html = html + '<li>' + val.field + ' - ' + val.msg + '</li>';
+			});
+			html = html + '</ul></div>';
+			$('#syg_status_bar').prepend(html);
+		},
+		
 		/* function that loads the data in the table */ 
 		loadData : function (data, pageNum) {
 			data = $.parseJSON(JSON.stringify(data));
@@ -324,7 +337,7 @@ jQuery.noConflict();
 			
 			$('#syg_style_form').on('submit', function(event) {
 				event.preventDefault();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + $(this).serialize());
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + $(this).serialize(), function (data) {$.fn.sygadmin('loadException', data);});
 			});
 			
 			$('.syg_page_submit').balloon({ 
@@ -348,14 +361,14 @@ jQuery.noConflict();
 		/* function that init gallery ui */
 		initGalleryUi : function () {
 			$('input[name=syg_gallery_type]').each(function(){
-				$(this).click(function () { methods.disableInput.call(); });
+				$(this).click(function () { methods.disableInput.call(this); });
 			});
 			
 			methods.disableInput.call();
 			
 			$('#syg_gallery_form').on('submit', function(event) {
 				event.preventDefault();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize());
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize(), function (data) {$.fn.sygadmin('loadException', data);});
 			});
 			
 			$('.syg_help').balloon({ 
@@ -550,9 +563,6 @@ jQuery.noConflict();
 		},
 		
 		replaceQueryString : function (uri, key, value) {
-			alert ('uri inside:' + uri);
-			alert ('key inside:' + key);
-			alert ('value inside:' + value);
 			var re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i");
 			separator = uri.indexOf('?') !== -1 ? "&" : "?";
 			if (uri.match(re)) {
@@ -560,21 +570,6 @@ jQuery.noConflict();
 			} else {
 				return uri + separator + key + "=" + value;
 			}
-		},
-		
-		/* validate Style form */
-		validateStyle : function () {
-			alert (this.serialize());
-		},
-		
-		/* validate Gallery form */
-		validateGallery : function () {
-			alert ('validateGallery');
-		},
-		
-		/* validate Settings form */
-		validateSettings : function () {
-			alert ('validateSettings');
 		}
 	};
 	

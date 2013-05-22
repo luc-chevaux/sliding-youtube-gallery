@@ -59,9 +59,7 @@ class SygGallery {
 		if (is_string($key)) $key = unserialize ($key);
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();		
-		if ($key != NULL) {
-			$this->mapThis($key);
-		}
+		$this->mapThis($key);
 	}
 
 	/**
@@ -74,21 +72,21 @@ class SygGallery {
 		$result = (object) $result;
 		
 		// id
-		$this->setId($result->id);
+		$this->setId((!empty($result->id)) ? $result->id : NULL);
 		
-		$this->setGalleryName($result->syg_gallery_name);
-		$this->setGalleryDetails($result->syg_gallery_details);
+		$this->setGalleryName((!empty($result->syg_gallery_name)) ? $result->syg_gallery_name : NULL);
+		$this->setGalleryDetails((!empty($result->syg_gallery_details)) ? $result->syg_gallery_details : NULL);
 		
 		// youtube option values
-		$this->setYtMaxVideoCount($result->syg_youtube_maxvideocount);
-		$this->setYtVideoFormat($result->syg_youtube_videoformat);
-		$this->setYtDisableRelatedVideo($result->syg_youtube_disablerel);
-		$this->setYtSrc($result->syg_youtube_src);
+		$this->setYtMaxVideoCount((!empty($result->syg_youtube_maxvideocount)) ? $result->syg_youtube_maxvideocount : NULL);
+		$this->setYtVideoFormat((!empty($result->syg_youtube_videoformat)) ? $result->syg_youtube_videoformat : NULL);
+		$this->setYtDisableRelatedVideo((!empty($result->syg_youtube_disablerel)) ? $result->syg_youtube_disablerel : NULL);
+		$this->setYtSrc((!empty($result->syg_youtube_src)) ? $result->syg_youtube_src : NULL);
 		// running with caching?
-		$this->setCacheOn($result->syg_youtube_cacheon);
+		$this->setCacheOn((!empty($result->syg_youtube_cacheon)) ? $result->syg_youtube_cacheon : NULL);
 		
 		// set youtube user profile
-		($result->syg_gallery_type) ? $this->setGalleryType($result->syg_gallery_type) : $this->setGalleryType('feed');
+		(!empty($result->syg_gallery_type)) ? $this->setGalleryType($result->syg_gallery_type) : $this->setGalleryType('feed');
 		
 		if ((($this->getGalleryType() == 'feed') && (!$this->getId())) || ($this->getGalleryType() != 'feed')) {
 			$this->setUserProfile(null);
@@ -97,17 +95,21 @@ class SygGallery {
 		}
 		
 		// description option values
-		$this->setDescShow($result->syg_description_show);
-		$this->setDescShowCategories($result->syg_description_showcategories);
-		$this->setDescShowDuration($result->syg_description_showduration);
-		$this->setDescShowRatings($result->syg_description_showratings);
-		$this->setDescShowTags($result->syg_description_showtags);
+		$this->setDescShow((!empty($result->syg_description_show)) ? $result->syg_description_show : NULL);
+		$this->setDescShowCategories((!empty($result->syg_description_showcategories)) ? $result->syg_description_showcategories : NULL);
+		$this->setDescShowDuration((!empty($result->syg_description_showduration)) ? $result->syg_description_showduration : NULL);
+		$this->setDescShowRatings((!empty($result->syg_description_showratings)) ? $result->syg_description_showratings : NULL);
+		$this->setDescShowTags((!empty($result->syg_description_showtags)) ? $result->syg_description_showtags : NULL);
 		
 		// set style id
-		$this->setStyleId($result->syg_style_id);
+		$this->setStyleId((!empty($result->syg_style_id)) ? $result->syg_style_id : NULL);
 		
 		// load style setting
-		$this->sygStyle = $this->sygDao->getSygStyleById($this->getStyleId());
+		if ($this->getStyleId() != NULL) {
+			$this->sygStyle = $this->sygDao->getSygStyleById($this->getStyleId());
+		} else {
+			$this->sygStyle = NULL;
+		}
 		
 		// load the caching path
 		$this->setThumbnailsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);

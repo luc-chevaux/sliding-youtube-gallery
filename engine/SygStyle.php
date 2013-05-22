@@ -50,9 +50,7 @@ class SygStyle {
 	 */
 	public function __construct($key = null) {
 		if (is_string($key)) $key = unserialize ($key);
-		if ($key != NULL) {
-			$this->mapThis($key);
-		}
+		$this->mapThis($key);
 	}
 
 	/**
@@ -65,30 +63,30 @@ class SygStyle {
 		$result = (object) $result;
 		
 		// style name
-		$this->setStyleName($result->syg_style_name);
-		$this->setStyleDetails($result->syg_style_details);
+		$this->setStyleName((!empty($result->syg_style_name)) ? $result->syg_style_name : NULL);
+		$this->setStyleDetails((!empty($result->syg_style_details)) ? $result->syg_style_details : NULL);
 		
 		// box option values
-		$this->setBoxBackground(($result->syg_box_background) ? $result->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
-		$this->setBoxPadding($result->syg_box_padding);
-		$this->setBoxRadius($result->syg_box_radius);
-		$this->setBoxWidth($result->syg_box_width);
+		$this->setBoxBackground((!empty($result->syg_box_background)) ? $result->syg_box_background : SygConstant::SYG_BOX_DEFAULT_BACKGROUND_COLOR);
+		$this->setBoxPadding((!empty($result->syg_box_padding)) ? $result->syg_box_padding : NULL);
+		$this->setBoxRadius((!empty($result->syg_box_radius)) ? $result->syg_box_radius : NULL);
+		$this->setBoxWidth((!empty($result->syg_box_width)) ? $result->syg_box_width : NULL);
 		
 		// description option values
-		$this->setDescFontColor(($result->syg_description_fontcolor) ? ($result->syg_description_fontcolor) : SygConstant::SYG_DESC_DEFAULT_FONT_COLOR);
-		$this->setDescFontSize($result->syg_description_fontsize);
-		$this->setDescWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+		$this->setDescFontColor((!empty($result->syg_description_fontcolor)) ? $result->syg_description_fontcolor : SygConstant::SYG_DESC_DEFAULT_FONT_COLOR);
+		$this->setDescFontSize((!empty($result->syg_description_fontsize)) ? $result->syg_description_fontsize : NULL);
+		$this->setDescWidth((!empty($result->syg_thumbnail_width) && ($result->syg_thumbnail_width > 0)) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
 		
 		// thumbnail option values
-		$this->setThumbBorderColor(($result->syg_thumbnail_bordercolor) ? $result->syg_thumbnail_bordercolor: SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
-		$this->setThumbBorderRadius($result->syg_thumbnail_borderradius);
-		$this->setThumbBorderSize($result->syg_thumbnail_bordersize);
-		$this->setThumbButtonOpacity($result->syg_thumbnail_buttonopacity);
-		$this->setThumbDistance($result->syg_thumbnail_distance);
-		$this->setThumbHeight(($result->syg_thumbnail_height > 0) ? $result->syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
+		$this->setThumbBorderColor((!empty($result->syg_thumbnail_bordercolor)) ? $result->syg_thumbnail_bordercolor: SygConstant::SYG_THUMB_DEFAULT_BORDER_COLOR);
+		$this->setThumbBorderRadius((!empty($result->syg_thumbnail_borderradius)) ? $result->syg_thumbnail_borderradius : NULL);
+		$this->setThumbBorderSize((!empty($result->syg_thumbnail_bordersize)) ? $result->syg_thumbnail_bordersize : NULL);
+		$this->setThumbButtonOpacity((!empty($result->syg_thumbnail_buttonopacity)) ? $result->syg_thumbnail_buttonopacity : NULL);
+		$this->setThumbDistance((!empty($result->syg_thumbnail_distance)) ? $result->syg_thumbnail_distance : NULL);
+		$this->setThumbHeight(((!empty($result->syg_thumbnail_height)) && ($result->syg_thumbnail_height > 0)) ? $result->syg_thumbnail_height : SygConstant::SYG_THUMB_DEFAULT_HEIGHT);
 		$this->setThumbImage((!empty($result->syg_thumbnail_image)) ? $result->syg_thumbnail_image : SygConstant::SYG_THUMB_DEFAULT_IMAGE);
-		$this->setThumbWidth(($result->syg_thumbnail_width > 0) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
-		$this->setThumbOverlaySize($result->syg_thumbnail_overlaysize);
+		$this->setThumbWidth(((!empty($result->syg_thumbnail_width)) && ($result->syg_thumbnail_width > 0)) ? $result->syg_thumbnail_width : SygConstant::SYG_THUMB_DEFAULT_WIDTH);
+		$this->setThumbOverlaySize((!empty($result->syg_thumbnail_overlaysize)) ? $result->syg_thumbnail_overlaysize : NULL);
 		
 		// additional graphic option values
 		$this->setPercOccH($this->getThumbOverlaySize() / ($this->getThumbHeight() + ($this->getThumbBorderSize()*2)));
@@ -97,7 +95,7 @@ class SygStyle {
 		$this->setThumbLeft(50 - ($this->getPercOccW() / 2 * 100));
 		
 		// id
-		$this->setId($result->id);
+		$this->setId((!empty($result->id)) ? $result->id : NULL);
 	}
 	
 	/**
