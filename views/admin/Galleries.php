@@ -11,7 +11,7 @@
 <!-- Javascript Inclusion -->
 
 <!-- Title Page -->
-<div class="wrap">
+<div class="syg-wrap">
 	<?php include 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 		

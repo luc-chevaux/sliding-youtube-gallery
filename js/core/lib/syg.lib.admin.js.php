@@ -115,14 +115,17 @@ jQuery.noConflict();
 		},
 		
 		loadingOn : function () {
+			alert ('loading on');
 			$('#loader').fadeIn(300);
 		},
 		
 		loadingOff : function () {
+			alert ('loading off');
 		    $('#loader').fadeOut(300);
 		},
 
 		loadingToggle : function () {
+			alert ('loading toggle');
 		    $('#loader').fadeToggle(300);
 		},
 		
@@ -596,10 +599,12 @@ jQuery(document).ready(function($) {
 	var pageNum = $.fn.sygadmin('getQParam', 'pageNum'); 
 	
 	$('#loader').ajaxStart(function() {
+		  $('.syg-wrap').hide();
 		  $(this).fadeIn(300);
 	});
 	
 	$('#loader').ajaxStop(function() {
+	      $('.syg-wrap').show();
 		  $(this).fadeOut(300);
 	});
 	

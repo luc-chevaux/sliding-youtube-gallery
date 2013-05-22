@@ -12,7 +12,7 @@
 </style>
 
 <!-- Title Page -->
-<div class="wrap">
+<div class="syg-wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 	
