@@ -196,6 +196,7 @@ jQuery.noConflict();
 					methods.hideLoad.call(this);
 					if (!jQuery.isEmptyObject(data)) {
 						$.each(data, function(key, val) {
+							if (val.galleryDetails == null) {val.galleryDetails = '<small><i>(No description)</i></small>';}
 							html = '<tr id="syg_row_' + key + '">';
 							html = html + '<td>';
 							html = html + val.id;
@@ -338,9 +339,15 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'box_backgroundcolor_selector', $('#syg_box_background'), '#efefef');
 			methods.initColorPicker.call(this, 'desc_fontcolor_selector', $('#syg_description_fontcolor'), '#333333');
 			
-			$('#syg_style_form').on('submit', function(event) {
+			$('#syg_style_form').submit(function(event) {
 				event.preventDefault();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + $(this).serialize(), function (data) {$.fn.sygadmin('loadException', data);});
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + $(this).serialize(), function (data) { 
+					if(!jQuery.isEmptyObject(data)) {
+						$.fn.sygadmin('loadException', data);
+					} else {
+						$('#syg_style_form').unbind('submit').submit();
+					}
+				});
 			});
 			
 			$('.syg_page_submit').balloon({ 
@@ -369,9 +376,16 @@ jQuery.noConflict();
 			
 			methods.disableInput.call();
 			
-			$('#syg_gallery_form').on('submit', function(event) {
-				event.preventDefault();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize(), function (data) {$.fn.sygadmin('loadException', data);});
+			$('#syg_gallery_form').submit(function(event) {
+				valid = new Boolean();
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize(), function (data) {
+					if(!jQuery.isEmptyObject(data)) {
+						$.fn.sygadmin('loadException', data);
+					} else {
+						$('#syg_style_form').unbind('submit').submit();
+					}
+				});
+				
 			});
 			
 			$('.syg_help').balloon({ 
