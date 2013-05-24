@@ -191,7 +191,7 @@ label {
 
 #galleries_table td {
 	text-align: center;
-	padding: 10px;
+	padding: 5px;
 }
 
 #galleries_table td.NO {
@@ -204,11 +204,11 @@ label {
 }
 
 #galleries_table th.user_pic {
-	width: 100px;
+	width: 50px;
 }
 
 img.user_pic {
-	height: 50px;
+	height: 36px;
 }
 
 #galleries_table th.user {
@@ -228,7 +228,7 @@ img.user_pic {
 }
 
 #galleries_table th.cached {
-	width: 100px;
+	width: 50px;
 }
 
 #galleries_table tr.navigation {
