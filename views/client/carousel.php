@@ -25,7 +25,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				$videoThumbnails = $element->getVideoThumbnails();
 			}
 		?>
-		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>&autoplay=1" title="<?php echo $element->getVideoTitle(); ?>">
+		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
 				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoTitle(); ?>"/>
 			<?php } else { ?>
@@ -52,6 +52,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	</div>
 </div>
 
+<!-- registra script -->
 <?php 
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
@@ -59,6 +60,6 @@ wp_register_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_C
 wp_enqueue_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$gallery->getId();
-wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
-wp_enqueue_script('syg-action-'.$gallery->getId());
+wp_register_script('syg-loading-carousel-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
+wp_enqueue_script('syg-loading-carousel-'.$gallery->getId());
 ?>

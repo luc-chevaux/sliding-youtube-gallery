@@ -38,7 +38,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				?> 
 				<!-- gallery code -->
 				<li>
-					<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>&autoplay=1&rel=0" title="<?php echo $element->getVideoTitle(); ?>">
+					<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
 						<!-- append video thumbnail -->
 						<?php if ($gallery->getDescShow()) { ?>
 							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
@@ -72,6 +72,6 @@ wp_register_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_C
 wp_enqueue_script('syg-client-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$gallery->getId();
-wp_register_script('syg-action-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
-wp_enqueue_script('syg-action-'.$gallery->getId());
+wp_register_script('syg-loading-gallery-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
+wp_enqueue_script('syg-loading-gallery-'.$gallery->getId());
 ?>
