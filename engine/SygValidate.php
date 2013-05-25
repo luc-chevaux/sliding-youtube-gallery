@@ -464,10 +464,10 @@ class SygValidate {
 					$url_path = substr($data['syg_option_use_fb2_url'], 0, $last_slash+1);
 				}
 				
-				// check if fancbox2 files are present
-				if (!(file_get_contents($url_path.'jquery.fancybox.pack.js') ||
-						file_get_contents($url_path.'jquery.fancybox.js') ||
-						file_get_contents($url_path.'jquery.fancybox.css'))) {
+				// check if fancybox2 files are present
+				if (!(@file_get_contents($url_path.'jquery.fancybox.pack.js') ||
+						@file_get_contents($url_path.'jquery.fancybox.js') ||
+						@file_get_contents($url_path.'jquery.fancybox.css'))) {
 					array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_option_use_fb2_url'),
 					'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_FANCYBOX2_NOT_FOUND, $url_path)));

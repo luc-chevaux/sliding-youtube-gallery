@@ -429,8 +429,7 @@ jQuery.noConflict();
 		
 		/* function that init settings ui */
 		initSettingsUi: function () {
-			// add event to fancybox2 inclusion button
-			
+			// add event to fancybox2 inclusion button			
 			$('#syg_option_use_fb2').click(function () {				
 				if ($('#syg_option_use_fb2_url').is(":visible")) {
 		            // disable
@@ -624,57 +623,57 @@ jQuery(document).ready(function($) {
 	var pageNum = $.fn.sygadmin('getQParam', 'pageNum'); 
 	
 	$('#loader').ajaxStart(function() {
-		  $('.syg-wrap').hide();
-		  $(this).fadeIn(300);
+		  $('.syg-wrap').fadeOut(700);
+		  $(this).fadeIn(700);
 	});
 	
 	$('#loader').ajaxStop(function() {
-	      $('.syg-wrap').show();
-		  $(this).fadeOut(300);
+	      $('.syg-wrap').fadeIn(700);
+		  $(this).fadeOut(700);
 	});
 	
-	// if we're doing some action init ui component
-	if (action == 'add' || action =='edit') {
-		if (page == 'syg-manage-galleries') {
-			// init the user interface
-			$.fn.sygadmin('initGalleryUi');
-		} else if (page == 'syg-manage-styles') {
-			// init the user interface
-			$.fn.sygadmin('initStyleUi');
-		}
-	} else{
-		switch (page) {
-			case 'syg-manage-styles':
-				// init pagination for styles
-				var table = 'styles';
-				$.fn.sygadmin('updateCache');
-				break;
-			case 'syg-manage-galleries':
-				// init pagination for galleries
-				var table = 'galleries';
-				break;
-			case 'syg-manage-settings':
-				// init settings
-				$.fn.sygadmin('initSettingsUi');
-				$.fn.sygadmin('updateCache');
-				return true;
-			default:
-				return false;
-		}
-	
-		// loading images
-		$.fn.sygadmin('displayLoad');
-	
-		// load if page contains a list
-		if (!id){
-			// get the data
-			if (!pageNum) {
-				var pageNum = 1;
-			}
-			$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.fn.sygadmin('loadData', data, pageNum);});
-		}
-		
-		// add pagination events
-		$.fn.sygadmin('addPaginationClickEvent', table);
+	switch (page) {
+		case 'syg-manage-styles':
+			if (action == 'add' || action =='edit') { $.fn.sygadmin('initStyleUi'); }
+			// init pagination for styles
+			var table = 'styles';
+			$.fn.sygadmin('updateCache');
+			break;
+		case 'syg-manage-galleries':
+			if (action == 'add' || action =='edit') { $.fn.sygadmin('initGalleryUi'); }
+			// init pagination for galleries
+			var table = 'galleries';
+			break;
+		case 'syg-manage-settings':
+			$('.syg-wrap').fadeOut(700);
+			$('#loader').fadeIn(700);
+			// init settings
+			$.fn.sygadmin('initSettingsUi');
+			$.fn.sygadmin('updateCache');
+			$('.syg-wrap').fadeIn(700);
+			$('#loader').fadeOut(700);
+			return true;
+		case 'syg-contacts':
+			$('.syg-wrap').fadeOut(700);
+			$('#loader').fadeIn(700);
+			$('.syg-wrap').fadeIn(700);
+			$('#loader').fadeOut(700);
+		default:
+			return false;
 	}
+
+	// loading images
+	$.fn.sygadmin('displayLoad');
+
+	// load if page contains a list
+	if (!id){
+		// get the data
+		if (!pageNum) {
+			var pageNum = 1;
+		}
+		$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.fn.sygadmin('loadData', data, pageNum);});
+	}
+	
+	// add pagination events
+	$.fn.sygadmin('addPaginationClickEvent', table);
 });

@@ -56,7 +56,7 @@
 				<label for="syg_option_use_fb2">Display gallery with Fancybox2</label>
 				<input type="checkbox" name="syg_option_use_fb2" id="syg_option_use_fb2" value="1" <?php if ($options['syg_option_use_fb2'] == "1") echo 'checked="checked"';?>/> <small>(You must agree with owner's <a href="http://fancyapps.com/fancybox/#license" target="_new">license</a>)</small>
 				
-				<div id="syg_option_use_fb2_desc" <?php if ($options['syg_option_use_fb2'] == NULL) echo 'style="display:none;"'; ?>> Fancybox2 inclusion url: <small>(use http://)</small> : </div><input type="text" id="syg_option_use_fb2_url" name="syg_option_use_fb2_url" value="<?php echo $options['syg_option_use_fb2_url']; ?>" value="<?php echo $options['syg_option_use_fb2_url']; ?>" size="40" <?php if ($options['syg_option_use_fb2'] == NULL) echo 'style="display:none;"'; ?>>
+				<div id="syg_option_use_fb2_desc" <?php if ($options['syg_option_use_fb2'] == "0") echo 'style="display:none;"'; ?>> Fancybox2 inclusion url: <small>(use http://)</small> : <input type="text" id="syg_option_use_fb2_url" name="syg_option_use_fb2_url" value="<?php echo $options['syg_option_use_fb2_url']; ?>" value="<?php echo $options['syg_option_use_fb2_url']; ?>" size="40" <?php if ($options['syg_option_use_fb2'] == NULL) echo 'style="display:none;"'; ?>></div>
 			</fieldset>
 			
 			<!-- youtube settings -->
