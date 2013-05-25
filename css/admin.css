@@ -369,3 +369,8 @@ select { border-color: #333333 !important;}
 	height: 16px;
 	display: inline-block;
 }
+
+.fb-like {
+	width: 200px;
+	max-width: 200px;
+}

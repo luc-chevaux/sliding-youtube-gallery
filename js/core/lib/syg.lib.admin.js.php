@@ -645,19 +645,12 @@ jQuery(document).ready(function($) {
 			var table = 'galleries';
 			break;
 		case 'syg-manage-settings':
-			$('.syg-wrap').fadeOut(700);
-			$('#loader').fadeIn(700);
 			// init settings
 			$.fn.sygadmin('initSettingsUi');
 			$.fn.sygadmin('updateCache');
-			$('.syg-wrap').fadeIn(700);
-			$('#loader').fadeOut(700);
 			return true;
 		case 'syg-contacts':
-			$('.syg-wrap').fadeOut(700);
-			$('#loader').fadeIn(700);
-			$('.syg-wrap').fadeIn(700);
-			$('#loader').fadeOut(700);
+			return true;
 		default:
 			return false;
 	}

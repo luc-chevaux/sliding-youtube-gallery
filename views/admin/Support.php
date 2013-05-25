@@ -93,7 +93,6 @@
 						<h4>Social activities</h4>
 						<p>Please socialize this plugin by clicking on your favourite social network. More people means more features.</p>
 						<div class="fb-like" data-href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana" data-colorscheme="dark"></div>
-					
 						<br/>	
 						<!-- Inserisci questo tag nel punto in cui vuoi che sia visualizzato l'elemento pulsante +1. -->
 						<div class="g-plusone" data-href="http://wordpress.org/extend/plugins/sliding-youtube-gallery/"></div>
