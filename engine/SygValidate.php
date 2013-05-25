@@ -448,7 +448,7 @@ class SygValidate {
 		}
 		
 		// validation fancybox2
-		if ($data['syg_option_use_fb2']) {
+		if (array_key_exists('syg_option_use_fb2', $data) && $data['syg_option_use_fb2']) {
 			// validate url
 			if (!filter_var($data['syg_option_use_fb2_url'], FILTER_VALIDATE_URL)) {
 				array_push($problemFound,

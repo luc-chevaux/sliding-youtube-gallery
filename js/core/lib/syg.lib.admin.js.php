@@ -142,7 +142,7 @@ jQuery.noConflict();
 					if (!jQuery.isEmptyObject(data)) {
 						var rowsPrinted = 0;
 						$.each(data, function(key, val) {
-							
+							if (val.styleDetails == null) {val.styleDetails = '<small><i>(No description)</i></small>';}
 							html = '<tr id="syg_row_' + key + '">';
 							html = html + '<td>';
 							html = html + val.id;
@@ -433,11 +433,11 @@ jQuery.noConflict();
 			
 			$('#syg_option_use_fb2').click(function () {				
 				if ($('#syg_option_use_fb2_url').is(":visible")) {
-		            // disabilita
+		            // disable
 		         	$('#syg_option_use_fb2_url').hide();
 		         	$('#syg_option_use_fb2_desc').hide();
 		        } else {
-		        	// abilita
+		        	// enable
 		        	$('#syg_option_use_fb2_url').show();
 		        	$('#syg_option_use_fb2_desc').show();
 		        }

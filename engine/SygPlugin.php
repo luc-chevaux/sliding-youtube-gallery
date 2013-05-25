@@ -105,90 +105,9 @@ class SygPlugin extends SanityPluginFramework {
 	 * @todo gestire le opzioni in opportuna mappa per ciclarla
 	 */
 	public static function setDefaultOption() {
-		/********************
-		 * General settings *
-		 ********************/
-		if (!get_option('syg_option_askcache'))
-			add_option('syg_option_askcache',
-					SygConstant::SYG_OPTION_DEFAULT_ASKCACHE);
-		if (!get_option('syg_option_description_length'))
-			add_option('syg_option_description_length',
-					SygConstant::SYG_OPTION_DEFAULT_DESCRIPTION_LENGTH);
-		if (!get_option('syg_option_numrec'))
-			add_option('syg_option_numrec',
-					SygConstant::SYG_OPTION_DEFAULT_NUM_REC);
-		if (!get_option('syg_option_use_fb2')) 
-			add_option('syg_option_use_fb2',
-				SygConstant::SYG_OPTION_DEFAULT_USE_FB2);
-		
-		/********************
-		 * YouTube settings *
-		*********************/
-		if (!get_option('syg_option_which_thumb'))
-			add_option('syg_option_which_thumb',
-					SygConstant::SYG_OPTION_DEFAULT_WHICH_THUMB);
-		
-		/*********************************
-		 * Video page component settings *
-		**********************************/
-		if (!get_option('syg_option_pagenumrec'))
-			add_option('syg_option_pagenumrec',
-					SygConstant::SYG_OPTION_DEFAULT_PAGENUM_REC);
-		if (!get_option('syg_option_paginationarea'))
-			add_option('syg_option_paginationarea',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATION_AREA);
-		if (!get_option('syg_option_paginator_borderradius'))
-			add_option('syg_option_paginator_borderradius',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERRADIUS);
-		if (!get_option('syg_option_paginator_bordersize'))
-			add_option('syg_option_paginator_bordersize',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERSIZE);
-		if (!get_option('syg_option_paginator_bordercolor'))
-			add_option('syg_option_paginator_bordercolor',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BORDERCOLOR);
-		if (!get_option('syg_option_paginator_bgcolor'))
-			add_option('syg_option_paginator_bgcolor',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_BGCOLOR);
-		if (!get_option('syg_option_paginator_shadowcolor'))
-			add_option('syg_option_paginator_shadowcolor',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWCOLOR);
-		if (!get_option('syg_option_paginator_shadowsize'))
-			add_option('syg_option_paginator_shadowsize',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_SHADOWSIZE);
-		if (!get_option('syg_option_paginator_fontcolor'))
-			add_option('syg_option_paginator_fontcolor',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTCOLOR);
-		if (!get_option('syg_option_paginator_fontsize'))
-			add_option('syg_option_paginator_fontsize',
-					SygConstant::SYG_OPTION_DEFAULT_PAGINATOR_FONTSIZE);
-		
-		/******************************
-		 * 3d cloud carousel settings *
-		*******************************/
-		if (!get_option('syg_option_carousel_autorotate'))
-			add_option('syg_option_carousel_autorotate',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_AUTOROTATE);
-		if (!get_option('syg_option_carousel_delay'))
-			add_option('syg_option_carousel_delay',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_DELAY);
-		if (!get_option('syg_option_carousel_fps'))
-			add_option('syg_option_carousel_fps',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_FPS);
-		if (!get_option('syg_option_carousel_speed'))
-			add_option('syg_option_carousel_speed',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_SPEED);
-		if (!get_option('syg_option_carousel_minscale'))
-			add_option('syg_option_carousel_minscale',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_MINSCALE);
-		if (!get_option('syg_option_carousel_reflheight'))
-			add_option('syg_option_carousel_reflheight',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLHEIGHT);
-		if (!get_option('syg_option_carousel_reflgap'))
-			add_option('syg_option_carousel_reflgap',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLGAP);
-		if (!get_option('syg_option_carousel_reflopacity'))
-			add_option('syg_option_carousel_reflopacity',
-					SygConstant::SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY);
+		foreach (SygConstant::$SYG_PLUGIN_OPTIONS as $key => $value) {
+			if (!get_option($key)) add_option($key, $value['DEFAULT']);
+		}
 	}
 
 	/**
@@ -1208,150 +1127,16 @@ class SygPlugin extends SanityPluginFramework {
 							// validate data
 							$valid = SygValidate::validateSettings($data);
 					
-							(get_option('syg_option_which_thumb') === false) ? add_option(
-									'syg_option_which_thumb',
-									$_POST['syg_option_which_thumb'])
-									: update_option('syg_option_which_thumb',
-											$_POST['syg_option_which_thumb']);
-							
-							(get_option('syg_option_askcache') === false) ? add_option(
-									'syg_option_askcache',
-									$_POST['syg_option_askcache'])
-									: update_option('syg_option_askcache',
-											$_POST['syg_option_askcache']);
-					
-							(get_option('syg_option_numrec') === false) ? add_option(
-									'syg_option_numrec',
-									$_POST['syg_option_numrec'])
-									: update_option('syg_option_numrec',
-											$_POST['syg_option_numrec']);
-														
-							(get_option('syg_option_use_fb2') === false) ? add_option(
-									'syg_option_use_fb2',
-									$_POST['syg_option_use_fb2'])
-									: update_option('syg_option_use_fb2',
-											empty($_POST['syg_option_use_fb2']) ? 0 : $_POST['syg_option_use_fb2']);
-							
-							(get_option('syg_option_use_fb2_url') === false) ? add_option(
-									'syg_option_use_fb2_url',
-									$_POST['syg_option_use_fb2_url'])
-									: update_option('syg_option_use_fb2_url',
-											$_POST['syg_option_use_fb2_url']);
-					
-							(get_option('syg_option_pagenumrec') === false) ? add_option(
-									'syg_option_pagenumrec',
-									$_POST['syg_option_pagenumrec'])
-									: update_option('syg_option_pagenumrec',
-											$_POST['syg_option_pagenumrec']);
-							
-							(get_option('syg_option_paginationarea') === false) ? add_option(
-									'syg_option_paginationarea',
-									$_POST['syg_option_paginationarea'])
-									: update_option('syg_option_paginationarea',
-											$_POST['syg_option_paginationarea']);
-							
-							(get_option('syg_option_description_length') === false) ? add_option(
-									'syg_option_description_length',
-									$_POST['syg_option_description_length'])
-									: update_option('syg_option_description_length',
-											$_POST['syg_option_description_length']);
-					
-							(get_option('syg_option_paginator_borderradius') === false) ? add_option(
-									'syg_option_paginator_borderradius',
-									$_POST['syg_option_paginator_borderradius'])
-									: update_option('syg_option_paginator_borderradius',
-											$_POST['syg_option_paginator_borderradius']);
-							
-							(get_option('syg_option_paginator_bordersize') === false) ? add_option(
-									'syg_option_paginator_bordersize',
-									$_POST['syg_option_paginator_bordersize'])
-									: update_option('syg_option_paginator_bordersize',
-											$_POST['syg_option_paginator_bordersize']);
-							
-							(get_option('syg_option_paginator_bordercolor') === false) ? add_option(
-									'syg_option_paginator_bordercolor',
-									$_POST['syg_option_paginator_bordercolor'])
-									: update_option('syg_option_paginator_bordercolor',
-											$_POST['syg_option_paginator_bordercolor']);
-							
-							(get_option('syg_option_paginator_bgcolor') === false) ? add_option(
-									'syg_option_paginator_bgcolor',
-									$_POST['syg_option_paginator_bgcolor'])
-									: update_option('syg_option_paginator_bgcolor',
-											$_POST['syg_option_paginator_bgcolor']);
-							
-							(get_option('syg_option_paginator_shadowcolor') === false) ? add_option(
-									'syg_option_paginator_shadowcolor',
-									$_POST['syg_option_paginator_shadowcolor'])
-									: update_option('syg_option_paginator_shadowcolor',
-											$_POST['syg_option_paginator_shadowcolor']);
-							
-							(get_option('syg_option_paginator_shadowsize') === false) ? add_option(
-									'syg_option_paginator_shadowsize',
-									$_POST['syg_option_paginator_shadowsize'])
-									: update_option('syg_option_paginator_shadowsize',
-											$_POST['syg_option_paginator_shadowsize']);
-							
-							(get_option('syg_option_paginator_fontcolor') === false) ? add_option(
-									'syg_option_paginator_fontcolor',
-									$_POST['syg_option_paginator_fontcolor'])
-									: update_option('syg_option_paginator_fontcolor',
-											$_POST['syg_option_paginator_fontcolor']);
-							
-							(get_option('syg_option_paginator_fontsize') === false) ? add_option(
-									'syg_option_paginator_fontsize',
-									$_POST['syg_option_paginator_fontsize'])
-									: update_option('syg_option_paginator_fontsize',
-											$_POST['syg_option_paginator_fontsize']);
-							
-							// 3d carousel section
-							(get_option('syg_option_carousel_autorotate') === false) ? add_option(
-									'syg_option_carousel_autorotate',
-									$_POST['syg_option_carousel_autorotate'])
-									: update_option('syg_option_carousel_autorotate',
-											$_POST['syg_option_carousel_autorotate']);
-							
-							(get_option('syg_option_carousel_delay') === false) ? add_option(
-									'syg_option_carousel_delay',
-									$_POST['syg_option_carousel_delay'])
-									: update_option('syg_option_carousel_delay',
-											$_POST['syg_option_carousel_delay']);
-							
-							(get_option('syg_option_carousel_fps') === false) ? add_option(
-									'syg_option_carousel_fps',
-									$_POST['syg_option_carousel_fps'])
-									: update_option('syg_option_carousel_fps',
-											$_POST['syg_option_carousel_fps']);
-							
-							(get_option('syg_option_carousel_speed') === false) ? add_option(
-									'syg_option_carousel_speed',
-									$_POST['syg_option_carousel_speed'])
-									: update_option('syg_option_carousel_speed',
-											$_POST['syg_option_carousel_speed']);
-							
-							(get_option('syg_option_carousel_minscale') === false) ? add_option(
-									'syg_option_carousel_minscale',
-									$_POST['syg_option_carousel_minscale'])
-									: update_option('syg_option_carousel_minscale',
-											$_POST['syg_option_carousel_minscale']);
-							
-							(get_option('syg_option_carousel_reflheight') === false) ? add_option(
-									'syg_option_carousel_reflheight',
-									$_POST['syg_option_carousel_reflheight'])
-									: update_option('syg_option_carousel_reflheight',
-											$_POST['syg_option_carousel_reflheight']);
-							
-							(get_option('syg_option_carousel_reflgap') === false) ? add_option(
-									'syg_option_carousel_reflgap',
-									$_POST['syg_option_carousel_reflgap'])
-									: update_option('syg_option_carousel_reflgap',
-											$_POST['syg_option_carousel_reflgap']);
-							
-							(get_option('syg_option_carousel_reflopacity') === false) ? add_option(
-									'syg_option_carousel_reflopacity',
-									$_POST['syg_option_carousel_reflopacity'])
-									: update_option('syg_option_carousel_reflopacity',
-											$_POST['syg_option_carousel_reflopacity']);
+							// write options
+							foreach (SygConstant::$SYG_PLUGIN_OPTIONS as $key => $value) {
+								if (get_option($key) === false) {
+									$optionValue = (!empty($_POST[$key])) ? $_POST[$key] : $value['DEFAULT'];
+									add_option($key, $optionValue);
+								} else {
+									$optionValue = (($value['TYPE'] == 'CHECKBOX') && (empty($_POST[$key]))) ? 0 : $_POST[$key];
+									update_option($key, $optionValue);
+								}
+							}
 							
 							$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_SETTINGS . '&modified=true';
 							
@@ -1726,46 +1511,10 @@ class SygPlugin extends SanityPluginFramework {
 	public function getOptions() {
 		$options = array();
 		
-		/********************
-		 * General settings *
-		********************/
-		$options['syg_option_askcache'] = get_option('syg_option_askcache');
-		$options['syg_option_description_length'] = get_option('syg_option_description_length');
-		$options['syg_option_numrec'] = get_option('syg_option_numrec');
-		$options['syg_option_use_fb2'] = get_option('syg_option_use_fb2');
-		$options['syg_option_use_fb2_url'] = get_option('syg_option_use_fb2_url');
-		
-		/********************
-		 * YouTube settings *
-		********************/
-		$options['syg_option_apikey'] = SygConstant::SYG_DEV_KEY;
-		$options['syg_option_which_thumb'] = get_option('syg_option_which_thumb');
-
-		/*********************************
-		 * Video page component settings *
-		**********************************/
-		$options['syg_option_pagenumrec'] = get_option('syg_option_pagenumrec');
-		$options['syg_option_paginationarea'] = get_option('syg_option_paginationarea');
-		$options['syg_option_paginator_borderradius'] = get_option('syg_option_paginator_borderradius');
-		$options['syg_option_paginator_bordersize'] = get_option('syg_option_paginator_bordersize');
-		$options['syg_option_paginator_bordercolor'] = get_option('syg_option_paginator_bordercolor');
-		$options['syg_option_paginator_bgcolor'] = get_option('syg_option_paginator_bgcolor');
-		$options['syg_option_paginator_shadowcolor'] = get_option('syg_option_paginator_shadowcolor');
-		$options['syg_option_paginator_fontcolor'] = get_option('syg_option_paginator_fontcolor');
-		$options['syg_option_paginator_shadowsize'] = get_option('syg_option_paginator_shadowsize');
-		$options['syg_option_paginator_fontsize'] = get_option('syg_option_paginator_fontsize');
-
-		/******************************
-		 * 3d cloud carousel settings *
-		*******************************/
-		$options['syg_option_carousel_autorotate'] = get_option('syg_option_carousel_autorotate');
-		$options['syg_option_carousel_delay'] = get_option('syg_option_carousel_delay');
-		$options['syg_option_carousel_fps'] = get_option('syg_option_carousel_fps');
-		$options['syg_option_carousel_speed'] = get_option('syg_option_carousel_speed');
-		$options['syg_option_carousel_minscale'] = get_option('syg_option_carousel_minscale');
-		$options['syg_option_carousel_reflheight'] = get_option('syg_option_carousel_reflheight');
-		$options['syg_option_carousel_reflgap'] = get_option('syg_option_carousel_reflgap');
-		$options['syg_option_carousel_reflopacity'] = get_option('syg_option_carousel_reflopacity');
+		/* load options scanning array of options */
+		foreach (SygConstant::$SYG_PLUGIN_OPTIONS as $key => $value) {
+			$options[$key] = get_option($key);
+		}
 		
 		/*********************************
 		 * additional javascript options *
