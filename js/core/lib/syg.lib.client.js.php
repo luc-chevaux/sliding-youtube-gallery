@@ -45,7 +45,7 @@ jQuery.noConflict();
 				html = html + '<tr>';
 				
 				html = html + '<td class="syg_video_page_thumb-' + gid + '">';
-				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '&autoplay=1" title="'+ val.video_title +'">';
+				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '" title="'+ val.video_title +'">';
 				if (options['description_show']) {
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + val.video_description + '" title="' + val.video_description + '"/>';
 				} else {
@@ -209,7 +209,7 @@ jQuery.noConflict();
 						'title' : this.title,
 						'width'	: options['width'],
 						'height' : options['height'],
-						'href'   : 'http://www.youtube.com/embed/' + rez[3] + '?rel=0&autoplay=1',
+						'href'   : 'http://www.youtube.com/embed/' + rez[3] + syg_option.syg_option_fancybox_url_suffix,
 						'fitToView' : true,
 						'type' : 'iframe'
 					});

@@ -623,13 +623,13 @@ jQuery(document).ready(function($) {
 	var pageNum = $.fn.sygadmin('getQParam', 'pageNum'); 
 	
 	$('#loader').ajaxStart(function() {
-		  $('.syg-wrap').fadeOut(700);
-		  $(this).fadeIn(700);
+		  // $('.syg-wrap').fadeOut(700);
+		  $(this).fadeIn(500);
 	});
 	
 	$('#loader').ajaxStop(function() {
-	      $('.syg-wrap').fadeIn(700);
-		  $(this).fadeOut(700);
+	      // $('.syg-wrap').fadeIn(700);
+		  $(this).fadeOut(500);
 	});
 	
 	switch (page) {
