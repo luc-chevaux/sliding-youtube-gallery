@@ -246,7 +246,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 
 #carousel-title-<?php echo $id; ?> {
 	position: absolute;
-	top: <?php echo $syg_box_padding; ?>px;
+	top: <?php echo ceil($syg_box_padding*1.5); ?>px;
 	right: <?php echo $syg_box_padding; ?>px;
 	left: <?php echo $syg_box_padding; ?>px;
 	overflow: hidden;
@@ -347,11 +347,11 @@ ul.sc_menu-<?php echo $id; ?> li:last-child {
 }
 
 #paginator-top-<?php echo $id; ?> {
-	margin: -<?php echo ceil($syg_box_padding/2); ?>px -<?php echo ceil($syg_box_padding/2); ?>px 0px 0px;
+	margin: 0px 0px 0px 0px;
 }
 
 #paginator-bottom-<?php echo $id; ?> {
-	margin: 0px -<?php echo ceil($syg_box_padding/2); ?>px -<?php echo ceil($syg_box_padding/2); ?>px 0px;
+	margin: 0px 0px 0px 0px;
 }
 
 #pagination-top-<?php echo $id; ?>, #pagination-bottom-<?php echo $id; ?> {
