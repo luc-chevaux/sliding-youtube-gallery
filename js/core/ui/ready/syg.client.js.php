@@ -49,11 +49,11 @@ jQuery(document).ready(function($){
 	options['plugin_root'] = '<?php echo $syg->getPluginRoot(); ?>'; // string
 	options['img_root'] = '<?php echo $syg->getImgRoot(); ?>'; // string
 	options['thumbnail_image'] = '<?php echo $syg_thumbnail_image; ?>'; // string
-	options['description_show'] = <?php echo $syg_description_show; ?>; // boolean
-	options['description_showduration'] = <?php echo $syg_description_showduration; ?>; // boolean
-	options['description_showcategories'] = <?php echo $syg_description_showcategories; ?>; // boolean
-	options['description_showtags'] = <?php echo $syg_description_showtags; ?>; // boolean
-	options['description_showratings'] = <?php echo $syg_description_showratings; ?>; // boolean
+	options['description_show'] = <?php echo (empty($syg_description_show)) ?  "0" : $syg_description_show; ?>; // boolean
+	options['description_showduration'] = <?php echo (empty($syg_description_showduration)) ? "0" : $syg_description_showduration; ?>; // boolean
+	options['description_showcategories'] = <?php echo (empty($syg_description_showcategories)) ? "0" : $syg_description_showcategories; ?>; // boolean
+	options['description_showtags'] = <?php echo (empty($syg_description_showtags)) ? "0" : $syg_description_showtags; ?>; // boolean
+	options['description_showratings'] = <?php echo (empty($syg_description_showratings)) ? "0" : $syg_description_showratings; ?>; // boolean
 	options['description_length'] = <?php echo $syg_option_description_length; ?>;
 	options['json_query_if_url'] = '<?php echo $syg->getJsonQueryIfUrl(); ?>'; // string
 	
