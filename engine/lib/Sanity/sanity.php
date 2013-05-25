@@ -137,8 +137,8 @@ class SanityPluginFramework {
 	        wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
 	        // js to include
 	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id;
-	        wp_register_script('syg-action-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-	        wp_enqueue_script('syg-action-'.$id);
+	        wp_register_script('syg-loading-gallery-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+	        wp_enqueue_script('syg-loading-gallery-'.$id);
         } else if (SygConstant::SYG_PLUGIN_COMPONENT_PAGE == $component) {
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
@@ -146,8 +146,8 @@ class SanityPluginFramework {
         	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$id;
-        	wp_register_script('syg-action-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-action-'.$id);
+        	wp_register_script('syg-loading-page-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-loading-page-'.$id);
         } elseif (SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL == $component) {
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
@@ -155,8 +155,8 @@ class SanityPluginFramework {
         	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$id;
-        	wp_register_script('syg-carousel-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-carousel-'.$id);
+        	wp_register_script('syg-loading-carousel-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-loading-carousel-'.$id);
         }
         return $output;
     }
