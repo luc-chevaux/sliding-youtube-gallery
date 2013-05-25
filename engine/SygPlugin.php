@@ -1520,8 +1520,30 @@ class SygPlugin extends SanityPluginFramework {
 		 * additional javascript options *
 		**********************************/
 		$options['syg_option_plugin_url'] = WP_PLUGIN_URL;
+		$options['syg_option_fancybox_url_suffix'] = $this->getFBUrlSuffix();
 		
 		return $options;
+	}
+	
+	/**
+	 * @name getFBUrlSuffix
+	 * @category get youtube suffix options
+	 * @since 1.5.0
+	 * @return $suffix
+	 */
+	public function getFBUrlSuffix() {
+		$suffix = '?';
+		$suffix .= 'autohide='. get_option('syg_option_youtube_autohide');
+		$suffix .= '&autoplay=' . get_option('syg_option_youtube_autoplay');
+		$suffix .= '&cc_load_policy=' . get_option('syg_option_youtube_ccloadpolicy');
+		$suffix .= '&controls=' . get_option('syg_option_youtube_controls');
+		$suffix .= '&disablekb=' . get_option('syg_option_youtube_disablekb');
+		$suffix .= '&iv_load_policy=' . get_option('syg_option_youtube_ivloadpolicy');
+		$suffix .= '&modestbranding=' . get_option('syg_option_youtube_modestbranding');
+		$suffix .= '&rel=' . get_option('syg_option_youtube_rel');
+		$suffix .= '&showinfo=' . get_option('syg_option_youtube_showinfo');
+		$suffix .= '&theme=' . get_option('syg_option_youtube_theme');
+		return $suffix;
 	}
 	
 	public function getJsOptions() {
