@@ -38,7 +38,7 @@
 				<legend>Define your new style</legend>
 				
 				<!-- style name -->
-				<label for="syg_style_name"><strong>Name</strong></label>
+				<label for="syg_style_name"><strong>Style Name</strong></label>
 				<input type="text" id="syg_style_name" name="syg_style_name" value="<?php echo $style->getStyleName(); ?>" size="15"/>
 				
 				<!-- style details -->

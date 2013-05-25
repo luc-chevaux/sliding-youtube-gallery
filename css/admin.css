@@ -21,6 +21,7 @@ h4 {
 .syg-wrap {
 	display: none;
 }
+
 .syg_error {
 	background-color: #FFEBE8;
     border: 1px #CC0000 solid;
@@ -186,7 +187,7 @@ label {
 }
 
 #galleries_table tr {
-	height: 30px;
+	height: 46px;
 }
 
 #galleries_table td {

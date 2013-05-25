@@ -289,6 +289,13 @@ class SygValidate {
 		// create youtube object for validation
 		$youtube = new SygYouTube();
 		
+		// syg_style_name string
+		if (!(preg_match('/^\s*\S.*$/', $data['syg_gallery_name']))) {
+			array_push($problemFound,
+			array('field' => SygUtil::getLabel('syg_gallery_name'),
+			'msg' => SygConstant::BE_VALIDATE_STRING_NOT_EMPTY));
+		}
+		
 		// validazione congiunta syg_gallery_type e syg_youtube_src
 		switch ($data['syg_gallery_type']) {
 			case "feed":
@@ -305,6 +312,12 @@ class SygValidate {
 				$list_of_videos = preg_split('/\r\n|\r|\n/', $data['syg_youtube_src']);
 				// remove empty elements
 				$list_of_videos = array_filter($list_of_videos, 'strlen');
+				
+				if (count($list_of_videos) == 0) {
+					array_push($problemFound,
+					array('field' => SygUtil::getLabel('syg_youtube_src_list'),
+					'msg' => SygConstant::BE_VALIDATE_VIDEO_LIST_EMPTY));
+				}
 				
 				foreach ($list_of_videos as $key => $value) {
 					$qsUrl = $list_of_videos[$key];

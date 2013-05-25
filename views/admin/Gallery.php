@@ -34,7 +34,7 @@
 				<legend>Define your new gallery</legend>
 				
 				<!-- style name -->
-				<label for="syg_gallery_name"><strong>Name</strong></label>
+				<label for="syg_gallery_name"><strong>Gallery Name</strong></label>
 				<input type="text" id="syg_gallery_name" name="syg_gallery_name" value="<?php echo $gallery->getGalleryName(); ?>" size="15"/>
 				
 				<!-- style details -->

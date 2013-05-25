@@ -14,7 +14,7 @@
 <!-- Javascript Inclusion -->
 
 <!-- Title Page -->
-<div class="syg-wrap-settings">
+<div class="syg-wrap-settings wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 		

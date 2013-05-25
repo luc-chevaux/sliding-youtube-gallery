@@ -5,7 +5,7 @@ jQuery.noConflict();
 		/* function to display splash image */
 		displayLoad : function () {
 			$('#syg-loading td').fadeIn(900,0);
-			$('#syg-loading td').html('<img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/bigLoader.gif" />');
+			/* $('#syg-loading td').html('<img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/bigLoader.gif" />'); */
 		},
 		
 		/* function to hide splash image */
@@ -114,21 +114,6 @@ jQuery.noConflict();
 			return true;
 		},
 		
-		loadingOn : function () {
-			alert ('loading on');
-			$('#loader').fadeIn(300);
-		},
-		
-		loadingOff : function () {
-			alert ('loading off');
-		    $('#loader').fadeOut(300);
-		},
-
-		loadingToggle : function () {
-			alert ('loading toggle');
-		    $('#loader').fadeToggle(300);
-		},
-		
 		/* function that loads exception in the page */
 		loadException : function (data) {
 			$('.syg_error').remove();
@@ -155,6 +140,7 @@ jQuery.noConflict();
 					var table = 'styles';
 					methods.hideLoad.call(this);
 					if (!jQuery.isEmptyObject(data)) {
+						var rowsPrinted = 0;
 						$.each(data, function(key, val) {
 							
 							html = '<tr id="syg_row_' + key + '">';
@@ -177,7 +163,17 @@ jQuery.noConflict();
 							html = html + '</td>';
 							html = html + '</tr>';
 							$('#galleries_table tr:last-child').after(html);
+							
+							rowsPrinted++;
 						});
+						
+						if (rowsPrinted < syg_option.syg_option_numrec) {
+							var emptyRowsHtml;
+							for (i=rowsPrinted; i < syg_option.syg_option_numrec; i++) {
+								emptyRowsHtml = emptyRowsHtml + '<tr id="syg_row_' + i + '"><td colspan="4">&nbsp;</td></tr>';
+							}
+							$('#galleries_table tr:last-child').after(emptyRowsHtml);
+						}
 					} else {
 						html = html + '<tr>';
 						html = html + '<td colspan="4">';
@@ -195,6 +191,7 @@ jQuery.noConflict();
 					var table = 'galleries';
 					methods.hideLoad.call(this);
 					if (!jQuery.isEmptyObject(data)) {
+						var rowsPrinted = 0;
 						$.each(data, function(key, val) {
 							if (val.galleryDetails == null) {val.galleryDetails = '<small><i>(No description)</i></small>';}
 							html = '<tr id="syg_row_' + key + '">';
@@ -256,7 +253,16 @@ jQuery.noConflict();
 								},
 								'type' : 'iframe'
 							});
+							rowsPrinted++;
 						});
+						
+						if (rowsPrinted < syg_option.syg_option_numrec) {
+							var emptyRowsHtml;
+							for (i=rowsPrinted; i < syg_option.syg_option_numrec; i++) {
+								emptyRowsHtml = emptyRowsHtml + '<tr id="syg_row_' + i + '"><td colspan="7">&nbsp;</td></tr>';
+							}
+							$('#galleries_table tr:last-child').after(emptyRowsHtml);
+						}
 					} else {
 						html = html + '<tr>';
 						html = html + '<td colspan="7">';
@@ -377,15 +383,14 @@ jQuery.noConflict();
 			methods.disableInput.call();
 			
 			$('#syg_gallery_form').submit(function(event) {
-				valid = new Boolean();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize(), function (data) {
+				event.preventDefault();
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=gallery&' + $(this).serialize(), function (data) { 
 					if(!jQuery.isEmptyObject(data)) {
 						$.fn.sygadmin('loadException', data);
 					} else {
-						$('#syg_style_form').unbind('submit').submit();
+						$('#syg_gallery_form').unbind('submit').submit();
 					}
 				});
-				
 			});
 			
 			$('.syg_help').balloon({ 
@@ -444,9 +449,15 @@ jQuery.noConflict();
 			methods.initColorPicker.call(this, 'paginator_shadowcolor_selector', $('#syg_option_paginator_shadowcolor'), '#333333');
 			methods.initColorPicker.call(this, 'paginator_fontcolor_selector', $('#syg_option_paginator_fontcolor'), '#333333');
 			
-			$('#syg_settings_form').on('submit', function( event ) {
+			$('#syg_settings_form').submit(function(event) {
 				event.preventDefault();
-				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=settings&' + $(this).serialize());
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=settings&' + $(this).serialize(), function (data) { 
+					if(!jQuery.isEmptyObject(data)) {
+						$.fn.sygadmin('loadException', data);
+					} else {
+						$('#syg_settings_form').unbind('submit').submit();
+					}
+				});
 			});
 			
 			$('.syg_page_submit').balloon({ 

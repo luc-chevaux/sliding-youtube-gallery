@@ -12,7 +12,7 @@
 </style>
 
 <!-- Title Page -->
-<div class="syg-wrap">
+<div class="syg-wrap wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 	
@@ -38,11 +38,11 @@
 					<span>ACTION</span>
 				</th>
 			</tr>
-			<tr id="syg-loading">
+			<!-- <tr id="syg-loading">
 				<td colspan="5">
 					
 				</td>
-			</tr>
+			</tr> -->
 		</table>
 		<div id="paginator-area">
 			<ul id="syg-pagination-styles">

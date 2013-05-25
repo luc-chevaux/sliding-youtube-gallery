@@ -456,6 +456,7 @@ class SygConstant {
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST = '%s youtube playlist does not exist.';
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
 	const BE_VALIDATE_OVERLAY_BAD_DIMENSION = 'Size %d for overlay button is not proportional to %s value that is %d. Please consider to use a lower value.';
+	const BE_VALIDATE_VIDEO_LIST_EMPTY = 'The video list is empty, please insert a list of YouTube videos';
 	
 	/**
 	 * Forms label
@@ -473,7 +474,8 @@ class SygConstant {
 	const syg_box_padding = 'Box padding';
 	
 	const syg_description_fontsize = 'Font size';
-	const syg_style_name = 'Name';
+	const syg_style_name = 'Style Name';
+	const syg_gallery_name = 'Gallery Name';
 	
 	const syg_youtube_maxvideocount = 'Maximum Video Count';
 	const syg_youtube_src = '';
