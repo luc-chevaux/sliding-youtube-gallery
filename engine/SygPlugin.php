@@ -818,9 +818,9 @@ class SygPlugin extends SanityPluginFramework {
 				 * include css in the view file *
 				 ********************************/
 				// css to include admin
-				$view['cssAdminUrl'] = $view['cssPath'] . 'admin.css';
+				$view['cssAdminUrl'] = $view['cssPath'] . 'SygAdmin.css';
 				// css to include colorpicker
-				$view['cssColorPicker'] = $view['cssPath'] . 'colorpicker.css';
+				$view['cssColorPicker'] = $view['jsPath'] . '3rdParty/colorPicker/colorpicker.css';
 	
 				/***********************
 				 * wp jquery injection *
