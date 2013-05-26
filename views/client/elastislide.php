@@ -19,51 +19,51 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 <!-- Javascript Inclusion -->
 
 <!-- Gallery -->
-<div id="syg_video_gallery-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>">
-	<div class="sc_menu-<?php echo $gallery->getId();?>">
-		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none;">
+<div class="elastislide-wrapper elastislide-vertical syg_video_gallery_loading-<?php echo $gallery->getId();?>" style="max-width: 170px; height: 554px;">
+	<div class="elastislide-carousel">
+		<ul style="display: block; height: 480px; transition: all 500ms ease-in-out 0s;" id="carousel" class="elastislide-list">
 			<?php 
-				foreach ($feed as $element) {				
-					// modify the img path to match local files
-					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-						$videoThumbnails[$options['syg_option_which_thumb']]['url'] = WP_PLUGIN_URL . 
-													SygConstant::WP_PLUGIN_PATH .
-													SygConstant::WP_CACHE_THUMB_REL_DIR .
-													$gallery->getId() . 
-													DIRECTORY_SEPARATOR . 
-													$element->getVideoId() . '.jpg';
-					} else {
-						$videoThumbnails = $element->getVideoThumbnails();
-					}
-				?> 
-				<!-- gallery code -->
-				<li>
-					<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>&autoplay=1" title="<?php echo $element->getVideoTitle(); ?>">
-						<!-- append video thumbnail -->
-						<?php if ($gallery->getDescShow()) { ?>
-							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
-						<?php } else { ?>
-							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
-						<?php }?>				
-				
-						<!-- show overlay button -->
-						<?php if ((!$gallery->getCacheOn()) || (!$gallery->isGalleryCached())) { ?>			
-							<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
-						<?php } ?>
-						
-						<!-- show video duration -->
-						<?php if ($gallery->getDescShowDuration()) { ?>
-							<span class="video_duration-<?php echo $gallery->getId();?>"><?php echo SygUtil::formatDuration($element->getVideoDuration()); ?></span>
-						<?php } ?>
-					</a>
-					<!-- show video title -->
-					<span class="video_title-<?php echo $gallery->getId();?>"><?php echo $element->getVideoTitle(); ?></span>
-				</li>
+			foreach ($feed as $element) {				
+				// modify the img path to match local files
+				if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
+					$videoThumbnails[$options['syg_option_which_thumb']]['url'] = WP_PLUGIN_URL . 
+												SygConstant::WP_PLUGIN_PATH .
+												SygConstant::WP_CACHE_THUMB_REL_DIR .
+												$gallery->getId() . 
+												DIRECTORY_SEPARATOR . 
+												$element->getVideoId() . '.jpg';
+				} else {
+					$videoThumbnails = $element->getVideoThumbnails();
+				}
+			?> 
+			<li style="width: 100%; max-width: 150px; max-height: 160px;">
+				<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>&autoplay=1" title="<?php echo $element->getVideoTitle(); ?>">
+					<!-- append video thumbnail -->
+					<?php if ($gallery->getDescShow()) { ?>
+						<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+					<?php } else { ?>
+						<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
+					<?php }?>				
+			
+					<!-- show overlay button -->
+					<?php if ((!$gallery->getCacheOn()) || (!$gallery->isGalleryCached())) { ?>			
+						<img class="play-icon-<?php echo $gallery->getId();?>" src="<?php echo $overlayButtonSrc; ?>" alt="play">
+					<?php } ?>
+					
+					<!-- show video duration -->
+					<?php if ($gallery->getDescShowDuration()) { ?>
+						<span class="video_duration-<?php echo $gallery->getId();?>"><?php echo SygUtil::formatDuration($element->getVideoDuration()); ?></span>
+					<?php } ?>
+				</a>
+			</li>
 			<?php } ?>
 		</ul>
 	</div>
+	<nav>
+		<span style="display: none;" class="elastislide-prev">Previous</span>
+		<span class="elastislide-next">Next</span>
+	</nav>
 </div>
-
 <!-- registra script -->
 <?php 
 // js to include

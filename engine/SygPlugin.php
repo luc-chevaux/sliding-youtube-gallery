@@ -727,11 +727,8 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return $output
 	 */
 	public function getElastislide($attributes, $mode = SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
-		foreach ($attributes as $key => $var) {
-			$attributes[$key] = (int) $var;
-		}
-	
-		extract(shortcode_atts(array('id' => null), $attributes));
+		// extract shortcode attributes	
+		extract(shortcode_atts(array('id' => null, 'type' => 'horizontal'), $attributes));
 	
 		if (!empty($id)) {
 			try {
@@ -751,14 +748,17 @@ class SygPlugin extends SanityPluginFramework {
 				// put the options in the view context
 				$this->data['options'] = $this->getOptions();
 	
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
-					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
-	
+				// set front end option
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {	
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
 				} else {
-					return $this->render(SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
+					// put the feed in the view
+					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
+					
+					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
@@ -783,7 +783,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param &$view
 	 * @param $context
 	 */
-	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE) {
+	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE, $shortag = null) {
 		// define resources path
 		$view['cssPath'] = $this->getCssRoot();
 		$view['imgPath'] = $this->getImgRoot();
@@ -893,14 +893,20 @@ class SygPlugin extends SanityPluginFramework {
 					$gallery = $view['gallery'];
 					$galleryId = $gallery->getId();
 				}
-					
+				
+				/*
+				 * pseudo code
+				 */
+				$scriptResources = simplexml_load_file($view['pluginUrl'].'/engine/ScriptResources.xml');
+				
+				
 				/***************************
 				 * gallery style injection *
 				 ***************************/
 				// indexed css
 				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
-				wp_register_style('sliding-youtube-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('sliding-youtube-gallery-' . $galleryId);
+				wp_register_style('syg-css-style-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
+				wp_enqueue_style('syg-css-style-gallery-' . $galleryId);
 				
 				/***********************
 				 * wp jquery injection *
@@ -961,10 +967,20 @@ class SygPlugin extends SanityPluginFramework {
 				/****************************
 				 * cloud carousel inclusion *
 				 ****************************/
-				// carousel resources url
 				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
 				wp_register_script('carousel', $view['carousel_js_url'], array(), '1.0.5', true);
 				wp_enqueue_script('carousel');
+				
+				/****************************
+				 * elastislide inclusion *
+				****************************/
+				/*css/demo.css
+				css/elastislide.css
+				css/custom.css
+				js/modernizr.custom.17475.js
+				
+				js/jquerypp.custom.js
+				js/jquery.elastislide.js*/
 				
 				break;
 			case SygConstant::SYG_CTX_WS:
