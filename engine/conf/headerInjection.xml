@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<headerInjection>
+	<libraries>
+		<!-- jquery -->
+		<library name="jquery">
+			<resource>
+				<name>jquery</name>
+				<type>js</type>
+				<thirdparty>yes</thirdparty>
+			</resource>
+		</library>
+		
+		<!-- syg client library -->
+		<library name="syg-client" version="1.4.0">
+			<resource>
+				<name>syg-client-library</name>
+				<relUrl>js/core/lib/syg.lib.client.min.js.php</relUrl>
+				<type>js</type>
+				<version>1.4.0</version>
+				<indexed>no</indexed>
+				<thirdparty>no</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		
+			<!-- gallery style css -->
+			<resource>
+				<name>syg-css-style-gallery</name>
+				<relUrl>css/SlidingYoutubeGallery.css.php?id=</relUrl>
+				<type>css</type>
+				<version>1.4.0</version>
+				<indexed>yes</indexed>
+				<thirdparty>no</thirdparty>
+			</resource>
+		</library>
+		
+		<!-- jquery mobile -->
+		<library name="jquery.mobile" version="1.2.1"> 
+			<resource>
+				<name>jquery.mobile</name>
+				<relUrl>js/3rdParty/jquery-mobile/jquery.mobile-1.2.1.min.js</relUrl>
+				<type>js</type>
+				<version>1.2.1</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>jquery.mobile</name>
+				<relUrl>js/3rdParty/jquery-mobile/jquery.mobile-1.2.1.min.css</relUrl>
+				<type>css</type>
+				<media>screen</media>
+				<version>1.2.1</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+			</resource>
+		</library>
+		
+		<!-- fancybox 1 library -->
+		<library name="fancybox" version="1.3.4">
+			<resource>
+				<name>fancybox</name>
+				<relUrl>js/3rdParty/fancybox/jquery.fancybox-1.3.4.css</relUrl>
+				<type>css</type>
+				<media>screen</media>
+				<version>1.3.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+			</resource>
+			<resource>
+				<name>fancybox</name>
+				<relUrl>js/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js</relUrl>
+				<type>js</type>
+				<version>1.3.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>easing</name>
+				<relUrl>js/3rdParty/fancybox/jquery.easing-1.3.pack.js</relUrl>
+				<type>js</type>
+				<version>1.3</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>mousewheel</name>
+				<relUrl>js/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js</relUrl>
+				<type>js</type>
+				<version>3.0.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		</library>
+		
+		<!-- fancybox 2 library -->
+		<library name="fancybox" version="2.1.4">
+			<resource>
+				<name>fancybox</name>
+				<relUrl>jquery.fancybox.pack.js</relUrl>
+				<type>js</type>
+				<version>2.1.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>mousewheel</name>
+				<relUrl>jquery.mousewheel-3.0.6.pack.js</relUrl>
+				<type>js</type>
+				<version>3.0.6</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>fancybox</name>
+				<relUrl>jquery.fancybox.css</relUrl>
+				<type>css</type>
+				<media>screen</media>
+				<version>2.1.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+			</resource>
+		</library>
+		
+		<!-- carousel library -->
+		<library name="carousel" version="1.0.5">
+			<resource>
+				<name>carousel</name>
+				<relUrl>js/3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js</relUrl>
+				<type>js</type>
+				<version>1.0.5</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		</library>
+		
+		<!-- elastislide library -->
+		<library name="elastislide" version="1.1.0">
+			<resource>
+				<name>elastislide</name>
+				<relUrl></relUrl>
+				<type>js</type>
+				<version>1.1.0</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		</library>
+	</libraries>
+	
+	<enqueueList shortag="syg_gallery">
+		<resource name="jquery"/>
+		<resource name="jquery.mobile"/>
+	</enqueueList>
+		
+	<enqueueList shortag="syg_page">
+		<resource name="jquery"/>
+		<resource name="jquery.mobile"/>
+	</enqueueList>
+		
+	<enqueueList shortag="syg_carousel">
+		<resource name="jquery"/>
+		<resource name="jquery.mobile"/>
+	</enqueueList>
+		
+	<enqueueList shortag="syg_elastislide">
+		<resource name="jquery"/>
+		<resource name="jquery.mobile"/>
+	</enqueueList>
+</headerInjection>
