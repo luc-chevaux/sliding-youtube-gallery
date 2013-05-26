@@ -172,22 +172,22 @@
 	</libraries>
 	
 	<enqueueList shortag="syg_gallery">
-		<resource name="jquery"/>
-		<resource name="jquery.mobile"/>
+		<library name="jquery"/>
+		<library name="jquery.mobile"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_page">
-		<resource name="jquery"/>
-		<resource name="jquery.mobile"/>
+		<library name="jquery"/>
+		<library name="jquery.mobile"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_carousel">
-		<resource name="jquery"/>
-		<resource name="jquery.mobile"/>
+		<library name="jquery"/>
+		<library name="jquery.mobile"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_elastislide">
-		<resource name="jquery"/>
-		<resource name="jquery.mobile"/>
+		<library name="jquery"/>
+		<library name="jquery.mobile"/>
 	</enqueueList>
 </headerInjection>
