@@ -27,7 +27,7 @@
 			<!-- gallery style css -->
 			<resource>
 				<name>syg-css-style-gallery</name>
-				<relUrl>css/SlidingYoutubeGallery.css.php?id=</relUrl>
+				<relUrl>css/SygClient.css.php?id=</relUrl>
 				<type>css</type>
 				<version>1.4.0</version>
 				<indexed>yes</indexed>

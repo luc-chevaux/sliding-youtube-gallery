@@ -904,7 +904,7 @@ class SygPlugin extends SanityPluginFramework {
 				 * gallery style injection *
 				 ***************************/
 				// indexed css
-				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SlidingYoutubeGallery.css.php?id=' . $galleryId;
+				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SygClient.css.php?id=' . $galleryId;
 				wp_register_style('syg-css-style-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
 				wp_enqueue_style('syg-css-style-gallery-' . $galleryId);
 				
