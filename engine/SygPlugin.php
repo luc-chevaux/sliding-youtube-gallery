@@ -809,17 +809,26 @@ class SygPlugin extends SanityPluginFramework {
 		$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
 		// find library to include
 		$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
+		
 		// scan libs array and include the right resources
 		foreach ($libs as $value) {
 			 $attributes = $value->attributes();
 			 $lib_to_include = (String)$attributes['name'];
+			 $ver_to_include = (String)$attributes['version'];
 			 
-			 $resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\']/resource');
+			 if (!empty($ver_to_include)) {
+			 	$resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\' and @version=\''.$ver_to_include.'\']/resource');
+			 } else {
+			 	$resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\']/resource');
+			 }
+			
 			 foreach ($resource as $key => $value) {
 			 	$res = new SygResourceAdapter($value, $galleryId, $conditions);
 			 	$res->enqueue();
+			 	var_dump ('enqueuing '.$res->getRelUrl());
 			 }
 		}
+		die();
 	}
 
 	/******************************/
