@@ -7,6 +7,7 @@
 				<name>jquery</name>
 				<type>js</type>
 				<thirdparty>yes</thirdparty>
+				<registered>yes</registered>
 			</resource>
 		</library>
 		
@@ -19,6 +20,7 @@
 				<version>1.4.0</version>
 				<indexed>no</indexed>
 				<thirdparty>no</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -32,6 +34,7 @@
 				<version>1.4.0</version>
 				<indexed>yes</indexed>
 				<thirdparty>no</thirdparty>
+				<registered>no</registered>
 			</resource>
 		</library>
 		
@@ -43,7 +46,9 @@
 				<type>js</type>
 				<version>1.2.1</version>
 				<indexed>no</indexed>
+				<condition>mobile</condition>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -55,7 +60,9 @@
 				<media>screen</media>
 				<version>1.2.1</version>
 				<indexed>no</indexed>
+				<condition>mobile</condition>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 			</resource>
 		</library>
 		
@@ -69,6 +76,7 @@
 				<version>1.3.4</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 			</resource>
 			<resource>
 				<name>fancybox</name>
@@ -77,6 +85,7 @@
 				<version>1.3.4</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -88,6 +97,7 @@
 				<version>1.3</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -99,6 +109,7 @@
 				<version>3.0.4</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -114,6 +125,7 @@
 				<version>2.1.4</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -125,6 +137,7 @@
 				<version>3.0.6</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -137,6 +150,7 @@
 				<version>2.1.4</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 			</resource>
 		</library>
 		
@@ -149,6 +163,7 @@
 				<version>1.0.5</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
@@ -164,6 +179,7 @@
 				<version>1.1.0</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
 				<dependencies>
 					<dependency>jquery</dependency>
 				</dependencies>
