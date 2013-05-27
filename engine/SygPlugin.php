@@ -564,7 +564,7 @@ class SygPlugin extends SanityPluginFramework {
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_GALLERY);
 					
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
@@ -632,7 +632,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
 					
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_PAGE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
@@ -690,7 +690,7 @@ class SygPlugin extends SanityPluginFramework {
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_CAROUSEL);
 						
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
@@ -700,7 +700,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->data['exception'] = true;
 					$this->data['exception_message'] = SygConstant::MSG_EX_GALLERY_NOT_CACHED;
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_CAROUSEL);
 					return $this->render('exception');
 				}
 			} catch (SygGalleryNotFoundException $ex) {
@@ -749,7 +749,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['options'] = $this->getOptions();
 	
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_ELASTISLIDE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {	
 					// render cache files
@@ -795,7 +795,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// detect if client is a mobile browser
 		$detect = new Mobile_Detect();
-		$mobile = $detect->isMobile();
+		$conditions['mobile'] = (bool) $detect->isMobile();
 		
 		// fancybox 2 resources url
 		$view['fancybox_js_url'] = $options['syg_option_use_fb2_url'] . 'jquery.fancybox.pack.js';
@@ -895,10 +895,22 @@ class SygPlugin extends SanityPluginFramework {
 				}
 				
 				/*
-				 * pseudo code
+				 * get resources configuration
 				 */
-				$scriptResources = simplexml_load_file($view['pluginUrl'].'/engine/ScriptResources.xml');
+				$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
+				$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
 				
+				// scan libs array and include the right libraries
+				foreach ($libs as $value) {
+					 $attributes = $value->attributes();
+					 $lib_to_include = (String)$attributes['name'];
+					 
+					 $resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\']/resource');
+					 foreach ($resource as $key => $value) {
+					 	$res = new SygResourceAdapter($value, $galleryId, $conditions);
+					 	$res->enqueue();
+					 }
+				}
 				
 				/***************************
 				 * gallery style injection *
