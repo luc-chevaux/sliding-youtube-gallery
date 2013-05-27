@@ -1,5 +1,5 @@
 <?php
-	error_reporting(1);
+	error_reporting(0);
 	require_once 'inc/getWpEnvironment.inc.php';
 	require_once 'inc/getExtractedGallery.inc.php';
 ?>

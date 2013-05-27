@@ -160,7 +160,7 @@ class SygPlugin extends SanityPluginFramework {
 		if (is_int((int) $id)) {
 			$dao = new SygDao();
 			$this->data['gallery'] = $dao->getSygGalleryById($id);
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+			$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 			return $this->data;
 		}
 		return false;
@@ -783,7 +783,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @param &$view
 	 * @param $context
 	 */
-	private function prepareHeader(&$view, $context = SygConstant::SYG_CTX_FE, $shortag = null) {
+	private function prepareHeader(&$view, $shortag = null) {
 		// define resources path
 		$view['cssPath'] = $this->getCssRoot();
 		$view['imgPath'] = $this->getImgRoot();
@@ -797,124 +797,28 @@ class SygPlugin extends SanityPluginFramework {
 		$detect = new Mobile_Detect();
 		$conditions['mobile'] = (bool) $detect->isMobile();
 		
-		// fancybox 2 resources url
-		$view['fancybox_js_url'] = $options['syg_option_use_fb2_url'] . 'jquery.fancybox.pack.js';
-		$view['mousewheel_js_url'] = $options['syg_option_use_fb2_url'] . 'jquery.mousewheel-3.0.6.pack.js';
-		$view['fancybox_css_url'] = $options['syg_option_use_fb2_url'] . 'jquery.fancybox.css';
+		// fix index
+		if (empty($view['gallery'])) {
+			$galleryId = 0;
+		} else {
+			$gallery = $view['gallery'];
+			$galleryId = $gallery->getId();
+		}
 		
-		// fancybox resources url
-		$view['fancybox_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js';
-		$view['easing_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.easing-1.3.pack.js';
-		$view['mousewheel_js_url'] = $view['jsPath'] . '/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js';
-		$view['fancybox_css_url'] = $view['jsPath']	. '/3rdParty/fancybox/jquery.fancybox-1.3.4.css';
-		
-		// jquery 
-		$view['jquery-cookie-master_js_url'] = $view['jsPath'] . '3rdParty/jquery-cookie-master/jquery.cookie.js';
-		$view['jquery-balloon_js_url'] = $view['jsPath'] . '3rdParty/jquery-balloon/jquery.balloon.min.js';
-		
-		switch ($context) {
-			case SygConstant::SYG_CTX_BE:
-				/********************************
-				 * include css in the view file *
-				 ********************************/
-				// css to include admin
-				$view['cssAdminUrl'] = $view['cssPath'] . 'SygAdmin.css';
-				// css to include colorpicker
-				$view['cssColorPicker'] = $view['jsPath'] . '3rdParty/colorPicker/colorpicker.css';
-	
-				/***********************
-				 * wp jquery injection *
-				 ***********************/
-				wp_enqueue_script('jquery');
-	
-				/*******************************
-				 * syg admin library inclusion *
-				 *******************************/
-				wp_register_script('sliding-youtube-gallery-admin', $view['jsPath'] . 'core/lib/syg.lib.admin.min.js.php', array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery-admin');
-	
-				/*****************************
-				 * color picker js inclusion *
-				 *****************************/
-				wp_register_script('sliding-youtube-gallery-colorpicker', $view['jsPath'] . '3rdParty/colorPicker/colorpicker.js', array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery-colorpicker');
-	
-				/**********************
-				 * fancybox inclusion *
-				 **********************/
-				if ($options['syg_option_use_fb2'] == '1') { // use fancybox 2
-					// include css
-					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
-					wp_enqueue_style('fancybox');
-					
-					// include fancybox
-					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '2.1.3', true);
-					wp_enqueue_script('fancybox');
-						
-					// include jquery mousewheel
-					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.6', true);
-					wp_enqueue_script('mousewheel');
-				} else { // use fancybox 1
-					// include css
-					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '1.3.4', 'screen');
-					wp_enqueue_style('fancybox');
-					
-					// include fancybox
-					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '1.3.4', true);
-					wp_enqueue_script('fancybox');
-					
-					// include jquery easing
-					wp_register_script('easing', $view['easing_js_url'], array('jquery'), '1.3.0', true);
-					wp_enqueue_script('easing');
-					
-					// include jquery mousewheel
-					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.4', true);
-					wp_enqueue_script('mousewheel');
-				}
-				
-				/********************************
-				 * include jquery cookie master *
-				 ********************************/
-				wp_register_script('jquery-cookie-master', $view['jquery-cookie-master_js_url'], array(), '1.3', true);
-				wp_enqueue_script('jquery-cookie-master');
-				
-				/*****************************
-				 * color picker js inclusion *
-				*****************************/
-				wp_register_script('jquery-balloon', $view['jquery-balloon_js_url'], array(), '0.3.0', true);
-				wp_enqueue_script('jquery-balloon');
-				
-				break;
-			case SygConstant::SYG_CTX_FE:
-				// fix index
-				if (empty($view['gallery'])) {
-					$galleryId = 0;
-				} else {
-					$gallery = $view['gallery'];
-					$galleryId = $gallery->getId();
-				}
-				
-				// use simplexmlelement to parse header injection configuration file 
-				$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
-				// find library to include
-				$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
-				// scan libs array and include the right resources
-				foreach ($libs as $value) {
-					 $attributes = $value->attributes();
-					 $lib_to_include = (String)$attributes['name'];
-					 
-					 $resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\']/resource');
-					 foreach ($resource as $key => $value) {
-					 	$res = new SygResourceAdapter($value, $galleryId, $conditions);
-					 	$res->enqueue();
-					 }
-				}
-				
-				break;
-			case SygConstant::SYG_CTX_WS:
-				break;
-			default:
-				break;
+		// use simplexmlelement to parse header injection configuration file 
+		$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
+		// find library to include
+		$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
+		// scan libs array and include the right resources
+		foreach ($libs as $value) {
+			 $attributes = $value->attributes();
+			 $lib_to_include = (String)$attributes['name'];
+			 
+			 $resource =  $headInjObject->xpath('/headerInjection/libraries/library[@name=\''.$lib_to_include.'\']/resource');
+			 foreach ($resource as $key => $value) {
+			 	$res = new SygResourceAdapter($value, $galleryId, $conditions);
+			 	$res->enqueue();
+			 }
 		}
 	}
 
@@ -958,7 +862,7 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->render('redirect');
 			default:
 				// prepare header
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+				$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 	
 				// put galleries in the view
 				// $galleries = $this->sygDao->getAllSygGalleries();
@@ -1021,7 +925,7 @@ class SygPlugin extends SanityPluginFramework {
 				return $this->render('redirect');
 			default:
 				// prepare header
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+				$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 	
 				// put galleries in the view
 				$styles = $this->sygDao->getAllSygStyles();
@@ -1101,7 +1005,7 @@ class SygPlugin extends SanityPluginFramework {
 			}
 			
 			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 	
 			// get settings
 			$options = $this->getOptions();
@@ -1169,7 +1073,7 @@ class SygPlugin extends SanityPluginFramework {
 			
 		// gallery administration form section
 		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 
 		// put an empty gallery in the view
 		$this->data['gallery'] = new SygGallery();
@@ -1227,7 +1131,7 @@ class SygPlugin extends SanityPluginFramework {
 		}
 		// gallery administration form section
 		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 
 		// put an empty gallery in the view
 		$this->data['style'] = new SygStyle();
@@ -1291,7 +1195,7 @@ class SygPlugin extends SanityPluginFramework {
 		$id = (int) $_GET['id'];
 
 		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 
 		// put gallery in the view
 		$this->data['gallery'] = $this->sygDao->getSygGalleryById($id);
@@ -1352,7 +1256,7 @@ class SygPlugin extends SanityPluginFramework {
 		$id = (int) $_GET['id'];
 
 		// prepare header
-		$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+		$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 
 		// put style in the view
 		$this->data['style'] = $this->sygDao->getSygStyleById($id);
@@ -1431,7 +1335,7 @@ class SygPlugin extends SanityPluginFramework {
 	public function forwardToSupport() {
 		if (current_user_can('edit_posts')) {
 			// prepare header
-			$this->prepareHeader($this->data, SygConstant::SYG_CTX_BE);
+			$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 	
 			// render admin/Support view
 			return $this->render('admin/Support');

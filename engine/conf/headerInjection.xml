@@ -208,7 +208,7 @@
 		<library name="jquery-cookie-master" version="1.3">
 			<resource>
 				<name>jquery-cookie-master</name>
-				<relUrl>js/3rdParty/jquery-cookie-master/jquery-cookie.js</relUrl>
+				<relUrl>js/3rdParty/jquery-cookie-master/jquery.cookie.js</relUrl>
 				<type>js</type>
 				<version>1.3</version>
 				<indexed>no</indexed>
@@ -329,7 +329,6 @@
 		<library name="colorpicker"/>
 		<library name="jquery-cookie-master"/>
 		<library name="jquery-balloon"/>
-		<library name="colorpicker"/>
 		<library name="fancybox" version="1.3.4"/>
 	</enqueueList>
 </headerInjection>

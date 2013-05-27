@@ -466,6 +466,7 @@ class SygConstant {
 	const SYG_SHORTAG_PAGE = 'syg_page';
 	const SYG_SHORTAG_CAROUSEL = 'syg_carousel';
 	const SYG_SHORTAG_ELASTISLIDE = 'syg_elastislide';
+	const SYG_ADMIN = 'syg_admin';
 	
 	/**
 	 * Forms label
