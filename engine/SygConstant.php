@@ -436,6 +436,7 @@ class SygConstant {
 	
 	const MSG_EX_GALLERY_NOT_CACHED = 'To enable 3d cloud carousel for this gallery, you must cache the content of this gallery. Please login in the admin area and check the cache content option.';
 	const COD_EX_GALLERY_NOT_CACHED = '1005';
+	
 	/**
 	 * Validation message
 	 */
@@ -457,6 +458,14 @@ class SygConstant {
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
 	const BE_VALIDATE_OVERLAY_BAD_DIMENSION = 'Size %d for overlay button is not proportional to %s value that is %d. Please consider to use a lower value.';
 	const BE_VALIDATE_VIDEO_LIST_EMPTY = 'The video list is empty, please insert a list of YouTube videos';
+	
+	/**
+	 * Shortag
+	 */
+	const SYG_SHORTAG_GALLERY = 'syg_gallery';
+	const SYG_SHORTAG_PAGE = 'syg_page';
+	const SYG_SHORTAG_CAROUSEL = 'syg_carousel';
+	const SYG_SHORTAG_ELASTISLIDE = 'syg_elastislide';
 	
 	/**
 	 * Forms label
