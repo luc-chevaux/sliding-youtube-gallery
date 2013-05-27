@@ -31,6 +31,7 @@ require_once(SYG_PATH . 'engine/SygYouTube.php');
 require_once(SYG_PATH . 'engine/SygStyle.php');
 require_once(SYG_PATH . 'engine/SygValidate.php');
 require_once(SYG_PATH . 'engine/SygWidget.php');
+require_once(SYG_PATH . 'engine/SygResourceAdapter.php');
 
 require_once(SYG_PATH . 'engine/lib/MobileDetect/MobileDetect.php');
 
@@ -49,13 +50,13 @@ register_uninstall_hook(SYG_PATH . 'SlidingYoutubeGallery.php', 'uninstall');
 if (!is_admin()) {
 	// front end code block
 	// add shortcode for sliding youtube gallery
-	add_shortcode('syg_gallery', 'getGallery');
+	add_shortcode(SygConstant::SYG_SHORTAG_GALLERY, 'getGallery');
 	// add shortcode for sliding youtube page
-	add_shortcode('syg_page', 'getPage');
+	add_shortcode(SygConstant::SYG_SHORTAG_PAGE, 'getPage');
 	// add shortcode for sliding youtube carousel
-	add_shortcode('syg_carousel', 'getCarousel');
+	add_shortcode(SygConstant::SYG_SHORTAG_CAROUSEL, 'getCarousel');
 	// add shortcode for sliding youtube elastislide
-	add_shortcode('syg_elastislide', 'getElastislide');
+	add_shortcode(SygConstant::SYG_SHORTAG_ELASTISLIDE, 'getElastislide');
 } else {
 	// add cookie
 	add_action('init', 'checkRole');
