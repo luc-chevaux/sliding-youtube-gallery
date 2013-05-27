@@ -564,7 +564,7 @@ class SygPlugin extends SanityPluginFramework {
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {					
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_GALLERY);
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 					
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
@@ -573,7 +573,7 @@ class SygPlugin extends SanityPluginFramework {
 					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
 		
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 					
 					// render gallery snippet code
 					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
@@ -582,13 +582,13 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 				return $this->render('exception');
 			}
 		}
@@ -632,7 +632,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['component_type'] = SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
 					
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_PAGE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_PAGE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
@@ -644,13 +644,13 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_PAGE);
 				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_PAGE);
 				return $this->render('exception');
 			}
 		}
@@ -690,7 +690,7 @@ class SygPlugin extends SanityPluginFramework {
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_CAROUSEL);
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_CAROUSEL);
 						
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
@@ -700,20 +700,20 @@ class SygPlugin extends SanityPluginFramework {
 					$this->data['exception'] = true;
 					$this->data['exception_message'] = SygConstant::MSG_EX_GALLERY_NOT_CACHED;
 					// set front end option
-					$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_CAROUSEL);
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_CAROUSEL);
 					return $this->render('exception');
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_CAROUSEL);
 				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_CAROUSEL);
 				return $this->render('exception');
 			}
 		}
@@ -749,7 +749,7 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['options'] = $this->getOptions();
 	
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE, SygConstant::SYG_SHORTAG_ELASTISLIDE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
 				
 				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {	
 					// render cache files
@@ -764,13 +764,13 @@ class SygPlugin extends SanityPluginFramework {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
 				return $this->render('exception');
 			} catch (Exception $ex) {
 				$this->data['exception'] = true;
 				$this->data['exception_message'] = $ex->getMessage();
 				// set front end option
-				$this->prepareHeader($this->data, SygConstant::SYG_CTX_FE);
+				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
 				return $this->render('exception');
 			}
 		}
