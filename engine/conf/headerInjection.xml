@@ -11,6 +11,56 @@
 			</resource>
 		</library>
 		
+		<!-- color picker -->
+		<library name="colorpicker">
+			<resource>
+				<name>colorpicker</name>
+				<relUrl>js/3rdParty/colorPicker/colorpicker.js</relUrl>
+				<type>js</type>
+				<version>1.3.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>colorpicker</name>
+				<relUrl>js/3rdParty/colorPicker/colorpicker.css</relUrl>
+				<type>css</type>
+				<version>1.3.4</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+			</resource>
+		</library>
+		
+		<!-- syg admin library -->
+		<library name="syg-admin" version="1.4.0">
+			<resource>
+				<name>syg-admin-library</name>
+				<relUrl>js/core/lib/syg.lib.admin.min.js.php</relUrl>
+				<type>js</type>
+				<version>1.4.0</version>
+				<indexed>no</indexed>
+				<thirdparty>no</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>syg-css-admin</name>
+				<relUrl>css/SygAdmin.css</relUrl>
+				<type>css</type>
+				<version>1.4.0</version>
+				<indexed>no</indexed>
+				<thirdparty>no</thirdparty>
+				<registered>no</registered>
+			</resource>
+		</library>
+		
 		<!-- syg client library -->
 		<library name="syg-client" version="1.4.0">
 			<resource>
@@ -154,6 +204,38 @@
 			</resource>
 		</library>
 		
+		<!-- jquery cookie master -->
+		<library name="jquery-cookie-master" version="1.3">
+			<resource>
+				<name>jquery-cookie-master</name>
+				<relUrl>js/3rdParty/jquery-cookie-master/jquery-cookie.js</relUrl>
+				<type>js</type>
+				<version>1.3</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		</library>
+		
+		<!-- jquery balloon -->
+		<library name="jquery-balloon" version="0.3.0">
+			<resource>
+				<name>jquery-balloon</name>
+				<relUrl>js/3rdParty/jquery-balloon/jquery.balloon.min.js</relUrl>
+				<type>js</type>
+				<version>0.3.0</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+		</library>
+		
 		<!-- carousel library -->
 		<library name="carousel" version="1.0.5">
 			<resource>
@@ -174,9 +256,33 @@
 		<library name="elastislide" version="1.1.0">
 			<resource>
 				<name>elastislide</name>
-				<relUrl></relUrl>
+				<relUrl>js/3rdParty/elastislide/js/jquery.elastislide.js</relUrl>
 				<type>js</type>
 				<version>1.1.0</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>jquerypp</name>
+				<relUrl>js/3rdParty/elastislide/js/jquerypp.custom.js</relUrl>
+				<type>js</type>
+				<version>1.1.0</version>
+				<indexed>no</indexed>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+				<dependencies>
+					<dependency>jquery</dependency>
+				</dependencies>
+			</resource>
+			<resource>
+				<name>modernizr.custom</name>
+				<relUrl>js/3rdParty/elastislide/js/modernizr.custom.17475.js</relUrl>
+				<type>js</type>
+				<version>2.6.2</version>
 				<indexed>no</indexed>
 				<thirdparty>yes</thirdparty>
 				<registered>no</registered>
@@ -189,21 +295,41 @@
 	
 	<enqueueList shortag="syg_gallery">
 		<library name="jquery"/>
+		<library name="syg-client"/>
 		<library name="jquery.mobile"/>
+		<library name="fancybox" version="1.3.4"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_page">
 		<library name="jquery"/>
+		<library name="syg-client"/>
 		<library name="jquery.mobile"/>
+		<library name="fancybox" version="1.3.4"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_carousel">
 		<library name="jquery"/>
+		<library name="syg-client"/>
 		<library name="jquery.mobile"/>
+		<library name="fancybox" version="1.3.4"/>
+		<library name="carousel"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_elastislide">
 		<library name="jquery"/>
+		<library name="syg-client"/>
 		<library name="jquery.mobile"/>
+		<library name="fancybox" version="1.3.4"/>
+		<library name="elastislide"/>
+	</enqueueList>
+	
+	<enqueueList shortag="syg_admin">
+		<library name="jquery"/>
+		<library name="syg-admin"/>
+		<library name="colorpicker"/>
+		<library name="jquery-cookie-master"/>
+		<library name="jquery-balloon"/>
+		<library name="colorpicker"/>
+		<library name="fancybox" version="1.3.4"/>
 	</enqueueList>
 </headerInjection>

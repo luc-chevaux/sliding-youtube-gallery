@@ -894,13 +894,11 @@ class SygPlugin extends SanityPluginFramework {
 					$galleryId = $gallery->getId();
 				}
 				
-				/*
-				 * get resources configuration
-				 */
+				// use simplexmlelement to parse header injection configuration file 
 				$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
+				// find library to include
 				$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
-				
-				// scan libs array and include the right libraries
+				// scan libs array and include the right resources
 				foreach ($libs as $value) {
 					 $attributes = $value->attributes();
 					 $lib_to_include = (String)$attributes['name'];
@@ -911,88 +909,6 @@ class SygPlugin extends SanityPluginFramework {
 					 	$res->enqueue();
 					 }
 				}
-				
-				/***************************
-				 * gallery style injection *
-				 ***************************/
-				// indexed css
-				$view['sygCssUrl_' . $galleryId] = $view['cssPath']	. 'SygClient.css.php?id=' . $galleryId;
-				wp_register_style('syg-css-style-gallery-' . $galleryId, $view['sygCssUrl_' . $galleryId], array(), SygConstant::SYG_VERSION, 'screen');
-				wp_enqueue_style('syg-css-style-gallery-' . $galleryId);
-				
-				/***********************
-				 * wp jquery injection *
-				 ***********************/
-				wp_enqueue_script('jquery');
-				
-				/***************************
-				 * jquery mobile inclusion *
-				 ***************************/
-				if ($mobile) {
-					wp_register_script('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.1.min.js', array('jquery'), '1.2.1', true);
-					wp_enqueue_script('jquery.mobile');
-					wp_register_style('jquery.mobile', $view['jsPath'] . '3rdParty/jquery-mobile/jquery.mobile-1.2.1.min.css', array(), '1.2.1', 'screen');
-					wp_enqueue_style('jquery.mobile');
-				}
-				
-				/********************************
-				 * syg client library inclusion *
-				 ********************************/
-				// syg client library
-				$view['sygJsUrl'] = $view['jsPath'] . 'core/lib/syg.lib.client.min.js.php';
-				wp_register_script('sliding-youtube-gallery', $view['sygJsUrl'], array(), SygConstant::SYG_VERSION, true);
-				wp_enqueue_script('sliding-youtube-gallery');
-				
-				/**********************
-				 * fancybox inclusion *
-				**********************/
-				if ($options['syg_option_use_fb2'] == '1') { // use fancybox 2
-					// include css
-					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '2.1.2', 'screen');
-					wp_enqueue_style('fancybox');
-						
-					// include fancybox
-					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '2.1.3', true);
-					wp_enqueue_script('fancybox');
-				
-					// include jquery mousewheel
-					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.6', true);
-					wp_enqueue_script('mousewheel');
-				} else { // use fancybox 1
-					// include css
-					wp_register_style('fancybox', $view['fancybox_css_url'], array(), '1.3.4', 'screen');
-					wp_enqueue_style('fancybox');
-						
-					// include fancybox
-					wp_register_script('fancybox', $view['fancybox_js_url'], array('jquery'), '1.3.4', true);
-					wp_enqueue_script('fancybox');
-						
-					// include jquery easing
-					wp_register_script('easing', $view['easing_js_url'], array('jquery'), '1.3.0', true);
-					wp_enqueue_script('easing');
-						
-					// include jquery mousewheel
-					wp_register_script('mousewheel', $view['mousewheel_js_url'], array('jquery'), '3.0.4', true);
-					wp_enqueue_script('mousewheel');
-				}
-				
-				/****************************
-				 * cloud carousel inclusion *
-				 ****************************/
-				$view['carousel_js_url'] = $view['jsPath'] . '3rdParty/cloudCarousel/cloud-carousel.1.0.5.min.js';
-				wp_register_script('carousel', $view['carousel_js_url'], array(), '1.0.5', true);
-				wp_enqueue_script('carousel');
-				
-				/****************************
-				 * elastislide inclusion *
-				****************************/
-				/*css/demo.css
-				css/elastislide.css
-				css/custom.css
-				js/modernizr.custom.17475.js
-				
-				js/jquerypp.custom.js
-				js/jquery.elastislide.js*/
 				
 				break;
 			case SygConstant::SYG_CTX_WS:

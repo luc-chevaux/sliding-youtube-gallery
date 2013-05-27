@@ -24,31 +24,34 @@ class SygResourceAdapter {
 	
 	public function __construct(SimpleXMLElement $element, $galleryId = null, $conditions = array()) {
 		$this->setGalleryId($galleryId);
+		$this->setIndexed($element->indexed);
 		$this->setName($element->name);
 		$this->setRelUrl($element->relUrl);
 		$this->setType($element->type);
 		$this->setMedia($element->media);
 		$this->setVersion($element->version);
-		$this->setIndexed($element->indexed);
 		$this->setRegistered($element->registered);
 		$this->setThirdparty($element->thirdparty);
 		$this->setDependencies($element->dependencies);
 		$this->setCondition($element->condition);
+		$this->setConditions($conditions);
 	}
 	
 	public function enqueue() {
-		$condition = $this->getCondition();
+		$condition = ($this->getCondition() != null) ? $this->getCondition() : 'none';
 		$conditions = $this->getConditions();
-		if(array_key_exists($condition, $conditions) && $conditions[$condition] == true) {
+		
+		if (($condition == 'none') || (array_key_exists($condition, $conditions) && $conditions[$condition] == true)) {
+			// esegui
 			switch ($this->getType()) {
-				case "js": 
+				case "js":
 					if ($this->getRegistered() == 'no') {
 						// register script
-						wp_register_script($this->getName(), 
-											WP_PLUGIN_URL. SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
-											$this->getDependencies(),
-											$this->getVersion(),
-											true
+						wp_register_script($this->getName(),
+						WP_PLUGIN_URL. SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
+						$this->getDependencies(),
+						$this->getVersion(),
+						true
 						);
 					}
 					// enqueue script
@@ -58,10 +61,10 @@ class SygResourceAdapter {
 					if ($this->getRegistered() == 'no') {
 						// register style
 						wp_register_style($this->getName(),
-										  WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
-										  $this->getDependencies(),
-										  $this->getVersion(),
-										  $this->getMedia()
+						WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
+						$this->getDependencies(),
+						$this->getVersion(),
+						$this->getMedia()
 						);
 					}
 					// enqueue style
@@ -173,7 +176,7 @@ class SygResourceAdapter {
 	 */
 	public function setRelUrl($relUrl) {
 		if ($this->getIndexed() == 'yes') {
-			$this->relUrl = ((String) $relUrl).'-'.$this->getGalleryId();
+			$this->relUrl = ((String) $relUrl).$this->getGalleryId();
 		} else {
 			$this->relUrl = (String) $relUrl;
 		}
@@ -232,21 +235,21 @@ class SygResourceAdapter {
 	 * @param NULL $galleryId
 	 */
 	public function setGalleryId($galleryId) {
-		$this->galleryId = $galleryId;
+		$this->galleryId = (String) $galleryId;
 	}
 	
 	/**
 	 * @param NULL $condition
 	 */
 	public function setCondition($condition) {
-		$this->condition = $condition;
+		$this->condition = (String) $condition;
 	}
 	
 	/**
 	 * @param NULL $conditions
 	 */
 	public function setConditions($conditions) {
-		$this->conditions = $conditions;
+		$this->conditions = (array) $conditions;
 	}
 }
 ?>
