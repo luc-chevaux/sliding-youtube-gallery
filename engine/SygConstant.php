@@ -54,13 +54,6 @@ class SygConstant {
 												  'syg_option_carousel_reflgap'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLGAP, 'TYPE' => 'TEXT'),
 												  'syg_option_carousel_reflopacity'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY, 'TYPE' => 'TEXT')
 												);
-	
-	/**
-	 * Plugin running contexts
-	 */
-	const SYG_CTX_FE = 'SYG_CTX_FE';
-	const SYG_CTX_BE = 'SYG_CTX_BE';
-	const SYG_CTX_WS = 'SYG_CTX_WS';
 
 	/**
 	 * Plugin component type 
