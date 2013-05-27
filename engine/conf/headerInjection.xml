@@ -14,7 +14,7 @@
 		<!-- color picker -->
 		<library name="colorpicker">
 			<resource>
-				<name>colorpicker</name>
+				<name>syg-colorpicker-script</name>
 				<relUrl>js/3rdParty/colorPicker/colorpicker.js</relUrl>
 				<type>js</type>
 				<version>1.3.4</version>
@@ -26,7 +26,7 @@
 				</dependencies>
 			</resource>
 			<resource>
-				<name>colorpicker</name>
+				<name>syg-colorpicker-css</name>
 				<relUrl>js/3rdParty/colorPicker/colorpicker.css</relUrl>
 				<type>css</type>
 				<version>1.3.4</version>

@@ -825,10 +825,8 @@ class SygPlugin extends SanityPluginFramework {
 			 foreach ($resource as $key => $value) {
 			 	$res = new SygResourceAdapter($value, $galleryId, $conditions);
 			 	$res->enqueue();
-			 	var_dump ('enqueuing '.$res->getRelUrl());
 			 }
 		}
-		die();
 	}
 
 	/******************************/
