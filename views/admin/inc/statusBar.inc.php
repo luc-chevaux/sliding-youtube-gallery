@@ -28,7 +28,7 @@
 	<?php } ?>
 	
 	<div id="loader" style="position: fixed; z-index: 9000; top: 0; left: 0; background: rgba(0,0,0,0.5); width: 100%; height: 100%; display: none;">
-		<div style="margin: 20% auto; width: 200px; height: 60px;">
+		<div style="margin: 20% auto; width: 60px; height: 60px;">
 			<img src="<?php echo WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH; ?>/img/ui/loader/page-loader.gif"/>
 		</div>
 	</div>
