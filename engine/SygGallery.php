@@ -314,9 +314,15 @@ class SygGallery {
 		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache the html of the page
-		$galleryPage = $syg->getPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$pageHtml = $syg->getPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
 		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $galleryPage);
+		file_put_contents($this->getHtmlPath().$localFN, $pageHtml);
+		chmod ($this->getHtmlPath().$localFN, 0755);
+		
+		// cache the html of the elastislide
+		$elastislideHtml = $syg->getElastislide(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE.'-'.$this->getId().".html";
+		file_put_contents($this->getHtmlPath().$localFN, $elastislideHtml);
 		chmod ($this->getHtmlPath().$localFN, 0755);
 		
 		// cache json page
