@@ -36,7 +36,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 							$videoThumbnails = $element->getVideoThumbnails();
 						}
 					?> 
-					<li style="width: 100%; max-width: 150px; max-height: 160px;">
+					<li>
 						<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
 							<!-- append video thumbnail -->
 							<?php if ($gallery->getDescShow()) { ?>
