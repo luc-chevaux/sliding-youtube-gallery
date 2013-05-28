@@ -133,30 +133,39 @@ class SanityPluginFramework {
         if (SygConstant::SYG_PLUGIN_COMPONENT_GALLERY == $component) {
 	        // js to include
 	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-	        wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY, $url, array(), SygConstant::SYG_VERSION, true);
-	        wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY);
+	        wp_register_script('syg-gallery-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+	        wp_enqueue_script('syg-gallery-ready-'.$id);
 	        // js to include
 	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id;
-	        wp_register_script('syg-loading-gallery-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-	        wp_enqueue_script('syg-loading-gallery-'.$id);
+	        wp_register_script('syg-gallery-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+	        wp_enqueue_script('syg-gallery-loading-'.$id);
         } else if (SygConstant::SYG_PLUGIN_COMPONENT_PAGE == $component) {
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
-        	wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
+        	wp_register_script('syg-page-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-page-loading-'.$id);
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$id;
-        	wp_register_script('syg-loading-page-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-loading-page-'.$id);
+        	wp_register_script('syg-page-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-page-loading-'.$id);
         } elseif (SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL == $component) {
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
-        	wp_register_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-client-'.$id.'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
+        	wp_register_script('syg-carousel-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-carousel-ready-'.$id);
         	// js to include
         	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$id;
-        	wp_register_script('syg-loading-carousel-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-loading-carousel-'.$id);
+        	wp_register_script('syg-carousel-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-carousel-loading-'.$id);
+        } elseif (SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE == $component) {
+        	// js to include
+        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
+        	wp_register_script('syg-elastislide-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-elastislide-ready-'.$id);
+        	// js to include
+        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/elastislide.min.js.php?id='.$id;
+        	wp_register_script('syg-elastislide-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        	wp_enqueue_script('syg-elastislide-loading-'.$id);
         }
         return $output;
     }
