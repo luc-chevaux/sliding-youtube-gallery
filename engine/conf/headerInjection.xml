@@ -255,26 +255,6 @@
 		<!-- elastislide library -->
 		<library name="elastislide" version="1.1.0">
 			<resource>
-				<name>elastislide-custom-css</name>
-				<relUrl>js/3rdParty/elastislide/css/custom.css</relUrl>
-				<type>css</type>
-				<version>1.1.0</version>
-				<indexed>no</indexed>
-				<thirdparty>yes</thirdparty>
-				<registered>no</registered>
-			</resource>
-			<!-- 
-			<resource>
-				<name>elastislide-demo-css</name>
-				<relUrl>js/3rdParty/elastislide/css/demo.css</relUrl>
-				<type>css</type>
-				<version>1.1.0</version>
-				<indexed>no</indexed>
-				<thirdparty>yes</thirdparty>
-				<registered>no</registered>
-			</resource>
-			-->
-			<resource>
 				<name>elastislide-css</name>
 				<relUrl>js/3rdParty/elastislide/css/elastislide.css</relUrl>
 				<type>css</type>
