@@ -142,7 +142,7 @@ label {
 #paginator_shadowcolor_selector div,
 #paginator_bgcolor_selector div,
 #paginator_fontcolor_selector div {
-    background: url("../img/colorpicker/select.png") repeat scroll center center transparent;
+    background: url("../js/3rdParty/colorPicker/colorpicker/select.png") repeat scroll center center transparent;
     height: 15px;
     width: 15px;
 	border: 1px #333333 solid;
