@@ -13,7 +13,7 @@
 </style>
 
 <!-- Title Page -->
-<div class="syg-wrap-gallery">
+<div class="syg-wrap-gallery wrap">
 	<?php require_once 'inc/header.inc.php'; ?>
 	<div id="syg-plugin-area">
 		
