@@ -118,5 +118,7 @@ jQuery(document).ready(function($){
 			titleBox: $("#carousel-title-<?php echo $id; ?>")
 		});
 		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
+	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE) { ?>
+		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } ?>
 });  
