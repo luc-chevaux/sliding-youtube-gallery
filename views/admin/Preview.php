@@ -37,8 +37,8 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	</div>
 	<div id="loading-footer">
 		<style type="text/css">
-			@import url('<?php echo $view['sygCssUrl_'.$id]; ?>');
-			@import url('<?php echo $view['fancybox_css_url']; ?>');
+			@import url('<?php echo $view['cssPath'].'SygClient.css.php?id=' . $id; ?>');			
+			@import url('<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/3rdParty/fancybox/jquery.fancybox-1.3.4.css'; ?>');
 		</style>		
 		<script type="text/javascript">
 		jQuery.noConflict();
@@ -52,9 +52,9 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 			});
 		});
 		</script>
-		<script type="text/javascript" src="<?php echo $view['fancybox_js_url']; ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['easing_js_url']; ?>"></script>
-		<script type="text/javascript" src="<?php echo $view['mousewheel_js_url']; ?>"></script>
+		<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/3rdParty/fancybox/jquery.fancybox-1.3.4.pack.js'; ?>"></script>
+		<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/3rdParty/fancybox/jquery.easing-1.3.pack.js'; ?>"></script>
+		<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/3rdParty/fancybox/jquery.mousewheel-3.0.4.pack.js'; ?>"></script>
 	</div>
 </body>
 </html>
