@@ -20,11 +20,13 @@ $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
 ?>
 jQuery(window).load(function($) {
-	if (window.console) console.log('carousel loading function >> start');
+	if (window.console) console.log('elastislide loading function >> start');
 	
-	jQuery('#syg-elastislide-<?php echo $id; ?>').elastislide({
-				orientation : 'vertical'
-			});
+	jQuery('#syg-elastislide-<?php echo $id; ?>').elastislide();
 	
-	if (window.console) console.log('carousel loading function >> end');
+	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
+		jQuery.mobile.hidePageLoadingMsg();
+	}
+	
+	if (window.console) console.log('elastislide loading function >> end');
 });

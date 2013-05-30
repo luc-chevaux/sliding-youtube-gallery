@@ -337,8 +337,8 @@ jQuery.noConflict();
 		/* function that init style ui */
 		initStyleUi : function () {
 			// add the aspect ratio function
-			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change($.calculateNewHeight);
-			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change($.calculateNewWidth);
+			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change(function() {methods.calculateNewHeight.call(this)});
+			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change(function() { methods.calculateNewWidth.call(this) });
 			
 			// init the color pickers
 			methods.initColorPicker.call(this, 'thumb_bordercolor_selector', $('#syg_thumbnail_bordercolor'));
@@ -496,13 +496,27 @@ jQuery.noConflict();
 		/* function that update cache */
 		updateCache: function () {
 			var modified = methods.getQParam.call(this, 'modified');
-			if ($.isNumeric(modified) && syg_option.syg_option_askcache == '1') {
+			var page = methods.getQParam.call(this, 'page');
+			if ($.isNumeric(modified) && page == 'syg-manage-styles' && syg_option.syg_option_askcache == '1') {
 				var answer = confirm('Your style has been changed. Cached content need to be updated. Update it now?');
 				if (answer) {
 					var request = jQuery.ajax({
 						  url: 'admin.php',
 						  type: 'GET',
 						  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
+						  dataType: 'html',
+						  complete: function () {
+							  alert ('Your server cache has been successfully updated.');
+						  }
+					});
+				}
+			} else if ($.isNumeric(modified) && page == 'syg-manage-galleries' && syg_option.syg_option_askcache == '1') {
+				var answer = confirm('Your gallery has been changed. Cached content need to be updated. Update it now?');
+				if (answer) {
+					var request = jQuery.ajax({
+						  url: 'admin.php',
+						  type: 'GET',
+						  data: {page: 'syg-manage-galleries', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
 							  alert ('Your server cache has been successfully updated.');
