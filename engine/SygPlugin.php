@@ -1177,10 +1177,7 @@ class SygPlugin extends SanityPluginFramework {
 					// updated flag
 					$this->data['updated'] = $updated;
 					
-					if ($gallery->getCacheOn()) {
-						// cache gallery
-						$gallery->cacheGallery();
-					} else {
+					if (!$gallery->getCacheOn()) {
 						$gallery->removeFromCache();
 					}
 					
