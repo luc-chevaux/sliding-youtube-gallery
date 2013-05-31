@@ -403,6 +403,7 @@ class SygConstant {
 
 	// context menu
 	const BE_MENU_ADD_NEW_STYLE = 'Add new Theme';
+	const BE_MENU_ADD_NEW_STYLE_FIRST = 'Add a new Theme first!';
 	const BE_MENU_ADD_NEW_GALLERY = 'Add new Gallery';
 	const BE_MENU_JUMP_TO_HOME = 'Jump to Home';
 	const BE_MENU_REBUILD_CACHE = 'Rebuild cache';

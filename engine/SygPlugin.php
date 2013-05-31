@@ -871,17 +871,15 @@ class SygPlugin extends SanityPluginFramework {
 				// prepare header
 				$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
 	
-				// put galleries in the view
-				// $galleries = $this->sygDao->getAllSygGalleries();
-	
-				// put galleries in the view
-				// $this->data['galleries'] = $galleries;
-	
+				// instantiate dao
+				$dao = new SygDao();
+				
+				// put styles count in the view
+				$this->data['stylesCount'] = $dao->getStylesCount();
+				
 				// number of pages
 				$options = $this->getOptions();
-				$this->data['pages'] = ceil(
-						$this->sygDao->getGalleriesCount()
-								/ $options['syg_option_numrec']);
+				$this->data['pages'] = ceil($this->sygDao->getGalleriesCount() / $options['syg_option_numrec']);
 	
 				// render admin/Galleries view
 				return $this->render('admin/Galleries');
