@@ -33,4 +33,4 @@
 		</div>
 	</div>
 </div>
-<div class="dialog-modal" title=""/>
+<div class="dialog-modal" title=""></div>

@@ -24,7 +24,7 @@
 			<input type="hidden" name="id" id="id" value="<?php echo $style->getId(); ?>">
 		
 			<!-- Define your new style -->
-			<fieldset>
+			<fieldset style="position: relative">
 				<legend>Define your new style</legend>
 				
 				<!-- style name -->
@@ -35,7 +35,22 @@
 				<label for="syg_style_details"><strong>Details</strong></label>
 				<input type="text" id="syg_style_details" name="syg_style_details" value="<?php echo $style->getStyleDetails(); ?>" size="50"/>
 				
-				<a href="#" class="syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
+				<table style="position: absolute; top: 10px; right: 40px;">
+					<tr>
+						<td>
+							<a href="#" class="iframe_0 syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
+						</td>
+						<td>
+							<label for="syg_component_preview"><strong>Component Preview</strong></label><br/>
+							Gallery
+							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_GALLERY; ?>" checked="checked"/>
+							Page
+							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_PAGE; ?>"/>	
+							Carousel
+							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL; ?>"/>
+						</td>
+					<tr>
+				</table>			
 			</fieldset>
 			
 			<!-- thumbnail appereance -->

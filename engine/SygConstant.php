@@ -85,6 +85,11 @@ class SygConstant {
 	const BE_ACTION_DEACTIVATION = 'deactivation';
 
 	/**
+	 * Playlist 0 for previews
+	 */
+	const SYG_DEFAULT_PLAYLIST = 'http://www.youtube.com/playlist?list=PL84C9100FCEF9B6DA';
+	
+	/**
 	 * Static and general URI
 	 */
 	const WP_PLUGIN_PATH = '/sliding-youtube-gallery/';

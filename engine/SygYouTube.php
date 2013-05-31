@@ -109,7 +109,9 @@ class SygYouTube {
 		foreach ($list_of_videos as $key => $value) {
 			$list_of_videos[$key] = str_replace('v=', '', parse_url($value, PHP_URL_QUERY));
 			$videoEntry = $this->getVideoEntry($list_of_videos[$key]);
-			$feed->addEntry($videoEntry);
+			if ($videoEntry != null) {
+				$feed->addEntry($videoEntry);
+			}
 		}
 		$feed = $this->adjustFeed($feed, $gallery, $start, $per_page);
 		return $feed;
@@ -144,7 +146,9 @@ class SygYouTube {
 			foreach ($feed_to_object as $item) {
 				$videoId = $item->{'media$group'}->{'yt$videoid'}->{'$t'};
 				$videoEntry = $this->getVideoEntry($videoId);
-				$feed->addEntry($videoEntry);
+				if ($videoEntry != null) {
+					$feed->addEntry($videoEntry);
+				}
 			}
 		}
 		$feed = $this->adjustFeed($feed, $gallery, $start, $per_page);
@@ -192,9 +196,13 @@ class SygYouTube {
 	 * @return Zend_Gdata_YouTube_VideoEntry $video
 	 */
 	public function getVideoEntry($video_code = null) {
-		$this->yt->setMajorProtocolVersion(2);
-		$video = $this->yt->getVideoEntry($video_code);
-		return $video;
+		try {
+			$this->yt->setMajorProtocolVersion(2);
+			$video = $this->yt->getVideoEntry($video_code);
+			return $video;
+		} catch (Zend_Gdata_App_HttpException $ex) {
+			return null;
+		}
 	}
 	
 	/**

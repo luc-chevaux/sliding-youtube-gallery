@@ -925,8 +925,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 				break;
 			case 'redirect':
-				$this->data['redirect_url'] = '?page='
-						. SygConstant::BE_ACTION_MANAGE_STYLES . '&modified='.$_GET['id'];
+				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_STYLES . '&modified='.$_GET['id'];
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -1035,7 +1034,7 @@ class SygPlugin extends SanityPluginFramework {
 			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
 				// database add gallery procedure
 				// get posted values
-				$data = serialize($_POST);
+				$data = serialize(stripslashes_deep($_POST));
 	
 				try {
 					// validate data
@@ -1102,7 +1101,7 @@ class SygPlugin extends SanityPluginFramework {
 			if (isset($_POST['syg_submit_hidden']) && $_POST['syg_submit_hidden'] == 'Y') {
 				// database add style procedure
 				// get posted values
-				$data = serialize($_POST);
+				$data = serialize(stripslashes_deep($_POST));
 
 				try {
 					// validate data
@@ -1157,7 +1156,7 @@ class SygPlugin extends SanityPluginFramework {
 			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
 				// database update procedure
 				// get posted values
-				$data = serialize($_POST);
+				$data = serialize(stripslashes_deep($_POST));
 	
 				try {
 					// validate data
@@ -1221,7 +1220,7 @@ class SygPlugin extends SanityPluginFramework {
 			if (isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y') {
 				// database update procedure
 				// get posted values
-				$data = serialize($_POST);
+				$data = serialize(stripslashes_deep($_POST));
 	
 				try {
 					// validate data
