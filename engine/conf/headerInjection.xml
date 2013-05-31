@@ -11,6 +11,42 @@
 			</resource>
 		</library>
 		
+		<!-- jquery-ui -->
+		<library name="jquery-ui">
+			<resource>
+				<name>jquery-ui-core</name>
+				<type>js</type>
+				<thirdparty>yes</thirdparty>
+				<registered>yes</registered>
+			</resource>
+			<resource>
+				<name>jquery-ui-draggable</name>
+				<type>js</type>
+				<thirdparty>yes</thirdparty>
+				<registered>yes</registered>
+			</resource>
+			<resource>
+				<name>jquery-ui-droppable</name>
+				<type>js</type>
+				<thirdparty>yes</thirdparty>
+				<registered>yes</registered>
+			</resource>
+			<resource>
+				<name>jquery-ui-dialog</name>
+				<type>js</type>
+				<thirdparty>yes</thirdparty>
+				<registered>yes</registered>
+			</resource>
+			<resource>
+				<name>jquery-style</name>
+				<relUrl>js/3rdParty/jquery-ui-themes/themes/blitzer/jquery-ui.css</relUrl>
+				<type>css</type>
+				<version>1.10.3</version>
+				<thirdparty>yes</thirdparty>
+				<registered>no</registered>
+			</resource>
+		</library>
+		
 		<!-- color picker -->
 		<library name="colorpicker">
 			<resource>
@@ -352,6 +388,7 @@
 	
 	<enqueueList shortag="syg_admin">
 		<library name="jquery"/>
+		<library name="jquery-ui"/>
 		<library name="syg-admin"/>
 		<library name="colorpicker"/>
 		<library name="jquery-cookie-master"/>
