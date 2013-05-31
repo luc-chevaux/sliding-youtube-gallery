@@ -129,9 +129,26 @@ jQuery.noConflict();
 		
 		/* function that alert exception in the page */
 		alertException : function (data) {
-			 $( ".dialog-modal" ).dialog({
-			height: 140,
-			modal: true
+			data = $.parseJSON(JSON.stringify(data));
+			var problemFound = data.exception_detail;
+			html = '<ul>';
+			$.each(problemFound, function(key, val) {
+				html = html + '<li><strong>' + val.field + '</strong> - ' + val.msg + '</li>';
+			});
+			html = html + '</ul>';
+			
+			$(".dialog-modal").attr("title", "Preview Errors:");
+			$(".dialog-modal").prepend(html);
+		
+			 $(".dialog-modal").dialog({
+				modal: true,
+				draggable: false,
+				resizable: false,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
 			});
 		},
 		
@@ -389,7 +406,8 @@ jQuery.noConflict();
 					if(!jQuery.isEmptyObject(data)) {
 						$.fn.sygadmin('alertException', data);
 					} else {
-						alert ('buono');
+						
+						html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
 					}
 				});
 			});
