@@ -127,6 +127,14 @@ jQuery.noConflict();
 			$('#syg_status_bar').prepend(html);
 		},
 		
+		/* function that alert exception in the page */
+		alertException : function (data) {
+			 $( ".dialog-modal" ).dialog({
+			height: 140,
+			modal: true
+			});
+		},
+		
 		/* function that loads the data in the table */ 
 		loadData : function (data, pageNum) {
 			data = $.parseJSON(JSON.stringify(data));
@@ -336,6 +344,9 @@ jQuery.noConflict();
 		
 		/* function that init style ui */
 		initStyleUi : function () {
+			// 
+			var styleForm = $('#syg_style_form');
+			
 			// add the aspect ratio function
 			if ($('#syg_thumbnail_width').length) $('#syg_thumbnail_width').change(function() {methods.calculateNewHeight.call(this)});
 			if ($('#syg_thumbnail_height').length) $('#syg_thumbnail_height').change(function() { methods.calculateNewWidth.call(this) });
@@ -372,6 +383,16 @@ jQuery.noConflict();
 					zIndex         : "32767",
 					textAlign      : "left"
 				}});
+				
+			$('.syg_preview_theme').click(function() {
+				$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + styleForm.serialize(), function (data) { 
+					if(!jQuery.isEmptyObject(data)) {
+						$.fn.sygadmin('alertException', data);
+					} else {
+						alert ('buono');
+					}
+				});
+			});
 		},
 		
 		/* function that init gallery ui */
