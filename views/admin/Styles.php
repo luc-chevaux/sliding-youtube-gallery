@@ -1,16 +1,6 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
 <?php 	
 	$styles = $this->data['styles'];
 ?>
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl']; ?>');
-@import url('<?php echo $this->data['cssColorPicker']; ?>');
-</style>
-
 <!-- Title Page -->
 <div class="syg-wrap wrap">
 	<?php require_once 'inc/header.inc.php'; ?>

@@ -1,15 +1,3 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl']; ?>');
-@import url('<?php echo $this->data['cssColorPicker']; ?>');
-</style>
-
-<!-- Javascript Inclusion -->
-
 <!-- Title Page -->
 <div class="syg-wrap wrap">
 	<?php include 'inc/header.inc.php'; ?>

@@ -1,18 +1,6 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
 <?php 	
 	$options = $this->data['options'];
 ?>
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl']; ?>');
-@import url('<?php echo $this->data['cssColorPicker']; ?>');
-</style>
-
-<!-- Javascript Inclusion -->
-
 <!-- Title Page -->
 <div class="syg-wrap-settings wrap">
 	<?php require_once 'inc/header.inc.php'; ?>

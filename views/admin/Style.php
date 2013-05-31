@@ -1,16 +1,6 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
 <?php 	
 	$style = $this->data['style'];
 ?>
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl']; ?>');
-@import url('<?php echo $this->data['cssColorPicker']; ?>');
-</style>
-
 <!-- Title Page -->
 <div class="syg-wrap-styles wrap">
 	<?php require_once 'inc/header.inc.php'; ?>	
@@ -44,6 +34,12 @@
 				<!-- style details -->
 				<label for="syg_style_details"><strong>Details</strong></label>
 				<input type="text" id="syg_style_details" name="syg_style_details" value="<?php echo $style->getStyleDetails(); ?>" size="50"/>
+				
+				<a href="#" class="syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
+				
+				<div class="dialog-modal" title="Basic modal dialog">
+				<p>Adding the modal overlay screen makes the dialog look more prominent because it dims out the page content.</p>
+				</div>
 			</fieldset>
 			
 			<!-- thumbnail appereance -->

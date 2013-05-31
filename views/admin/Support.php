@@ -1,7 +1,3 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
-
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -10,11 +6,6 @@
   js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1&appId=163842223712966";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
-<!-- Css Inclusion -->
-<style type="text/css">
-@import url('<?php echo $this->data['cssAdminUrl']; ?>');
-</style>
 
 <!-- Title Page -->
 <div class="syg-wrap-support wrap">
