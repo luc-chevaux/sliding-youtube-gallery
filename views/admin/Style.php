@@ -36,10 +36,6 @@
 				<input type="text" id="syg_style_details" name="syg_style_details" value="<?php echo $style->getStyleDetails(); ?>" size="50"/>
 				
 				<a href="#" class="syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
-				
-				<div class="dialog-modal" title="Basic modal dialog">
-				<p>Adding the modal overlay screen makes the dialog look more prominent because it dims out the page content.</p>
-				</div>
 			</fieldset>
 			
 			<!-- thumbnail appereance -->
