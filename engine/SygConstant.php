@@ -54,15 +54,21 @@ class SygConstant {
 												  'syg_option_carousel_reflgap'			=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLGAP, 'TYPE' => 'TEXT'),
 												  'syg_option_carousel_reflopacity'		=> array('DEFAULT' => self::SYG_OPTION_DEFAULT_CAROUSEL_REFLOPACITY, 'TYPE' => 'TEXT')
 												);
-	public static $SYG_GALLERY_DEFAULT_SETTINGS = array("syg_gallery_name" => "Demo Gallery",
+	public static $SYG_GALLERY_DEFAULT_SETTINGS = array("id" => "example",
+															"syg_gallery_name" => "Demo Gallery",
 															"syg_gallery_details" => "Demo Gallery",
 															"syg_gallery_type" => "playlist",
 															"syg_youtube_src" => self::SYG_DEFAULT_PLAYLIST,
 															"syg_youtube_maxvideocount" => 12,
-															"syg_youtube_cacheon" => null,
-															"syg_youtube_disablerel"=> null,
+															"syg_youtube_cacheon" => 0,
+															"syg_youtube_disablerel"=> 0,
 															"syg_style_id" => null,
-															"syg_youtube_videoformat" => null
+															"syg_youtube_videoformat" => "480n",
+															"syg_description_show" => 0,
+															"syg_description_showcategories" => 0,
+															"syg_description_showduration" => 0,
+															"syg_description_showratings" => 0,
+															"syg_description_showtags" => 0
 													);
 	
 	/**
