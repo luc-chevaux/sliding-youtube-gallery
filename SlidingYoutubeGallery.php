@@ -14,6 +14,7 @@ require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 define('SYG_PATH', plugin_dir_path(__FILE__));
+define("APPLICATION_ENV", "development");
 
 // library path
 $lib_path = SYG_PATH . 'engine/lib';
@@ -34,6 +35,7 @@ require_once(SYG_PATH . 'engine/SygWidget.php');
 require_once(SYG_PATH . 'engine/SygResourceAdapter.php');
 
 require_once(SYG_PATH . 'engine/lib/MobileDetect/MobileDetect.php');
+require_once(SYG_PATH . 'engine/lib/Debug/codeaid.net_snippet.php');
 
 define('SYG_URL', WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
 
