@@ -8,7 +8,7 @@
 <?php } ?>
 
 <?php if ($_GET['page'] == 'syg-manage-galleries') { ?>
-	<?php if ($this->data['stylesCount']) { ?>
+	<?php if (array_key_exists('stylesCount', $this->data) && $this->data['stylesCount']) { ?>
 		<a href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_GALLERIES; ?>&action=add" title="<?php echo SygConstant::BE_MENU_ADD_NEW_GALLERY; ?>" class="button-secondary syg_page_submit">
 			<?php echo SygConstant::BE_MENU_ADD_NEW_GALLERY; ?>
 		</a>
