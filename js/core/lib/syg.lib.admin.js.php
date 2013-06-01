@@ -53,8 +53,9 @@ jQuery.noConflict();
 		
 		/* function that delete a gallery (ajax) */
 		deleteStyle : function (id, pageNum) {
-			var sure = confirm('Are you sure to delete this style?');
-			if (sure) {
+			var message = 'Are you sure to delete this style?';
+			var title = 'Confirmation';
+			var callbck = function () {
 				var request = jQuery.ajax({
 					  url: 'admin.php',
 					  type: 'GET',
@@ -68,14 +69,16 @@ jQuery.noConflict();
 						  window.location.replace(target_url);
 					  }
 				});
-			}
+			};
+			methods.sygAlert.call(this, title, message, 'confirm', callbck);
 			return true;
 		},
 
 		/* function that delete a gallery (ajax) */
 		deleteGallery : function (id, pageNum) {
-			var sure = confirm('Are you sure to delete this gallery?');
-			if (sure) {
+			var message = 'Are you sure to delete this gallery?';
+			var title = 'Confirmation';
+			var callbck = function () {
 				var request = jQuery.ajax({
 					  url: 'admin.php',
 					  type: 'GET',
@@ -89,14 +92,16 @@ jQuery.noConflict();
 						  window.location.replace(new_url);
 					  }
 				});
-			}
+			};
+			methods.sygAlert.call(this, title, message, 'confirm', callbck);
 			return true;
 		},
 		
 		/* function that cache a gallery (ajax) */
 		cacheGallery : function (id, pageNum) {
-			var sure = confirm('Are you sure to re-cache this gallery?');
-			if (sure) {
+			var message = 'Are you sure to re-cache this gallery?';
+			var title = 'Confirmation';
+			var callbck = function () {
 				var request = jQuery.ajax({
 					  url: 'admin.php',
 					  type: 'GET',
@@ -110,7 +115,8 @@ jQuery.noConflict();
 						  window.location.replace(target_url);
 					  }
 				});
-			}
+			};
+			methods.sygAlert.call(this, title, message, 'confirm', callbck);
 			return true;
 		},
 		
@@ -128,21 +134,38 @@ jQuery.noConflict();
 		},
 		
 		/* function that alert exception in the page */
-		sygAlert : function (title, message, type) {
+		sygAlert : function (title, message, type, callbck) {
 			$(".dialog-modal").attr("title", title);
 			$(".dialog-modal").empty();
 			$(".dialog-modal").prepend(message);
-		
-			 $(".dialog-modal").dialog({
-				modal: true,
-				draggable: false,
-				resizable: false,
-				buttons: {
-					Ok: function() {
-						$(this).dialog( "close" );
+			
+			if (type == 'confirm') {
+				$(".dialog-modal").dialog({
+					resizable: false,
+					modal: true,
+					buttons: {
+						Ok : function() {
+                   			$(this).dialog('close');
+                   			callbck();
+						},
+						Cancel : function() {
+							$(this).dialog("close");
+						}
 					}
-				}
-			});
+				});
+			} else if(type == 'info') {			
+				 $(".dialog-modal").dialog({
+					modal: true,
+					draggable: false,
+					resizable: false,
+					buttons: {
+						Ok: function() {
+							$(this).dialog( "close" );
+							return true;
+						}
+					}
+				});
+			}
 		},
 		
 		/* function that alert exception in the page */
@@ -261,7 +284,7 @@ jQuery.noConflict();
 							}
 							html = html + '</td>';
 							html = html + '<td>';
-							html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
+							html = html + '<a href="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/views/admin/Preview.php?gallery_id=' + val.id + '" class="iframe_' + val.id + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/preview.png" title="Preview gallery" class="syg_table_button"/></a>';
 							html = html + '<a href="?page=syg-manage-galleries&action=edit&id=' + val.id + '&pageNum=' + pageNum + '"><img src="' + syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/img/ui/admin/edit.png" title="Edit gallery" class="syg_table_button"/></a>';
 	
 							if ($.cookie('syg-role') == 'Administrator' || $.cookie('syg-role') == 'Editor') {
@@ -419,24 +442,41 @@ jQuery.noConflict();
 					zIndex         : "32767",
 					textAlign      : "left"
 				}});
-							
+			
+			$('.iframe_example').mousedown(function() {
+				var formData = styleForm.serializeArray();
+					
+				formData = methods.serializeRemove.call(this, formData, "syg_submit_hidden");
+				formData = methods.serializeRemove.call(this, formData, "nonce_field");
+				formData = methods.serializeRemove.call(this, formData, "_wp_http_referer");
+				formData = methods.serializeRemove.call(this, formData, "id");
+				
+				formData = $.param(formData);
+				url = $('.syg_preview_theme').attr('href');
+				var params = formData.toString();
+				var params = params.replace(/&/g, "|");
+
+				adjusted_url = url + '&mode=' + $('#syg_component_preview').val() + '&params=' + params;
+				$('.syg_preview_theme').attr('href', adjusted_url);
+				return true;
+			});
+						
 			// set preview action
 			$('.iframe_example').fancybox({ 
 				'onStart' : function() {
-					var formData = styleForm.find(":input:not(:hidden)").serialize();
+					var formData = styleForm.serializeArray();
+					
+					formData = methods.serializeRemove.call(this, formData, "syg_submit_hidden");
+					formData = methods.serializeRemove.call(this, formData, "nonce_field");
+					formData = methods.serializeRemove.call(this, formData, "_wp_http_referer");
+					formData = methods.serializeRemove.call(this, formData, "id");
+					
+					formData = $.param(formData);
 					
 					$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + formData, function (data) { 
 						if(!jQuery.isEmptyObject(data)) {
 							$.fn.sygadmin('alertException', data);
 							$.fancybox.close();
-						} else {
-							url = $('.syg_preview_theme').attr('href');
-							var params = formData.toString();
-							var params = params.replace(/&/g, "|");
-
-							adjusted_url = url + '&mode=' + $('#syg_component_preview').val() + '&params=' + params;
-							$('.syg_preview_theme').attr('href', adjusted_url);
-							return true;
 						}
 					});
 				},
@@ -589,7 +629,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
 						  }
 					});
 				}
@@ -602,7 +642,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-galleries', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
 						  }
 					});
 				}
@@ -615,7 +655,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-settings', action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
 						  }
 					});
 				}
@@ -694,6 +734,13 @@ jQuery.noConflict();
 			} else {
 				return uri + separator + key + "=" + value;
 			}
+		},
+		
+		serializeRemove : function(serialArr, paramName) {
+		    "use strict";
+		    return serialArr.filter( function( item ) {
+		    	return item.name != paramName;
+		    });
 		}
 	};
 	
@@ -721,12 +768,12 @@ jQuery(document).ready(function($) {
 	
 	$('#loader').ajaxStart(function() {
 		  // $('.syg-wrap').fadeOut(700);
-		  $(this).fadeIn(500);
+		  $(this).fadeIn(250);
 	});
 	
 	$('#loader').ajaxStop(function() {
 	      // $('.syg-wrap').fadeIn(700);
-		  $(this).fadeOut(500);
+		  $(this).fadeOut(250);
 	});
 	
 	switch (page) {
