@@ -18,15 +18,25 @@ if (file_exists($root.'/wp-load.php')) {
 require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once( SYG_PATH . 'engine/SygPlugin.php');
 require_once( SYG_PATH . 'engine/SygUtil.php');
+
 $syg = SygPlugin::getInstance();
 $id = $_GET['id'];
 $option = $syg->getGallerySettings($id);
+
 extract ($option);
 $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
 
+
 $jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_description_fontcolor);
 
+if (!empty($_GET['params'])) {
+	$params = $_GET['params'];
+	parse_str(str_replace("|", "&", $params), $params);
+	unset($params['id']);
+	// extract dynamic css
+	extract($params);
+}
 ?>
 
 /* general styles */
