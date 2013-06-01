@@ -45,9 +45,9 @@
 							Gallery
 							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_GALLERY; ?>" checked="checked"/>
 							Page
-							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_PAGE; ?>"/>	
+							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_PAGE; ?>" disabled="disabled"/>	
 							Carousel
-							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL; ?>"/>
+							<input type="radio" id="syg_component_preview" name="syg_component_preview" value="<?php echo SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL; ?>" disabled="disabled"/>
 						</td>
 					<tr>
 				</table>			
