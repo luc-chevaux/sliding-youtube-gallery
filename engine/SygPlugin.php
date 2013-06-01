@@ -157,9 +157,16 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return array $context
 	 */
 	public function getViewCtx($id = null) {
-		if (is_int((int) $id)) {
+		if (is_int($id)) {
 			$dao = new SygDao();
 			$this->data['gallery'] = $dao->getSygGalleryById($id);
+			$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
+			return $this->data;
+		} else if ($id == 'example') {
+			$gallery = new SygGallery(serialize(SygConstant::$SYG_GALLERY_DEFAULT_SETTINGS));
+			$style = new SygStyle($_GET);
+			$gallery->setSygStyle($style);
+			$this->data['gallery'] = $gallery;
 			$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_GALLERY);
 			return $this->data;
 		}
@@ -513,10 +520,21 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return array $settings
 	 */
 	public function getGallerySettings($id = null) {
-		// cast id to an int
-		$id = (int) $id;
-
-		if ($id == 0) {
+		//var_dump($_GET);
+		if ($id == 'example') {
+			// generate a fake gallery without style
+			$gallery = new SygGallery(serialize(SygConstant::$SYG_GALLERY_DEFAULT_SETTINGS));
+			
+			$gallery->setId('example');
+			
+			$params = str_replace('|', '&', $_GET['params']);
+			$paramArray = array();
+			parse_str($params, $paramArray);
+			
+			$style = new SygStyle(serialize($paramArray));
+			
+			$gallery->setSygStyle($style);
+		} elseif ($id == 0) {
 			// generate a fake gallery
 			$gallery = new SygGallery();
 		} else {
@@ -525,8 +543,9 @@ class SygPlugin extends SanityPluginFramework {
 			$gallery = $dao->getSygGalleryById($id);
 		}
 		
-		// return gallery in dto format
 		$settings = $gallery->toDto(true);
+		
+		// return gallery in dto format
 		return $settings;
 	}
 
@@ -544,11 +563,21 @@ class SygPlugin extends SanityPluginFramework {
 		
 		extract(shortcode_atts(array('id' => null), $attributes));
 
+		if ($id == 0) { $id = 'example'; }
+		
 		if (!empty($id)) {
 			try {
 				// get the gallery
 				$dao = new SygDao();
-				$gallery = $dao->getSygGalleryById($id);
+				
+				if ($id == 'example') {
+					$gallery = new SygGallery(serialize(SygConstant::$SYG_GALLERY_DEFAULT_SETTINGS));
+					$style = new SygStyle();
+					$style->setThumbImage(1);
+					$gallery->setSygStyle($style);
+				} else {
+					$gallery = $dao->getSygGalleryById($id);
+				}
 				
 				// put the gallery settings in the view
 				$this->data['gallery'] = $gallery;
@@ -807,6 +836,7 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// use simplexmlelement to parse header injection configuration file 
 		$headInjObject = simplexml_load_file($view['pluginUrl'].'/engine/conf/headerInjection.xml');
+		
 		// find library to include
 		$libs = $headInjObject->xpath('/headerInjection/enqueueList[@shortag=\''.$shortag.'\']/library');
 		
