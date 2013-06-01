@@ -415,7 +415,7 @@ jQuery.noConflict();
 							url = $('.syg_preview_theme').attr('href');
 							var params = formData.toString();
 							var params = params.replace(/&/g, "|");
-							alert(params);
+
 							adjusted_url = url + '&mode=' + $('#syg_component_preview').val() + '&params=' + params;
 							$('.syg_preview_theme').attr('href', adjusted_url);
 							return true;
