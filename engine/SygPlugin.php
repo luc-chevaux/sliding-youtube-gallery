@@ -520,7 +520,6 @@ class SygPlugin extends SanityPluginFramework {
 	 * @return array $settings
 	 */
 	public function getGallerySettings($id = null) {
-		//var_dump($_GET);
 		if ($id == 'example') {
 			// generate a fake gallery without style
 			$gallery = new SygGallery(serialize(SygConstant::$SYG_GALLERY_DEFAULT_SETTINGS));
@@ -895,7 +894,10 @@ class SygPlugin extends SanityPluginFramework {
 			case 'cache':
 				return $this->forwardToCacheGallery();
 			case 'redirect':
-				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_GALLERIES . '&modified='.$_GET['id'];
+				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_GALLERIES;
+				if (array_key_exists('id', $_GET)) {
+					$this->data['redirect_url'] .= '&modified=' . $_GET['id'];
+				}
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -955,7 +957,10 @@ class SygPlugin extends SanityPluginFramework {
 		
 				break;
 			case 'redirect':
-				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_STYLES . '&modified='.$_GET['id'];
+				$this->data['redirect_url'] = '?page=' . SygConstant::BE_ACTION_MANAGE_STYLES;
+				if (array_key_exists('id', $_GET)) {
+					$this->data['redirect_url'] .= '&modified=' . $_GET['id'];
+				}
 				return $this->render('redirect');
 			default:
 				// prepare header
@@ -1072,7 +1077,7 @@ class SygPlugin extends SanityPluginFramework {
 	
 					// create a new gallery
 					$gallery = new SygGallery($data);
-	
+					
 					// update db
 					$id = $this->sygDao->addSygGallery($gallery);
 	
