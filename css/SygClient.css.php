@@ -32,8 +32,9 @@ $jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_descriptio
 
 if (!empty($_GET['params'])) {
 	$params = $_GET['params'];
+	
 	parse_str(str_replace("|", "&", $params), $params);
-	unset($params['id']);
+	
 	// extract dynamic css
 	extract($params);
 }
