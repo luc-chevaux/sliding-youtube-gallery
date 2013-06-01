@@ -56,10 +56,12 @@ class SygGallery {
 	 * @param $key
 	 */
 	public function __construct($key = null) {
-		if (is_string($key)) $key = unserialize ($key);
-		$this->sygYouTube = new SygYouTube();
-		$this->sygDao = new SygDao();		
+		if (is_string($key)) {
+			$key = unserialize ($key);
+		}
 		$this->mapThis($key);
+		$this->sygYouTube = new SygYouTube();
+		$this->sygDao = new SygDao();
 	}
 
 	/**
