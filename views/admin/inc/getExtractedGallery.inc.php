@@ -1,10 +1,9 @@
 <?php 
-$id = $_GET['id'];
-
+$gallery_id = $_GET['gallery_id'];
 $syg = SygPlugin::getInstance();
-$option = $syg->getGallerySettings($_GET['id']);
-extract ($option);
+$option = $syg->getGallerySettings($gallery_id);
 
+extract ($option);
 $type = SygUtil::extractType($syg_youtube_videoformat);
 $width = SygUtil::extractWidth($syg_youtube_videoformat);
 
@@ -14,5 +13,6 @@ if ($type == 'n') {
 	$height = SygUtil::getWideHeight($width);
 }
 
-$view = $syg->getViewCtx($id);
+$view = $syg->getViewCtx($gallery_id);
+
 ?>
