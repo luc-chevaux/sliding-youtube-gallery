@@ -128,6 +128,24 @@ jQuery.noConflict();
 		},
 		
 		/* function that alert exception in the page */
+		sygAlert : function (title, message, type) {
+			$(".dialog-modal").attr("title", title);
+			$(".dialog-modal").empty();
+			$(".dialog-modal").prepend(message);
+		
+			 $(".dialog-modal").dialog({
+				modal: true,
+				draggable: false,
+				resizable: false,
+				buttons: {
+					Ok: function() {
+						$(this).dialog( "close" );
+					}
+				}
+			});
+		},
+		
+		/* function that alert exception in the page */
 		alertException : function (data) {
 			data = $.parseJSON(JSON.stringify(data));
 			var problemFound = data.exception_detail;
@@ -571,7 +589,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  alert ('Your server cache has been successfully updated.');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
 						  }
 					});
 				}
@@ -584,7 +602,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-galleries', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  alert ('Your server cache has been successfully updated.');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
 						  }
 					});
 				}
@@ -597,7 +615,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-settings', action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  alert ('Your server cache has been successfully updated.');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>');
 						  }
 					});
 				}
