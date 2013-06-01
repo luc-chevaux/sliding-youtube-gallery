@@ -38,7 +38,7 @@
 				<table style="position: absolute; top: 10px; right: 40px;">
 					<tr>
 						<td>
-							<a href="<?php echo $this->data['pluginUrl'] . 'views/admin/Preview.php?id=0'; ?>" class="iframe_0 syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
+							<a href="<?php echo $this->data['pluginUrl'] . 'views/admin/Preview.php?gallery_id=example'; ?>" class="iframe_example syg_preview_theme"><img class="syg_page_submit" title="Preview this Theme!" src="<?php echo $this->data['imgPath'].'/ui/admin/preview-style.png'; ?>"></img></a>
 						</td>
 						<td>
 							<label for="syg_component_preview"><strong>Component Preview</strong></label><br/>

@@ -18,6 +18,10 @@ require_once( WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygPlugin.php');
 $syg = SygPlugin::getInstance();
 $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
+
+// set http header
+header('Content-type: text/javascript; charset=utf-8');
+header('Expires: '.gmdate("D, d M Y H:i:s", time() + 3600*24*365).' GMT');
 ?>
 jQuery(window).load(function($) {
 	if (window.console) console.log('gallery loading function >> start');

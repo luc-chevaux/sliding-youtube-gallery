@@ -26,18 +26,18 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	</style>
 	<script type="text/javascript" src="../../../../../wp-includes/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/lib/syg.lib.client.min.js.php'; ?>"></script>
-	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id; ?>"></script>
+	<script type="text/javascript" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.js.php?id='.$gallery_id.'&params='.http_build_query($_GET, '', '|'); ?>"></script>
 </head>
 <body>
 	<div id="loading-level"></div>
 	<div id="loading-wrapper">
 		<?php 
-		echo $syg->getGallery(array('id' => $id));
+		echo $syg->getGallery(array('id' => $gallery_id));
 		?>
 	</div>
 	<div id="loading-footer">
 		<style type="text/css">
-			@import url('<?php echo $view['cssPath'].'SygClient.css.php?id=' . $id; ?>');			
+			@import url('<?php echo $view['cssPath'].'SygClient.css.php?id=' . $gallery_id. '&params=' . http_build_query($_GET, '', '|'); ?>');			
 			@import url('<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/js/3rdParty/fancybox/jquery.fancybox-1.3.4.css'; ?>');
 		</style>		
 		<script type="text/javascript">
