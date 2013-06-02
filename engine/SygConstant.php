@@ -455,6 +455,9 @@ class SygConstant {
 	const MSG_EX_STYLE_IN_USE = 'Opss... You can\'t delete this style because it is used by a gallery. Delete gallery or change its style first.';
 	const COD_EX_STYLE_IN_USE = '1006';
 	
+	const MSG_EX_CACHE_FAILED = 'Caching process has failed for some galleries. You could try to cache manually the following gallery:';
+	const COD_EX_CACHE_FAILED = '1007';
+	
 	/**
 	 * Validation message
 	 */
