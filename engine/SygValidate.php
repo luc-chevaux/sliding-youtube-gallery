@@ -45,15 +45,14 @@ class SygException extends Exception {
 }
 
 /**
- * @name SygValidateException
+ * @name SygExceptionList
  * @category Sliding Youtube Gallery Custom Exception Class
- * @since 1.3.0
+ * @since 1.5.0
  * @author: Luca Martini @ webEng
- * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.4.4
  */
 
-class SygValidateException extends SygException {
+class SygExceptionList extends SygException {
 	private $problems;
 
 	/**
@@ -105,6 +104,58 @@ class SygValidateException extends SygException {
 	public function setProblems($problems) {
 		$this->problems = $problems;
 	}
+	
+	public function toArray() {
+		return array("code" => parent::getCode(), "message" => parent::getMessage, "exception" => parent::getTraceAsString(), "problems" =>$this->getProblems());
+	}
+}
+
+/**
+ * @name SygValidateException
+ * @category Sliding Youtube Gallery Custom Exception Class
+ * @since 1.3.0
+ * @author: Luca Martini @ webEng
+ * @version: 1.4.4
+ */
+
+class SygValidateException extends SygExceptionList {
+	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
+		parent::setProblems($problems);
+
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			parent::__construct($message, $code, $previous);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	public function __toString() {
+		return __CLASS__ . ": [{$this->getCode()}]: {$this->getMessage()}\n";
+	}
+}
+
+/**
+ * @name SygCacheFailedException
+ * @category Sliding Youtube Gallery Custom Exception Class
+ * @since 1.3.0
+ * @author: Luca Martini @ webEng
+ * @version: 1.4.4
+ */
+
+class SygCacheFailedException extends SygExceptionList {
+	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
+		parent::setProblems($problems);
+
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			parent::__construct($message, $code, $previous);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	public function __toString() {
+		return __CLASS__ . ": [{$this->getCode()}]: {$this->getMessage()}\n";
+	}
 }
 
 /**
@@ -112,7 +163,6 @@ class SygValidateException extends SygException {
  * @category Sliding Youtube Gallery Custom Exception Class
  * @since 1.3.0
  * @author: Luca Martini @ webEng
- * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.4
  */
 class SygGalleryNotFoundException extends SygException {
@@ -130,7 +180,6 @@ class SygGalleryNotFoundException extends SygException {
  * @category Sliding Youtube Gallery Custom Exception Class
  * @since 1.3.0
  * @author: Luca Martini @ webEng
- * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.3.4
  */
 class SygStyleInUseException extends SygException {
@@ -148,7 +197,6 @@ class SygStyleInUseException extends SygException {
  * @category Sliding Youtube Gallery Validate Class
  * @since 1.2.5
  * @author: Luca Martini @ webEng
- * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
  * @version: 1.2.5
  */
 

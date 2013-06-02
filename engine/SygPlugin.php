@@ -997,12 +997,28 @@ class SygPlugin extends SanityPluginFramework {
 			// determine wich action to call
 			switch ($action) {
 				case 'cache':
-					// update cached gallery
+					// update all cached gallery
 					$galleries = $this->sygDao->getAllCachedGallery();
+					
+					// create a failed array
+					$failed = array();
+					
+					// try to cache each gallery
 					for ($i=0; $i<count($galleries); $i++) {
 						$gallery = $galleries[$i];
-						$gallery->cacheGallery();
+						try {
+							$gallery->cacheGallery();
+						} catch (SygException $ex) {
+							array_push($failed, array('field' => $gallery->getGalleryName().' ('.$gallery->getId().')', 'msg' => $ex->getTraceAsString()));
+						}
 					}
+					
+					if (count($failed) > 0) {
+						$cacheFailedExc = new SygCacheFailedException($failed, SygConstant::MSG_EX_CACHE_FAILED, SygConstant::COD_EX_CACHE_FAILED, null);
+						$this->data['syg_exception'] = json_encode($cacheFailedExc->toArray());
+						return $this->render('admin/jsException');
+					}
+					
 					break;
 				default:
 					if (isset($_POST['syg_submit_hidden'])

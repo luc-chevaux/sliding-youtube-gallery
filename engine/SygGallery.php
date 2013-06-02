@@ -238,111 +238,116 @@ class SygGallery {
 	 * @since 1.4.0
 	 * @param SygGallery $gallery
 	 */
-	public function cacheGallery() {		
-		// local plugin instance
-		$syg = SygPlugin::getInstance();
-		
-		// get the style 
-		$style = $this->getSygStyle();
-		
-		// get the id of the button
-		$thumbImg = $style->getThumbImage();
-		
-		// get overlay button
-		$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-1.png';
-		
-		// get the feed
-		$feed = $this->sygYouTube->getVideoFeed($this);
-		
-		// get the options
-		$options = $syg->getOptions();
-		
-		// create directory if not exist
-		if (!$this->isGalleryCached()) {
-			// create directory
-			mkdir($this->getJsonPath());
-			chmod($this->getJsonPath(), 0755);
-			// create directory
-			mkdir($this->getThumbnailsPath());
-			chmod($this->getThumbnailsPath(), 0755);
-			// create directory
-			mkdir($this->getHtmlPath());
-			chmod($this->getHtmlPath(), 0755);
-		}
-		
-		// cache video thumbnails from youtube
-		foreach ($feed as $element) {
-			$videoThumbnails = $element->getVideoThumbnails();
-			$imgUrl = $videoThumbnails[$options['syg_option_which_thumb']]['url'];
-			$localFN = $element->getVideoId().".jpg";
+	public function cacheGallery() {	
+		try {	
+			// local plugin instance
+			$syg = SygPlugin::getInstance();
 			
-			if (extension_loaded('gd') && function_exists('gd_info')) {				
-				// write resized image
-				SygUtil::writeResizedImage($imgUrl, $this->getThumbnailsPath().$localFN, null, $style->getThumbWidth().'x'.$style->getThumbHeight());
+			// get the style 
+			$style = $this->getSygStyle();
+			
+			// get the id of the button
+			$thumbImg = $style->getThumbImage();
+			
+			// get overlay button
+			$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-1.png';
+			
+			// get the feed
+			$feed = $this->sygYouTube->getVideoFeed($this);
+			
+			// get the options
+			$options = $syg->getOptions();
+			
+			// create directory if not exist
+			if (!$this->isGalleryCached()) {
+				// create directory
+				mkdir($this->getJsonPath());
+				chmod($this->getJsonPath(), 0755);
+				// create directory
+				mkdir($this->getThumbnailsPath());
+				chmod($this->getThumbnailsPath(), 0755);
+				// create directory
+				mkdir($this->getHtmlPath());
+				chmod($this->getHtmlPath(), 0755);
+			}
+			
+			// cache video thumbnails from youtube
+			foreach ($feed as $element) {
+				$videoThumbnails = $element->getVideoThumbnails();
+				$imgUrl = $videoThumbnails[$options['syg_option_which_thumb']]['url'];
+				$localFN = $element->getVideoId().".jpg";
 				
-				// add play button overlay
-				SygUtil::addOverlayButton($this->getThumbnailsPath().$localFN, $overlaySrc, $style);
-			} else if (SygUtil::isCurlInstalled()) {
-				// curl enabled
-				$ch = curl_init($imgUrl);
-				$fp = fopen($this->getThumbnailsPath().$localFN, 'wb');
-				curl_setopt($ch, CURLOPT_FILE, $fp);
-				curl_setopt($ch, CURLOPT_HEADER, 0);
-				curl_exec($ch);
-				curl_close($ch);
-				fclose($fp);
-			} else if (ini_get('allow_url_fopen')) {
-				// allow url fopen
-				file_put_contents($this->getThumbnailsPath().$localFN, file_get_contents($imgUrl));
-			} else { null; }
+				if (extension_loaded('gd') && function_exists('gd_info')) {				
+					// write resized image
+					SygUtil::writeResizedImage($imgUrl, $this->getThumbnailsPath().$localFN, null, $style->getThumbWidth().'x'.$style->getThumbHeight());
+					
+					// add play button overlay
+					SygUtil::addOverlayButton($this->getThumbnailsPath().$localFN, $overlaySrc, $style);
+				} else if (SygUtil::isCurlInstalled()) {
+					// curl enabled
+					$ch = curl_init($imgUrl);
+					$fp = fopen($this->getThumbnailsPath().$localFN, 'wb');
+					curl_setopt($ch, CURLOPT_FILE, $fp);
+					curl_setopt($ch, CURLOPT_HEADER, 0);
+					curl_exec($ch);
+					curl_close($ch);
+					fclose($fp);
+				} else if (ini_get('allow_url_fopen')) {
+					// allow url fopen
+					file_put_contents($this->getThumbnailsPath().$localFN, file_get_contents($imgUrl));
+				} else { null; }
+				
+				// chmod file
+				chmod ($this->getThumbnailsPath().$localFN, 0755);
+			}
+		
+			// get the plugin singleton
+			$syg = SygPlugin::getInstance();
 			
-			// chmod file
-			chmod ($this->getThumbnailsPath().$localFN, 0755);
+			// cache the html of the gallery
+			$galleryHtml = $syg->getGallery(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+			$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$this->getId().".html";
+			file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
+			chmod ($this->getHtmlPath().$localFN, 0755);
+			
+			// cache the html of the carousel
+			$carouselHtml = $syg->getCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+			$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
+			file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
+			chmod ($this->getHtmlPath().$localFN, 0755);
+			
+			// cache the html of the page
+			$pageHtml = $syg->getPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+			$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
+			file_put_contents($this->getHtmlPath().$localFN, $pageHtml);
+			chmod ($this->getHtmlPath().$localFN, 0755);
+			
+			// cache the html of the elastislide
+			$elastislideHtml = $syg->getElastislide(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
+			$localFN = SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE.'-'.$this->getId().".html";
+			file_put_contents($this->getHtmlPath().$localFN, $elastislideHtml);
+			chmod ($this->getHtmlPath().$localFN, 0755);
+			
+			// cache json page
+			$options = $syg->getOptions();
+			$per_page = $options['syg_option_pagenumrec']; // Per page records
+			$maxVideoCount = $this->getYtMaxVideoCount();
+			$numVid = $this->sygYouTube->countVideoEntry($this);
+		
+			$no_of_paginations = ceil ($numVid / $per_page);
+			for ($i=1;$i<=$no_of_paginations;$i++) {
+				$url = $syg->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&syg_option_which_thumb='.$options['syg_option_which_thumb'].'&syg_option_pagenumrec='.$per_page.'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
+				$localFN = $i.'.json';
+				file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
+				chmod ($this->getJsonPath().$localFN, 0755);
+			}
+			
+			// delete javascript cache
+			SygUtil::removeDirectory($this->getJsPath());
+		} catch (Exception $ex) {
+			$sygExc = new SygException($ex->getMessage(), $ex->getCode(), $ex->getPrevious()); 
+			throw $sygExc;
 		}
-	
-		// get the plugin singleton
-		$syg = SygPlugin::getInstance();
-		
-		// cache the html of the gallery
-		$galleryHtml = $syg->getGallery(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_GALLERY.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $galleryHtml);
-		chmod ($this->getHtmlPath().$localFN, 0755);
-		
-		// cache the html of the carousel
-		$carouselHtml = $syg->getCarousel(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $carouselHtml);
-		chmod ($this->getHtmlPath().$localFN, 0755);
-		
-		// cache the html of the page
-		$pageHtml = $syg->getPage(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_PAGE.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $pageHtml);
-		chmod ($this->getHtmlPath().$localFN, 0755);
-		
-		// cache the html of the elastislide
-		$elastislideHtml = $syg->getElastislide(array('id' => $this->getId()), SygConstant::SYG_PLUGIN_FE_CACHING_MODE);
-		$localFN = SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE.'-'.$this->getId().".html";
-		file_put_contents($this->getHtmlPath().$localFN, $elastislideHtml);
-		chmod ($this->getHtmlPath().$localFN, 0755);
-		
-		// cache json page
-		$options = $syg->getOptions();
-		$per_page = $options['syg_option_pagenumrec']; // Per page records
-		$maxVideoCount = $this->getYtMaxVideoCount();
-		$numVid = $this->sygYouTube->countVideoEntry($this);
-	
-		$no_of_paginations = ceil ($numVid / $per_page);
-		for ($i=1;$i<=$no_of_paginations;$i++) {
-			$url = $syg->getJsonQueryIfUrl().'?query=videos&page_number='.$i.'&id='.$this->getId().'&syg_option_which_thumb='.$options['syg_option_which_thumb'].'&syg_option_pagenumrec='.$per_page.'&mode='.SygConstant::SYG_PLUGIN_FE_CACHING_MODE;
-			$localFN = $i.'.json';
-			file_put_contents($this->getJsonPath().$localFN, file_get_contents($url));
-			chmod ($this->getJsonPath().$localFN, 0755);
-		}
-		
-		// delete javascript cache
-		SygUtil::removeDirectory($this->getJsPath());
 	}
 	
 	/**

@@ -66,7 +66,7 @@ jQuery.noConflict();
 					  	  eval(exceptions.text());
 					  	  if (syg_exception != null) {
 					  	  	error_title = 'Exception ' + syg_exception.code;
-					  	  	error_message = syg_exception.message;
+					  	  	error_message = '<p>' + syg_exception.message + '</p>';
 					  	  	methods.sygAlert.call(this, error_title, error_message, 'error', null);
 					  	  } else {
 						  	var target_url = window.location.toString();
@@ -144,10 +144,10 @@ jQuery.noConflict();
 		/* function that alert exception in the page */
 		sygAlert : function (windowTitle, message, type, callbck) {			
 			if (type == 'confirm') {
-				$(".dialog-modal").attr("title", windowTitle);			
-				$(".dialog-modal").empty();
-				$(".dialog-modal").prepend(message);
-				$(".dialog-modal").dialog({
+				$(".dialog-confirm").attr("title", windowTitle);			
+				$(".dialog-confirm").empty();
+				$(".dialog-confirm").prepend(message);
+				$(".dialog-confirm").dialog({
 					resizable: false,
 					modal: true,
 					buttons: {
@@ -161,10 +161,10 @@ jQuery.noConflict();
 					}
 				});
 			} else if (type == 'info') {
-				$(".dialog-modal").attr("title", windowTitle);			
-				$(".dialog-modal").empty();
-				$(".dialog-modal").prepend(message);			
-				$(".dialog-modal").dialog({
+				$(".dialog-info").attr("title", windowTitle);			
+				$(".dialog-info").empty();
+				$(".dialog-info").prepend(message);			
+				$(".dialog-info").dialog({
 					modal: true,
 					draggable: false,
 					resizable: false,
@@ -175,10 +175,10 @@ jQuery.noConflict();
 					}
 				});
 			} else if (type == 'error') {
-				$(".dialog-exception").attr("title", windowTitle);			
-				$(".dialog-exception").empty();
-				$(".dialog-exception").prepend(message);			
-				$(".dialog-exception").dialog({
+				$(".dialog-error").attr("title", windowTitle);			
+				$(".dialog-error").empty();
+				$(".dialog-error").prepend(message);			
+				$(".dialog-error").dialog({
 					modal: true,
 					draggable: false,
 					resizable: false,
@@ -643,9 +643,11 @@ jQuery.noConflict();
 		updateCache: function () {
 			var modified = methods.getQParam.call(this, 'modified');
 			var page = methods.getQParam.call(this, 'page');
+			
 			if ($.isNumeric(modified) && page == 'syg-manage-styles' && syg_option.syg_option_askcache == '1') {
-				var answer = confirm('Your style has been changed. Cached content need to be updated. Update it now?');
-				if (answer) {
+				var title = 'Confirmation';
+				var message = '<p>Your style has been changed. Cached content need to be updated. Update it now?</p>';
+				var callbck = function () {
 					var request = jQuery.ajax({
 						  url: 'admin.php',
 						  type: 'GET',
@@ -655,10 +657,14 @@ jQuery.noConflict();
 							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
-				}
+				};
+				
+				methods.sygAlert.call(this, title, message, 'confirm', callbck);
+				
 			} else if ($.isNumeric(modified) && page == 'syg-manage-galleries' && syg_option.syg_option_askcache == '1') {
-				var answer = confirm('Your gallery has been changed. Cached content need to be updated. Update it now?');
-				if (answer) {
+				var title = 'Confirmation';
+				var message = '<p>Your gallery has been changed. Cached content need to be updated. Update it now?</p>';
+				var callbck = function () {
 					var request = jQuery.ajax({
 						  url: 'admin.php',
 						  type: 'GET',
@@ -668,20 +674,49 @@ jQuery.noConflict();
 							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
-				}
+				};
+				
+				methods.sygAlert.call(this, title, message, 'confirm', callbck);
+				
 			} else if (modified == 'true' && syg_option.syg_option_askcache == '1') {
-				var answer = confirm('Your settings has been updated. Cached content need to be updated. Update it now?');
-				if (answer) {
+			
+				var title = 'Confirmation';
+				var message = '<p>Your settings has been updated. Cached content need to be updated. Update it now?</p>';
+				
+				var callbck = function () {
 					var request = jQuery.ajax({
 						  url: 'admin.php',
 						  type: 'GET',
 						  data: {page: 'syg-manage-settings', action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
-				}
+				};
+				
+				var callbck = function () {
+					var request = jQuery.ajax({
+						  url: 'admin.php',
+						  type: 'GET',
+						  data: {page: 'syg-manage-settings', action : 'cache'},
+						  dataType: 'text',
+						  success: function (data) {
+						 	  var exceptions = jQuery(data).filter("#jsonException");
+						  	  eval(exceptions.text());
+						  	  if (syg_exception != null) {
+						  	  	error_title = 'Exception ' + syg_exception.code;
+						  	  	error_message = '<p>' + syg_exception.message + '</p>';
+						  	  	methods.sygAlert.call(this, error_title, error_message, 'error', null);
+						  	  } else {
+						  	  	var windowTitle = 'Information';
+						  	  	var windowMessage = '<p>Your server cache has been successfully updated.</p>';
+						  	  	methods.sygAlert.call(this, windowTitle, windowMessage, 'info', null);
+							  }
+						  }
+					});
+				};
+				methods.sygAlert.call(this, title, message, 'confirm', callbck);
+				return true;				
 			}
 		},
 		
