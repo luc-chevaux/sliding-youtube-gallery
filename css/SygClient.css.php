@@ -27,6 +27,7 @@ extract ($option);
 $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
 
+$heightRatio = ceil($syg_thumbnail_height*2.8);
 
 $jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_description_fontcolor);
 
@@ -219,7 +220,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 }
 
 .syg_video_carousel-<?php echo $id; ?> {
-	height: <?php echo ceil($syg_thumbnail_height*2.3);?>px;
+	height: <?php echo $heightRatio; ?>px;
 }
 
 #hidden-carousel-layer_<?php echo $id; ?> {
@@ -233,7 +234,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
     filter:alpha(opacity=30);	
     position: absolute;
     left: <?php echo $syg_box_padding; ?>px;
-    bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
+    bottom: <?php echo ceil($heightRatio/2 - 25);?>px;
     display: inline;
     z-index: 1000;
 }
@@ -242,7 +243,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
     filter:alpha(opacity=30);	
     position: absolute;
     right: <?php echo $syg_box_padding; ?>px;
-    bottom: <?php echo ceil(($syg_thumbnail_height*2.3)/2 - 25);?>px;
+    bottom: <?php echo ceil($heightRatio/2 - 25);?>px;
     display: inline;
     z-index: 1000;
 }
@@ -257,7 +258,7 @@ h4.video_title-<?php echo $id; ?> a:link, h4.video_title-<?php echo $id; ?> a:vi
 
 #carousel-title-<?php echo $id; ?> {
 	position: absolute;
-	top: <?php echo ceil($syg_box_padding*1.5); ?>px;
+	top: <?php echo $syg_box_padding; ?>px;
 	right: <?php echo $syg_box_padding; ?>px;
 	left: <?php echo $syg_box_padding; ?>px;
 	overflow: hidden;
