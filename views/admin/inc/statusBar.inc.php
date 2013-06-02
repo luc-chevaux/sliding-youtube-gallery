@@ -33,5 +33,6 @@
 		</div>
 	</div>
 </div>
-<div class="dialog-modal" title=""></div>
-<div class="dialog-exception" title=""></div>
+<div class="dialog-confirm" title=""></div>
+<div class="dialog-info" title=""></div>
+<div class="dialog-error" title=""></div>
