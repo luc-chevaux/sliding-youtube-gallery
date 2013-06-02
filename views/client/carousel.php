@@ -47,12 +47,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				<img class="right-carousel-button-<?php echo $gallery->getId();?>" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/50/right.png'; ?>">
 			</div>
 		<?php } ?>
-		
-		<p id="carousel-title-<?php echo $gallery->getId(); ?>"></p>
 	</div>
+	<p id="carousel-title-<?php echo $gallery->getId(); ?>"></p>
 </div>
 
-<!-- registra script -->
 <?php 
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;

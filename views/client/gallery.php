@@ -1,6 +1,3 @@
-<!-- Php Inclusion -->
-
-<!-- Extra Php Code -->
 <?php
 // gallery data retreival
 $feed = $this->data['feed'];
@@ -12,13 +9,7 @@ $options = $this->data['options'];
 $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
-<!-- User Message -->
 
-<!-- Css Inclusion -->
-
-<!-- Javascript Inclusion -->
-
-<!-- Gallery -->
 <div id="syg_video_gallery-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>">
 	<div class="sc_menu-<?php echo $gallery->getId();?>">
 		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none !important;">
@@ -64,7 +55,6 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	</div>
 </div>
 
-<!-- registra script -->
 <?php 
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;

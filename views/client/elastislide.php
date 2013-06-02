@@ -46,6 +46,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	</li>
 	<?php } ?>
 </ul>
+
 <?php 
 // js to include
 $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
