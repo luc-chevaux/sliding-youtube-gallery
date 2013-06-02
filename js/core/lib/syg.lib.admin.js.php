@@ -64,7 +64,7 @@ jQuery.noConflict();
 					  success: function (data) {
 					 	  var exceptions = jQuery(data).filter("#jsonException");
 					  	  eval(exceptions.text());
-					  	  if (syg_exception != null) {
+					  	  if ((typeof syg_exception != 'undefined') && (syg_exception != null)) {
 					  	  	error_title = 'Exception ' + syg_exception.code;
 					  	  	error_message = '<p>' + syg_exception.message + '</p>';
 					  	  	methods.sygAlert.call(this, error_title, error_message, 'error', null);
