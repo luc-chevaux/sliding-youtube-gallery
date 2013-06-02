@@ -452,6 +452,9 @@ class SygConstant {
 	const MSG_EX_GALLERY_NOT_CACHED = 'To enable 3d cloud carousel for this gallery, you must cache the content of this gallery. Please login in the admin area and check the cache content option.';
 	const COD_EX_GALLERY_NOT_CACHED = '1005';
 	
+	const MSG_EX_STYLE_IN_USE = 'Opss... You can\'t delete this style because it is used by a gallery. Delete gallery or change its style first.';
+	const COD_EX_STYLE_IN_USE = '1006';
+	
 	/**
 	 * Validation message
 	 */
