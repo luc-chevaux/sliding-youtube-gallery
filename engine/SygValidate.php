@@ -52,7 +52,7 @@ class SygException extends Exception {
  * @version: 1.4.4
  */
 
-class SygExceptionList extends SygException {
+class SygExceptionList extends Exception {
 	private $problems;
 
 	/**
@@ -130,7 +130,7 @@ class SygValidateException extends SygExceptionList {
 	}
 
 	public function __toString() {
-		return __CLASS__ . ": [{$this->getCode()}]: {$this->getMessage()}\n";
+		return parent::__toString();
 	}
 }
 
@@ -154,7 +154,7 @@ class SygCacheFailedException extends SygExceptionList {
 	}
 
 	public function __toString() {
-		return __CLASS__ . ": [{$this->getCode()}]: {$this->getMessage()}\n";
+		return parent::__toString();
 	}
 }
 
@@ -486,6 +486,8 @@ class SygValidate {
 			$exc = new SygValidateException($problemFound,
 					SygConstant::MSG_EX_GALLERY_NOT_VALID,
 					SygConstant::COD_EX_GALLERY_NOT_VALID);
+			var_dump($exc); die();
+			
 			throw $exc;
 		} else {
 			return true;
