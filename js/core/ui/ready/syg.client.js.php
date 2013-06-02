@@ -95,8 +95,10 @@ jQuery(document).ready(function($){
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
 		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
-	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>				   
+	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>
+		<?php $heightRatio = ceil($syg_thumbnail_height*2.8);?>		   
 		// This initialises carousels on the container elements specified, in this case, carousel1.
+		alert('sto lanciando');
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
 			minScale: <?php echo $syg_option_carousel_minscale; ?>,
 			reflHeight: <?php echo $syg_option_carousel_reflheight; ?>,
@@ -105,8 +107,8 @@ jQuery(document).ready(function($){
 			mouseWheel: true, 
 			FPS: <?php echo $syg_option_carousel_fps; ?>,
 			xPos: <?php echo ceil($syg_box_width/2); ?>, // half the height of container.
-			yPos: <?php echo ceil((($syg_thumbnail_height*2.5)/2)/2); ?>, // half the width of the container.
-			yRadius: <?php echo ceil($syg_thumbnail_height*2.5/6); ?>, // da 0 a 100 Height of container / 6
+			yPos: <?php echo ceil((($heightRatio)/1.7)/2); ?>, // half the width of the container.
+			yRadius: <?php echo ceil($heightRatio/6); ?>, // da 0 a 100 Height of container / 6
 			xRadius: <?php echo ceil($syg_box_width/2.3); ?>, // percentuale al container Width of container / 2.3
 			autoRotate: '<?php echo $syg_option_carousel_autorotate; ?>',
 			<?php if ($syg_option_carousel_autorotate == "yes") { ?>
