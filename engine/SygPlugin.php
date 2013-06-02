@@ -1355,9 +1355,18 @@ class SygPlugin extends SanityPluginFramework {
 			// get the gallery id
 			$id = (int) $_GET['id'];
 	
-			// delete gallery
-			$this->sygDao->deleteSygStyle($this->sygDao->getSygStyleById($id));
-	
+			// get galleries with by style id 
+			$galleries = $this->sygDao->getSygGalleriesByStyleId($id);
+			
+			if (count($galleries) > 0) {
+				$exception = new SygStyleInUseException(SygConstant::MSG_EX_STYLE_IN_USE, SygConstant::COD_EX_STYLE_IN_USE);
+				$this->data['syg_exception'] = json_encode($exception->toArray());
+				return $this->render('admin/jsException');
+			} else {			
+				// delete gallery
+				$this->sygDao->deleteSygStyle($this->sygDao->getSygStyleById($id));
+			}
+				
 			die();
 		}
 	}
