@@ -97,8 +97,7 @@ jQuery(document).ready(function($){
 		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>
 		<?php $heightRatio = ceil($syg_thumbnail_height*2.8);?>		   
-		// This initialises carousels on the container elements specified, in this case, carousel1.
-		alert('sto lanciando');
+		// This initialises carousels on the container elements specified, in this case, carousel1
 		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
 			minScale: <?php echo $syg_option_carousel_minscale; ?>,
 			reflHeight: <?php echo $syg_option_carousel_reflheight; ?>,
