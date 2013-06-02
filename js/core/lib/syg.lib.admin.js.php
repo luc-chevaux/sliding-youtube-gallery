@@ -201,11 +201,11 @@ jQuery.noConflict();
 			});
 			html = html + '</ul>';
 			
-			$(".dialog-modal").attr("title", "Preview Errors:");
-			$(".dialog-modal").empty();
-			$(".dialog-modal").prepend(html);
+			$(".dialog-error").attr("title", "Preview Errors:");
+			$(".dialog-error").empty();
+			$(".dialog-error").prepend(html);
 		
-			 $(".dialog-modal").dialog({
+			 $(".dialog-error").dialog({
 				modal: true,
 				draggable: false,
 				resizable: false,
@@ -265,7 +265,7 @@ jQuery.noConflict();
 							$('#galleries_table tr:last-child').after(emptyRowsHtml);
 						}
 					} else {
-						html = html + '<tr>';
+						html = html + '<tr id="syg_row_x">';
 						html = html + '<td colspan="4">';
 						if (methods.getQParam.call(this, 'pageNum')>0) {
 							html = html + 'No styles found in this page';
@@ -354,7 +354,7 @@ jQuery.noConflict();
 							$('#galleries_table tr:last-child').after(emptyRowsHtml);
 						}
 					} else {
-						html = html + '<tr>';
+						html = html + '<tr id="syg_row_x">';
 						html = html + '<td colspan="7">';
 						if (methods.getQParam.call(this, 'pageNum')>0) {
 							html = html + 'No galleries found in this page';
@@ -498,7 +498,7 @@ jQuery.noConflict();
 					
 					$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/validate.php?what=style&' + formData, function (data) { 
 						if(!jQuery.isEmptyObject(data)) {
-							$.fn.sygadmin('alertException', data);
+							methods.alertException.call(this, data);
 							$.fancybox.close();
 						}
 					});

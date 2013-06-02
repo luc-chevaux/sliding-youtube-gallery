@@ -1,58 +1,16 @@
 <?php
 
 /**
- * @name SygException
+ * @name SygValidateException
  * @category Sliding Youtube Gallery Custom Exception Class
- * @since 1.5.0
+ * @since 1.3.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.3.4
- */
-
-class SygException extends Exception {
-
-	/**
-	 * @name __construct
-	 * @category construct SygValidateException object
-	 * @since 1.3.4
-	 * @param $problems
-	 * @param $message
-	 * @param $code
-	 * @param $previous
-	 */
-	public function __construct($message, $code = 0, Exception $previous = null) {
-		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-			parent::__construct($message, $code, $previous);
-		} else {
-			parent::__construct($message, $code);
-		}
-	}
-
-	/**
-	 * @name __toString
-	 * @category return a string map which is representation of the object
-	 * @since 1.3.4
-	 * @throws Exception
-	 * @return string $this
-	 */
-	public function __toString() {
-		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-	}
-	
-	public function toArray() {
-		return array("code" => $this->code, "message" => $this->message, "exception" => parent::getTraceAsString());
-	}
-}
-
-/**
- * @name SygExceptionList
- * @category Sliding Youtube Gallery Custom Exception Class
- * @since 1.5.0
- * @author: Luca Martini @ webEng
  * @version: 1.4.4
  */
 
-class SygExceptionList extends Exception {
+class SygValidateException extends Exception {
+
 	private $problems;
 
 	/**
@@ -64,7 +22,8 @@ class SygExceptionList extends Exception {
 	 * @param $code
 	 * @param $previous
 	 */
-	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
+	public function __construct($problems, $message, $code = 0,
+			Exception $previous = null) {
 		$this->setProblems($problems);
 
 		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
@@ -111,30 +70,6 @@ class SygExceptionList extends Exception {
 }
 
 /**
- * @name SygValidateException
- * @category Sliding Youtube Gallery Custom Exception Class
- * @since 1.3.0
- * @author: Luca Martini @ webEng
- * @version: 1.4.4
- */
-
-class SygValidateException extends SygExceptionList {
-	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
-		parent::setProblems($problems);
-
-		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-			parent::__construct($message, $code, $previous);
-		} else {
-			parent::__construct($message, $code);
-		}
-	}
-
-	public function __toString() {
-		return parent::__toString();
-	}
-}
-
-/**
  * @name SygCacheFailedException
  * @category Sliding Youtube Gallery Custom Exception Class
  * @since 1.3.0
@@ -142,9 +77,22 @@ class SygValidateException extends SygExceptionList {
  * @version: 1.4.4
  */
 
-class SygCacheFailedException extends SygExceptionList {
-	public function __construct($problems, $message, $code = 0, Exception $previous = null) {
-		parent::setProblems($problems);
+class SygCacheFailedException extends Exception {
+
+	private $problems;
+
+	/**
+	 * @name __construct
+	 * @category construct SygValidateException object
+	 * @since 1.3.0
+	 * @param $problems
+	 * @param $message
+	 * @param $code
+	 * @param $previous
+	 */
+	public function __construct($problems, $message, $code = 0,
+			Exception $previous = null) {
+		$this->setProblems($problems);
 
 		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
 			parent::__construct($message, $code, $previous);
@@ -153,8 +101,39 @@ class SygCacheFailedException extends SygExceptionList {
 		}
 	}
 
+	/**
+	 * @name __toString
+	 * @category return a string map which is representation of the object
+	 * @since 1.3.0
+	 * @throws Exception
+	 * @return string $this
+	 */
 	public function __toString() {
-		return parent::__toString();
+		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+	}
+
+	/**
+	 * @name getProblems
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @return array $problemFound
+	 */
+	public function getProblems() {
+		return $this->problems;
+	}
+
+	/**
+	 * @name setProblems
+	 * @category getters and setters
+	 * @since 1.3.0
+	 * @param $problemFound
+	 */
+	public function setProblems($problems) {
+		$this->problems = $problems;
+	}
+	
+	public function toArray() {
+		return array("code" => parent::getCode(), "message" => parent::getMessage, "exception" => parent::getTraceAsString(), "problems" =>$this->getProblems());
 	}
 }
 
@@ -165,13 +144,40 @@ class SygCacheFailedException extends SygExceptionList {
  * @author: Luca Martini @ webEng
  * @version: 1.3.4
  */
-class SygGalleryNotFoundException extends SygException {
+
+class SygGalleryNotFoundException extends Exception {
+
+	/**
+	 * @name __construct
+	 * @category construct SygGalleryNotFoundException object
+	 * @since 1.3.4
+	 * @param $problems
+	 * @param $message
+	 * @param $code
+	 * @param $previous
+	 */
 	public function __construct($message, $code = 0, Exception $previous = null) {
-		parent::__construct($message, $code, $previous);
+
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			parent::__construct($message, $code, $previous);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	/**
+	 * @name __toString
+	 * @category return a string map which is representation of the object
+	 * @since 1.3.4
+	 * @throws Exception
+	 * @return string $this
+	 */
+	public function __toString() {
+		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
 	}
 	
-	public function __toString() {
-		return parent::__toString();
+	public function toArray() {
+		return array("code" => $this->code, "message" => $this->message, "exception" => parent::getTraceAsString());
 	}
 }
 
@@ -182,13 +188,39 @@ class SygGalleryNotFoundException extends SygException {
  * @author: Luca Martini @ webEng
  * @version: 1.3.4
  */
-class SygStyleInUseException extends SygException {
+class SygStyleInUseException extends Exception {
+
+	/**
+	 * @name __construct
+	 * @category construct SygGalleryNotFoundException object
+	 * @since 1.3.4
+	 * @param $problems
+	 * @param $message
+	 * @param $code
+	 * @param $previous
+	 */
 	public function __construct($message, $code = 0, Exception $previous = null) {
-		parent::__construct($message, $code, $previous);
+
+		if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+			parent::__construct($message, $code, $previous);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	/**
+	 * @name __toString
+	 * @category return a string map which is representation of the object
+	 * @since 1.3.4
+	 * @throws Exception
+	 * @return string $this
+	 */
+	public function __toString() {
+		return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
 	}
 	
-	public function __toString() {
-		return parent::__toString();
+	public function toArray() {
+		return array("code" => $this->code, "message" => $this->message, "exception" => parent::getTraceAsString());
 	}
 }
 
@@ -486,7 +518,6 @@ class SygValidate {
 			$exc = new SygValidateException($problemFound,
 					SygConstant::MSG_EX_GALLERY_NOT_VALID,
 					SygConstant::COD_EX_GALLERY_NOT_VALID);
-			var_dump($exc); die();
 			
 			throw $exc;
 		} else {
@@ -514,10 +545,10 @@ class SygValidate {
 				array('field' => SygUtil::getLabel('syg_option_numrec'),
 						'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_numrec'])));
 		} else {
-			if ($data['syg_option_numrec'] < 2) {
+			if (!($data['syg_option_numrec'] >= 2 && $data['syg_option_numrec'] <= 15)) {
 				array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_option_numrec'),
-							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_LESS_VALUE, 2)));
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_numrec'], 2, 15)));
 			}
 		}
 		
@@ -527,10 +558,10 @@ class SygValidate {
 				array('field' => SygUtil::getLabel('syg_option_pagenumrec'),
 						'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_A_INTEGER, $data['syg_option_pagenumrec'])));
 		} else {
-			if ($data['syg_option_pagenumrec'] < 2) {
+			if (!($data['syg_option_pagenumrec'] >= 2 && $data['syg_option_pagenumrec'] <= 15)) {
 				array_push($problemFound,
 					array('field' => SygUtil::getLabel('syg_option_pagenumrec'),
-							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_LESS_VALUE, 2)));
+							'msg' => SygUtil::injectValues(SygConstant::BE_VALIDATE_NOT_IN_RANGE, $data['syg_option_pagenumrec'], 2, 15)));
 			}
 		}
 		

@@ -882,7 +882,13 @@ class SygPlugin extends SanityPluginFramework {
 		} else {
 			$action = 'default';
 		}
-
+		
+		// instantiate dao
+		$dao = new SygDao();
+		
+		// put styles count in the view
+		$this->data['stylesCount'] = $dao->getStylesCount();
+		
 		// determine wich action to call
 		switch ($action) {
 			case 'add':
@@ -902,12 +908,6 @@ class SygPlugin extends SanityPluginFramework {
 			default:
 				// prepare header
 				$this->prepareHeader($this->data, SygConstant::SYG_ADMIN);
-	
-				// instantiate dao
-				$dao = new SygDao();
-				
-				// put styles count in the view
-				$this->data['stylesCount'] = $dao->getStylesCount();
 				
 				// number of pages
 				$options = $this->getOptions();
