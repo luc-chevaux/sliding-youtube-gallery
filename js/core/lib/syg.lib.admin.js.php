@@ -842,7 +842,15 @@ jQuery(document).ready(function($) {
 			$.fn.sygadmin('updateCache');
 			break;
 		case 'syg-manage-galleries':
-			if (action == 'add' || action =='edit') { $.fn.sygadmin('initGalleryUi'); }
+			if (action == 'add' || action =='edit') { 
+				$.fn.sygadmin('initGalleryUi'); 
+			} else {
+				// bind click function on syg_cache_rebuild
+				$('#syg_cache_rebuild').click(function(event) {
+					event.preventDefault();
+					alert ('ciccio');
+				});
+			}
 			// init pagination for galleries
 			var table = 'galleries';
 			break;

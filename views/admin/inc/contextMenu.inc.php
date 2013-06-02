@@ -14,7 +14,7 @@
 		</a>
 		&nbsp;
 		<?php if (!array_key_exists("action", $_GET)) { ?>
-		<a href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_GALLERIES; ?>&action=cache_rebuild" title="<?php echo SygConstant::BE_REBUILD_CACHE_HELP; ?>" class="button-secondary syg_page_submit">
+		<a id="syg_cache_rebuild" href="admin.php?page=<?php echo SygConstant::BE_ACTION_MANAGE_GALLERIES; ?>&action=cache_rebuild" title="<?php echo SygConstant::BE_REBUILD_CACHE_HELP; ?>" class="button-secondary syg_page_submit">
 			<?php echo SygConstant::BE_MENU_REBUILD_CACHE; ?>
 		</a>
 		&nbsp;
