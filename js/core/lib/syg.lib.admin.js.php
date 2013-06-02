@@ -60,13 +60,21 @@ jQuery.noConflict();
 					  url: 'admin.php',
 					  type: 'GET',
 					  data: {page: 'syg-manage-styles', id : id, action : 'delete'},
-					  dataType: 'html',
-					  complete: function () {
-						  var target_url = window.location.toString();
-					  	  target_url = target_url.replace('#', '');
-					  	  if (!pageNum) pageNum = 1;
-					  	  var new_url = methods.replaceQueryString.call (this, target_url ,'pageNum', pageNum);
-						  window.location.replace(target_url);
+					  dataType: 'text',
+					  success: function (data) {
+					 	  var exceptions = jQuery(data).filter("#jsonException");
+					  	  eval(exceptions.text());
+					  	  if (syg_exception != null) {
+					  	  	error_title = 'Exception ' + syg_exception.code;
+					  	  	error_message = syg_exception.message;
+					  	  	methods.sygAlert.call(this, error_title, error_message, 'error', null);
+					  	  } else {
+						  	var target_url = window.location.toString();
+					  	  	target_url = target_url.replace('#', '');
+					  	  	if (!pageNum) pageNum = 1;
+					  	  	var new_url = methods.replaceQueryString.call (this, target_url ,'pageNum', pageNum);
+						  	window.location.replace(target_url);
+						  }
 					  }
 				});
 			};
@@ -134,12 +142,11 @@ jQuery.noConflict();
 		},
 		
 		/* function that alert exception in the page */
-		sygAlert : function (title, message, type, callbck) {
-			$(".dialog-modal").attr("title", title);
-			$(".dialog-modal").empty();
-			$(".dialog-modal").prepend(message);
-			
+		sygAlert : function (windowTitle, message, type, callbck) {			
 			if (type == 'confirm') {
+				$(".dialog-modal").attr("title", windowTitle);			
+				$(".dialog-modal").empty();
+				$(".dialog-modal").prepend(message);
 				$(".dialog-modal").dialog({
 					resizable: false,
 					modal: true,
@@ -153,15 +160,31 @@ jQuery.noConflict();
 						}
 					}
 				});
-			} else if(type == 'info') {			
-				 $(".dialog-modal").dialog({
+			} else if (type == 'info') {
+				$(".dialog-modal").attr("title", windowTitle);			
+				$(".dialog-modal").empty();
+				$(".dialog-modal").prepend(message);			
+				$(".dialog-modal").dialog({
 					modal: true,
 					draggable: false,
 					resizable: false,
 					buttons: {
 						Ok: function() {
 							$(this).dialog( "close" );
-							return true;
+						}
+					}
+				});
+			} else if (type == 'error') {
+				$(".dialog-exception").attr("title", windowTitle);			
+				$(".dialog-exception").empty();
+				$(".dialog-exception").prepend(message);			
+				$(".dialog-exception").dialog({
+					modal: true,
+					draggable: false,
+					resizable: false,
+					buttons: {
+						Ok: function() {
+							$(this).dialog( "close" );
 						}
 					}
 				});
@@ -629,7 +652,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-styles', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
 				}
@@ -642,7 +665,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-galleries', id : modified, action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
 				}
@@ -655,7 +678,7 @@ jQuery.noConflict();
 						  data: {page: 'syg-manage-settings', action : 'cache'},
 						  dataType: 'html',
 						  complete: function () {
-							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'information');
+							  methods.sygAlert.call(this, 'Information', '<p>Your server cache has been successfully updated.</p>', 'info', null);
 						  }
 					});
 				}

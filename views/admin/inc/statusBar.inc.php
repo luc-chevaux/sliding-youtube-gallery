@@ -34,3 +34,4 @@
 	</div>
 </div>
 <div class="dialog-modal" title=""></div>
+<div class="dialog-exception" title=""></div>
