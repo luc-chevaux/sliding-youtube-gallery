@@ -25,7 +25,9 @@ jQuery(window).load(function($) {
 	jQuery('#syg-elastislide-<?php echo $id; ?>').elastislide();
 	
 	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		jQuery.mobile.hidePageLoadingMsg();
+		$(document).bind("mobileinit", function(){
+  			$.mobile.loadingMessage = false;
+		});
 	}
 	
 	if (window.console) console.log('elastislide loading function >> end');

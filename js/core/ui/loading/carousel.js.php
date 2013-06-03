@@ -46,7 +46,9 @@ jQuery(window).load(function($) {
 	});
 	
 	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		jQuery.mobile.hidePageLoadingMsg();
+		$(document).bind("mobileinit", function(){
+  			$.mobile.loadingMessage = false;
+		});
 	}
 	
 	if (window.console) console.log('carousel loading function >> end');
