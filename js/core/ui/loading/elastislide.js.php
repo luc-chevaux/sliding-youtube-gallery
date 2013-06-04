@@ -18,17 +18,21 @@ require_once( WP_PLUGIN_DIR . '/sliding-youtube-gallery/engine/SygPlugin.php');
 $syg = SygPlugin::getInstance();
 $option = $syg->getGallerySettings($_GET['id']);
 extract ($option);
+
+// set http header
+header('Content-type: text/javascript; charset=utf-8');
+header('Expires: '.gmdate("D, d M Y H:i:s", time() + 3600*24*365).' GMT');
 ?>
-jQuery(window).load(function($) {
+jQuery.noConflict();
+(function($) {
+$(window).load(function() {
 	if (window.console) console.log('elastislide loading function >> start');
 	
-	jQuery('#syg-elastislide-<?php echo $id; ?>').elastislide();
+	$('#syg-elastislide-<?php echo $id; ?>').elastislide();
 	
-	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		jQuery(document).bind("mobileinit", function(){
-  			jQuery.mobile.loadingMessage = false;
-		});
+	if ($.fn.sygclient('isMobileBrowser')) {
+		$.mobile.hidePageLoadingMsg();
 	}
 	
 	if (window.console) console.log('elastislide loading function >> end');
-});
+});})(jQuery);

@@ -23,17 +23,19 @@ extract ($option);
 header('Content-type: text/javascript; charset=utf-8');
 header('Expires: '.gmdate("D, d M Y H:i:s", time() + 3600*24*365).' GMT');
 ?>
-jQuery(window).load(function($) {
+jQuery.noConflict();
+(function($) {
+$(window).load(function() {
 	if (window.console) console.log('gallery loading function >> start');
 	
-	jQuery('#syg_video_gallery-<?php echo $id; ?>').removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
-	jQuery('#syg_video_gallery-<?php echo $id; ?>').addClass('syg_video_gallery-<?php echo $id; ?>');
+	$('#syg_video_gallery-<?php echo $id; ?>').removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
+	$('#syg_video_gallery-<?php echo $id; ?>').addClass('syg_video_gallery-<?php echo $id; ?>');
 	
 	
 	/* remove display none */
-	jQuery('.sc_menu-<?php echo $id;?>').removeAttr('style');
+	$('.sc_menu-<?php echo $id;?>').removeAttr('style');
 
-	jQuery(function($){
+	$(function($){
 		// Get our elements for faster access and set overlay width
 		var div = $('div.sc_menu-<?php echo $id; ?>'),
 			ul = $('ul.sc_menu-<?php echo $id; ?>'),
@@ -48,9 +50,9 @@ jQuery(window).load(function($) {
 		//Find last image container
 		var lastLi = ul.find('li:last-child');
 		
-		if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-			div.bind('touchmove', function(jQueryEvent) {
-				jQueryEvent.preventDefault();
+		if ($.fn.sygclient('isMobileBrowser', this)) {
+			div.bind('touchmove', function($Event) {
+				$Event.preventDefault();
 			   	//As images are loaded ul width increases,
 				//so we recalculate it each time
 				var event = window.event;
@@ -71,11 +73,9 @@ jQuery(window).load(function($) {
 		}
 	});
 	
-	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		jQuery(document).bind("mobileinit", function(){
-  			jQuery.mobile.loadingMessage = false;
-		});
+	if ($.fn.sygclient('isMobileBrowser')) {
+		$.mobile.hidePageLoadingMsg();
 	}
 	
 	if (window.console) console.log('gallery loading function >> end');
-});
+});})(jQuery);
