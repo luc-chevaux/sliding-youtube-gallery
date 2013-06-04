@@ -41,8 +41,11 @@ header('Expires: '.gmdate("D, d M Y H:i:s", time() + 3600*24*365).' GMT');
 ?>
 
 jQuery.noConflict();
-(function($){
-$(document).ready(function(){
+(function($) {
+$(document).on('pageinit', function(){
+
+	if (window.console) console.log('sliding youtube gallery >> start pageinit function');
+	
 	var options = new Array();
 	var gid = new Array();
 	
@@ -123,4 +126,7 @@ $(document).ready(function(){
 	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE) { ?>
 		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } ?>
+	
+	if (window.console) console.log('sliding youtube gallery >> end pageinit function');
+
 });})(jQuery);
