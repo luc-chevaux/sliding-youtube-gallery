@@ -26,9 +26,8 @@ header('Expires: '.gmdate("D, d M Y H:i:s", time() + 3600*24*365).' GMT');
 jQuery(window).load(function($) {
 	if (window.console) console.log('gallery loading function >> start');
 	
-	jQuery('#syg_video_gallery-<?php echo $id; ?>')
-		.removeClass('syg_video_gallery_loading-<?php echo $id; ?>')
-		.addClass('syg_video_gallery-<?php echo $id; ?>');
+	jQuery('#syg_video_gallery-<?php echo $id; ?>').removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
+	jQuery('#syg_video_gallery-<?php echo $id; ?>').addClass('syg_video_gallery-<?php echo $id; ?>');
 	
 	
 	/* remove display none */
@@ -73,8 +72,8 @@ jQuery(window).load(function($) {
 	});
 	
 	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		$(document).bind("mobileinit", function(){
-  			$.mobile.loadingMessage = false;
+		jQuery(document).bind("mobileinit", function(){
+  			jQuery.mobile.loadingMessage = false;
 		});
 	}
 	

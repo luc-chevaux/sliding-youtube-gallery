@@ -22,18 +22,15 @@ extract ($option);
 jQuery(window).load(function($) {
 	if (window.console) console.log('page loading function >> start');
 	
-	jQuery('#syg_video_page-<?php echo $id; ?>')
-		.removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
+	jQuery('#syg_video_page-<?php echo $id; ?>').removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
 		
-	jQuery('#paginator-top-<?php echo $id; ?>')
-		.removeAttr("style");
+	jQuery('#paginator-top-<?php echo $id; ?>').removeAttr("style");
 		
-	jQuery('#paginator-bottom-<?php echo $id; ?>')
-		.removeAttr("style");
+	jQuery('#paginator-bottom-<?php echo $id; ?>').removeAttr("style");
 	
 	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		$(document).bind("mobileinit", function(){
-  			$.mobile.loadingMessage = false;
+		jQuery(document).bind("mobileinit", function(){
+  			jQuery.mobile.loadingMessage = false;
 		});
 	}
 	

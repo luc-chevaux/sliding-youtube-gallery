@@ -22,10 +22,9 @@ extract ($option);
 jQuery(window).load(function($) {
 	if (window.console) console.log('carousel loading function >> start');
 	
-	jQuery('#syg_video_carousel-<?php echo $id; ?>')
-		.removeClass('syg_video_carousel_loading-<?php echo $id; ?>')
-		.addClass('syg_video_carousel-<?php echo $id; ?>');
-		
+	jQuery('#syg_video_carousel-<?php echo $id; ?>').removeClass('syg_video_carousel_loading-<?php echo $id; ?>');
+	jQuery('#syg_video_carousel-<?php echo $id; ?>').addClass('syg_video_carousel-<?php echo $id; ?>');
+	
 	/* remove display none */
 	jQuery('#hidden-carousel-layer_<?php echo $id;?>').removeAttr('style');	
 	
@@ -46,8 +45,8 @@ jQuery(window).load(function($) {
 	});
 	
 	if (jQuery.fn.sygclient('isMobileBrowser', this)) {
-		$(document).bind("mobileinit", function(){
-  			$.mobile.loadingMessage = false;
+		jQuery(document).bind("mobileinit", function(){
+  			jQuery.mobile.loadingMessage = false;
 		});
 	}
 	
