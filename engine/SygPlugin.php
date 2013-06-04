@@ -804,6 +804,12 @@ class SygPlugin extends SanityPluginFramework {
 		}
 	}
 	
+	public function isMobileBrowser() {
+		// detect if client is a mobile browser
+		$detect = new Mobile_Detect();
+		return (bool) $detect->isMobile();
+	}
+	
 	/**
 	 * @name prepareHeader
 	 * @category prepare header with the right js and css inclusion
@@ -821,9 +827,8 @@ class SygPlugin extends SanityPluginFramework {
 		// get options
 		$options = $this->getOptions();
 		
-		// detect if client is a mobile browser
-		$detect = new Mobile_Detect();
-		$conditions['mobile'] = (bool) $detect->isMobile();
+		// detect if mobile browser
+		$conditions['mobile'] = $this->isMobileBrowser();
 		
 		// fix index
 		if (empty($view['gallery'])) {
