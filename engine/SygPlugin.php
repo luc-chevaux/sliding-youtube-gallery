@@ -779,14 +779,20 @@ class SygPlugin extends SanityPluginFramework {
 				// set front end option
 				$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
 				
-				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {	
+				if ($gallery->isGalleryCached() && $mode == SygConstant::SYG_PLUGIN_FE_NORMAL_MODE) {
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
+				
 					// render cache files
 					return $this->cacheRender($gallery->getId(), SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
-				} else {
-					// put the feed in the view
-					$this->data['feed'] = $this->sygYouTube->getVideoFeed($gallery);
-					
+				} else if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
 					return $this->render('client/'.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
+				} else {
+					$this->data['exception'] = true;
+					$this->data['exception_message'] = SygConstant::MSG_EX_GALLERY_NOT_CACHED;
+					// set front end option
+					$this->prepareHeader($this->data, SygConstant::SYG_SHORTAG_ELASTISLIDE);
+					return $this->render('exception');
 				}
 			} catch (SygGalleryNotFoundException $ex) {
 				$this->data['exception'] = true;
