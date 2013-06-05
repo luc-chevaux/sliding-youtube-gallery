@@ -366,14 +366,12 @@
 	<enqueueList shortag="syg_page">
 		<library name="jquery"/>
 		<library name="syg-client"/>
-		<library name="jquery.mobile"/>
 		<library name="fancybox" version="1.3.4"/>
 	</enqueueList>
 		
 	<enqueueList shortag="syg_carousel">
 		<library name="jquery"/>
 		<library name="syg-client"/>
-		<library name="jquery.mobile"/>
 		<library name="fancybox" version="1.3.4"/>
 		<library name="carousel"/>
 	</enqueueList>
@@ -381,7 +379,6 @@
 	<enqueueList shortag="syg_elastislide">
 		<library name="jquery"/>
 		<library name="syg-client"/>
-		<library name="jquery.mobile"/>
 		<library name="fancybox" version="1.3.4"/>
 		<library name="elastislide"/>
 	</enqueueList>
