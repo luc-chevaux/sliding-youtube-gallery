@@ -77,53 +77,8 @@ $(document).on('pageinit', function(){
 		options['jsonUrl'] = '<?php echo $jsonUrl;?>';
 	<?php } ?>
 		
-	<?php if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_PAGE) { ?>		
-		/* video page */
-		// loading images
-		$.fn.sygclient('displayLoad', gid['<?php echo $id; ?>']);
-		<?php if ($cache == 'on') { ?>			
-			// get the data
-			$.getJSON('<?php echo $firstPageUrl; ?>', 
-					   function (data) {
-							$.fn.sygclient('loadData', data, gid['<?php echo $id; ?>'], options);
-						});
-		<?php } else { ?>
-			// get the data
-			$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=1&id=' + gid['<?php echo $id; ?>'] + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, 
-					   function (data) {
-					   		$.fn.sygclient('loadData', data, gid['<?php echo $id; ?>'], options);
-					   	});
-		<?php } ?>
-		// add pagination events
-		$.fn.sygclient('addPaginationClickEvent', gid['<?php echo $id; ?>'], options);
-	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
+	<?php if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) { ?>
 		/* video gallery */
-		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
-	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL) { ?>
-		<?php $heightRatio = ceil($syg_thumbnail_height*2.8);?>		   
-		// This initialises carousels on the container elements specified, in this case, carousel1
-		$('#syg_video_carousel-' + gid['<?php echo $id; ?>']).CloudCarousel({
-			minScale: <?php echo $syg_option_carousel_minscale; ?>,
-			reflHeight: <?php echo $syg_option_carousel_reflheight; ?>,
-			reflGap: <?php echo $syg_option_carousel_reflgap; ?>, 
-			speed: <?php echo $syg_option_carousel_speed; ?>,
-			mouseWheel: true, 
-			FPS: <?php echo $syg_option_carousel_fps; ?>,
-			xPos: <?php echo ceil($syg_box_width/2); ?>, // half the height of container.
-			yPos: <?php echo ceil((($heightRatio)/1.7)/2); ?>, // half the width of the container.
-			yRadius: <?php echo ceil($heightRatio/6); ?>, // da 0 a 100 Height of container / 6
-			xRadius: <?php echo ceil($syg_box_width/2.3); ?>, // percentuale al container Width of container / 2.3
-			autoRotate: '<?php echo $syg_option_carousel_autorotate; ?>',
-			<?php if ($syg_option_carousel_autorotate == "yes") { ?>
-			autoRotateDelay: <?php echo $syg_option_carousel_delay; ?>,
-			<?php } else { ?>
-			buttonLeft: $("#left-carousel-button-<?php echo $id; ?>"),
-			buttonRight: $("#right-carousel-button-<?php echo $id; ?>"),
-			<?php } ?>
-			titleBox: $("#carousel-title-<?php echo $id; ?>")
-		});
-		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
-	<?php } else if ($uiType == SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE) { ?>
 		$.fn.sygclient('addFancyBoxSupport', gid['<?php echo $id; ?>'], options);
 	<?php } ?>
 	

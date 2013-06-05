@@ -129,44 +129,25 @@ class SanityPluginFramework {
         include ($template_path);
         $output = ob_get_clean();
         // @todo gestire sovrapposizione tra script registrati quando i componenti
+        
         // sono uguali o tra galleria e pagina
-        if (SygConstant::SYG_PLUGIN_COMPONENT_GALLERY == $component) {
-	        // js to include
-	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_GALLERY;
-	        wp_register_script('syg-gallery-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-	        wp_enqueue_script('syg-gallery-ready-'.$id);
-	        // js to include
-	        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/gallery.min.js.php?id='.$id;
-	        wp_register_script('syg-gallery-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-	        wp_enqueue_script('syg-gallery-loading-'.$id);
-        } else if (SygConstant::SYG_PLUGIN_COMPONENT_PAGE == $component) {
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
-        	wp_register_script('syg-page-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-page-ready-'.$id);
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$id;
-        	wp_register_script('syg-page-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-page-loading-'.$id);
-        } elseif (SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL == $component) {
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
-        	wp_register_script('syg-carousel-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-carousel-ready-'.$id);
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$id;
-        	wp_register_script('syg-carousel-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-carousel-loading-'.$id);
-        } elseif (SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE == $component) {
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
-        	wp_register_script('syg-elastislide-ready-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-elastislide-ready-'.$id);
-        	// js to include
-        	$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/elastislide.min.js.php?id='.$id;
-        	wp_register_script('syg-elastislide-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
-        	wp_enqueue_script('syg-elastislide-loading-'.$id);
+        $scriptName = '';
+        $scriptUrl = '';
+        if (array_key_exists('mobile', $this->data) == true && $component == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) {
+        	$scriptUrl = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.mobile.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
+        	$scriptName = 'syg-'.$component.'-mobile-ready-'.$id;
+        } else {
+        	$scriptUrl = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
+        	$scriptName = 'syg-'.$component.'-ready-'.$id;
         }
+        wp_register_script($scriptName, $scriptUrl, array(), SygConstant::SYG_VERSION, true);
+        wp_enqueue_script($scriptName);
+        
+        // js to include
+        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/'.$component.'.min.js.php?id='.$id;
+        wp_register_script('syg-'.$component.'-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
+        wp_enqueue_script('syg-'.$component.'-loading-'.$id);
+        
         return $output;
     }
 }
