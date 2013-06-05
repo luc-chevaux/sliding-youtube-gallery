@@ -128,12 +128,12 @@ class SygDao {
 	 * @param $per_page
 	 * @return array of $galleries
 	 */
-	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX) {
+	public function getAllSygGalleries($output_type = 'OBJECT', $start = 0, $per_page = PHP_INT_MAX, $loadUserProfile = true) {
 		$galleries = array();
 		$query = $this->db->prepare(SygConstant::sqlGetAllGalleries(), $start, $per_page);
 		$results = $this->db->get_results($query, $output_type);
 		foreach ($results as $gallery) {
-			$galleries[] = new SygGallery($gallery);
+			$galleries[] = new SygGallery($gallery, $loadUserProfile);
 		}
 		return $galleries;
 	}
