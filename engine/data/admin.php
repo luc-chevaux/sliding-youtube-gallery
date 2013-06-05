@@ -35,7 +35,7 @@ if ($_GET['table']) {
 				$per_page = $_GET['syg_option_numrec']; // Per page records
 				$start = $page_number * $per_page;
 				$dao = new SygDao();
-				$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page);
+				$galleries = $dao->getAllSygGalleries('OBJECT', $start, $per_page, false);
 				$gallery_to_json = array();
 				foreach ($galleries as $gallery) {
 					array_push($gallery_to_json, $gallery->getJsonData());
