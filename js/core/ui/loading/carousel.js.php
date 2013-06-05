@@ -51,9 +51,5 @@ $(window).load(function() {
 	   $(this).find('.right-carousel-button-<?php echo $id; ?>').fadeTo('slow', 0.3);
 	});
 	
-	if ($.fn.sygclient('isMobileBrowser')) {
-		$.mobile.hidePageLoadingMsg();
-	}
-	
 	if (window.console) console.log('carousel loading function >> end');
 });})(jQuery);

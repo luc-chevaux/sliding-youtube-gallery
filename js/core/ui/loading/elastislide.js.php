@@ -30,9 +30,5 @@ $(window).load(function() {
 	
 	$('#syg-elastislide-<?php echo $id; ?>').elastislide();
 	
-	if ($.fn.sygclient('isMobileBrowser')) {
-		$.mobile.hidePageLoadingMsg();
-	}
-	
 	if (window.console) console.log('elastislide loading function >> end');
 });})(jQuery);

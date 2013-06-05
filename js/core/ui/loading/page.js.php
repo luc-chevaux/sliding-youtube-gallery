@@ -34,9 +34,5 @@ $(window).load(function() {
 		
 	$('#paginator-bottom-<?php echo $id; ?>').removeAttr("style");
 	
-	if ($.fn.sygclient('isMobileBrowser')) {
-		$.mobile.hidePageLoadingMsg();
-	}
-	
 	if (window.console) console.log('page loading function >> end');
 });})(jQuery);
