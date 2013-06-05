@@ -55,13 +55,13 @@ class SygGallery {
 	 * @since 1.0.1
 	 * @param $key
 	 */
-	public function __construct($key = null) {
+	public function __construct($key = null, $loadUserProfile = true) {
 		if (is_string($key)) {
 			$key = unserialize ($key);
 		}
 		$this->sygYouTube = new SygYouTube();
 		$this->sygDao = new SygDao();
-		$this->mapThis($key);
+		$this->mapThis($key, $loadUserProfile);
 	}
 
 	/**
@@ -70,7 +70,7 @@ class SygGallery {
 	 * @since 1.0.1
 	 * @param $result
 	 */
-	private function mapThis($result = null) {
+	private function mapThis($result = null, $loadUserProfile = true) {
 		$result = (object) $result;
 		
 		// id
@@ -90,7 +90,7 @@ class SygGallery {
 		// set youtube user profile
 		(!empty($result->syg_gallery_type)) ? $this->setGalleryType($result->syg_gallery_type) : $this->setGalleryType('feed');
 		
-		if ((($this->getGalleryType() == 'feed') && (!$this->getId())) || ($this->getGalleryType() != 'feed')) {
+		if ((($this->getGalleryType() == 'feed') && (!$this->getId())) || ($this->getGalleryType() != 'feed') || (!$loadUserProfile)) {
 			$this->setUserProfile(null);
 		} else {
 			$this->setUserProfile($this->sygYouTube->getUserProfile($this->getYtSrc()));
