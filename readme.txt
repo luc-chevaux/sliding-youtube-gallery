@@ -3,8 +3,8 @@ Contributors: webeng
 Donate link: http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-wordpress-plugin/
 Tags: youtube, video, gallery, sliding gallery, youtube channel, display video, youtube playlist, videogallery
 Requires at least: 2.7 or higher
-Tested up to: 3.4
-Stable tag: 1.4.4
+Tested up to: 3.5.1
+Stable tag: 1.5.0
 License: GPLv3
 
 SYG is a nice plugin that gives you a fast way, to add multiple and fully customizable ajax video galleries from different sources in your blog! 
@@ -21,6 +21,8 @@ Users can get the video played as a nice fancybox player. If you have problems d
 
 [3d Cloud Carousel Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-3d-cloud-carousel-demo/ "3d Cloud Carousel Demo")
 
+[Elastislide Demo](http://blog.webeng.it/how-to/cms/wordpress/sliding-youtube-gallery-elastislide-demo/ "Elastislide Demo (Experimental)")
+
 == Installation ==
 - Using the WordPress dashboard
 	- Login to your wordpress blog
@@ -36,7 +38,12 @@ Users can get the video played as a nice fancybox player. If you have problems d
 
 == Frequently Asked Questions ==
 
+= Components does not work or your admin area is broken, what should you do? =
+
+It could be a bug or not. To ensure yourself that you discover a bug, before contacting me, please use a developer console (firebug, chrome, explorer, firefox console etc..) and look if you have javascript errors that could be related to this plugin. Sometimes, other third party plugin or simply your custom theme could cause general plugin malfunction. Before contacting me, please do a little investigation on your console and fix eventually javascript errors.
+
 = Where do I find support forum? =
+
 You could find more information about bugs and issues at [Sliding YouTube Gallery support forum](http://wordpress.org/support/plugin/sliding-youtube-gallery "Sliding YouTube Gallery support forum"). 
 
 = Where could I have more information about this plugin? =
@@ -61,7 +68,7 @@ To display a video page in a page or post, you must use the short code [syg_page
 
 = How do I display a simple video page in a Template? =
 
-To display a video page within a template you must use the getVideoPage function, for example `<?php echo getVideoPage(array('id' => 1)); ?>`.
+To display a video page within a template you must use the getPage function, for example `<?php echo getPage(array('id' => 1)); ?>`.
 
 = How do I display a 3d carousel in a page or post? =
 
@@ -69,11 +76,19 @@ To display a 3d carousel in a page or post, you must use the short code [syg_car
 
 = How do I display a 3d carousel in a Template? =
 
-To display a 3d carousel within a template you must use the getVideoCarousel function, for example `<?php echo getVideoCarousel(array('id' => 1)); ?>`.
+To display a 3d carousel within a template you must use the getCarousel function, for example `<?php echo getCarousel(array('id' => 1)); ?>`.
+
+= How do I display an Elastislide in a page or post? =
+
+To display an Elastislide in a page or post, you must use the short code [syg_elastislide id=your_gallery_id] .
+
+= How do I display an Elastislide in a Template? =
+
+To display an Elastislide within a template you must use the getElastislide function, for example `<?php echo getElastislide(array('id' => 1)); ?>`.
 
 = How can I override css settings? =
 
-To customize your galleries you can use the plugin administration page. If you need to customize something specific, you can override standard css by adding your css manually and make the single directive !important .
+Sometimes, some theme could override gallery css settings making your component rendered bad. To customize your galleries you have to use the theme administration page, but if something goes wrong, you can try to fix possible css errors by looking in firebug console for selectors that has been overridden from your theme css. If so, or if you need to customize something specific, you can do using in your css attribute the !important directive.
 
 == Screenshots ==
 
@@ -84,6 +99,15 @@ To customize your galleries you can use the plugin administration page. If you n
 5. Settings Page
 
 == Changelog ==
+
+= 1.5.0 =
+* Fixed IE bug
+* Rebuild cache optimized to use wp-cron
+* Added more video embed option
+* Added theme preview
+* Ajax validation (form not resetting anymore)
+* Fixed some minor bugs
+* Added Elastislide component (experimental and not fully customizable at the moment)
 
 = 1.4.4 =
 * Fixed minor bugs with mobile browser
@@ -138,6 +162,15 @@ To customize your galleries you can use the plugin administration page. If you n
 * Video count setting bug, was fixed.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+- Fixed IE bug
+- Rebuild cache optimized to use wp-cron
+- Added more video embed option
+- Added theme preview
+- Ajax validation (form not resetting anymore)
+- Fixed some minor bugs
+- Added Elastislide component (experimental and not fully customizable at the moment)
 
 = 1.4.4 =
 - Fixed minor bugs with mobile browser
