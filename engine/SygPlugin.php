@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.4.4
+ * @version: 1.5.0
  * 
  * @todo Background image (milestone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
