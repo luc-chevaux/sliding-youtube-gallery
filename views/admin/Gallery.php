@@ -66,8 +66,7 @@
 				<input type="text" id="syg_youtube_maxvideocount" name="syg_youtube_maxvideocount" value="<?php echo $gallery->getYtMaxVideoCount(); ?>" size="10"/>
 				
 				<!-- related videos -->
-				<label for="syg_youtube_disablerel">Disable related videos</label>
-				<input type="checkbox" name="syg_youtube_disablerel" id="syg_youtube_disablerel" value="1" <?php if ($gallery->getYtDisableRelatedVideo()) echo 'checked="checked"';?>/>
+				<input type="hidden" name="syg_youtube_disablerel" id="syg_youtube_disablerel" value="0"/>
 				
 				<!-- cache the content -->
 				<label for="syg_youtube_cacheon">Cache content for this gallery</label> <div class="syg_help" title="<?php echo SygConstant::BE_CACHE_HELP; ?>"></div>
