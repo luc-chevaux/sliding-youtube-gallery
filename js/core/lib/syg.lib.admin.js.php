@@ -848,7 +848,24 @@ jQuery(document).ready(function($) {
 				// bind click function on syg_cache_rebuild
 				$('#syg_cache_rebuild').click(function(event) {
 					event.preventDefault();
-					alert ('ciccio');
+					
+					var title = 'Confirmation';
+					var message = '<p>Rebuilding cache could spend a lot of time, especially if you have a great number of galleries.</p><p>To ensure that the process goes well, it should be launched preferably at the start of your WordPress editing session, because it uses Wp-Cron.</p><p>Each cron job will be executed after 180 seconds from the previous.</p><p>Are you sure to rebuild your server cache?</p>';
+					var callbck = function () {
+						var request = jQuery.ajax({
+							  url: 'admin.php',
+							  type: 'GET',
+							  data: {page: 'syg-manage-galleries', action : 'cache_rebuild'},
+							  dataType: 'text',
+							  complete: function () {
+								  window.location.reload();
+							  }
+						});
+					};
+					
+					$.fn.sygadmin('sygAlert', title, message, 'confirm', callbck);
+					
+					return true;
 				});
 			}
 			// init pagination for galleries
