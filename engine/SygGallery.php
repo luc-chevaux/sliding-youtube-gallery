@@ -251,7 +251,7 @@ class SygGallery {
 			
 			// get overlay button
 			$overlaySrc = (!empty($thumbImg)) ? $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-' . $thumbImg .'.png' : $syg->getImgRoot() . '/button/'.$style->getThumbOverlaySize().'/play-1.png';
-			
+
 			// get the feed
 			$feed = $this->sygYouTube->getVideoFeed($this);
 			
@@ -276,11 +276,11 @@ class SygGallery {
 				$videoThumbnails = $element->getVideoThumbnails();
 				$imgUrl = $videoThumbnails[$options['syg_option_which_thumb']]['url'];
 				$localFN = $element->getVideoId().".jpg";
-				
-				if (extension_loaded('gd') && function_exists('gd_info')) {				
+
+				if (extension_loaded('gd') && function_exists('gd_info')) {
 					// write resized image
 					SygUtil::writeResizedImage($imgUrl, $this->getThumbnailsPath().$localFN, null, $style->getThumbWidth().'x'.$style->getThumbHeight());
-					
+
 					// add play button overlay
 					SygUtil::addOverlayButton($this->getThumbnailsPath().$localFN, $overlaySrc, $style);
 				} else if (SygUtil::isCurlInstalled()) {
@@ -295,7 +295,10 @@ class SygGallery {
 				} else if (ini_get('allow_url_fopen')) {
 					// allow url fopen
 					file_put_contents($this->getThumbnailsPath().$localFN, file_get_contents($imgUrl));
-				} else { null; }
+				} else {
+                    // @todo must throw an exception
+                    null;
+                }
 				
 				// chmod file
 				chmod ($this->getThumbnailsPath().$localFN, 0755);

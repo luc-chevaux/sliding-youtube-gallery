@@ -124,6 +124,7 @@ class SygUtil {
 	 */
 	public static function isCurlInstalled() {
 		$installed = (in_array ('curl', get_loaded_extensions())) ? true : false;
+        return $installed;
 	}
 	
 	/**

@@ -261,7 +261,7 @@ class SygPlugin extends SanityPluginFramework {
 	 * @category check update process
 	 * @since 1.3.3
 	 */
-	public static function checkUpdateProcess() {
+	public function checkUpdateProcess() {
 		global $wpdb;
 		global $syg_db_version;
 		// set db version

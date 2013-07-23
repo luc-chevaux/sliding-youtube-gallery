@@ -33,6 +33,8 @@ $(window).load(function() {
 	$('#paginator-top-<?php echo $id; ?>').removeAttr("style");
 		
 	$('#paginator-bottom-<?php echo $id; ?>').removeAttr("style");
+
+    $('#syg_video_container-<?php echo $id;?>').css("display", "");
 	
 	if (window.console) console.log('page loading function >> end');
 });})(jQuery);

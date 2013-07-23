@@ -18,7 +18,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		} 
 		?>
 		
-		<div id="syg_video_container-<?php echo $gallery->getId();?>">
+		<div id="syg_video_container-<?php echo $gallery->getId();?>" style="display: none;">
 			<div id="hook"></div>
 		</div>
 		
