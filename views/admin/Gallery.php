@@ -21,7 +21,7 @@
 			
 			<!-- Define your new gallery -->
 			<fieldset>
-				<legend>Define your new gallery</legend>
+				<legend><strong>Define your new gallery</strong></legend>
 				
 				<!-- style name -->
 				<label for="syg_gallery_name"><strong>Gallery Name</strong></label>

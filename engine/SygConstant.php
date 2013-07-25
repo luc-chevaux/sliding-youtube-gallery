@@ -457,7 +457,7 @@ class SygConstant {
 	
 	const MSG_EX_CACHE_FAILED = 'Caching process has failed for some galleries. You could try to cache manually the following gallery:';
 	const COD_EX_CACHE_FAILED = '1007';
-	
+
 	/**
 	 * Validation message
 	 */
@@ -479,8 +479,10 @@ class SygConstant {
 	const BE_VALIDATE_NOT_A_VALID_PLAYLIST_URL = '%s is not a valid playlist url.';
 	const BE_VALIDATE_OVERLAY_BAD_DIMENSION = 'Size %d for overlay button is not proportional to %s value that is %d. Please consider to use a lower value.';
 	const BE_VALIDATE_VIDEO_LIST_EMPTY = 'The video list is empty, please insert a list of YouTube videos';
-	
-	/**
+	const BE_GD_NOT_INSTALLED = 'Gd library is not installed: Gd library is used to generate thumbnails in cache, please <a target="_blank" href="https://shopplugin.net/kb/installing-the-gd-library-for-php/">see here to install</a> or ask your provider to enable it.';
+	const BE_CURL_NOT_INSTALLED = 'It\'s not strictly necessary but, please, consider to install CURL extension for PHP to avoid malfunctions.';
+
+    /**
 	 * Shortag
 	 */
 	const SYG_SHORTAG_GALLERY = 'syg_gallery';

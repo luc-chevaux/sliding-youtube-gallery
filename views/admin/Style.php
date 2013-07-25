@@ -25,7 +25,7 @@
 		
 			<!-- Define your new style -->
 			<fieldset style="position: relative">
-				<legend>Define your new style</legend>
+				<legend><strong>Define your new style</strong></legend>
 				
 				<!-- style name -->
 				<label for="syg_style_name"><strong>Style Name</strong></label>

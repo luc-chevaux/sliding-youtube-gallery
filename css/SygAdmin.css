@@ -44,6 +44,16 @@ h4 {
     line-height: 1.4em;
 }
 
+.syg_updated p {
+    padding: 2px !important;
+    margin: 8px 0px 0px 0px !important;
+    font-size: 15px !important;
+}
+
+.syg_updated ul {
+    margin: 0px 0px 6px 0px;
+}
+
 .webengTitle {
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
 	display: inline-block;
@@ -53,8 +63,8 @@ h4 {
 }
 
 .webengText {
-	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
-	font-size: 16px;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif !important;
+	font-size: 13px !important;
 }
 
 .webengRed {
@@ -299,8 +309,8 @@ select { border-color: #333333 !important;}
 }
 
 #syg-plugin-area p, #syg-plugin-area span, #syg-plugin-area ul {
-	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
-	font-size: 14px;
+	font-family: sans-serif;
+	font-size: 11px;
 }
 
 #syg-plugin-area ul {
@@ -308,8 +318,9 @@ select { border-color: #333333 !important;}
 	list-style-position: inside;
 }
 
-#syg-plugin-area ul {
-	
+#syg-plugin-area ul li {
+	margin: 0px;
+    padding: 0px;
 }
 
 /***************************

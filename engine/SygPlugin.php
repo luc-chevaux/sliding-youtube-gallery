@@ -202,34 +202,46 @@ class SygPlugin extends SanityPluginFramework {
 					|| ($_GET['page'] == SygConstant::BE_ACTION_CONTACTS)) 
 				&& !(isset($_POST['syg_submit_hidden'])	&& $_POST['syg_submit_hidden'] == 'Y')) {
 
-			$checkStyles = (bool) $this->sygDao->getStylesCount();
-			$checkGallery = (bool) $this->sygDao->getGalleriesCount();
-			$checkFSPermission = (bool) (is_writable(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR) && 
+            // check gd extension installed
+            $checkGdInstalled = (bool) (extension_loaded('gd') && function_exists('gd_info'));
+			// check styles are present
+            $checkStyles = (bool) $this->sygDao->getStylesCount();
+			// check gallery are present
+            $checkGallery = (bool) $this->sygDao->getGalleriesCount();
+			// check file system permission
+            $checkFSPermission = (bool) (is_writable(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR) &&
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR) && 
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR) &&
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR) && 
 										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR));
-			
+
 			// define a warning array
 			$warning = array();
-			
+
 			// check if gallery exist
 			if (!$checkGallery) {
 				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_NO_GALLERY_FOUND_ADM_WRN));
 			}
-			
 			// check if style exist
 			if (!$checkStyles) {
 				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_NO_STYLES_FOUND_ADM_WRN));
 			}
-			
+			// check file system permission
 			if (!$checkFSPermission) {
 				array_push($warning, array('field' => '', 'msg' => SygConstant::BE_FS_NOT_WRITEABLE));
 			}
+            // check gd installed
+            if (!$checkGdInstalled) {
+                array_push($warning, array('field' => '', 'msg' => SygConstant::BE_GD_NOT_INSTALLED));
+            }
+            // check curl installed
+            if (!SygUtil::isCurlInstalled()) {
+                array_push($warning, array('field' => '', 'msg' => SygConstant::BE_CURL_NOT_INSTALLED));
+            }
 			
 			// place warnings in the view
 			$this->data['warning'] = $warning;
-			
+
 			// try to validate options
 			try {
 				$checkOptions = (bool) SygValidate::validateSettings(serialize(SygPlugin::getInstance()->getOptions()));

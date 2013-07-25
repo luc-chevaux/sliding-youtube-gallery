@@ -9,19 +9,19 @@
 			<ul>
 				<?php $detail = $this->data['warning'];  ?>
 				<?php foreach ($detail as $problem) { ?>
-					<li><?php echo $problem['field'].' - '.$problem['msg']; ?></li>
+					<li><?php echo $problem['field'].' > '.$problem['msg']; ?></li>
 				<?php }?>
 			</ul>
 		</div>
 	<?php } ?>
-	
+
 	<?php if (isset($this->data['exception']) && $this->data['exception']) {?>
 		<div class="syg_error">
 			<p><strong><?php echo $this->data['exception_message']; ?></strong></p>
 			<ul>
 				<?php $detail = $this->data['exception_detail']; ?>
 				<?php foreach ($detail as $problem) { ?>
-					<li><?php echo $problem['field'].' - '.$problem['msg']; ?></li>
+					<li><?php echo $problem['field'].' > '.$problem['msg']; ?></li>
 				<?php }?>
 			</ul>
 		</div>
