@@ -2,13 +2,14 @@
 require_once('./inc/cssIf.php');
 ?>
 
-.syg_video_gallery-<?php echo $id; ?>, .syg_video_carousel-<?php echo $id; ?> {
+.syg_video_gallery-<?php echo $id; ?> {
     background-color: <?php echo $syg_box_background; ?>;
     border-radius: <?php echo $syg_box_radius; ?>px;
     -webkit-border-radius: <?php echo $syg_box_radius; ?>px;
     -moz-border-radius: <?php echo $syg_box_radius; ?>px;
     width: <?php echo $syg_box_width; ?>px;
     display: inline-block;
+    margin: <?php echo $syg_box_padding; ?>px 0px <?php echo $syg_box_padding; ?>px 0px;
 }
 
 /* style to remove after loading */
@@ -93,29 +94,6 @@ img.thumbnail-image-<?php echo $id; ?> {
     display: block;
     padding: 0 !important;
     margin: 0 !important;
-}
-
-.syg_gallery_error {
-border: 1px #bc0f11 solid;
-padding: 5px;
-margin: 5px;
-background-color: #ed0000;
-color: white;
-}
-
-.syg_gallery_error h2 {
-font-size: 18px;
-margin: 0;
-padding: 0;
-border-bottom: 1px #bc0f11 solid;
-color: white;
-}
-
-.syg_gallery_error p {
-margin: 3px 0px 3px 0px;
-padding: 0;
-font-size: 14px;
-font-weight: bold;
 }
 
 img.play-icon-<?php echo $id; ?>{

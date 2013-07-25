@@ -116,6 +116,15 @@
         <!-- gallery style css -->
         <library name="syg-css-gallery" version="1.4.0">
             <resource>
+                <name>syg-css-standard</name>
+                <relUrl>css/Standard.css</relUrl>
+                <type>css</type>
+                <version>1.4.0</version>
+                <indexed>no</indexed>
+                <thirdparty>no</thirdparty>
+                <registered>no</registered>
+            </resource>
+            <resource>
                 <name>syg-css-gallery</name>
                 <relUrl>css/SygGallery.css.php?id=</relUrl>
                 <type>css</type>
@@ -128,6 +137,15 @@
 
         <!-- carousel style css -->
         <library name="syg-css-carousel" version="1.4.0">
+            <resource>
+                <name>syg-css-standard</name>
+                <relUrl>css/Standard.css</relUrl>
+                <type>css</type>
+                <version>1.4.0</version>
+                <indexed>no</indexed>
+                <thirdparty>no</thirdparty>
+                <registered>no</registered>
+            </resource>
             <resource>
                 <name>syg-css-carousel</name>
                 <relUrl>css/SygCarousel.css.php?id=</relUrl>
@@ -142,6 +160,15 @@
         <!-- page style css -->
         <library name="syg-css-page" version="1.4.0">
             <resource>
+                <name>syg-css-standard</name>
+                <relUrl>css/Standard.css</relUrl>
+                <type>css</type>
+                <version>1.4.0</version>
+                <indexed>no</indexed>
+                <thirdparty>no</thirdparty>
+                <registered>no</registered>
+            </resource>
+            <resource>
                 <name>syg-css-page</name>
                 <relUrl>css/SygPage.css.php?id=</relUrl>
                 <type>css</type>
@@ -154,6 +181,15 @@
 
         <!-- elastislide style css -->
         <library name="syg-css-elastislide" version="1.4.0">
+            <resource>
+                <name>syg-css-standard</name>
+                <relUrl>css/Standard.css</relUrl>
+                <type>css</type>
+                <version>1.4.0</version>
+                <indexed>no</indexed>
+                <thirdparty>no</thirdparty>
+                <registered>no</registered>
+            </resource>
             <resource>
                 <name>syg-css-elastislide</name>
                 <relUrl>css/SygElastislide.css.php?id=</relUrl>

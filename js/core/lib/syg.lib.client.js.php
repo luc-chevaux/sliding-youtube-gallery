@@ -114,7 +114,16 @@ jQuery.noConflict();
 			// add fancybox
 			methods.addFancyBoxSupport.call(this, gid, options);
 		},
-		
+
+        shadeColor : function (color, percent) {
+            var num = parseInt(color.slice(1),16),
+                amt = Math.round(2.55 * percent),
+                R = (num >> 16) + amt,
+                B = (num >> 8 & 0x00FF) + amt,
+                G = (num & 0x0000FF) + amt;
+                return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+        },
+
 		/* function that add pagination event per table */
 		addPaginationClickEvent : function (gid, options) {
 			// add galleries pagination click event
@@ -137,9 +146,15 @@ jQuery.noConflict();
 				var pageNum = button;
 				
 				if (options['cache'] == 'on') {
-					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options);});
+                    var originalColor = String($('#syg_video_page-' + gid).css('background-color'));
+                    var animationColor = String(methods.shadeColor.call(this, originalColor, -50));
+
+                    $('#syg_video_page-' + gid).animate({ backgroundColor: "black" }, "slow");
+                    alert ('#syg_video_page-' + gid);
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).animate({backgroundColor: originalColor });});
 				} else {
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData.call(this, data, gid, options);});
+                    $('#syg_video_page-' + gid).fadeIn(500);
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).fadeOut(500);});
 				}				
 			});
 			
@@ -252,6 +267,25 @@ jQuery.noConflict();
 	};
 	
 	$.fn.sygclient = function( method ) {
+        $.cssHooks.backgroundColor = {
+            get: function(elem) {
+                if (elem.currentStyle)
+                    var bg = elem.currentStyle["backgroundColor"];
+                else if (window.getComputedStyle)
+                    var bg = document.defaultView.getComputedStyle(elem,null).getPropertyValue("background-color");
+
+                if (bg.search("rgb") == -1) {
+                    return bg;
+                } else {
+                    bg = bg.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                    function hex(x) {
+                        return ("0" + parseInt(x).toString(16)).slice(-2);
+                    }
+                    return "#" + hex(bg[1]) + hex(bg[2]) + hex(bg[3]);
+                }
+            }
+        }
+
     	// Method calling logic
     	if (methods[method]) {
 			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
