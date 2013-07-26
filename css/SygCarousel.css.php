@@ -23,18 +23,41 @@ require_once('./inc/cssIf.php');
     margin: 0;
 }
 
-#carousel-title-<?php echo $id; ?> {
-    position: absolute;
-    top: <?php echo $syg_box_padding; ?>px;
-    right: <?php echo $syg_box_padding; ?>px;
-    left: <?php echo $syg_box_padding; ?>px;
-    overflow: hidden;
-    line-height: 1;
-    text-align: center;
-    color: <?php echo $syg_thumbnail_bordercolor; ?>;
-    font-size: <?php echo ceil ($syg_description_fontsize*1.30); ?>px;
-    font-weight: bold;
+#carousel-title-area-<?php echo $id; ?> {
+    position: absolute !important;
+    top: <?php echo $syg_box_padding; ?>px !important;
+    right: <?php echo $syg_box_padding; ?>px !important;
+    left: <?php echo $syg_box_padding; ?>px !important;
+
+    height: <?php echo ceil($heightRatio*0.13); ?>px !important;
+    width: <?php echo ceil($syg_box_width-$syg_box_padding*2); ?>px;
+
     margin: 0 auto !important;
+    padding: 0px !important;
+    z-index: 10000;
+    border: 0px black solid !important;
+}
+
+#carousel-titleblock-<?php echo $id; ?> {
+ /**/
+    height: <?php echo ceil($heightRatio*0.13); ?>px !important;
+    display: inline-block;
+    width: <?php echo ceil($syg_box_width-$syg_box_padding*2); ?>px;
+    text-align: center;
+    padding: 0px !important;
+    border: 0px black solid !important;
+}
+
+#carousel-title-<?php echo $id; ?> {
+    text-shadow: -1px 0 black,
+                 0 1px black,
+                 1px 0 black,
+                 0 -1px black,
+                 0px 0px 30px <?php echo $syg_thumbnail_bordercolor; ?>;
+    font-size: <?php echo ceil ($syg_description_fontsize*1.8); ?>px;
+    color: <?php echo $syg_description_fontcolor; ?>;
+    font-weight: bold;
+line-height: normal;
 }
 
 a.sygVideo-<?php echo $id; ?> {

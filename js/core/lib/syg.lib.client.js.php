@@ -146,11 +146,11 @@ jQuery.noConflict();
 				var pageNum = button;
 				
 				if (options['cache'] == 'on') {
+                    // @todo verificare funzionamento animazione
                     var originalColor = String($('#syg_video_page-' + gid).css('background-color'));
                     var animationColor = String(methods.shadeColor.call(this, originalColor, -50));
 
                     $('#syg_video_page-' + gid).animate({ backgroundColor: "black" }, "slow");
-                    alert ('#syg_video_page-' + gid);
 					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).animate({backgroundColor: originalColor });});
 				} else {
                     $('#syg_video_page-' + gid).fadeIn(500);

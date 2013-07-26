@@ -27,7 +27,7 @@ extract ($option);
 $pluginOpt = $syg->getOptions();
 extract ($pluginOpt);
 
-$heightRatio = ceil($syg_thumbnail_height*2.8);
+$heightRatio = ceil($syg_thumbnail_height*2.3);
 
 $jollyColor = SygUtil::getJollyColor($syg_thumbnail_bordercolor, $syg_description_fontcolor);
 

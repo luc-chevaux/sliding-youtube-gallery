@@ -10,6 +10,7 @@
  */
 
 // @todo loader while caching
+// @todo animazione su click paginatore
 
 // include required wordpress object
 require_once(ABSPATH . 'wp-admin/includes/plugin.php');

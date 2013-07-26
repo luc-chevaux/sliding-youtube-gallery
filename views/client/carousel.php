@@ -48,7 +48,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 			</div>
 		<?php } ?>
 	</div>
-	<p id="carousel-title-<?php echo $gallery->getId(); ?>"></p>
+    <table id="carousel-title-area-<?php echo $gallery->getId(); ?>" cellspacing="0" cellpadding="0">
+        <tr>
+            <td id="carousel-titleblock-<?php echo $gallery->getId(); ?>"><span id="carousel-title-<?php echo $gallery->getId(); ?>"></span></td>
+        </tr>
+    </table>
 </div>
 
 <?php 
