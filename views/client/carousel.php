@@ -9,7 +9,7 @@ $options = $this->data['options'];
 $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
-<div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_carousel_loading-<?php echo $gallery->getId();?>">
+<div id="syg_video_carousel-<?php echo $gallery->getId();?>" class="syg_video_carousel_loading-<?php echo $gallery->getId();?> syg_video_carousel-<?php echo $gallery->getId();?>">
 	<div id="hidden-carousel-layer_<?php echo $gallery->getId();?>" style="display: none !important;">
 		<?php
 		foreach ($feed as $element) {				
@@ -25,11 +25,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				$videoThumbnails = $element->getVideoThumbnails();
 			}
 		?>
-		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
+		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo htmlspecialchars($element->getVideoTitle()); ?>">
 			<?php if ($gallery->getDescShow()) { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoTitle(); ?>"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo htmlspecialchars($element->getVideoDescription()); ?>" title="<?php echo htmlspecialchars($element->getVideoTitle()); ?>"/>
 			<?php } else { ?>
-				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="<?php echo $element->getVideoTitle(); ?>"/>
+				<img class="cloudcarousel carousel-thumb-image-<?php echo $gallery->getId();?>" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="<?php echo htmlspecialchars($element->getVideoTitle()); ?>"/>
 			<?php } ?>
 			
 			<!-- show overlay button -->

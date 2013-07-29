@@ -29,7 +29,7 @@ $(window).load(function() {
 	if (window.console) console.log('gallery loading function >> start');
 	
 	$('#syg_video_gallery-<?php echo $id; ?>').removeClass('syg_video_gallery_loading-<?php echo $id; ?>');
-	$('#syg_video_gallery-<?php echo $id; ?>').addClass('syg_video_gallery-<?php echo $id; ?>');
+	/* $('#syg_video_gallery-<?php echo $id; ?>').addClass('syg_video_gallery-<?php echo $id; ?>'); */
 	
 	
 	/* remove display none */

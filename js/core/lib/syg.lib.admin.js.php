@@ -679,7 +679,7 @@ jQuery.noConflict();
 				methods.sygAlert.call(this, title, message, 'confirm', callbck);
 				
 			} else if (modified == 'true' && syg_option.syg_option_askcache == '1') {
-			
+
 				var title = 'Confirmation';
 				var message = '<p>Your settings has been updated. Cached content need to be updated. Update it now?</p>';
 				
@@ -687,31 +687,12 @@ jQuery.noConflict();
 					var request = jQuery.ajax({
 						  url: 'admin.php',
 						  type: 'GET',
-						  data: {page: 'syg-manage-settings', action : 'cache'},
-						  dataType: 'html',
-						  complete: function () {
-						  }
-					});
-				};
-				
-				var callbck = function () {
-					var request = jQuery.ajax({
-						  url: 'admin.php',
-						  type: 'GET',
-						  data: {page: 'syg-manage-settings', action : 'cache'},
+						  data: {page: 'syg-manage-galleries', action : 'cache_rebuild'},
 						  dataType: 'text',
 						  success: function (data) {
-						 	  var exceptions = jQuery(data).filter("#jsonException");
-						  	  eval(exceptions.text());
-						  	  if (syg_exception != null) {
-						  	  	error_title = 'Exception ' + syg_exception.code;
-						  	  	error_message = '<p>' + syg_exception.message + '</p>';
-						  	  	methods.sygAlert.call(this, error_title, error_message, 'error', null);
-						  	  } else {
-						  	  	var windowTitle = 'Information';
-						  	  	var windowMessage = '<p>Your server cache has been successfully updated.</p>';
-						  	  	methods.sygAlert.call(this, windowTitle, windowMessage, 'info', null);
-							  }
+                                var windowTitle = 'Information';
+                                var windowMessage = '<p>Your content update has been scheduled.</p>';
+                                methods.sygAlert.call(this, windowTitle, windowMessage, 'info', null);
 						  }
 					});
 				};

@@ -202,3 +202,25 @@ span.video_duration-<?php echo $id; ?> {
     background-color: #000;
 }
 
+img.play-icon-<?php echo $id; ?>{
+    border: 0;
+    display: block;
+    visibility:visible;
+    position:absolute;
+    left:<?php echo $syg_thumbnail_left; ?>%;
+    top:<?php echo $syg_thumbnail_top; ?>%;
+    width: <?php echo $syg_thumbnail_overlaysize; ?>px;
+    height: <?php echo $syg_thumbnail_overlaysize; ?>px;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: <?php echo $syg_thumbnail_buttonopacity; ?>;
+    filter:alpha(opacity=<?php echo $syg_thumbnail_buttonopacity*100;?>);
+}
+
+.syg_video_gallery_loading-<?php echo $id; ?> {
+    background-image: url('../img/ui/loader.gif');
+    background-repeat: no-repeat;
+    background-position:center;
+    height: 100px !important;
+}

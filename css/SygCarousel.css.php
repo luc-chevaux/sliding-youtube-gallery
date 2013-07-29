@@ -54,7 +54,7 @@ require_once('./inc/cssIf.php');
                  1px 0 black,
                  0 -1px black,
                  0px 0px 30px <?php echo $syg_thumbnail_bordercolor; ?>;
-    font-size: <?php echo ceil ($syg_description_fontsize*1.8); ?>px;
+    font-size: <?php echo ceil ($syg_description_fontsize); ?>px;
     color: <?php echo $syg_description_fontcolor; ?>;
     font-weight: bold;
 line-height: normal;
@@ -104,3 +104,9 @@ img.carousel-thumb-image-<?php echo $id; ?> {
     opacity: 0.3;
 }
 
+.syg_video_carousel_loading-<?php echo $id; ?> {
+    background-image: url('../img/ui/loader.gif');
+    background-repeat: no-repeat;
+    background-position:center;
+    height: 100px !important;
+}

@@ -10,7 +10,7 @@ $thumbImage = $gallery->getSygStyle()->getThumbImage();
 $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/play-the-video_' . $gallery->getSygStyle()->getThumbImage() .'.png' : $this->data['imgPath'] . '/button/play-the-video_1.png'; 
 ?>
 
-<div id="syg_video_gallery-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?>">
+<div id="syg_video_gallery-<?php echo $gallery->getId();?>" class="syg_video_gallery_loading-<?php echo $gallery->getId();?> syg_video_gallery-<?php echo $gallery->getId();?>">
 	<div class="sc_menu-<?php echo $gallery->getId();?>">
 		<ul class="sc_menu-<?php echo $gallery->getId();?>" style="display: none !important;">
 			<?php 
@@ -29,10 +29,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				?> 
 				<!-- gallery code -->
 				<li>
-					<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
+					<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo htmlspecialchars($element->getVideoTitle()); ?>">
 						<!-- append video thumbnail -->
 						<?php if ($gallery->getDescShow()) { ?>
-							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="<?php echo htmlspecialchars($element->getVideoDescription()); ?>" title="<?php echo htmlspecialchars($element->getVideoDescription()); ?>"/>
 						<?php } else { ?>
 							<img src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" class="thumbnail-image-<?php echo $gallery->getId();?>" alt="play" title="play"/>
 						<?php }?>				
@@ -48,7 +48,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 						<?php } ?>
 					</a>
 					<!-- show video title -->
-					<span class="video_title-<?php echo $gallery->getId();?>"><?php echo $element->getVideoTitle(); ?></span>
+					<span class="video_title-<?php echo $gallery->getId();?>"><?php echo htmlspecialchars($element->getVideoTitle()); ?></span>
 				</li>
 			<?php } ?>
 		</ul>

@@ -310,7 +310,7 @@ select { border-color: #333333 !important;}
 
 #syg-plugin-area p, #syg-plugin-area span, #syg-plugin-area ul {
 	font-family: sans-serif;
-	font-size: 11px;
+	font-size: 14px;
 }
 
 #syg-plugin-area ul {
@@ -349,19 +349,43 @@ select { border-color: #333333 !important;}
 }
 
 .support_internal {
-	box-shadow: 0 0 8px #888; 
 	margin-top: 15px;
 	width: 97%;
-	padding: 1%;
 }
 
-.side_box {
-	background-color: #cccccc; 
+.side_box_right_top {
+	background-color: #333333;
 	border: 1px #333 solid; 
-	padding: 10px; 
-	margin-bottom: 15px; 
+	padding: 10px;
 	border-radius: 10px; 
 	box-shadow: 0 0 8px #888;
+    color: white;
+    margin-left: 5px;
+}
+
+.side_box_right_bottom {
+    background-color: #333333;
+    border: 1px #333 solid;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px #888;
+    color: white;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.side_box_left {
+    background-color: #333333;
+    border: 1px #333 solid;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px #888;
+    color: white;
+    margin-right: 5px;
+}
+
+.side_box_right_bottom ul li a:link, .side_box ul li a:hover, .side_box ul li a:link a:visited {
+    color: white !important;
 }
 
 #syg_option_use_fb2_desc {
@@ -384,4 +408,11 @@ select { border-color: #333333 !important;}
 .fb-like {
 	width: 200px;
 	max-width: 200px;
+}
+
+.syg_sidebar_title {
+    margin: 0 auto 10px !important;
+    font-size: 17px;
+    font-weight: bold;
+    text-shadow: 0px 1px 0px #333, 0px 2px 0px #222, 0px 3px 0px #000;
 }

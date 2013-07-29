@@ -16,7 +16,7 @@ jQuery.noConflict();
 		},
 		
 		/* word truncation function */
-		wordTruncate : function truncate(str, limit) { 
+		wordTruncate : function (str, limit) {
 			var bits, i; 
 			if ("string" !== typeof str) { 
 				return ''; 
@@ -30,7 +30,17 @@ jQuery.noConflict();
 			} 
 			return bits.join(''); 
 		},
-		
+
+        /* escape html like htmlspecialchars */
+        escapeHtml: function (text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        },
+
 		/* function that loads the data in the table */ 
 		loadData : function (data, gid, options) {
 			data = $.parseJSON(JSON.stringify(data));
@@ -45,9 +55,9 @@ jQuery.noConflict();
 				html = html + '<tr>';
 				
 				html = html + '<td class="syg_video_page_thumb-' + gid + '">';
-				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '" title="'+ val.video_title +'">';
+				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '" title="'+ methods.escapeHtml(this, val.video_title) +'">';
 				if (options['description_show']) {
-					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + val.video_description + '" title="' + val.video_description + '"/>';
+					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + methods.escapeHtml(this, val.video_description) + '" title="' + methods.escapeHtml(this, val.video_description) + '"/>';
 				} else {
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="play" title="play"/>';
 				}
@@ -69,7 +79,7 @@ jQuery.noConflict();
 				html = html + '</td>';
 				
 				html = html + '<td class="syg_video_page_description">';
-				html = html + '<h4 class="video_title-' + gid + '"><a href="' + val.video_watch_page_url + '" target="_blank">' + val.video_title + '</a></h4>';
+				html = html + '<h4 class="video_title-' + gid + '"><a href="' + val.video_watch_page_url + '" target="_blank">' + methods.escapeHtml(this, val.video_title) + '</a></h4>';
 				
 				if (options['description_showratings']) {
 						rating = val.video_ratings;
@@ -101,7 +111,7 @@ jQuery.noConflict();
 				}
 				
 				if (options['description_show']) {
-					html = html + '<p class="textual_video_description">' + methods.wordTruncate.call(this, val.video_description, options['description_length']) + '</p>';
+					html = html + '<p class="textual_video_description">' + methods.escapeHtml(this, methods.wordTruncate.call(this, val.video_description, options['description_length'])) + '</p>';
 				}
 				
 				html = html + '</td>';
@@ -146,15 +156,11 @@ jQuery.noConflict();
 				var pageNum = button;
 				
 				if (options['cache'] == 'on') {
-                    // @todo verificare funzionamento animazione
-                    var originalColor = String($('#syg_video_page-' + gid).css('background-color'));
-                    var animationColor = String(methods.shadeColor.call(this, originalColor, -50));
-
-                    $('#syg_video_page-' + gid).animate({ backgroundColor: "black" }, "slow");
-					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).animate({backgroundColor: originalColor });});
+                    $('#syg_video_page-' + gid).animate({ "opacity": "0.25" }, "fast");
+					$.getJSON(options['jsonUrl'] + pageNum + '.json', function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).animate({ "opacity": "1" }, "fast");});
 				} else {
-                    $('#syg_video_page-' + gid).fadeIn(500);
-					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).fadeOut(500);});
+                    $('#syg_video_page-' + gid).animate({ "opacity": "0.25" }, "fast");
+					$.getJSON(options['json_query_if_url'] + '?query=videos&page_number=' + pageNum + '&id=' + gid + '&syg_option_which_thumb=' + syg_option.syg_option_which_thumb + '&syg_option_pagenumrec=' + syg_option.syg_option_pagenumrec, function (data) {methods.loadData.call(this, data, gid, options); $('#syg_video_page-' + gid).animate({ "opacity": "1" }, "fast");});
 				}				
 			});
 			

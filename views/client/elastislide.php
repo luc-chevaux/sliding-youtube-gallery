@@ -25,10 +25,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		}
 	?> 
 	<li>
-		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo $element->getVideoTitle(); ?>">
+		<a class="sygVideo-<?php echo $gallery->getId();?>" href="http://www.youtube.com/watch?v=<?php echo $element->getVideoId(); ?>" title="<?php echo htmlspecialchars($element->getVideoTitle()); ?>">
 			<!-- append video thumbnail -->
 			<?php if ($gallery->getDescShow()) { ?>
-				<img class="elastislide-img-item" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo $element->getVideoDescription(); ?>" title="<?php echo $element->getVideoDescription(); ?>"/>
+				<img class="elastislide-img-item" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="<?php echo htmlspecialchars($element->getVideoDescription()); ?>" title="<?php echo htmlspecialchars($element->getVideoDescription()); ?>"/>
 			<?php } else { ?>
 				<img class="elastislide-img-item" src="<?php echo $videoThumbnails[$options['syg_option_which_thumb']]['url']; ?>" alt="play" title="play"/>
 			<?php }?>

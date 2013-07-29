@@ -13,7 +13,7 @@ require_once('./inc/cssIf.php');
 }
 
 /* style to remove after loading */
-.syg_video_gallery_loading-<?php echo $id; ?>, .syg_video_carousel_loading-<?php echo $id; ?> {
+.syg_video_gallery_loading-<?php echo $id; ?> {
     background-image: url('../img/ui/loader.gif');
     background-repeat: no-repeat;
     background-position:center;

@@ -26,3 +26,7 @@ span.video_duration-<?php echo $id; ?> {
     color: white;
     background-color: #000;
 }
+
+.elastislide-wrapper {
+    margin: <?php echo $syg_box_padding; ?>px 0px <?php echo $syg_box_padding; ?>px 0px;
+}
