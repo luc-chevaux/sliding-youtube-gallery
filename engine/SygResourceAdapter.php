@@ -5,7 +5,7 @@
  * @since 1.5.0
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.5.2
+ * @version: 1.5.3
  */
 class SygResourceAdapter {
 	private $conditions = null;

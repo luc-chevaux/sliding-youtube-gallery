@@ -5,7 +5,7 @@
  * @since 1.4.4
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.5.2
+ * @version: 1.5.3
  */
 class SygWidget extends WP_Widget{
 	function SygWidget() {  

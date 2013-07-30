@@ -55,9 +55,9 @@ jQuery.noConflict();
 				html = html + '<tr>';
 				
 				html = html + '<td class="syg_video_page_thumb-' + gid + '">';
-				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '" title="'+ methods.escapeHtml(this, val.video_title) +'">';
+				html = html + '<a class="sygVideo-' + gid + '" href="http://www.youtube.com/watch?v=' + val.video_id + '" title="'+ methods.escapeHtml.call(this, val.video_title) +'">';
 				if (options['description_show']) {
-					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + methods.escapeHtml(this, val.video_description) + '" title="' + methods.escapeHtml(this, val.video_description) + '"/>';
+					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="' + methods.escapeHtml.call(this, val.video_description) + '" title="' + methods.escapeHtml.call(this, val.video_description) + '"/>';
 				} else {
 					html = html + '<img src="' + val.video_thumbshot + '" class="thumbnail-image-' + gid + '" alt="play" title="play"/>';
 				}
@@ -79,7 +79,7 @@ jQuery.noConflict();
 				html = html + '</td>';
 				
 				html = html + '<td class="syg_video_page_description">';
-				html = html + '<h4 class="video_title-' + gid + '"><a href="' + val.video_watch_page_url + '" target="_blank">' + methods.escapeHtml(this, val.video_title) + '</a></h4>';
+				html = html + '<h4 class="video_title-' + gid + '"><a href="' + val.video_watch_page_url + '" target="_blank">' + methods.escapeHtml.call(this, val.video_title) + '</a></h4>';
 				
 				if (options['description_showratings']) {
 						rating = val.video_ratings;
@@ -111,7 +111,7 @@ jQuery.noConflict();
 				}
 				
 				if (options['description_show']) {
-					html = html + '<p class="textual_video_description">' + methods.escapeHtml(this, methods.wordTruncate.call(this, val.video_description, options['description_length'])) + '</p>';
+					html = html + '<p class="textual_video_description">' + methods.escapeHtml.call(this, methods.wordTruncate.call(this, val.video_description, options['description_length'])) + '</p>';
 				}
 				
 				html = html + '</td>';
