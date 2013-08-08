@@ -439,7 +439,7 @@ class SygValidate {
 				foreach ($list_of_videos as $key => $value) {
 					$qsUrl = $list_of_videos[$key];
 					
-					if (preg_match('/^(http:\/\/)?(?:www\.)?youtube.com\/watch\?(?=.*v=\w+)(?:\S+)?$/', $qsUrl)) {
+					if (preg_match('#(http://www.youtube.com)?/(v/([-|~_0-9A-Za-z]+)|watch\?v\=([-|~_0-9A-Za-z]+)&?.*?)#i', $qsUrl)) {
 						// parse query string
 						$qsArr = array();
 						parse_str (parse_url($qsUrl, PHP_URL_QUERY), $qsArr);

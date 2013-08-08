@@ -759,7 +759,7 @@ jQuery.noConflict();
 			var regex = new RegExp(regexS);
 			var results = regex.exec(window.location.search);
 			if(results == null) {
-				return "";
+				return null;
 			} else {
 				return decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
@@ -867,7 +867,7 @@ jQuery(document).ready(function($) {
 	$.fn.sygadmin('displayLoad');
 
 	// load if page contains a list
-	if (!id){
+	if (action === null) {
 		// get the data
 		if (!pageNum) {
 			var pageNum = 1;

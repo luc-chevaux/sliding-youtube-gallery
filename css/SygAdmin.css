@@ -319,7 +319,7 @@ select { border-color: #333333 !important;}
 }
 
 #syg-plugin-area ul li {
-	margin: 0px;
+	margin: 0 3px;
     padding: 0px;
 }
 
