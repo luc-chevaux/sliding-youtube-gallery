@@ -48,7 +48,7 @@ class SygResourceAdapter {
 					if ($this->getRegistered() == 'no') {
 						// register script
 						wp_register_script($this->getName(),
-						WP_PLUGIN_URL. SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
+                        plugins_url() . SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
 						$this->getDependencies(),
 						$this->getVersion(),
 						true
@@ -61,7 +61,7 @@ class SygResourceAdapter {
 					if ($this->getRegistered() == 'no') {
 						// register style
 						wp_register_style($this->getName(),
-						WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
+                        plugins_url() . SygConstant::WP_PLUGIN_PATH . $this->getRelUrl(),
 						$this->getDependencies(),
 						$this->getVersion(),
 						$this->getMedia()

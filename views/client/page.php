@@ -33,11 +33,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 
 <?php
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_PAGE;
 wp_register_script('syg-page-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-page-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_PAGE);
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$gallery->getId();
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/loading/page.min.js.php?id='.$gallery->getId();
 wp_register_script('syg-page-loading-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-page-loading-'.$gallery->getId());
 ?>

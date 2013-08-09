@@ -15,7 +15,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		foreach ($feed as $element) {				
 			// modify the img path to match local files
 			if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-				$videoThumbnails[$options['syg_option_which_thumb']]['url'] = WP_PLUGIN_URL . 
+				$videoThumbnails[$options['syg_option_which_thumb']]['url'] = plugins_url() .
 											SygConstant::WP_PLUGIN_PATH .
 											SygConstant::WP_CACHE_THUMB_REL_DIR .
 											$gallery->getId() . 
@@ -41,10 +41,10 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 		
 		<?php if ($options['syg_option_carousel_autorotate'] == 'no') { ?>
 			<div id="left-carousel-button-<?php echo $gallery->getId();?>">
-				<img class="left-carousel-button-<?php echo $gallery->getId();?>" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/50/left.png'; ?>">
+				<img class="left-carousel-button-<?php echo $gallery->getId();?>" src="<?php echo plugins_url().'/sliding-youtube-gallery/img/ui/carousel/50/left.png'; ?>">
 			</div>
 			<div id="right-carousel-button-<?php echo $gallery->getId();?>">
-				<img class="right-carousel-button-<?php echo $gallery->getId();?>" src="<?php echo WP_PLUGIN_URL.'/sliding-youtube-gallery/img/ui/carousel/50/right.png'; ?>">
+				<img class="right-carousel-button-<?php echo $gallery->getId();?>" src="<?php echo plugins_url().'/sliding-youtube-gallery/img/ui/carousel/50/right.png'; ?>">
 			</div>
 		<?php } ?>
 	</div>
@@ -57,11 +57,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 
 <?php 
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL;
 wp_register_script('syg-carousel-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-carousel-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_CAROUSEL);
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$gallery->getId();
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/loading/carousel.min.js.php?id='.$gallery->getId();
 wp_register_script('syg-carousel-loading-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-carousel-loading-'.$gallery->getId());
 ?>

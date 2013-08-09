@@ -14,7 +14,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 	foreach ($feed as $element) {				
 		// modify the img path to match local files
 		if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-			$videoThumbnails[$options['syg_option_which_thumb']]['url'] = WP_PLUGIN_URL . 
+			$videoThumbnails[$options['syg_option_which_thumb']]['url'] = plugins_url() .
 										SygConstant::WP_PLUGIN_PATH .
 										SygConstant::WP_CACHE_THUMB_REL_DIR .
 										$gallery->getId() . 
@@ -44,11 +44,11 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 
 <?php 
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$gallery->getId().'&cache=off'.'&ui='.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE;
 wp_register_script('syg-elastislide-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE, $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-elastislide-ready-'.$gallery->getId().'-'.SygConstant::SYG_PLUGIN_COMPONENT_ELASTISLIDE);
 // js to include
-$url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/elastislide.min.js.php?id='.$gallery->getId();
+$url = plugins_url().'/sliding-youtube-gallery/js/core/ui/loading/elastislide.min.js.php?id='.$gallery->getId();
 wp_register_script('syg-elastislide-loading-'.$gallery->getId(), $url, array(), SygConstant::SYG_VERSION, true);
 wp_enqueue_script('syg-elastislide-loading-'.$gallery->getId());
 ?>

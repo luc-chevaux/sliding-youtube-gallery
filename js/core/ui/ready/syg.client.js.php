@@ -64,7 +64,7 @@ $(document).ready(function(){
 	<?php if ($cache == 'on') { ?>
 		options['cache'] = '<?php echo $cache; ?>';
 		<?php 
-			$jsonUrl = WP_PLUGIN_URL . 
+			$jsonUrl = plugins_url() .
 						SygConstant::WP_PLUGIN_PATH .
 						SygConstant::WP_CACHE_JSON_REL_DIR .
 						$id .

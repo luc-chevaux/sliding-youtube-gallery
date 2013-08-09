@@ -27,7 +27,7 @@
 								<p>You can add video from different sources such as user's channel, youtube playlist or by adding video url manually.</p><p>You may choose between four different kind of component to display your galleries. </p>
 								<table>
 									<tr style="vertical-align: top;">
-										<td><img style="width: 100px; float: left;" src="<?php echo WP_PLUGIN_URL . SygConstant::WP_IMG_PATH . 'ui/admin/opensource-logo.png'; ?>"/></td>
+										<td><img style="width: 100px; float: left;" src="<?php echo plugins_url() . SygConstant::WP_IMG_PATH . 'ui/admin/opensource-logo.png'; ?>"/></td>
 										<td><i>If programmers deserve to be rewarded for creating innovative programs, by the same token they deserve to be punished if they restrict the use of these programs.</i><br/> (Richard Stallman)</td>
 									</tr>
 								</table>

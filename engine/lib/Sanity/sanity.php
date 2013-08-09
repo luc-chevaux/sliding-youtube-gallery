@@ -33,8 +33,8 @@ class SanityPluginFramework {
             $this->plugin_dir = SYG_PATH;
         }
         $this->plugin_dir_name = basename(dirname($here));
-        $this->css_path = WP_PLUGIN_URL.'/'.$this->plugin_dir_name.'/css/';
-        $this->js_path = WP_PLUGIN_URL.'/'.$this->plugin_dir_name.'/js/';
+        $this->css_path = plugins_url().'/'.$this->plugin_dir_name.'/css/';
+        $this->js_path = plugins_url().'/'.$this->plugin_dir_name.'/js/';
         add_action('wp_loaded', array(&$this, 'create_nonce'));
         if(!empty($this->admin_css) || !empty($this->admin_js) ) {
             add_action('admin_enqueue_scripts', array(&$this, 'load_admin_scripts'));
@@ -134,17 +134,17 @@ class SanityPluginFramework {
         $scriptName = '';
         $scriptUrl = '';
         if (array_key_exists('mobile', $this->data) == true && $component == SygConstant::SYG_PLUGIN_COMPONENT_GALLERY) {
-        	$scriptUrl = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.mobile.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
+        	$scriptUrl = plugins_url().'/sliding-youtube-gallery/js/core/ui/ready/syg.client.mobile.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
         	$scriptName = 'syg-'.$component.'-mobile-ready-'.$id;
         } else {
-        	$scriptUrl = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
+        	$scriptUrl = plugins_url().'/sliding-youtube-gallery/js/core/ui/ready/syg.client.min.js.php?id='.$id.'&cache=on'.'&ui='.$component;
         	$scriptName = 'syg-'.$component.'-ready-'.$id;
         }
         wp_register_script($scriptName, $scriptUrl, array(), SygConstant::SYG_VERSION, true);
         wp_enqueue_script($scriptName);
         
         // js to include
-        $url = WP_PLUGIN_URL.'/sliding-youtube-gallery/js/core/ui/loading/'.$component.'.min.js.php?id='.$id;
+        $url = plugins_url().'/sliding-youtube-gallery/js/core/ui/loading/'.$component.'.min.js.php?id='.$id;
         wp_register_script('syg-'.$component.'-loading-'.$id, $url, array(), SygConstant::SYG_VERSION, true);
         wp_enqueue_script('syg-'.$component.'-loading-'.$id);
         

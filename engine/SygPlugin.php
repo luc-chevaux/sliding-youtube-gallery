@@ -76,22 +76,22 @@ class SygPlugin extends SanityPluginFramework {
 		$this->homeRoot = site_url();
 
 		// set the plugin path
-		$this->setPluginRoot(WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
+		$this->setPluginRoot(plugins_url() . SygConstant::WP_PLUGIN_PATH);
 
 		// set the css path
-		$this->setCssRoot(WP_PLUGIN_URL . SygConstant::WP_CSS_PATH);
+		$this->setCssRoot(plugins_url() . SygConstant::WP_CSS_PATH);
 
 		// set the js path
-		$this->setJsRoot(WP_PLUGIN_URL . SygConstant::WP_JS_PATH);
+		$this->setJsRoot(plugins_url() . SygConstant::WP_JS_PATH);
 
 		// set the img path
-		$this->setImgRoot(WP_PLUGIN_URL . SygConstant::WP_IMG_PATH);
+		$this->setImgRoot(plugins_url() . SygConstant::WP_IMG_PATH);
 
 		// set json query interface url
-		$this->setJsonQueryIfUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_URL);
+		$this->setJsonQueryIfUrl(plugins_url() . SygConstant::WP_JQI_URL);
 		
 		// set json query interface admin url
-		$this->setJsonQueryIfAdminUrl(WP_PLUGIN_URL . SygConstant::WP_JQI_ADMIN_URL);
+		$this->setJsonQueryIfAdminUrl(plugins_url() . SygConstant::WP_JQI_ADMIN_URL);
 
 		// set local object
 		$this->sygYouTube = new SygYouTube();
@@ -1451,7 +1451,7 @@ class SygPlugin extends SanityPluginFramework {
 		/*********************************
 		 * additional javascript options *
 		**********************************/
-		$options['syg_option_plugin_url'] = WP_PLUGIN_URL;
+		$options['syg_option_plugin_url'] = plugins_url();
 		$options['syg_option_fancybox_url_suffix'] = $this->getFBUrlSuffix();
 		
 		return $options;

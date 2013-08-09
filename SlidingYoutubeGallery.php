@@ -41,7 +41,7 @@ if (!class_exists('Mobile_Detect')) {
 
 require_once(SYG_PATH . 'engine/lib/Debug/codeaid.net_snippet.php');
 
-define('SYG_URL', WP_PLUGIN_URL . SygConstant::WP_PLUGIN_PATH);
+define('SYG_URL', plugins_url() . SygConstant::WP_PLUGIN_PATH);
 
 // register activation hook
 register_activation_hook(SYG_PATH . '/SlidingYoutubeGallery.php', 'activate');

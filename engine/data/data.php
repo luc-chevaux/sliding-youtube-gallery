@@ -66,7 +66,7 @@ switch ($_GET['query']) {
 				
 				// modify the img path to match local files
 				if (!empty($_GET['mode']) && $_GET['mode'] == 'caching_mode') {
-					$element['video_thumbshot'] = WP_PLUGIN_URL .
+					$element['video_thumbshot'] = plugins_url() .
 												'/sliding-youtube-gallery/' .
 												'/cache/thumb/' .
 												$gallery->getId() . 
