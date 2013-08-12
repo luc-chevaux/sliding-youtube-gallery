@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.5.3
+ * @version: 1.5.4
  */
 
 class SygConstant {
@@ -15,7 +15,8 @@ class SygConstant {
 	 */
 	const SYG_VERSION = '1.4.0';
 	const SYG_DEV_KEY = 'AI39si6mNwVCtzfMFh7__lYnzq6H180Fpd3fQwXdyykuPKCKDfxnmVG09D3L-xxv8X8XoyHEzXmMI0c9qACLik_6ocXRKcmQ7A';
-	
+	const SYG_DEBUG_MODE = false;
+
 	/**
 	 * Plugin option inventory
 	 */
@@ -114,11 +115,11 @@ class SygConstant {
 	const WP_IMG_PATH = '/sliding-youtube-gallery/img/';
 	const WP_JQI_URL = '/sliding-youtube-gallery/engine/data/data.php';
 	const WP_JQI_ADMIN_URL = '/sliding-youtube-gallery/engine/data/admin.php';
-	const WP_CACHE_DIR = '/sliding-youtube-gallery/cache/';
-	const WP_CACHE_THUMB_REL_DIR = '/cache/thumb/';
-	const WP_CACHE_HTML_REL_DIR = '/cache/html/';
-	const WP_CACHE_JSON_REL_DIR = '/cache/json/';
-	const WP_CACHE_JS_REL_DIR = '/cache/js/';
+	const WP_CACHE_DIR = '/syg-cache/';
+	const WP_CACHE_THUMB_REL_DIR = '/syg-cache/thumb/';
+	const WP_CACHE_HTML_REL_DIR = '/syg-cache/html/';
+	const WP_CACHE_JSON_REL_DIR = '/syg-cache/json/';
+	const WP_CACHE_JS_REL_DIR = '/syg-cache/js/';
 	
 	/**
 	 * UI images url

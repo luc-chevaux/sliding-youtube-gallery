@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.5.3
+ * @version: 1.5.4
  */
 
 class SygGallery {
@@ -114,10 +114,10 @@ class SygGallery {
 		}
 		
 		// load the caching path
-		$this->setThumbnailsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
-		$this->setHtmlPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
-		$this->setJsonPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
-		$this->setJsPath(realpath(dirname(dirname(__FILE__))) . SygConstant::WP_CACHE_JS_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setThumbnailsPath(WP_CONTENT_DIR . SygConstant::WP_CACHE_THUMB_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setHtmlPath(WP_CONTENT_DIR . SygConstant::WP_CACHE_HTML_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setJsonPath(WP_CONTENT_DIR . SygConstant::WP_CACHE_JSON_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
+		$this->setJsPath(WP_CONTENT_DIR . SygConstant::WP_CACHE_JS_REL_DIR . $this->getId() . DIRECTORY_SEPARATOR);
 		
 		// see if exists cache directory
 		if ($this->isGalleryCached()) {

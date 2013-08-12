@@ -17,8 +17,7 @@ $overlayButtonSrc = (!empty($thumbImage)) ? $this->data['imgPath'] . '/button/pl
 				foreach ($feed as $element) {				
 					// modify the img path to match local files
 					if ($mode == SygConstant::SYG_PLUGIN_FE_CACHING_MODE) {
-						$videoThumbnails[$options['syg_option_which_thumb']]['url'] = plugins_url() .
-													SygConstant::WP_PLUGIN_PATH .
+						$videoThumbnails[$options['syg_option_which_thumb']]['url'] = content_url() .
 													SygConstant::WP_CACHE_THUMB_REL_DIR .
 													$gallery->getId() . 
 													DIRECTORY_SEPARATOR . 

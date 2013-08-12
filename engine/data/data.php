@@ -25,6 +25,7 @@ require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 require_once ('../SygYouTube.php');
 require_once ('../SygDao.php');
 require_once ('../SygUtil.php');
+require_once ('../SygConstant.php');
 
 // construct objects
 $dao = new SygDao();
@@ -66,9 +67,8 @@ switch ($_GET['query']) {
 				
 				// modify the img path to match local files
 				if (!empty($_GET['mode']) && $_GET['mode'] == 'caching_mode') {
-					$element['video_thumbshot'] = plugins_url() .
-												'/sliding-youtube-gallery/' .
-												'/cache/thumb/' .
+					$element['video_thumbshot'] = content_url() .
+												SygConstant::WP_CACHE_THUMB_REL_DIR .
 												$gallery->getId() . 
 												DIRECTORY_SEPARATOR . 
 												$entry->getVideoId() . '.jpg';

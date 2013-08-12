@@ -872,6 +872,7 @@ jQuery(document).ready(function($) {
 		if (!pageNum) {
 			var pageNum = 1;
 		}
+
 		$.getJSON(syg_option.syg_option_plugin_url + '/sliding-youtube-gallery/engine/data/admin.php?action=query&table='+ table + '&page_number=' + pageNum + '&syg_option_numrec=' + syg_option.syg_option_numrec, function (data) {$.fn.sygadmin('loadData', data, pageNum);});
 	}
 	

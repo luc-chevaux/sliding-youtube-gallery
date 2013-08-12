@@ -18,6 +18,7 @@ class SanityPluginFramework {
     var $js_path = 'js';
     var $plugin_dir = '';
     var $plugin_dir_name = '';
+    var $cache_dir = '';
 
     // AJAX actions
     var $ajax_actions = array(
@@ -31,6 +32,9 @@ class SanityPluginFramework {
         $this->wpdb = $wpdb;
         if(empty($this->plugin_dir)) {
             $this->plugin_dir = SYG_PATH;
+        }
+        if(empty($this->cache_dir)) {
+            $this->cache_dir = SYG_CACHE_PATH;
         }
         $this->plugin_dir_name = basename(dirname($here));
         $this->css_path = plugins_url().'/'.$this->plugin_dir_name.'/css/';
@@ -124,7 +128,7 @@ class SanityPluginFramework {
     }
     
     function cacheRender($id, $component) {
-    	$template_path = $this->plugin_dir.'/cache/html/'.$id.'/'.$component.'-'.$id.'.html';
+    	$template_path = $this->cache_dir.'html/'.$id.'/'.$component.'-'.$id.'.html';
     	ob_start();
         include ($template_path);
         $output = ob_get_clean();

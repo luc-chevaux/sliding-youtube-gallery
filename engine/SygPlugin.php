@@ -6,7 +6,7 @@
  * @since 1.0.1
  * @author: Luca Martini @ webEng
  * @license: GNU GPLv3 - http://www.gnu.org/copyleft/gpl.html
- * @version: 1.5.3
+ * @version: 1.5.4
  * 
  * @todo Background image (milestone v1.4.0)
  * @todo widget wordpress + Implementare scroll verticale (milestone v1.4.0)
@@ -209,11 +209,11 @@ class SygPlugin extends SanityPluginFramework {
 			// check gallery are present
             $checkGallery = (bool) $this->sygDao->getGalleriesCount();
 			// check file system permission
-            $checkFSPermission = (bool) (is_writable(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR) &&
-										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR) && 
-										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR) &&
-										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR) && 
-										 is_writable(WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR));
+            $checkFSPermission = (bool) (is_writable(WP_CONTENT_DIR . SygConstant::WP_CACHE_DIR) &&
+										 is_writable(WP_CONTENT_DIR . SygConstant::WP_CACHE_HTML_REL_DIR) &&
+										 is_writable(WP_CONTENT_DIR . SygConstant::WP_CACHE_THUMB_REL_DIR) &&
+										 is_writable(WP_CONTENT_DIR . SygConstant::WP_CACHE_JSON_REL_DIR) &&
+										 is_writable(WP_CONTENT_DIR . SygConstant::WP_CACHE_JS_REL_DIR));
 
 			// define a warning array
 			$warning = array();
@@ -259,7 +259,12 @@ class SygPlugin extends SanityPluginFramework {
 	}
 
 
-	/**
+    function __sleep()
+    {
+        // TODO: Implement __sleep() method.
+    }
+
+    /**
 	 * @name printTasks
 	 * @category debug function
 	 * @since 1.4.0
@@ -281,16 +286,25 @@ class SygPlugin extends SanityPluginFramework {
 		
 		// get the current db version
 		$installed_ver = get_option("syg_db_version");
-		
+
+        // check if directory not exists, then create
+        if (!file_exists(WP_CONTENT_DIR . SygConstant::WP_CACHE_DIR)) {
+            mkdir(WP_CONTENT_DIR . SygConstant::WP_CACHE_DIR);
+            mkdir(WP_CONTENT_DIR . SygConstant::WP_CACHE_HTML_REL_DIR);
+            mkdir(WP_CONTENT_DIR . SygConstant::WP_CACHE_THUMB_REL_DIR);
+            mkdir(WP_CONTENT_DIR . SygConstant::WP_CACHE_JSON_REL_DIR);
+            mkdir(WP_CONTENT_DIR . SygConstant::WP_CACHE_JS_REL_DIR);
+        }
+
 		// chmod all the cache directories to ensure that is writeable
-		$stat = stat(WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR);
+		$stat = stat(WP_CONTENT_DIR . SygConstant::WP_CACHE_DIR);
 
 		if ((getmygid() == $stat['gid']) || ($stat['gid'] == 0)) {
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_CACHE_DIR, 0755 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_HTML_REL_DIR, 0755 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_THUMB_REL_DIR, 0755 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JSON_REL_DIR, 0755 );
-			chmod ( WP_PLUGIN_DIR . SygConstant::WP_PLUGIN_PATH . SygConstant::WP_CACHE_JS_REL_DIR, 0755);
+			chmod ( WP_CONTENT_DIR . SygConstant::WP_CACHE_DIR, 0755 );
+			chmod ( WP_CONTENT_DIR . SygConstant::WP_CACHE_HTML_REL_DIR, 0755 );
+			chmod ( WP_CONTENT_DIR . SygConstant::WP_CACHE_THUMB_REL_DIR, 0755 );
+			chmod ( WP_CONTENT_DIR . SygConstant::WP_CACHE_JSON_REL_DIR, 0755 );
+			chmod ( WP_CONTENT_DIR . SygConstant::WP_CACHE_JS_REL_DIR, 0755);
 		}
 		
 		if ($installed_ver != $target_syg_db_version) {
